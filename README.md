@@ -8,7 +8,7 @@ cd CMSSW_9_4_0/src
 
 cmsenv
 
-git clone https://github.com/CMSDIJET/DijetRootTreeAnalyzer.git CMSDIJET/DijetRootTreeAnalyzer
+git clone https://github.com/CMSDIJET/DijetRootTreeAnalyzer.git CMSDIJET/DijetRootTreeAnalyzer -b btag2018
 
 cd CMSDIJET/DijetRootTreeAnalyzer
 
