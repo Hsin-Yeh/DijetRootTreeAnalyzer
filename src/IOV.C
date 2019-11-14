@@ -13,9 +13,9 @@ void IOV::add(string id, int runmin, int runmax, bool isdata) {
     }
     
     const char *s;
-    const char *dir = "data/Fall17_17Nov2017_V6_DATA/";
-    const char *tag = "Fall17_17Nov2017";
-    const char *dtype = "_V6_DATA";
+    const char *dir = "data/Summer16_07Aug2017_V11_DATA/";
+    const char *tag = "Summer16_07Aug2017";
+    const char *dtype = "_V11_DATA";
     /* const char *dir = "data/Summer16_23Sep2016V3_DATA/";
     const char *tag = "Summer16_23Sep2016";
     const char *dtype = "V3_DATA";*/
