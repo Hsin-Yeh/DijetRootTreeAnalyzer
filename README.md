@@ -18,24 +18,22 @@ Location of key files
 ============
 ```
 store data JEC information
-
   src/IOV.C 
 
 cutfiles, store JSON info, all varialbes whick need to be store in reduced Ntuple
-
-  config/cutFile\_mainDijetSelection\_JetHT\_Run2018A-18Aut2018.txt
-  config/cutFile\_mainDijetSelection\_JetHT\_Run2018D-18Aut2018.txt
-  config/cutFile\_mainDijetSelection\_JetHT\_Run2018C-18Aut2018.txt
-  config/cutFile\_mainDijetSelection\_JetHT\_Run2018D-18Aut2018.txt
+  config/cutFile_mainDijetSelection_JetHT_Run2018A-18Aut2018.txt
+  config/cutFile_mainDijetSelection_JetHT_Run2018D-18Aut2018.txt
+  config/cutFile_mainDijetSelection_JetHT_Run2018C-18Aut2018.txt
+  config/cutFile_mainDijetSelection_JetHT_Run2018D-18Aut2018.txt
 
 bTag SFs:
-  data/bTag\_MC\_ScalingFactors/\*
+  data/bTag_MC_ScalingFactors/*
 
 Main Files(for btag central, up, down, and create rootfile, which contain all SF in pT-Eta plain, for interpolation)
-   analysisClass\_mainDijetSelection\_cemf\_lt\_0p8.C
-   analysisClass\_mainDijetSelection\_cemf\_lt\_0p8\_up.C
-   analysisClass\_mainDijetSelection\_cemf\_lt\_0p8\_down.C
-   analysisClass\_mainDijetSelection\_cemf\_lt\_0p8\_inter.C
+   analysisClass_mainDijetSelection_cemf_lt_0p8.C
+   analysisClass_mainDijetSelection_cemf_lt_0p8_up.C
+   analysisClass_mainDijetSelection_cemf_lt_0p8_down.C
+   analysisClass_mainDijetSelection_cemf_lt_0p8_inter.C
 
 Submit to Condor:
    SubmitCondorJobs.py
