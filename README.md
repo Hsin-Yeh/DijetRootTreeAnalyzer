@@ -54,3 +54,6 @@ make
 
 mv /tmp/HT700to1000* /eos/cms/store/group/phys_exotica/dijet/Dijet13TeV/TylerW/2017JetHT_reduced/QCD/
 ```
+```
+python SubmitCondorJobs.py -l lists/2018DATA/A.txt -c config/cutFile_mainDijetSelection_JetHT_Run2018A-18Aut2018.txt -s 25 -d /eos/cms/store/group/phys_exotica/dijet/Dijet13TeV/TylerW/2018JetHT_reduced/RunII2018A/ -f 2018A -t NewJunA
+```
