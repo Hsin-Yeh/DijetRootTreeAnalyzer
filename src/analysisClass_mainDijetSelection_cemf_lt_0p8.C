@@ -149,22 +149,51 @@ analysisClass::analysisClass(string * inputList, string * cutFile, string * tree
 
   //load btag scale factors
   bcalib = new BTagCalibration("CSVv2", "data/bTag_MC_ScalingFactors/CSVv2_ichep.csv");
+  bcalib94XCSVv2   = new BTagCalibration("DeepCSV"  , "data/bTag_MC_ScalingFactors/CSVv2_94XSF_V2_B_F.csv");
+  bcalib94XDeepCSV = new BTagCalibration("CSVv2", "data/bTag_MC_ScalingFactors/DeepCSV_94XSF_V2_B_F.csv");
+  //loose WP
+  breader_loose_CSVv294X    = new BTagCalibrationReader(BTagEntry::OP_LOOSE ,"central", {"up", "down"});
+  breader_loose_CSVv294X->load(*bcalib94XCSVv2, BTagEntry::FLAV_B,"comb");
 
-  //medium WP
+  breader_loose_DeepCSV94X  = new BTagCalibrationReader(BTagEntry::OP_LOOSE ,"central", {"up", "down"});
+  breader_loose_DeepCSV94X->load(*bcalib94XDeepCSV, BTagEntry::FLAV_B,"comb");
+
+  breader_loose = new BTagCalibrationReader(BTagEntry::OP_LOOSE ,  // operating point
+                                            "central",             // central sys type
+                                            {"up", "down"});       // other sys types
+  breader_loose->load(*bcalib,                                     // calibration instance
+                      BTagEntry::FLAV_B,                           // btag flavour
+                      "comb");
+   //medium WP
+  breader_medium_CSVv294X   = new BTagCalibrationReader(BTagEntry::OP_MEDIUM,"central", {"up", "down"});
+  breader_medium_CSVv294X->load(*bcalib94XCSVv2, BTagEntry::FLAV_B,"comb");
+
+  breader_medium_DeepCSV94X = new BTagCalibrationReader(BTagEntry::OP_MEDIUM,"central", {"up", "down"});
+  breader_medium_DeepCSV94X->load(*bcalib94XDeepCSV, BTagEntry::FLAV_B,"comb");
+
   breader_medium = new BTagCalibrationReader(BTagEntry::OP_MEDIUM,  // operating point
-					     "central",             // central sys type
-					     {"up", "down"});      // other sys types
-  breader_medium->load(*bcalib,                // calibration instance
-		       BTagEntry::FLAV_B,    // btag flavour
-		       "comb");
+                                             "central",             // central sys type
+                                             {"up", "down"});       // other sys types
+  breader_medium->load(*bcalib,                                     // calibration instance
+                       BTagEntry::FLAV_B,                           // btag flavour
+                       "comb");
   //tight WP
-  breader_tight = new BTagCalibrationReader(BTagEntry::OP_TIGHT,  // operating point
-					    "central",             // central sys type
-					    {"up", "down"});      // other sys types
-  breader_tight->load(*bcalib,                // calibration instance
-		      BTagEntry::FLAV_B,    // btag flavour
-		      "comb");
-  
+  breader_tight_CSVv294X    = new BTagCalibrationReader(BTagEntry::OP_TIGHT ,"central", {"up", "down"});
+  breader_tight_CSVv294X->load(*bcalib94XCSVv2, BTagEntry::FLAV_B,"comb");
+
+  breader_tight_DeepCSV94X  = new BTagCalibrationReader(BTagEntry::OP_TIGHT ,"central", {"up", "down"});
+  breader_tight_DeepCSV94X->load(*bcalib94XDeepCSV, BTagEntry::FLAV_B,"comb");
+
+  breader_tight = new BTagCalibrationReader(BTagEntry::OP_TIGHT,   // operating point
+                                            "central",             // central sys type
+                                            {"up", "down"});       // other sys types
+  breader_tight->load(*bcalib,                                     // calibration instance
+                      BTagEntry::FLAV_B,                           // btag flavour
+                      "comb");
+
+
+
+
   
   std::cout << "analysisClass::analysisClass(): ends " << std::endl;
 }
@@ -245,10 +274,29 @@ TH1F* h_CEMF_test1 = new TH1F("h_CEMF_test1", "h_CEMF_test1", 50, 0, 1.0);
    TH1F* h_mjj_btag0_t = new TH1F("h_mjj_btag0_t","h_mjj_btag0_t",10000,0,10000);
    TH1F* h_mjj_btag1_t = new TH1F("h_mjj_btag1_t","h_mjj_btag1_t",10000,0,10000);
    TH1F* h_mjj_btag2_t = new TH1F("h_mjj_btag2_t","h_mjj_btag2_t",10000,0,10000);
-   TH1F* h_mjj_btag0_mt = new TH1F("h_mjj_btag0_mt","h_mjj_btag0_mt",10000,0,10000);
-   TH1F* h_mjj_btag1_mt = new TH1F("h_mjj_btag1_mt","h_mjj_btag1_mt",10000,0,10000);
-   TH1F* h_mjj_btag2_mt = new TH1F("h_mjj_btag2_mt","h_mjj_btag2_mt",10000,0,10000);
+   TH1F* h_mjj_btag0_l = new TH1F("h_mjj_btag0_l","h_mjj_btag0_l",10000,0,10000);
+   TH1F* h_mjj_btag1_l = new TH1F("h_mjj_btag1_l","h_mjj_btag1_l",10000,0,10000);
+   TH1F* h_mjj_btag2_l = new TH1F("h_mjj_btag2_l","h_mjj_btag2_l",10000,0,10000);
 
+   TH1F* h_mjj_Deepbtag0_m = new TH1F("h_mjj_Deepbtag0_m","h_mjj_Deepbtag0_m",10000,0,10000);
+   TH1F* h_mjj_Deepbtag1_m = new TH1F("h_mjj_Deepbtag1_m","h_mjj_Deepbtag1_m",10000,0,10000);
+   TH1F* h_mjj_Deepbtag2_m = new TH1F("h_mjj_Deepbtag2_m","h_mjj_Deepbtag2_m",10000,0,10000);
+   TH1F* h_mjj_Deepbtag0_t = new TH1F("h_mjj_Deepbtag0_t","h_mjj_Deepbtag0_t",10000,0,10000);
+   TH1F* h_mjj_Deepbtag1_t = new TH1F("h_mjj_Deepbtag1_t","h_mjj_Deepbtag1_t",10000,0,10000);
+   TH1F* h_mjj_Deepbtag2_t = new TH1F("h_mjj_Deepbtag2_t","h_mjj_Deepbtag2_t",10000,0,10000);
+   TH1F* h_mjj_Deepbtag0_l = new TH1F("h_mjj_Deepbtag0_l","h_mjj_Deepbtag0_l",10000,0,10000);
+   TH1F* h_mjj_Deepbtag1_l = new TH1F("h_mjj_Deepbtag1_l","h_mjj_Deepbtag1_l",10000,0,10000);
+   TH1F* h_mjj_Deepbtag2_l = new TH1F("h_mjj_Deepbtag2_l","h_mjj_Deepbtag2_l",10000,0,10000);
+
+   TH1F* h_mjj_Newbtag0_m = new TH1F("h_mjj_Newbtag0_m","h_mjj_Newbtag0_m",10000,0,10000);
+   TH1F* h_mjj_Newbtag1_m = new TH1F("h_mjj_Newbtag1_m","h_mjj_Newbtag1_m",10000,0,10000);
+   TH1F* h_mjj_Newbtag2_m = new TH1F("h_mjj_Newbtag2_m","h_mjj_Newbtag2_m",10000,0,10000);
+   TH1F* h_mjj_Newbtag0_t = new TH1F("h_mjj_Newbtag0_t","h_mjj_Newbtag0_t",10000,0,10000);
+   TH1F* h_mjj_Newbtag1_t = new TH1F("h_mjj_Newbtag1_t","h_mjj_Newbtag1_t",10000,0,10000);
+   TH1F* h_mjj_Newbtag2_t = new TH1F("h_mjj_Newbtag2_t","h_mjj_Newbtag2_t",10000,0,10000);
+   TH1F* h_mjj_Newbtag0_l = new TH1F("h_mjj_Newbtag0_l","h_mjj_Newbtag0_l",10000,0,10000);
+   TH1F* h_mjj_Newbtag1_l = new TH1F("h_mjj_Newbtag1_l","h_mjj_Newbtag1_l",10000,0,10000);
+   TH1F* h_mjj_Newbtag2_l = new TH1F("h_mjj_Newbtag2_l","h_mjj_Newbtag2_l",10000,0,10000); 
   
 
    /////////initialize variables
@@ -311,27 +359,26 @@ TH1F* h_CEMF_test1 = new TH1F("h_CEMF_test1", "h_CEMF_test1", 50, 0, 1.0);
 	 std::multimap<double, unsigned> sortedJets;
 	 for(size_t j=0; j<no_jets_ak4; ++j)
 	   {
-	    JetCorrector->setJetEta(jetEtaAK4->at(j));
-	     JetCorrector->setJetPt(jetPtAK4->at(j)/jetJecAK4->at(j)); //pTraw
-	     JetCorrector->setJetA(jetAreaAK4->at(j));
-	     JetCorrector->setRho(rho);
-	     
-      JetCorrector_data = iov->get(runNo); // Get IOV dependent JEC
-
-        
-  	     JetCorrector_data->setJetEta(jetEtaAK4->at(j));
-	     JetCorrector_data->setJetPt(jetPtAK4->at(j)/jetJecAK4->at(j)); //pTraw
-	     JetCorrector_data->setJetA(jetAreaAK4->at(j));
-	     JetCorrector_data->setRho(rho);
-
 
   	     //nominal value of JECs
 	     double correction;//, old_correction, nominal_correction;
 	     //if( int(getPreCutValue1("shiftJECs"))==0 ){
-	     if (isData == 1) correction = JetCorrector_data->getCorrection();
-                              
-	     else correction = JetCorrector->getCorrection();
+	     if (isData == 1) {
+     		JetCorrector_data = iov->get(runNo); // Get IOV dependent JEC
+                JetCorrector_data->setJetEta(jetEtaAK4->at(j));
+                JetCorrector_data->setJetPt(jetPtAK4->at(j)/jetJecAK4->at(j)); //pTraw
+                JetCorrector_data->setJetA(jetAreaAK4->at(j));
+                JetCorrector_data->setRho(rho);
+		correction = JetCorrector_data->getCorrection();
+             }
+	     else {
 
+                JetCorrector->setJetEta(jetEtaAK4->at(j));
+                JetCorrector->setJetPt(jetPtAK4->at(j)/jetJecAK4->at(j)); //pTraw
+                JetCorrector->setJetA(jetAreaAK4->at(j));
+                JetCorrector->setRho(rho);
+		correction = JetCorrector->getCorrection();
+		}
 //cout << correction << endl;
 	     //nominal_correction=correction;
 	     //old_correction = jetJecAK4->at(j);u
@@ -636,6 +683,7 @@ TH1F* h_CEMF_test1 = new TH1F("h_CEMF_test1", "h_CEMF_test1", 50, 0, 1.0);
        fillVariableWithValue( "jetJecUncAK4_j1", jecUncertainty[sortedJetIdx[0]] );
        
        fillVariableWithValue( "jetCSVAK4_j1", jetCSVAK4->at(sortedJetIdx[0]) );
+       fillVariableWithValue( "jetDeepCSVAK4_j1", jetCSVAK4->at(sortedJetIdx[0]) );
        fillVariableWithValue("jetHflavour_j1",hFlavourAK4->at(sortedJetIdx[0]));
 
        //jetID
@@ -660,6 +708,7 @@ TH1F* h_CEMF_test1 = new TH1F("h_CEMF_test1", "h_CEMF_test1", 50, 0, 1.0);
        fillVariableWithValue( "jetJecAK4_j2", jecFactors[sortedJetIdx[1]]); 
        fillVariableWithValue( "jetJecUncAK4_j2", jecUncertainty[sortedJetIdx[1]] );
        fillVariableWithValue( "jetCSVAK4_j2", jetCSVAK4->at(sortedJetIdx[1]) );
+       fillVariableWithValue( "jetDeepCSVAK4_j2", jetCSVAK4->at(sortedJetIdx[1]) );
        fillVariableWithValue("jetHflavour_j2",hFlavourAK4->at(sortedJetIdx[1]));
 
        //jetID
@@ -731,26 +780,26 @@ TH1F* h_CEMF_test1 = new TH1F("h_CEMF_test1", "h_CEMF_test1", 50, 0, 1.0);
        fillVariableWithValue("passHLT_PFHT890",triggerResult->at(triggerMap_.find("HLT_PFHT890_v*")->second));
      if( NtriggerBits > 2 && isData)
        fillVariableWithValue("passHLT_PFHT1050",triggerResult->at(triggerMap_.find("HLT_PFHT1050_v*")->second));
-     if( NtriggerBits > 3 && isData)
-       fillVariableWithValue("passHLT_PFJet400",triggerResult->at(triggerMap_.find("HLT_PFJet400_v*")->second));
-     if( NtriggerBits > 4 && isData)
-       fillVariableWithValue("passHLT_PFJet450",triggerResult->at(triggerMap_.find("HLT_PFJet450_v*")->second));
+//     if( NtriggerBits > 3 && isData)
+ //      fillVariableWithValue("passHLT_PFJet400",triggerResult->at(triggerMap_.find("HLT_PFJet400_v*")->second));
+  //   if( NtriggerBits > 4 && isData)
+//       fillVariableWithValue("passHLT_PFJet450",triggerResult->at(triggerMap_.find("HLT_PFJet450_v*")->second));
      if( NtriggerBits > 5 && isData)
        fillVariableWithValue("passHLT_PFJet500",triggerResult->at(triggerMap_.find("HLT_PFJet500_v*")->second));
      if( NtriggerBits > 6 && isData)
        fillVariableWithValue("passHLT_PFJet550",triggerResult->at(triggerMap_.find("HLT_PFJet550_v*")->second));
      if( NtriggerBits > 7 && isData)
        fillVariableWithValue("passHLT_Mu50",triggerResult->at(triggerMap_.find("HLT_Mu50_v*")->second));
-     if( NtriggerBits > 8 && isData)
-       fillVariableWithValue("passHLT_AK8PFJet320",triggerResult->at(triggerMap_.find("HLT_AK8PFJet320_v*")->second));
-     if( NtriggerBits > 9 && isData)
-       fillVariableWithValue("passHLT_AK8PFJet400",triggerResult->at(triggerMap_.find("HLT_AK8PFJet400_v*")->second));
-     if( NtriggerBits > 10 && isData)
-       fillVariableWithValue("passHLT_AK8PFJet450",triggerResult->at(triggerMap_.find("HLT_AK8PFJet450_v*")->second));
-     if( NtriggerBits > 11 && isData)
-       fillVariableWithValue("passHLT_AK8PFJet500",triggerResult->at(triggerMap_.find("HLT_AK8PFJet500_v*")->second));
-     if( NtriggerBits > 12 && isData)
-       fillVariableWithValue("passHLT_AK8PFJet550",triggerResult->at(triggerMap_.find("HLT_AK8PFJet550_v*")->second));
+//     if( NtriggerBits > 8 && isData)
+//       fillVariableWithValue("passHLT_AK8PFJet320",triggerResult->at(triggerMap_.find("HLT_AK8PFJet320_v*")->second));
+//     if( NtriggerBits > 9 && isData)
+//       fillVariableWithValue("passHLT_AK8PFJet400",triggerResult->at(triggerMap_.find("HLT_AK8PFJet400_v*")->second));
+//     if( NtriggerBits > 10 && isData)
+//       fillVariableWithValue("passHLT_AK8PFJet450",triggerResult->at(triggerMap_.find("HLT_AK8PFJet450_v*")->second));
+//     if( NtriggerBits > 11 && isData)
+//       fillVariableWithValue("passHLT_AK8PFJet500",triggerResult->at(triggerMap_.find("HLT_AK8PFJet500_v*")->second));
+//     if( NtriggerBits > 12 && isData)
+//       fillVariableWithValue("passHLT_AK8PFJet550",triggerResult->at(triggerMap_.find("HLT_AK8PFJet550_v*")->second));
      if( NtriggerBits > 13 && isData)
        fillVariableWithValue("passHLT_CaloJet500_NoJetID",triggerResult->at(triggerMap_.find("HLT_CaloJet500_NoJetID_v*")->second));
      if( NtriggerBits > 14 && isData)
@@ -792,133 +841,364 @@ h_CEMF_test2->Fill(jetCemfAK4->at(sortedJetIdx[1]));
 	 //####################################################################################
 	 //######################### BTAGGED PART OF THE ANALYSIS #############################
 	 //####################################################################################
-	 int njetsm = 0;
-	 int njetst = 0;
-	 
-	 double evtWeightBtagM = 1.;
-	 double evtWeightBtagT = 1.;
-	 double evtWeightBtagMT = 1.;
+         int nExpBtag = 0;
+         int njetsl = 0;
+         int njetsm = 0;
+         int njetst = 0;
 
-	 int nExpBtag = 0;
+         std::vector<double> SFAK4L;
+         std::vector<double> SFAK4M;
+         std::vector<double> SFAK4T;
 
-	 std::vector<double> SFAK4M;
-	 std::vector<double> SFAK4T;
-	 std::vector<double> SFAK4MT;
 
-	 //JET1 MEDIUM
-	 if (getVariableValue("jetCSVAK4_j1") > getPreCutValue1("CSVv2M"))
-	   {
-	     ++njetsm;
-	     if(!isData)
-	       {
-		 double tmpSF = breader_medium->eval_auto_bounds("central",
-								 BTagEntry::FLAV_B,
-								 ak4j1.Eta(),
-								 ak4j1.Pt());
-		 
-		 SFAK4M.push_back(tmpSF);				  
-		 SFAK4MT.push_back(tmpSF);
-	       }
-	   }
-	 //JET2 MEDIUM
-	 if (getVariableValue("jetCSVAK4_j2") > getPreCutValue1("CSVv2M"))
-	   {
-	     ++njetsm;
-	     if(!isData)
-	       {
-		 
-		 double tmpSF = breader_medium->eval_auto_bounds("central",
-								 BTagEntry::FLAV_B,
-								 ak4j2.Eta(),
-								 ak4j2.Pt());
-		 SFAK4M.push_back(tmpSF);
-		 SFAK4MT.push_back(tmpSF);
-	       }
-	   }
+         if(!isData)
+           {
+             if(pFlavourAK4->at(sortedJetIdx[0]) == 5)
 
-	 //JET1 TIGHT
-	 if (getVariableValue("jetCSVAK4_j1") > getPreCutValue1("CSVv2T"))
-	   {
-	     ++njetst;
-	     if(!isData)
-	       {
-		 double tmpSF =  breader_tight->eval_auto_bounds("central",
-								 BTagEntry::FLAV_B,
-								 ak4j1.Eta(),
-								 ak4j1.Pt());
-
-		 SFAK4T.push_back(tmpSF);
-		 SFAK4MT[0] = tmpSF;
-	       }
-	   }
-	 //JET2 TIGHT
-	 if (getVariableValue("jetCSVAK4_j2") > getPreCutValue1("CSVv2T"))
-	   {
-	     ++njetst;
-	     if(!isData)
-	       {
-		 double tmpSF = breader_tight->eval_auto_bounds("central",
-								BTagEntry::FLAV_B,
-								ak4j2.Eta(),
-								ak4j2.Pt());
-
-		 SFAK4T.push_back(tmpSF);
-		 SFAK4MT[1] = tmpSF;
-	       }
-	   }
+               ++nExpBtag;
+           }
 
 
 
-	 if(!isData)
-	   {
-	     if(hFlavourAK4->at(sortedJetIdx[0]) == 5)
-	       ++nExpBtag;
-	     if(hFlavourAK4->at(sortedJetIdx[1]) == 5)
-	       ++nExpBtag;
+	 //************************************************************************************************
+	 //***************************************New CSVv2************************************************
+	 //************************************************************************************************
 
-	     evtWeightBtagM = bTagEventWeight(SFAK4M, nExpBtag);
-	     evtWeightBtagT = bTagEventWeight(SFAK4T, nExpBtag);
-	     evtWeightBtagMT = bTagEventWeight(SFAK4MT, nExpBtag);
-	   }
+         double evtWeightBtagM_CSVv294X = 1.;
+         double evtWeightBtagT_CSVv294X = 1.;
+         double evtWeightBtagL_CSVv294X = 1.;
+         //JET1 Loose
+         if (getVariableValue("jetCSVAK4_j1") > getPreCutValue1("CSVv2L94X"))
+           {
+             ++njetsl;
+             if(!isData)
+               {
+                 double tmpSF = breader_loose_CSVv294X->eval_auto_bounds("central", BTagEntry::FLAV_B,ak4j1.Eta(),ak4j1.Pt());
+                 SFAK4L.push_back(tmpSF);
+               }
+           }
+         //JET2 Loose
+         if (getVariableValue("jetCSVAK4_j2") > getPreCutValue1("CSVv2L94X"))
+           {
+             ++njetsl;
+             if(!isData)
+               {
+
+                 double tmpSF = breader_loose_CSVv294X->eval_auto_bounds("central", BTagEntry::FLAV_B, ak4j2.Eta(), ak4j2.Pt());
+                 SFAK4L.push_back(tmpSF);
+               }
+           }
+
+         //JET1 Medium
+         if (getVariableValue("jetCSVAK4_j1") > getPreCutValue1("CSVv2M94X"))
+           {
+             ++njetsm;
+             if(!isData)
+               {
+                 double tmpSF = breader_medium_CSVv294X->eval_auto_bounds("central", BTagEntry::FLAV_B,ak4j1.Eta(),ak4j1.Pt());
+                 SFAK4M.push_back(tmpSF);
+               }
+           }
+         //JET2 Medium
+         if (getVariableValue("jetCSVAK4_j2") > getPreCutValue1("CSVv2M94X"))
+           {
+             ++njetsm;
+             if(!isData)
+               {
+
+                 double tmpSF = breader_medium_CSVv294X->eval_auto_bounds("central",BTagEntry::FLAV_B,ak4j2.Eta(),ak4j2.Pt());
+                 SFAK4M.push_back(tmpSF);
+               }
+           }
+
+         //JET1 Tight
+         if (getVariableValue("jetCSVAK4_j1") > getPreCutValue1("CSVv2T94X"))
+           {
+             ++njetst;
+             if(!isData)
+               {
+                 double tmpSF = breader_tight_CSVv294X->eval_auto_bounds("central",BTagEntry::FLAV_B,ak4j1.Eta(),ak4j1.Pt());
+                 SFAK4T.push_back(tmpSF);
+               }
+           }
+         //JET2 Tight
+         if (getVariableValue("jetCSVAK4_j2") > getPreCutValue1("CSVv2T94X"))
+           {
+             ++njetst;
+             if(!isData)
+               {
+                 double tmpSF = breader_tight_CSVv294X->eval_auto_bounds("central",BTagEntry::FLAV_B,ak4j2.Eta(),ak4j2.Pt());
+                 SFAK4T.push_back(tmpSF);
+               }
+           }
+
+           if(!isData)
+                   {
+
+                     evtWeightBtagM_CSVv294X = bTagEventWeight(SFAK4M, nExpBtag);
+                     evtWeightBtagT_CSVv294X = bTagEventWeight(SFAK4T, nExpBtag);
+                     evtWeightBtagL_CSVv294X = bTagEventWeight(SFAK4L, nExpBtag);
+                   }
+
+         fillVariableWithValue("evtNewBweight_m",evtWeightBtagM_CSVv294X);
+         fillVariableWithValue("evtNewBweight_t",evtWeightBtagT_CSVv294X);
+         fillVariableWithValue("evtNewBweight_l",evtWeightBtagL_CSVv294X);
 
 
-	 //fill histos in categories and save branches
-	 double MJJWide_M =  MJJWide * evtWeightBtagM;
-	 double MJJWide_T =  MJJWide * evtWeightBtagT;
-	 double MJJWide_MT =  MJJWide * evtWeightBtagMT;
+         if (njetsl == 1)
+             h_mjj_Newbtag1_l->Fill(MJJWide,evtWeightBtagL_CSVv294X);
+         else if (njetsl == 2)
+             h_mjj_Newbtag2_l->Fill(MJJWide,evtWeightBtagL_CSVv294X);
+         else
+             h_mjj_Newbtag0_l->Fill(MJJWide,evtWeightBtagL_CSVv294X);
 
-	 if (njetsm == 1)
-	   h_mjj_btag1_m->Fill(MJJWide_M);
-	 else if (njetsm == 2)
-	   h_mjj_btag2_m->Fill(MJJWide_M);
-	 else
-	   h_mjj_btag0_m->Fill(MJJWide_M);
+         if (njetst == 1)
+             h_mjj_Newbtag1_t->Fill(MJJWide,evtWeightBtagT_CSVv294X);
+         else if (njetst == 2)
+             h_mjj_Newbtag2_t->Fill(MJJWide,evtWeightBtagT_CSVv294X);
+         else
+             h_mjj_Newbtag0_t->Fill(MJJWide,evtWeightBtagT_CSVv294X);
 
-	 if (njetst == 1)
-	   h_mjj_btag1_t->Fill(MJJWide_T);
-	 else if (njetst == 2)
-	   h_mjj_btag2_t->Fill(MJJWide_T);
-	 else
-	   h_mjj_btag0_t->Fill(MJJWide_T);
-
-	 if (njetsm == 2 && njetst==1)
-	   {
-	     h_mjj_btag2_mt->Fill(MJJWide_MT);
-	     if(isData && triggerResult->size()>10) // only run on data  
-	       fillTriggerPlots(h_mjj_HLTpass_bb,MJJWide);
-	   }
-	 else if (njetst==1)
-	   h_mjj_btag1_mt->Fill(MJJWide_MT);
-	 else
-	   h_mjj_btag0_mt->Fill(MJJWide_MT);
+         if (njetsm == 1)
+             h_mjj_Newbtag1_m->Fill(MJJWide,evtWeightBtagM_CSVv294X);
+         else if (njetsm == 2)
+             h_mjj_Newbtag2_m->Fill(MJJWide,evtWeightBtagM_CSVv294X);
+         else
+             h_mjj_Newbtag0_m->Fill(MJJWide,evtWeightBtagM_CSVv294X);
 
 
+         //************************************************************************************************
+	 //***************************************DeepCSV**************************************************
+	 //************************************************************************************************
+         double evtWeightBtagM_DeepCSV = 1.;
+         double evtWeightBtagT_DeepCSV = 1.;
+         double evtWeightBtagL_DeepCSV = 1.;
 
-	 fillVariableWithValue("nBjets_m",njetsm);
-	 fillVariableWithValue("nBjets_t",njetst);
-	 fillVariableWithValue("evtBweight_m",evtWeightBtagM);
-	 fillVariableWithValue("evtBweight_t",evtWeightBtagT);
-	 fillVariableWithValue("evtBweight_mt",evtWeightBtagMT);
+         njetsl = 0;
+         njetsm = 0;
+         njetst = 0;
+
+               SFAK4L.clear();
+         SFAK4M.clear();
+         SFAK4T.clear();
+
+         //JET1 Loose
+         if (getVariableValue("jetDeepCSVAK4_j1") > getPreCutValue1("DeepCSVL"))
+           {
+             ++njetsl;
+             if(!isData)
+               {
+                 double tmpSF = breader_loose_DeepCSV94X->eval_auto_bounds("central",BTagEntry::FLAV_B, ak4j1.Eta(),ak4j1.Pt());
+                 SFAK4L.push_back(tmpSF);
+               }
+           }
+         //JET2 Loose
+         if (getVariableValue("jetDeepCSVAK4_j2") > getPreCutValue1("DeepCSVL"))
+           {
+             ++njetsl;
+             if(!isData)
+               {
+
+                 double tmpSF = breader_loose_DeepCSV94X->eval_auto_bounds("central",BTagEntry::FLAV_B,ak4j2.Eta(),ak4j2.Pt());
+                 SFAK4L.push_back(tmpSF);
+               }
+           }
+
+         //JET1 Medium
+         if (getVariableValue("jetDeepCSVAK4_j1") > getPreCutValue1("DeepCSVM"))
+           {
+             ++njetsm;
+             if(!isData)
+               {
+                 double tmpSF = breader_medium_DeepCSV94X->eval_auto_bounds("central",BTagEntry::FLAV_B,ak4j1.Eta(),ak4j1.Pt());
+                 SFAK4M.push_back(tmpSF);
+               }
+           }
+         //JET2 Medium
+         if (getVariableValue("jetDeepCSVAK4_j2") > getPreCutValue1("DeepCSVM"))
+           {
+             ++njetsm;
+             if(!isData)
+               {
+
+                 double tmpSF = breader_medium_DeepCSV94X->eval_auto_bounds("central",BTagEntry::FLAV_B,ak4j2.Eta(),ak4j2.Pt());
+                 SFAK4M.push_back(tmpSF);
+               }
+            }
+
+         //JET1 Tight
+         if (getVariableValue("jetDeepCSVAK4_j1") > getPreCutValue1("DeepCSVT"))
+           {
+             ++njetst;
+             if(!isData)
+               {
+                 double tmpSF = breader_tight_DeepCSV94X->eval_auto_bounds("central", BTagEntry::FLAV_B,ak4j1.Eta(),ak4j1.Pt());
+
+                 SFAK4T.push_back(tmpSF);
+               }
+           }
+
+         //JET2 Tight
+         if (getVariableValue("jetDeepCSVAK4_j2") > getPreCutValue1("DeepCSVT"))
+           {
+             ++njetst;
+             if(!isData)
+               {
+
+                 double tmpSF = breader_tight_DeepCSV94X->eval_auto_bounds("central",BTagEntry::FLAV_B,ak4j2.Eta(),ak4j2.Pt());
+                 SFAK4T.push_back(tmpSF);
+               }
+           }
+
+           if(!isData)
+                   {
+
+                     evtWeightBtagM_DeepCSV = bTagEventWeight(SFAK4M, nExpBtag);
+                     evtWeightBtagT_DeepCSV = bTagEventWeight(SFAK4T, nExpBtag);
+                     evtWeightBtagL_DeepCSV = bTagEventWeight(SFAK4L, nExpBtag);
+                   }
+
+          fillVariableWithValue("evtDeepBweight_m",evtWeightBtagM_DeepCSV);
+          fillVariableWithValue("evtDeepBweight_t",evtWeightBtagT_DeepCSV);
+          fillVariableWithValue("evtDeepBweight_l",evtWeightBtagL_DeepCSV);
+
+         if (njetsl == 1)
+           h_mjj_Deepbtag1_l->Fill(MJJWide,evtWeightBtagL_DeepCSV);
+         else if (njetsl == 2)
+           h_mjj_Deepbtag2_l->Fill(MJJWide,evtWeightBtagL_DeepCSV);
+         else
+           h_mjj_Deepbtag0_l->Fill(MJJWide,evtWeightBtagL_DeepCSV);
+
+         if (njetst == 1)
+           h_mjj_Deepbtag1_t->Fill(MJJWide,evtWeightBtagT_DeepCSV);
+         else if (njetst == 2)
+           h_mjj_Deepbtag2_t->Fill(MJJWide,evtWeightBtagT_DeepCSV);
+         else
+           h_mjj_Deepbtag0_t->Fill(MJJWide,evtWeightBtagT_DeepCSV);
+
+          if (njetsm == 1)
+           h_mjj_Deepbtag1_m->Fill(MJJWide,evtWeightBtagM_DeepCSV);
+          else if (njetsm == 2)
+           h_mjj_Deepbtag2_m->Fill(MJJWide,evtWeightBtagM_DeepCSV);
+          else
+           h_mjj_Deepbtag0_m->Fill(MJJWide,evtWeightBtagM_DeepCSV);
+           //************************************************************************************************
+           //***************************************Old CSVv2************************************************
+           //************************************************************************************************
+         double evtWeightBtagM = 1.;
+         double evtWeightBtagT = 1.;
+         double evtWeightBtagL = 1.;
+
+         njetsl = 0;
+         njetsm = 0;
+         njetst = 0;
+
+         SFAK4L.clear();
+         SFAK4M.clear();
+         SFAK4T.clear();
+
+         //JET1 Loose
+         if (getVariableValue("jetCSVAK4_j1") > getPreCutValue1("CSVv2L"))
+           {
+             ++njetsl;
+             if(!isData)
+               {
+                         double tmpSF = breader_loose->eval_auto_bounds("central",BTagEntry::FLAV_B,ak4j1.Eta(),ak4j1.Pt());
+                         SFAK4L.push_back(tmpSF);
+               }
+           }
+         //JET2 MEDIUM
+         if (getVariableValue("jetCSVAK4_j2") > getPreCutValue1("CSVv2L"))
+           {
+             ++njetsl;
+             if(!isData)
+               {
+                  double tmpSF = breader_loose->eval_auto_bounds("central",BTagEntry::FLAV_B,ak4j2.Eta(),ak4j2.Pt());
+                        SFAK4L.push_back(tmpSF);
+               }
+           }
+
+         //JET1 MEDIUM
+         if (getVariableValue("jetCSVAK4_j1") > getPreCutValue1("CSVv2M"))
+           {
+             ++njetsm;
+             if(!isData)
+               {
+                         double tmpSF = breader_medium->eval_auto_bounds("central",BTagEntry::FLAV_B,ak4j1.Eta(),ak4j1.Pt());
+                         SFAK4M.push_back(tmpSF);
+               }
+           }
+         //JET2 MEDIUM
+         if (getVariableValue("jetCSVAK4_j2") > getPreCutValue1("CSVv2M"))
+           {
+             ++njetsm;
+             if(!isData)
+               {
+                  double tmpSF = breader_medium->eval_auto_bounds("central",BTagEntry::FLAV_B,ak4j2.Eta(),ak4j2.Pt());
+                        SFAK4M.push_back(tmpSF);
+               }
+           }
+
+         //JET1 TIGHT
+         if (getVariableValue("jetCSVAK4_j1") > getPreCutValue1("CSVv2T"))
+           {
+             ++njetst;
+             if(!isData)
+               {
+                         double tmpSF =  breader_tight->eval_auto_bounds("central",BTagEntry::FLAV_B,ak4j1.Eta(),ak4j1.Pt());
+                         SFAK4T.push_back(tmpSF);
+               }
+           }
+         //JET2 TIGHT
+         if (getVariableValue("jetCSVAK4_j2") > getPreCutValue1("CSVv2T"))
+           {
+             ++njetst;
+             if(!isData)
+               {
+                         double tmpSF = breader_tight->eval_auto_bounds("central",BTagEntry::FLAV_B,ak4j2.Eta(),ak4j2.Pt());
+                         SFAK4T.push_back(tmpSF);
+               }
+           }
+
+
+     if(!isData)
+       {
+
+         evtWeightBtagM = bTagEventWeight(SFAK4M, nExpBtag);
+         evtWeightBtagT = bTagEventWeight(SFAK4T, nExpBtag);
+         evtWeightBtagL = bTagEventWeight(SFAK4L, nExpBtag);
+       }
+
+
+
+         //fill histos in categories and save branches
+
+         if (njetsm == 1)
+           h_mjj_btag1_m->Fill(MJJWide,evtWeightBtagM);
+         else if (njetsm == 2)
+           h_mjj_btag2_m->Fill(MJJWide,evtWeightBtagM);
+         else
+           h_mjj_btag0_m->Fill(MJJWide,evtWeightBtagM);
+
+         if (njetst == 1)
+           h_mjj_btag1_t->Fill(MJJWide,evtWeightBtagT);
+         else if (njetst == 2)
+           h_mjj_btag2_t->Fill(MJJWide,evtWeightBtagT);
+         else
+           h_mjj_btag0_t->Fill(MJJWide,evtWeightBtagT);
+
+         if (njetsl == 1)
+           h_mjj_btag1_l->Fill(MJJWide,evtWeightBtagL);
+         else if (njetsl == 2)
+           h_mjj_btag2_l->Fill(MJJWide,evtWeightBtagL);
+         else
+           h_mjj_btag0_l->Fill(MJJWide,evtWeightBtagL);
+
+
+         fillVariableWithValue("evtBweight_m",evtWeightBtagM);
+         fillVariableWithValue("evtBweight_t",evtWeightBtagT);
+         fillVariableWithValue("evtBweight_l",evtWeightBtagL);
+
 	 
 
 
@@ -989,9 +1269,30 @@ h_CEMF_test2->Fill(jetCemfAK4->at(sortedJetIdx[1]));
    h_mjj_btag0_t->Write();
    h_mjj_btag1_t->Write();
    h_mjj_btag2_t->Write();
-   h_mjj_btag0_mt->Write();
-   h_mjj_btag1_mt->Write();
-   h_mjj_btag2_mt->Write();
+   h_mjj_btag0_l->Write();
+   h_mjj_btag1_l->Write();
+   h_mjj_btag2_l->Write();
+
+
+   h_mjj_Deepbtag0_l->Write();
+   h_mjj_Deepbtag1_l->Write();
+   h_mjj_Deepbtag2_l->Write();
+   h_mjj_Deepbtag0_m->Write();
+   h_mjj_Deepbtag1_m->Write();
+   h_mjj_Deepbtag2_m->Write();
+   h_mjj_Deepbtag0_t->Write();
+   h_mjj_Deepbtag1_t->Write();
+   h_mjj_Deepbtag2_t->Write();
+
+   h_mjj_Newbtag0_l->Write();
+   h_mjj_Newbtag1_l->Write();
+   h_mjj_Newbtag2_l->Write();
+   h_mjj_Newbtag0_m->Write();
+   h_mjj_Newbtag1_m->Write();
+   h_mjj_Newbtag2_m->Write();
+   h_mjj_Newbtag0_t->Write();
+   h_mjj_Newbtag1_t->Write();
+   h_mjj_Newbtag2_t->Write();
 h_CEMF_test1->Write();
 h_CEMF_test2->Write();
 
