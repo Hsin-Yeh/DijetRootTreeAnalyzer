@@ -1,0 +1,5 @@
+/eos/cms/store/group/phys_exotica/dijet/Dijet13TeV/TylerW/2016JetHT_reduced/RunIIAug2016C/2016BC_0_reduced_skim.root
+/eos/cms/store/group/phys_exotica/dijet/Dijet13TeV/TylerW/2016JetHT_reduced/RunIIAug2016D/2016BD_14_reduced_skim.root
+/eos/cms/store/group/phys_exotica/dijet/Dijet13TeV/TylerW/2016JetHT_reduced/RunIIAug2016E/2016BE_19_reduced_skim.root
+/eos/cms/store/group/phys_exotica/dijet/Dijet13TeV/TylerW/2016JetHT_reduced/RunIIAug2016F/2016BF_23_reduced_skim.root
+/eos/cms/store/group/phys_exotica/dijet/Dijet13TeV/TylerW/2016JetHT_reduced/RunIIAug2016G/2016BG_6_reduced_skim.root

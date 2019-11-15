@@ -14,6 +14,7 @@ def getFileName(hybridLimit, massPoint, box, model, lumi,  directory, method, t)
         fileName = "%s/%s%s_%s_lumi-%.3f_%s.%s.mH120.%s.root"%(directory,hybridLimit,model,massPoint,lumi,box,method,t)
     else:
         fileName = "%s/%s%s_%s_lumi-%.3f_%s.%s.mH120.root"%(directory,hybridLimit,model,massPoint,lumi,box,method)
+    print fileName
     return fileName
 
 
@@ -117,10 +118,6 @@ if __name__ == '__main__':
         massIterable = list(eval(options.mass))
     for massPoint in massIterable:
         
-
-        print "MASSPOINT", massPoint
-
-
         if doSignificance and doHybridNew:
             if not glob.glob(getFileName("higgsCombineSignif",massPoint,boxInput,model,lumi,directory,"HybridNew",0)): continue
             print "INFO: opening %s"%(getFileName("higgsCombineSignif",massPoint,boxInput,model,lumi,directory,"HybridNew",0))
@@ -252,4 +249,5 @@ if __name__ == '__main__':
         if bayes:
             os.system("hadd -f %s/xsecUL_MarkovChainMC_%s_%s.root %s"%(directory,model,boxInput," ".join(haddOutputs)))
         else:
+	    print "hadd -f %s/xsecUL_Asymptotic_%s_%s.root %s"%(directory,model,boxInput," ".join(haddOutputs))
             os.system("hadd -f %s/xsecUL_Asymptotic_%s_%s.root %s"%(directory,model,boxInput," ".join(haddOutputs)))
