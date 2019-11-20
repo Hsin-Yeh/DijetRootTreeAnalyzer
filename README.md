@@ -51,7 +51,7 @@ make
 ```
 ./main lists/HT700to1000/list.txt config/cutFile_mainDijetSelection.txt dijets/events /tmp/HT700to1000 /tmp/HT700to1000
 
-argv[1]: text file contain location of files
+argv[1]: text file contain location of root files
 argv[2]: cut file location
 argv[3]: root tree
 argv[4]: normal root file name
