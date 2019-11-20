@@ -57,9 +57,28 @@ private :
   FactorizedJetCorrector *JetCorrector_data;
   FactorizedJetCorrector *JetCorrector_dataHLT;
   JetCorrectionUncertainty *unc;
-  BTagCalibration        *bcalib;
-  BTagCalibrationReader  *breader_medium;
-  BTagCalibrationReader  *breader_tight;
+  BTagCalibration        *bcalib94XDeepCSV;
+  BTagCalibration        *bcalib94XCSVv2;
+  BTagCalibration        *bcalib94XDeepJet;
+  BTagCalibrationReader  *breader_Bloose_CSVv294X;
+  BTagCalibrationReader  *breader_Bmedium_CSVv294X;
+  BTagCalibrationReader  *breader_Btight_CSVv294X;
+  BTagCalibrationReader  *breader_Bloose_DeepCSV94X;
+  BTagCalibrationReader  *breader_Bmedium_DeepCSV94X;
+  BTagCalibrationReader  *breader_Btight_DeepCSV94X;
+  BTagCalibrationReader  *breader_Bloose_DeepJet94X;
+  BTagCalibrationReader  *breader_Bmedium_DeepJet94X;
+  BTagCalibrationReader  *breader_Btight_DeepJet94X;
+  BTagCalibrationReader  *breader_Cloose_CSVv294X;
+  BTagCalibrationReader  *breader_Cmedium_CSVv294X;
+  BTagCalibrationReader  *breader_Ctight_CSVv294X;
+  BTagCalibrationReader  *breader_Cloose_DeepCSV94X;
+  BTagCalibrationReader  *breader_Cmedium_DeepCSV94X;
+  BTagCalibrationReader  *breader_Ctight_DeepCSV94X;
+  BTagCalibrationReader  *breader_Cloose_DeepJet94X;
+  BTagCalibrationReader  *breader_Cmedium_DeepJet94X;
+  BTagCalibrationReader  *breader_Ctight_DeepJet94X;
+
   jec::IOV *iov;
 };
 
