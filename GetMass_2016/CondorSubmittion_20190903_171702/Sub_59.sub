@@ -1,0 +1,7 @@
++JobFlavour= "tomorrow"
+executable = CondorSubmittion_20190903_171702/CondorJob_59.sh
+output     = CondorSubmittion_20190903_171702/output/$(ClusterId).$(ProcId).out
+error      = CondorSubmittion_20190903_171702/error/$(ClusterId).$(ProcId).err
+log        = CondorSubmittion_20190903_171702/log/$(ClusterId).$(ProcId).log
+
+queue
