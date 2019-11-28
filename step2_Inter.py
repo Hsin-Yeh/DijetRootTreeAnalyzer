@@ -4,7 +4,7 @@ FolderName = 'signalHistos_model_flavor_NovInter_ForYearScan_Algo'
 cata = []
 
 TComm = []
-for a in ['DMgq0p25','DMgq0p2']:
+for a in ['DMgq0p25']:#,'DMgq0p2']:
   for b in ['2018','2016','2017']:
 #    for c in ['CSVv2','DeepCSV','DeepJet']:
      for c in ['DeepJet']:
@@ -17,11 +17,7 @@ for a in ['DMgq0p25','DMgq0p2']:
        name=[]
        for i in ['_up','_central','_down']:
          if 'bg' in folder:
-<<<<<<< HEAD
            cata = ['1b','2b','0b']
-=======
-           cata = ['le1b','1b','Non']
->>>>>>> fefdb2e706949d9e1c73a96989ee3c57a3f88afa
          if 'bb' in folder:
            cata = ['Non','2b','le1b']
          for j in cata:
@@ -47,7 +43,6 @@ for a in ['DMgq0p25','DMgq0p2']:
            if j in i:
              py = py.replace('CEN',j)
        
-<<<<<<< HEAD
 	 if 'DMgq0p25' in i:
            add1 = ' DMgq0p25 '
          elif 'DMgq0p2' in i:     
@@ -56,16 +51,6 @@ for a in ['DMgq0p25','DMgq0p2']:
            add1 = ' qq '
          elif 'bg' in i:
            add1 = ' qg '
-=======
-         if 'bb' in i:
-           add1 = ' qq '
-         if 'bg' in i:
-           add1 = ' qg '
-	 if 'DMgq0p25' in i:
-           add1 = ' DMgq0p25 '
-         if 'DMgq0p2' in i:     
-	   add1 = ' DMgq0p2 '
->>>>>>> fefdb2e706949d9e1c73a96989ee3c57a3f88afa
 
 	 print i
  
@@ -90,11 +75,7 @@ for a in ['DMgq0p25','DMgq0p2']:
          #print('python '+py2+' -m '+add1+' -F '+i+' -c '+i.split('_')[-1])
          #os.system('python '+py2+' -m '+add1+' -F '+i+' -c '+i.split('_')[-1])
 
-<<<<<<< HEAD
 excution = 3 
-=======
-excution = 6
->>>>>>> fefdb2e706949d9e1c73a96989ee3c57a3f88afa
 command = {}
 for i in range(excution):
   command[i] = '#!/bin/bash\n\n'

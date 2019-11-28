@@ -18,7 +18,6 @@ if __name__=='__main__':
   if 'Non' in options.tag :
     CSV_Value = [0.1]
   elif '2018' in options.tag:
-#    CSV_Value = [0.2770]
     CSV_Value = [0.0494, 0.1241, 0.2, 0.2770,0.35, 0.4184,0.45,0.5,0.55,0.6,0.65,0.7, 0.7264, 0.7527,0.8,0.85,0.9,0.95]
   elif '2017' in options.tag:
     CSV_Value = [0.0521,0.1,0.1522,0.2,0.25,0.3033,0.35,0.4,0.45,0.4941,0.55,0.5803,0.6,0.65,0.7,0.7489,0.8001,0.85,0.8838,0.9,0.9693]
@@ -33,7 +32,7 @@ if __name__=='__main__':
   point = options.point 
   Folder = options.Folder
   
-  if model == 'qq':
+  if model == 'qq' or 'DM' in model:
     flavor = 'bb'
   elif model == 'qg':
     flavor = 'bg'

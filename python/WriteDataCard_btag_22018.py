@@ -166,7 +166,10 @@ def writeDataCard(box,model,txtfileName,bkgs,paramNames,w,penalty,fixed,shapes=[
 
         nBkgd = len(bkgs)
         rootFileName = txtfileName.replace('.txt','.root')
-        signals = len(model.split('p'))
+        if 'DM' in model:
+	   signals = 1
+	else:
+           signals = len(model.split('p'))
         if signals>1:
                 rates = [w.data("%s_%s"%(box,sig)).sumEntries() for sig in model.split('p')]
                 processes = ["%s_%s"%(box,sig) for sig in model.split('p')]
@@ -263,7 +266,10 @@ def writeDataCardMC(box,model,txtfileName,bkgs,paramNames,w):
         obsRate = w.data("data_obs").sumEntries()
         nBkgd = len(bkgs)
         rootFileName = txtfileName.replace('.txt','.root')
-        signals = len(model.split('p'))
+	if 'DM' in model:
+	   signals =1
+	else:
+           signals = len(model.split('p'))
         if signals>1:
                 rates = [w.data("%s_%s"%(box,sig)).sumEntries() for sig in model.split('p')]
                 processes = ["%s_%s"%(box,sig) for sig in model.split('p')]
@@ -450,6 +456,7 @@ if __name__ == '__main__':
     myTH1 = None
     for f in args:
         if f.lower().endswith('.root'):
+            print f
             if f.lower().find('resonanceshapes')!=-1:
                 signalFileName = f
             else:

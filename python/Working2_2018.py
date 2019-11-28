@@ -21,8 +21,8 @@ if __name__=='__main__':
   box=options.box
   Print = options.printout
  
-  os.system('mkdir fits_2019_09')
-  os.system('mkdir fits_2019_09/'+fit_dir)
+  os.system('mkdir fits_2019_11')
+  os.system('mkdir fits_2019_11/'+fit_dir)
   os.system('mkdir '+out_dir)
 
   content = '#!/bin/bash\n\n'
@@ -42,17 +42,16 @@ if __name__=='__main__':
     lumi = 37600 
     year = '2016'
 
-  content += 'python python/BinnedFit.py -c config/'+con+' -l '+str(lumi)+' -m '+model+' -s '+signal+' inputs/JetHT_run'+year+'_red_cert_scan.root -b '+box+' -d fits_2019_09/'+fit_dir+' --fit-spectrum\n\n'
-  content += 'python python/RunCombine_I_btag2018.py -m '+model+' -d '+out_dir+' --mass range\(1600,7000,100\) -c config/'+con+' -i fits_2019_09/'+fit_dir+'/DijetFitResults_'+box+'.root -b '+box+' --rMax 20 --xsec 1e-3 -l '+str(float(lumi)/1000.0)+'00\n\n'
+  content += 'python python/BinnedFit.py -c config/'+con+' -l '+str(lumi)+' -m '+model+' -s '+signal+' inputs/JetHT_run'+year+'_red_cert_scan.root -b '+box+' -d fits_2019_11/'+fit_dir+' --fit-spectrum\n\n'
+  content += 'python python/RunCombine_I_btag2018.py -m '+model+' -d '+out_dir+' --mass range\(1600,7000,100\) -c config/'+con+' -i fits_2019_11/'+fit_dir+'/DijetFitResults_'+box+'.root -b '+box+' --rMax 20 --xsec 1e-3 -l '+str(float(lumi)/1000.0)+'0\n\n'
   content += 'python python/GetCombine.py -d '+out_dir+'/ -m '+model+' --mass range\(1600,7000,100\) -b '+box+' --xsec 1e-3 -l '+str(float(lumi)/1000.0)+'\n\n'
   content += 'python python/Plot1DLimit_1718.py -o '+Print+' -d '+out_dir+'/ -m '+model+' -b '+box+' -l '+str(float(lumi)/1000.0)+' --massMin 1000 --massMax 8000 --xsecMin 1e-4 --xsecMax 1e2\n\n'
 
+  print('python python/BinnedFit.py -c config/'+con+' -l '+str(lumi)+' -m '+model+' -s '+signal+' inputs/JetHT_run'+year+'_red_cert_scan.root -b '+box+' -d fits_2019_11/'+fit_dir+' --fit-spectrum\n\n')
+#  os.system('python python/BinnedFit.py -c config/'+con+' -l '+str(lumi)+' -m '+model+' -s '+signal+' inputs/JetHT_run'+year+'_red_cert_scan.root -b '+box+' -d fits_2019_11/'+fit_dir+' --fit-spectrum\n\n')
 
-  print('python python/BinnedFit.py -c config/'+con+' -l '+str(lumi)+' -m '+model+' -s '+signal+' inputs/JetHT_run'+year+'_red_cert_scan.root -b '+box+' -d fits_2019_09/'+fit_dir+' --fit-spectrum\n\n')
-  os.system('python python/BinnedFit.py -c config/'+con+' -l '+str(lumi)+' -m '+model+' -s '+signal+' inputs/JetHT_run'+year+'_red_cert_scan.root -b '+box+' -d fits_2019_09/'+fit_dir+' --fit-spectrum\n\n')
-
-  print('python python/RunCombine_I_btag2018.py -m '+model+' -d '+out_dir+' --mass range\(1600,7000,100\) -c config/'+con+' -i fits_2019_09/'+fit_dir+'/DijetFitResults_'+box+'.root -b '+box+' --rMax 20 --xsec 1e-3 -l '+str(float(lumi)/1000.0)+'0\n\n')
-  os.system('python python/RunCombine_I_btag2018.py -m '+model+' -d '+out_dir+' --mass range\(1600,7000,100\) -c config/'+con+' -i fits_2019_09/'+fit_dir+'/DijetFitResults_'+box+'.root -b '+box+' --rMax 20 --xsec 1e-3 -l '+str(float(lumi)/1000.0)+'0\n\n')
+  print('python python/RunCombine_I_btag2018.py -m '+model+' -d '+out_dir+' --mass range\(1600,7000,100\) -c config/'+con+' -i fits_2019_11/'+fit_dir+'/DijetFitResults_'+box+'.root -b '+box+' --rMax 20 --xsec 1e-3 -l '+str(float(lumi)/1000.0)+'0\n\n')
+#  os.system('python python/RunCombine_I_btag2018.py -m '+model+' -d '+out_dir+' --mass range\(1600,7000,100\) -c config/'+con+' -i fits_2019_11/'+fit_dir+'/DijetFitResults_'+box+'.root -b '+box+' --rMax 20 --xsec 1e-3 -l '+str(float(lumi)/1000.0)+'0\n\n')
 
   print('python python/GetCombine.py -d '+out_dir+'/ -m '+model+' --mass range\(1600,7000,100\) -b '+box+' --xsec 1e-3 -l '+str(float(lumi)/1000.0)+'\n\n')
 #  os.system('python python/GetCombine.py -d '+out_dir+'/ -m '+model+' --mass range\(1600,7000,100\) -b '+box+' --xsec 1e-3 -l '+str(float(lumi)/1000.0)+'\n\n')
@@ -65,4 +64,4 @@ if __name__=='__main__':
   excute_out.close()
 
   os.system('chmod 751 '+box+'.sh')
-  os.system('mv '+box+'.sh /afs/cern.ch/work/z/zhixing/private/CMSSW_7_4_14/src/CMSDIJET/DijetRootTreeAnalyzer/ExucteCommandBox')
+  os.system('mv '+box+'.sh ExcuteCommandBox/')

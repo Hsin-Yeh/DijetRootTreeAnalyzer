@@ -1,6 +1,5 @@
 from ROOT import *
 from optparse import OptionParser
-import bTag_Add
 import os
 
 if __name__=='__main__':
@@ -23,7 +22,7 @@ if __name__=='__main__':
   elif 'DeepJet' in tag:
     tagger = 'DeepJet'
 
-  if model == 'qq':
+  if model == 'qq' or 'DM' in model:
     flavor = 'bb'
   if model == 'qg':
     flavor = 'bg'

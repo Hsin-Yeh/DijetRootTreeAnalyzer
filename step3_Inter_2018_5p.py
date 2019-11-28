@@ -1,18 +1,11 @@
 import os
 
-<<<<<<< HEAD
 tag = 'PFNo70modelDijetYearflavorAlgo' 
-=======
-tag = 'PFNo70DijetYearflavorAlgo'
->>>>>>> fefdb2e706949d9e1c73a96989ee3c57a3f88afa
 
 #L = ['signalHistos_bg_JunInter_For2018Scan_DeepJet','Gaussian_bg_JunInter_For2018Scan_DeepJet','signalHistos_bg_JunInter_For2017Scan_DeepJet','Gaussian_bg_JunInter_For2017Scan_DeepJet','signalHistos_bg_JunInter_For2016Scan_DeepJet','Gaussian_bg_JunInter_For2016Scan_DeepJet'] 
 
 L= ['signalHistos_bg_OctInter_For2018Scan_DeepJet','signalHistos_bg_OctInter_For2016Scan_DeepJet','signalHistos_bg_OctInter_For2017Scan_DeepJet']
-<<<<<<< HEAD
 L=['signalHistos_DMgq0p25_bb_NovInter_For2017Scan_DeepJet','signalHistos_DMgq0p2_bb_NovInter_For2017Scan_DeepJet','signalHistos_DMgq0p25_bb_NovInter_For2016Scan_DeepJet','signalHistos_DMgq0p2_bb_NovInter_For2016Scan_DeepJet','signalHistos_DMgq0p25_bb_NovInter_For2018Scan_DeepJet','signalHistos_DMgq0p2_bb_NovInter_For2018Scan_DeepJet']
-=======
->>>>>>> fefdb2e706949d9e1c73a96989ee3c57a3f88afa
 
 ns = ''#'ns'
 nobtag= ''#'nobtag'
@@ -24,7 +17,6 @@ index = 0
 Total=''
 
 for i in L:
-<<<<<<< HEAD
   if 'DMgq0p25' in i:
     flavor = 'bb'
     model = 'DMgq0p25'
@@ -40,16 +32,6 @@ for i in L:
     if 'Gaussian' in i:
       cata = ['le1b']
   elif 'bb' in i:
-=======
-  if 'bg' in i:
-    flavor = 'bg'
-    model = 'qg'
-    cata = ['1b','2b','0b']
-    if 'Gaussian' in i:
-      cata = ['le1b']
-
-  if 'bb' in i:
->>>>>>> fefdb2e706949d9e1c73a96989ee3c57a3f88afa
     model = 'qq'
     flavor='bb'
     cata = ['Non','le1b','2b']
