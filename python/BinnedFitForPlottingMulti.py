@@ -447,7 +447,12 @@ if __name__ == '__main__':
 
     sideband = convertSideband(fitRegion,w,x)
     plotband = convertSideband(plotRegion,w,x)
-
+    
+    extDijetPdfs = { "dijet"   : w.pdf('extDijetPdf_%s_%s_dijet'%(options.coup,options.cat)),
+                     "expow1"  : w.pdf('extDijetPdf_%s_%s_bkgexpow1'%(options.coup,options.cat)),
+                     "invpow1"  : w.pdf('extDijetPdf_%s_%s_bkginvpow1'%(options.coup,options.cat)),
+                     "invpowlin1"  : w.pdf('extDijetPdf_%s_%s_bkginvpowlin1'%(options.coup,options.cat))
+    }
     extDijetPdf = w.pdf('extDijetPdf_%s_%s'%(options.coup,options.cat))
     print(extDijetPdf)
     #extDijetPdf = w.pdf('DiPhotons_bkg_dijet_unbin')
@@ -511,17 +516,18 @@ if __name__ == '__main__':
                 
             if options.doSpectrumFit:
                 #sideband is Full if full is given to convertSideband
-                fr = binnedFit(extDijetPdf,dataHist,sideband,options.useWeight)
-                #fr = binnedFit(diphotonsPdf,dataHist,sideband,options.useWeight)
-                rootTools.Utils.importToWS(w,fr)     
-                fr.Print('v')
-                fr.Print()
-                fr.covarianceMatrix().Print('v')
-                fr.correlationMatrix().Print('v')
-                corrHist = fr.correlationHist('correlation_matrix')
-                corrHist.Draw('colztext')
-                corrCanvas.Print(options.outDir+'/corrHist.pdf')
-                corrCanvas.Print(options.outDir+'/corrHist.C')
+                for key, value in extDijetPdfs.iteritems():
+                    fr = binnedFit(value,dataHist,sideband,options.useWeight)
+                    #fr = binnedFit(diphotonsPdf,dataHist,sideband,options.useWeight)
+                    rootTools.Utils.importToWS(w,fr)     
+                    fr.Print('v')
+                    fr.Print()
+                    fr.covarianceMatrix().Print('v')
+                    fr.correlationMatrix().Print('v')
+                    corrHist = fr.correlationHist('correlation_matrix')
+                    corrHist.Draw('colztext')
+                    corrCanvas.Print(options.outDir+'/corrHist.pdf')
+                    corrCanvas.Print(options.outDir+'/corrHist.C')
             else:
                 fr = rt.RooFitResult()
                 
@@ -585,6 +591,7 @@ if __name__ == '__main__':
                     d_th1x = convertToTh1xHist(d_rebin)
                     signalHistos.append(d_th1x)        
 
+    '''
     asimov = extDijetPdf.generateBinned(rt.RooArgSet(th1x),rt.RooFit.Name('central'),rt.RooFit.Asimov())
     print(asimov)
         
@@ -621,9 +628,25 @@ if __name__ == '__main__':
         tdirectory.Print('v')
         
     h_th1x = asimov.createHistogram('h_th1x',th1x)
+ 
     h_data_th1x = dataHist_reduce.createHistogram('h_data_th1x',th1x)
     print(h_data_th1x.GetEntries())
+    '''
     
+    rt.TH1D.SetDefaultSumw2()
+    
+    # start writing output
+    rt.gStyle.SetOptStat(0)
+    rt.gStyle.SetOptTitle(0)
+    c = rt.TCanvas('c','c',600,700)
+    rootFile = rt.TFile.Open(options.outDir + '/' + 'Plots_%s'%box + '.root','recreate')
+    tdirectory = rootFile.GetDirectory(options.outDir)
+    if tdirectory==None:
+        print "making directory"
+        rootFile.mkdir(options.outDir)
+        tdirectory = rootFile.GetDirectory(options.outDir)
+        tdirectory.Print('v')
+
     boxLabel = "%s %s Fit" % (box,fitRegion)
     plotLabel = "%s Projection" % (plotRegion)
 
@@ -816,38 +839,46 @@ if __name__ == '__main__':
         tdirectory.cd()
         d.Write()
     '''
+
+    background_pdfs = { "dijet"   : w.pdf('%s_bkg_unbin'%box),
+                        "expow1"  : w.pdf('%s_bkgexpow1_unbin'%box),
+                        "invpow1"  : w.pdf('%s_bkginvpow1_unbin'%box),
+                        "invpowlin1"  : w.pdf('%s_bkginvpowlin1_unbin'%box) }
+
+    backgrounds = {}
     
-    background_pdf = w.pdf('%s_bkg_unbin'%box)
-    print(background_pdf)
+    #background_pdf = w.pdf('%s_bkg_unbin'%box)
+    #print(background_pdf)
     #background= background_pdf.asTF(rt.RooArgList(w.var('th1x')),rt.RooArgList(w.var('p0_%s'%box)))
-    if "dijet" in options.config: 
-        background= background_pdf.asTF(rt.RooArgList(w.var('mgg')),rt.RooArgList(w.var('p0_%s'%box), w.var('p1_%s'%box), w.var('p2_%s'%box)))
-    if "expow1" in options.config: 
-        background= background_pdf.asTF(rt.RooArgList(w.var('mgg')),rt.RooArgList(w.var('p0_%s'%box), w.var('pex1_1_%s'%box), w.var('pex1_2_%s'%box)))
-    if "invpow1" in options.config: 
-        background= background_pdf.asTF(rt.RooArgList(w.var('mgg')),rt.RooArgList(w.var('p0_%s'%box), w.var('pip1_1_%s'%box), w.var('pip1_2_%s'%box)))
-    if "invpowlin1" in options.config: 
-        background= background_pdf.asTF(rt.RooArgList(w.var('mgg')),rt.RooArgList(w.var('p0_%s'%box), w.var('pil1_1_%s'%box), w.var('pil1_2_%s'%box), w.var('pil1_3_%s'%box)))
-    #background= background_pdf.asTF(rt.RooArgList(w.var('mgg')),rt.RooArgList(w.var('p0_%s'%box), w.var('p1_%s'%box), w.var('p2_%s'%box), w.var('p3_%s'%box), w.var('sqrts') ))
-    #background= background_pdf.asTF(rt.RooArgList(w.var('mgg')),rt.RooArgList(w.var('p0_%s'%box) ))
-    print("DO I REACH HERE?")
-    #int_b = background.Integral(w.var('th1x').getMin(),w.var('th1x').getMax())
-    print(w.var('mgg').getMin(),w.var('mgg').getMax())
-    int_b = background.Integral(w.var('mgg').getMin(),w.var('mgg').getMax())
-    #p0_b = w.var('Ntot_%s_bkg'%box).getVal() / (int_b * lumi)
+    for key, value in background_pdfs.iteritems():
+        if "dijet" == key: 
+            backgrounds[key]= value.asTF(rt.RooArgList(w.var('mgg')),rt.RooArgList(w.var('p0_%s'%box), w.var('p1_%s'%box), w.var('p2_%s'%box)))
+        if "expow1" == key: 
+            backgrounds[key]= value.asTF(rt.RooArgList(w.var('mgg')),rt.RooArgList(w.var('pex1_0_%s'%box), w.var('pex1_1_%s'%box), w.var('pex1_2_%s'%box)))
+        if "invpow1" == key: 
+            backgrounds[key]= value.asTF(rt.RooArgList(w.var('mgg')),rt.RooArgList(w.var('pip1_0_%s'%box), w.var('pip1_1_%s'%box), w.var('pip1_2_%s'%box)))
+        if "invpowlin1" == key: 
+            backgrounds[key]= value.asTF(rt.RooArgList(w.var('mgg')),rt.RooArgList(w.var('pil1_0_%s'%box), w.var('pil1_1_%s'%box), w.var('pil1_2_%s'%box), w.var('pil1_3_%s'%box)))
+        #background= background_pdf.asTF(rt.RooArgList(w.var('mgg')),rt.RooArgList(w.var('p0_%s'%box), w.var('p1_%s'%box), w.var('p2_%s'%box), w.var('p3_%s'%box), w.var('sqrts') ))
+        #background= background_pdf.asTF(rt.RooArgList(w.var('mgg')),rt.RooArgList(w.var('p0_%s'%box) ))
+        print("DO I REACH HERE?")
+        #int_b = background.Integral(w.var('th1x').getMin(),w.var('th1x').getMax())
+        print(w.var('mgg').getMin(),w.var('mgg').getMax())
+        int_b = backgrounds[key].Integral(w.var('mgg').getMin(),w.var('mgg').getMax())
+        #p0_b = w.var('Ntot_%s_bkg'%box).getVal() / (int_b * lumi)
 
-    #p0_b =  int_b/w.var('Ntot_%s_bkg'%box).getVal()
-    if "dijet" in options.config:
-        p0_b =  w.var('Ntot_%s_bkg'%(box)).getVal() / int_b
-    else: 
-        p0_b =  w.var('Ntot_%s_bkg%s'%(box,options.config.split("_")[-1].split(".")[-2])).getVal() / int_b
-        print(int_b,p0_b, w.var('Ntot_%s_bkg%s'%(box,options.config.split("_")[-1].split(".")[-2])).getVal() )
+        #p0_b =  int_b/w.var('Ntot_%s_bkg'%box).getVal()
+        if "dijet" == key:
+            p0_b =  w.var('Ntot_%s_bkg'%(box)).getVal() / int_b
+        else: 
+            p0_b =  w.var('Ntot_%s_bkg%s'%(box,key)).getVal() / int_b
+            print(int_b,p0_b, w.var('Ntot_%s_bkg%s'%(box,key)).getVal() )
 
-    #print(int_b,p0_b, w.var('Ntot_%s_bkg'%box).getVal() )
-    #print(int_b,p0_b, w.var('Ntot_%s_bkg%s'%(box,options.config.split("_")[-1].split(".")[-2])).getVal() )
-    #print(background)
+            #print(int_b,p0_b, w.var('Ntot_%s_bkg'%box).getVal() )
+            #print(int_b,p0_b, w.var('Ntot_%s_bkg%s'%(box,options.config.split("_")[-1].split(".")[-2])).getVal() )
+            #print(background)
 
-    background.SetParameter(0,p0_b)
+        backgrounds[key].SetParameter(0,p0_b)
     
     g_data = rt.TGraphAsymmErrors(myRebinnedTH1)
     
@@ -884,13 +915,19 @@ if __name__ == '__main__':
             g_data.SetPointEYhigh(i, 0)
             g_data.SetPoint(i, g_data.GetX()[i], 0)
             print("AM I IN HERE?")
-            
-    h_background = convertFunctionToHisto(background,"h_background",len(x)-1,x)
+
+
+    h_backgrounds = {}
+    
+    for key, value in backgrounds.iteritems():
+        h_backgrounds[key] = convertFunctionToHisto(value,"h_background",len(x)-1,x)
+
     #i have data 
     #h_th1x.Scale(1.0/lumi)
     #h_background = convertToMjjHist(h_th1x,x)
     h_fit_residual_vs_mass = rt.TH1D("h_fit_residual_vs_mass","h_fit_residual_vs_mass",len(x)-1,x)
-    list_chi2AndNdf_background = calculateChi2AndFillResiduals(g_data,h_background,h_fit_residual_vs_mass,w,0)
+    #will only plot the residuals with respect to the nominal function
+    list_chi2AndNdf_background = calculateChi2AndFillResiduals(g_data,h_backgrounds["dijet"],h_fit_residual_vs_mass,w,0)
 
     g_data.SetMarkerStyle(20)
     g_data.SetMarkerSize(0.9)
@@ -979,7 +1016,14 @@ if __name__ == '__main__':
     myRebinnedDensityTH1.Draw("axis")
     
     if options.doTriggerFit or options.doSimultaneousFit or options.doSpectrumFit or options.noFit:
-        background.Draw("csame")
+        backgrounds["dijet"].SetLineColor(rt.kBlack)
+        backgrounds["dijet"].Draw("csame")
+        backgrounds["expow1"].SetLineColor(rt.kRed)
+        backgrounds["expow1"].Draw("csame")
+        backgrounds["invpow1"].SetLineColor(rt.kGreen)
+        backgrounds["invpow1"].Draw("csame")
+        backgrounds["invpowlin1"].SetLineColor(rt.kBlue)
+        backgrounds["invpowlin1"].Draw("csame")
     else:
         h_background.SetLineColor(rt.kRed)
         h_background.SetLineWidth(2)
@@ -1053,14 +1097,19 @@ if __name__ == '__main__':
         else:
             leg = rt.TLegend(0.58,0.55,0.85,0.87)
     else:        
-        leg = rt.TLegend(0.7,0.7,0.89,0.89)
+        leg = rt.TLegend(0.6,0.6,0.89,0.89)
     leg.SetTextFont(42)
     leg.SetFillColor(rt.kWhite)
     leg.SetFillStyle(0)
     leg.SetLineWidth(0)
     leg.SetLineColor(rt.kWhite)
     leg.AddEntry(g_data,"Data","pe")
-    leg.AddEntry(background,"Fit","l")
+    modelforms = {"dijet"      : "x^{p_{1}+p_{2}*log(x)}",
+                  "expow1"     : "e^{p_{1} x} x^{p_{2}}",
+                  "invpow1"    : "(1+x*p_{1})^{p_{2}}",
+                  "invpowlin1" : "(1+x*p_{1})^{p_{2}+p_{3}*x}"}
+    for key, value in backgrounds.iteritems():
+        leg.AddEntry(value,"%s: %s "%(key, modelforms[key]),"l")
     for model, mass, xsec, signalFileName, g_signal in zip(models,masses,xsecs,signalFileNames, g_signals):
         if 'PF' in box:
             leg.AddEntry(g_signal,"%s (%.1f TeV)"%(model,float(mass)/1000.),"l")
@@ -1075,7 +1124,7 @@ if __name__ == '__main__':
     #background.Draw("csame")
     #g_data.Draw("pezsame")
 
-    pave_sel = rt.TPaveText(0.2,0.03,0.5,0.32,"NDC")
+    pave_sel = rt.TPaveText(0.2,0.03,0.5,0.25,"NDC")
     #pave_sel = rt.TPaveText(0.2,0.03,0.5,0.22,"NDC")
     pave_sel.SetFillColor(0)
     pave_sel.SetBorderSize(0)
@@ -1103,7 +1152,7 @@ if __name__ == '__main__':
         theform = "x^{p_{1}+p_{2}*log(x)}*(1.-x*p_{3})^{p_{4}}"
         theformname = "moddijet"
 
-    pave_sel.AddText("%s : %s" %(theformname, theform) )
+    #pave_sel.AddText("%s : %s" %(theformname, theform) )
     pave_sel.AddText("#chi^{{2}} / NDF = {0:.1f} / {1:d} = {2:.1f}".format(
                           list_chi2AndNdf_background[4], list_chi2AndNdf_background[5],
                           list_chi2AndNdf_background[4]/list_chi2AndNdf_background[5]))
@@ -1120,7 +1169,7 @@ if __name__ == '__main__':
             plabel = "#frac{#Gamma}{m} = 5.6 #times 10^{-2}"
 
         #pave_sel.AddText("DiPhotons")
-        pave_sel.AddText(plabel)
+        #pave_sel.AddText(plabel)
         if w.var('mgg').getMax() > 2037:
             #pave_sel.AddText("%.1f < m_{jj} < %.1f TeV"%(w.var('mjj').getMin('Low')/1000.,w.var('mjj').getMax('High')/1000.))
             #BLIND
@@ -1180,7 +1229,16 @@ if __name__ == '__main__':
     '''
     
     if options.doTriggerFit or options.doSimultaneousFit or options.doSpectrumFit or options.noFit:
-        background.Draw("csame")
+        backgrounds["dijet"].SetLineColor(rt.kBlack)
+        backgrounds["dijet"].Draw("csame")
+        backgrounds["expow1"].SetLineColor(rt.kRed)
+        backgrounds["expow1"].Draw("csame")
+        backgrounds["invpow1"].SetLineColor(rt.kGreen)
+        backgrounds["invpow1"].Draw("csame")
+        backgrounds["invpowlin1"].SetLineColor(rt.kBlue)
+        backgrounds["invpowlin1"].Draw("csame")
+
+        #background.Draw("csame")
     else:
         h_background.SetLineColor(rt.kRed)
         h_background.SetLineWidth(2)
