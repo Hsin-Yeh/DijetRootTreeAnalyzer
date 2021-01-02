@@ -50,6 +50,7 @@ H  = H_ref
 
 iPeriod = 0
 
+
 # references for T, B, L, R
 T = 0.08*H_ref
 B = 0.12*H_ref 
@@ -132,7 +133,7 @@ if __name__ == '__main__':
         histos.append(h_mgg_varbins)
 
         #Now to the interpolated shape
-        tfileRes = rt.TFile("/afs/cern.ch/work/a/apsallid/CMS/Hgg/exodiphotons/seconditeration/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/ResonanceShapes_InputShapes_%s_%s_%s.root" %(title,options.cat,year) , "read")
+        tfileRes = rt.TFile("/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/DijetShapeInterpolator/ResonanceShapes_InputShapes_%s_%s_%s.root" %(title,options.cat,year) , "read")
         tfileRes.cd()
 
         #tfileRes.Print()
