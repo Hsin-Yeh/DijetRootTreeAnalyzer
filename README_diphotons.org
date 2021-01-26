@@ -1,6 +1,6 @@
 #+TITLE: README_diphotons
 #+Author: Andreas
-#+Description: Starting from dijet analysis
+Starting from dijet analysis
 
 * ADD Signals
 *** Norm
@@ -62,35 +62,6 @@ python python/AddSignalShapes.py -t nom -d output ${files_RS_001_2017} ${files_R
 
 #+end_src
 
-
-
-#=======================================================
-#RS
-for year in {2017,2018}; do echo $year; for coup in {"kMpl001","kMpl01","kMpl02"}; do echo $coup; files_RS=`ls /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/input/trees/RSGravitonToGammaGamma_${coup}*${year}*.root`; python python/AddSignalShapes.py -t nom -d output -c EBEB ${files_RS}; python python/AddSignalShapes.py -t nom -d output -c EBEE ${files_RS}; done; done;
-
-#=======================================================
-#GluGlu
-for year in {2017,2018}; do echo $year; for coup in {"0p014","1p4","5p6"}; do echo $coup; files_GluGlu=`ls /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/input/trees/GluGluSpin0ToGammaGamma_W_${coup}*${year}*.root`; python python/AddSignalShapes.py -t nom -d output -c EBEB ${files_GluGlu}; python python/AddSignalShapes.py -t nom -d output -c EBEE ${files_GluGlu}; done; done;
-
-#=======================================================
-#=======================================================
-#Systematics 
-"energyScaleStatUp","energyScaleSystUp","energyScaleGainUp","energySigmaUp",
-"energyScaleStatDown","energyScaleSystDown","energyScaleGainDown","energySigmaDown" 
-
-#RS
-for year in {2017,2018}; do echo $year; for coup in {"kMpl001","kMpl01","kMpl02"}; do echo $coup; files_RS=`ls /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/input/trees/RSGravitonToGammaGamma_${coup}*${year}*.root`; for syst in {"energyScaleStatUp","energyScaleSystUp","energyScaleGainUp","energySigmaUp","energyScaleStatDown","energyScaleSystDown","energyScaleGainDown","energySigmaDown"}; do echo ${syst}; python python/AddSignalShapes.py -t systematics -s ${syst} -d output -c EBEB ${files_RS}; python python/AddSignalShapes.py -t systematics -s ${syst} -d output -c EBEE ${files_RS}; done; done; done;
-
-#GluGlu
-for year in {2017,2018}; do echo $year; for coup in {"0p014","1p4","5p6"}; do echo $coup; files_GluGlu=`ls /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/input/trees/GluGluSpin0ToGammaGamma_W_${coup}*${year}*.root`;for syst in {"energyScaleStatUp","energyScaleSystUp","energyScaleGainUp","energySigmaUp","energyScaleStatDown","energyScaleSystDown","energyScaleGainDown","energySigmaDown"}; do echo ${syst}; python python/AddSignalShapes.py -t systematics -s ${syst} -d output -c EBEB ${files_GluGlu}; python python/AddSignalShapes.py -t systematics -s ${syst} -d output -c EBEE ${files_GluGlu}; done; done; done;
-
-#=======================================================
-#=======================================================
-#For data
-for year in {2017,2018}; do echo $year; python python/AddDataSamples.py -t nom -d output -c EBEB /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/input/trees/data_${year}.root; python python/AddDataSamples.py -t nom -d output -c EBEE /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/input/trees/data_${year}.root; done;
-
-#=======================================================
-
 * Save Normalization <<<--- DON'T USE THAT NO MORE.
 #=======================================================
 The signal samples trees and the initial histos that are input to the interpolation package are 
@@ -149,7 +120,7 @@ for file in ${filesToExtractGluGlu};
 do echo ${file}; coup=`echo ${file} | cut -d'_' -f 4`; echo $coup; filename=`echo ${file} | cut -d'.' -f 1`; ./getResonanceShapes.py -i inputs/${filename}.py -c ${coup} -f gg --massrange 500 10000 100 -o ResonanceShapes_${filename}.root; done;
 
 #Below an example when debugging
-#./getResonanceShapes.py -i inputs/InputShapes_GluGluSpin0ToGammaGamma_W_1p4_EBEB_2017.py -c kMpl001 -f gg --massrange 500 10000 100 -o ResonanceShapes_GluGluSpin0ToGammaGamma_W_1p4_EBEB_2017.root
+./getResonanceShapes.py -i inputs/InputShapes_GluGluSpin0ToGammaGamma_W_1p4_EBEB_2017.py -c kMpl001 -f gg --massrange 500 10000 100 -o ResonanceShapes_GluGluSpin0ToGammaGamma_W_1p4_EBEB_2017.root
 
 #+end_src
 
@@ -192,18 +163,19 @@ done; done;
 #+end_src
 
 * Background model TODO
+
 #+begin_src bash
 
-#+end_src
 You should create the config file. For the number of bins do :
 
 python python/BinningDiPhotons.py -m 500
 
-#below is for equal width bins. 
+#below is for equal width bins.
 #seq 500 5 6000 > tt
 #sed ':a;N;$!ba;s/\n/,/g' tt
 
-#BLIND with adding --plot-region Low 
+
+#BLIND with adding --plot-region Low
 #kMpl001
 python python/BinnedFit.py -c config/diphotons.config -l 41527 -b DiPhotons_kMpl001_EBEB -d test_directory --fit-spectrum --plot-region Low --coup kMpl001 --cat EBEB --year 2017 output/InputShapes_data_EBEB_2017.root
 
@@ -222,39 +194,41 @@ python python/BinnedFit.py -c config/diphotons_kMpl02.config -l 41527 -b DiPhoto
 # NOMINAL MODEL: dijet
 
 #All at once
-#2016 Lumi 35900 
+#2016 Lumi 35900
 for coup in {"kMpl001","kMpl01","kMpl02"}; do echo $coup; for cat in {"EBEB","EBEE"}; do echo $cat; python python/BinnedFit.py -c config/diphotons_dijet.config -l 35900 -b DiPhotons_${coup}_${cat} -d test_directory --fit-spectrum --plot-region Low --coup $coup --cat $cat --year 2016 output/InputShapes_data_${cat}_2016.root; done; done;
 
-#2017 Lumi 41527 
+#2017 Lumi 41527
 for coup in {"kMpl001","kMpl01","kMpl02"}; do echo $coup; for cat in {"EBEB","EBEE"}; do echo $cat; python python/BinnedFit.py -c config/diphotons_dijet.config -l 41527 -b DiPhotons_${coup}_${cat} -d test_directory --fit-spectrum --plot-region Low --coup $coup --cat $cat --year 2017 output/InputShapes_data_${cat}_2017.root; done; done;
 
-#2018 Lumi 59670 
+#2018 Lumi 59670
 for coup in {"kMpl001","kMpl01","kMpl02"}; do echo $coup; for cat in {"EBEB","EBEE"}; do echo $cat; python python/BinnedFit.py -c config/diphotons_dijet.config -l 59670 -b DiPhotons_${coup}_${cat} -d test_directory --fit-spectrum --plot-region Low --coup $coup --cat $cat --year 2018 output/InputShapes_data_${cat}_2018.root; done; done;
 
+
+
 #-------------------------------------------------------
-Plot all models together - Not all couplings needed but OK run on all. 
+Plot all models together - Not all couplings needed but OK run on all.
 
 mkdir -p AllBkgModels/blind
 
-#BLIND with adding --plot-region Low 
-#2016 Lumi 35900 
+#BLIND with adding --plot-region Low
+#2016 Lumi 35900
 for coup in {"kMpl001","kMpl01","kMpl02"}; do echo $coup; for cat in {"EBEB","EBEE"}; do echo $cat; python python/BinnedFitForPlottingMulti.py -c config/diphotons_multiplot.config -l 35900 -b DiPhotons_${coup}_${cat} -d AllBkgModels/blind --fit-spectrum --plot-region Low --coup $coup --cat $cat --year 2016 output/InputShapes_data_${cat}_2016.root; done; done;
 
-#2017 Lumi 41527 
+#2017 Lumi 41527
 for coup in {"kMpl001","kMpl01","kMpl02"}; do echo $coup; for cat in {"EBEB","EBEE"}; do echo $cat; python python/BinnedFitForPlottingMulti.py -c config/diphotons_multiplot.config -l 41527 -b DiPhotons_${coup}_${cat} -d AllBkgModels/blind --fit-spectrum --plot-region Low --coup $coup --cat $cat --year 2017 output/InputShapes_data_${cat}_2017.root; done; done;
 
-#2018 Lumi 59670 
+#2018 Lumi 59670
 for coup in {"kMpl001","kMpl01","kMpl02"}; do echo $coup; for cat in {"EBEB","EBEE"}; do echo $cat; python python/BinnedFitForPlottingMulti.py -c config/diphotons_multiplot.config -l 59670 -b DiPhotons_${coup}_${cat} -d AllBkgModels/blind --fit-spectrum --plot-region Low --coup $coup --cat $cat --year 2018 output/InputShapes_data_${cat}_2018.root; done; done;
 
 mkdir -p AllBkgModels/unblind
-#UNBLIND removing --plot-region Low 
-#2016 Lumi 35900 
+#UNBLIND removing --plot-region Low
+#2016 Lumi 35900
 for coup in {"kMpl001","kMpl01","kMpl02"}; do echo $coup; for cat in {"EBEB","EBEE"}; do echo $cat; python python/BinnedFitForPlottingMulti.py -c config/diphotons_multiplot.config -l 35900 -b DiPhotons_${coup}_${cat} -d AllBkgModels/unblind --fit-spectrum --coup $coup --cat $cat --year 2016 output/InputShapes_data_${cat}_2016.root; done; done;
 
-#2017 Lumi 41527 
+#2017 Lumi 41527
 for coup in {"kMpl001","kMpl01","kMpl02"}; do echo $coup; for cat in {"EBEB","EBEE"}; do echo $cat; python python/BinnedFitForPlottingMulti.py -c config/diphotons_multiplot.config -l 41527 -b DiPhotons_${coup}_${cat} -d AllBkgModels/unblind --fit-spectrum --coup $coup --cat $cat --year 2017 output/InputShapes_data_${cat}_2017.root; done; done;
 
-#2018 Lumi 59670 
+#2018 Lumi 59670
 for coup in {"kMpl001","kMpl01","kMpl02"}; do echo $coup; for cat in {"EBEB","EBEE"}; do echo $cat; python python/BinnedFitForPlottingMulti.py -c config/diphotons_multiplot.config -l 59670 -b DiPhotons_${coup}_${cat} -d AllBkgModels/unblind --fit-spectrum --coup $coup --cat $cat --year 2018 output/InputShapes_data_${cat}_2018.root; done; done;
 
 #----------------------
@@ -262,6 +236,11 @@ for coup in {"kMpl001","kMpl01","kMpl02"}; do echo $coup; for cat in {"EBEB","EB
 #kMpl001
 python python/BinnedFitForPlottingMulti.py -c config/diphotons_multiplot.config -l 41527 -b DiPhotons_kMpl001_EBEB -d test_directory --fit-spectrum --plot-region Low --coup kMpl001 --cat EBEB --year 2017 output/InputShapes_data_EBEB_2017.root
 #----------------------
+
+#+end_src
+
+
+
 
 
 #=======================================================

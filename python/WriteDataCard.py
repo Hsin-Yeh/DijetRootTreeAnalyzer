@@ -8,7 +8,7 @@ import sys
 import pandas as pd
 
 def getNormalization():    
-    norm = pd.read_csv('/afs/cern.ch/work/a/apsallid/CMS/Hgg/exodiphotons/seconditeration/CMSSW_10_2_13/src/diphoton-analysis/SignalNorm.txt', sep=" ", header=None)
+    norm = pd.read_csv('/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/SignalNorm.txt', sep=" ", header=None)
     norm.columns = ["Year", "Coupling", "MassPoint", "Category", "Norm"]
     norm.Year = norm.Year.astype(str)
     norm.Coupling = norm.Coupling.astype(str)
