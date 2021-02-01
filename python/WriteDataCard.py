@@ -596,7 +596,7 @@ if __name__ == '__main__':
         if wIn.obj("fitresult_extDijetPdf_data_obs") != None:
             frIn = wIn.obj("fitresult_extDijetPdf_data_obs")
         elif wIn.obj("nll_extDijetPdf_%s_dijet_data_obs"% box.split("DiPhotons_")[1] ) != None:
-            frIn = wIn.obj("nll_extDijetPdf_%s_dijet_data_obs"% box.split("DiPhotons_")[1])
+            frIn = wIn.obj("nll_extDijetPdf_%s_dijet_data_obs"% box.split("DiPhotons_")[1])  #FIXME I add "_dijet to the original name"
         elif wIn.obj("fitresult_extDijetPdf_data_obs_with_constr") != None:
             fr = wIn.obj("fitresult_extDijetPdf_data_obs_with_constr")
         elif wIn.obj("nll_extDijetPdf_data_obs_with_constr") != None:
