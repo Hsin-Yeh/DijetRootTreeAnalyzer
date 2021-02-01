@@ -20,7 +20,7 @@ setenv cats "EBEB EBEE"
 setenv insigname "grav"
 
 # Years 
-setenv years "2018"
+setenv years "2017"
 #setenv years "2018"
 
 setenv musinjected `seq 1 1`
