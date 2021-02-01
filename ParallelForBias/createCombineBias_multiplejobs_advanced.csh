@@ -43,7 +43,7 @@ echo "------------------------"
 echo "Year ${year}"
 
 # in/out
-setenv inoutpath "/afs/cern.ch/work/a/apsallid/CMS/Hgg/exodiphotons/seconditeration/CMSSW_10_2_13/src/diphoton-analysis/output/${year}/combine_bias/${insigname}/${combmode}"
+setenv inoutpath "/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/output/${year}/combine_bias/${insigname}/${combmode}"
 
 # Coupling now
 foreach coup ($couplings)

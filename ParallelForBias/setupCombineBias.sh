@@ -19,7 +19,7 @@ THECAT=${14}
 THELUMI=${15}
 CURRENTTOY=${16}
 
-export mainpath="/afs/cern.ch/work/a/apsallid/CMS/Hgg/exodiphotons/seconditeration/CMSSW_10_2_13/src/diphoton-analysis/CMSDIJET/DijetRootTreeAnalyzer"
+export mainpath="/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/CMSDIJET/DijetRootTreeAnalyzer"
 
 cd ${mainpath}
 eval `scramv1 runtime -sh`

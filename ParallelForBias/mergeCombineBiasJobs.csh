@@ -1,6 +1,6 @@
 #!/bin/tcsh
 
-cd /afs/cern.ch/work/a/apsallid/CMS/Hgg/exodiphotons/seconditeration/CMSSW_10_2_13/src/diphoton-analysis
+cd /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis
 eval `scramv1 runtime -csh`
 cd -
 
@@ -36,7 +36,7 @@ echo "------------------------"
 echo "Year ${year}"
 
 # in/out
-setenv finalout "/afs/cern.ch/work/a/apsallid/CMS/Hgg/exodiphotons/seconditeration/CMSSW_10_2_13/src/diphoton-analysis/output/${year}/combine_bias/finaloutput"
+setenv finalout "/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/output/${year}/combine_bias/finaloutput"
 
 rm -rf ${finalout}
 mkdir ${finalout}
@@ -67,7 +67,7 @@ echo "------------------------"
 echo "Mass ${mass}"
 
 #This is where is the input from the jobs
-setenv input "/afs/cern.ch/work/a/apsallid/CMS/Hgg/exodiphotons/seconditeration/CMSSW_10_2_13/src/diphoton-analysis/output/${year}/combine_bias/${insigname}/${combmode}/${coup}/${cat}/mu${muin}/${model}/mass${mass}"
+setenv input "/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/output/${year}/combine_bias/${insigname}/${combmode}/${coup}/${cat}/mu${muin}/${model}/mass${mass}"
 
 echo "Merging ${input}"
 hadd -f ${finalout}/tree_${combmode}_${insigname}_mu${muin}_${coup}_${cat}_${model}_mass${mass}.root ${input}/fitDiagnostics_${insigname}_mu${muin}_${coup}_${cat}_${model}_${mass}_*.root
