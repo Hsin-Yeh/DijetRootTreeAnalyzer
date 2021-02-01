@@ -20,9 +20,9 @@ setenv cats "EBEB EBEE"
 setenv insigname "grav"
 
 # Years 
-setenv years "2016"
-setenv lumi "35.9"
-#setenv lumi "41.527"
+setenv years "2017"
+# setenv lumi "35.9"
+setenv lumi "41.527"
 #setenv lumi "59.670"
 
 setenv musinjected `seq 1 1`
