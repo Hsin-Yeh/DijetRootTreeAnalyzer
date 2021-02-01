@@ -167,7 +167,7 @@ if __name__ == '__main__':
     #    freezeStringFit += ',pmd1_1_%s,pmd1_2_%s,pmd1_3_%s,pmd1_4_%s' % (box,box,box,box)
     
     for massPoint in massIterable(options.mass):        
-        exec_me('python python/WriteDataCard.py -m %s --year %s --mass %s %s -i %s -l %f -c %s -b %s -d %s %s %s --multi'%(model, options.year, massPoint,backgroundDsName[box], options.inputFitFile,1000*lumi,options.config,box,options.outDir, signalDsName,signalSys),options.dryRun)
+        exec_me('python python/WriteDataCard.py -m %s --year %s --mass %s %s -i %s -l %f -c %s -b %s -d %s %s %s'%(model, options.year, massPoint,backgroundDsName[box], options.inputFitFile,1000*lumi,options.config,box,options.outDir, signalDsName,signalSys),options.dryRun) #FIXME I removed --multi option
         exec_me('combine -M GenerateOnly %s/diphoton_combine_%i_%s_%s.txt -n %s_r-%.3f_%s_%s_%s_%s %s %s %s --bypassFrequentistFit --seed -1 --saveToys --expectSignal %.3f -t %i'%(options.outDir,int(massPoint),box,options.year,int(massPoint),rDict[int(massPoint)],box,options.genPdf,options.fitPdf,options.year,rRangeString,fixStringGen,freezeStringGen,rDict[int(massPoint)],options.toys),options.dryRun)
 
         toysfile = glob.glob('./higgsCombine%s_r-%.3f_%s_%s_%s_%s.GenerateOnly.mH*.root' %(int(massPoint),rDict[int(massPoint)],box,options.genPdf,options.fitPdf,options.year))
