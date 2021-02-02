@@ -33,7 +33,7 @@ cp -r ${mainpath}/config .
 cp -r ${mainpath}/output .
 cp -r ${mainpath}/bkgAltModels .
 
-time python python/RunBias.py -c config/diphotons_bias_${THEYEAR}.config -i bkgAltModels/${THEMODEL}/blind/FitResults_DiPhotons_${THECOUP}_${THECAT}_${THEYEAR}.root -b DiPhotons_${THECOUP}_${THECAT} --mass ${THEMASS} -m gg -d signal_bias -r${THEMUIN} -l ${THELUMI} --year ${THEYEAR} -t ${THENTOYS} --gen-pdf ${THEMODEL} --fit-pdf ${THENOMINALMODEL} 
+time python python/RunBias.py -c config/diphotons_bias_${THEYEAR}.config -i bkgAltModels/${THEMODEL}/blind/FitResults_DiPhotons_${THECOUP}_${THECAT}_${THEYEAR}.root -b DiPhotons_${THECOUP}_${THECAT} --mass ${THEMASS} -m gg -d signal_bias -r ${THEMUIN} -l ${THELUMI} --year ${THEYEAR} -t ${THENTOYS} --gen-pdf ${THEMODEL} --fit-pdf ${THENOMINALMODEL}
 
 outfile=`ls fitDiagnostics*|grep ${THECOUP}|grep ${THEMODEL}|grep ${THENOMINALMODEL}|grep .root`
 
