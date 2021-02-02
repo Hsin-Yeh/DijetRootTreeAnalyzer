@@ -10,8 +10,8 @@ setenv models "dijet expow1 invpow1 invpowlin1"
 #setenv masses `seq 600 100 5000`
 setenv masses "600 700 800 900 1000 1100 1200 1500 1800 2100 2400 2700 3000 3500 4000 4500 5000 5500 6000"
 
-setenv couplings "kMpl001 kMpl01 kMpl02 0p014 1p4 5p6"
-#setenv couplings "kMpl001 kMpl01 kMpl02"
+# setenv couplings "kMpl001 kMpl01 kMpl02 0p014 1p4 5p6"
+setenv couplings "kMpl001 kMpl01 kMpl02"
 #setenv couplings "0p014 1p4 5p6"
 
 setenv cats "EBEB EBEE"

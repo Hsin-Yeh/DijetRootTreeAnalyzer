@@ -25,9 +25,9 @@ setenv years "2017"
 setenv lumi "41.527"
 #setenv lumi "59.670"
 
-setenv musinjected `seq 1 1`
+# setenv musinjected `seq 1 1`
 #setenv musinjected "5 10 15"
-#setenv musinjected `seq 1 3`
+setenv musinjected `seq 1 3`
 #setenv musinjected `seq 1 1`
 setenv ntoys 1000
 setenv theseed 397
