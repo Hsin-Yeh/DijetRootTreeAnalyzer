@@ -5,7 +5,7 @@ from framework import Config
 from array import *
 from itertools import *
 from operator import *
-from WriteDataCard import initializeWorkspace,convertToTh1xHist,convertToMjjHist,applyTurnonFunc,applyTurnonGraph
+from WriteDataCard_test import initializeWorkspace,convertToTh1xHist,convertToMjjHist,applyTurnonFunc,applyTurnonGraph
 import os
 import random
 import sys

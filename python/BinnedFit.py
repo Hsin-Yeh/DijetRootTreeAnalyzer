@@ -129,7 +129,7 @@ def convertFunctionToHisto(background_,name_,N_massBins_,massBins_):
 def calculateChi2AndFillResiduals(data_obs_TGraph_,background_hist_,hist_fit_residual_vsMass_,workspace_,prinToScreen_=0,effFit_=False):
     
     N_massBins_ = data_obs_TGraph_.GetN()
-    print(N_massBins_)
+    # print(N_massBins_)
     MinNumEvents = 10
     nParFit = 2
     if workspace_.var('meff_%s'%box).getVal()>0 and workspace_.var('seff_%s'%box).getVal()>0 :
@@ -165,9 +165,9 @@ def calculateChi2AndFillResiduals(data_obs_TGraph_,background_hist_,hist_fit_res
         binWidth_current = xbinHigh - xbinLow
         #value_fit = background_.Integral(xbinLow , xbinHigh) / binWidth_current
         value_fit = background_hist_.GetBinContent(bin+1)
-        print(value_data,err_low_data,err_high_data)
-        print(xbinCenter,xbinLow,xbinHigh,binWidth_current)
-        print(value_fit)
+        # print(value_data,err_low_data,err_high_data)
+        # print(xbinCenter,xbinLow,xbinHigh,binWidth_current)
+        # print(value_fit)
         
         ## Fit residuals
         err_tot_data = 0
@@ -283,7 +283,7 @@ if __name__ == '__main__':
     rt.gStyle.SetPaintTextFormat('+.2f')
 
     (options,args) = parser.parse_args()
-    
+
     cfg = Config.Config(options.config)
     
     box = options.box
@@ -327,7 +327,7 @@ if __name__ == '__main__':
 
     paramNames, bkgs = initializeWorkspace(w,cfg,box,multi=options.multi)
     print(paramNames, bkgs)
-        
+
     if options.inputFitFile is not None:
         inputRootFile = rt.TFile.Open(options.inputFitFile,"r")
         wIn = inputRootFile.Get("w"+box).Clone("wIn"+box)            
@@ -603,8 +603,8 @@ if __name__ == '__main__':
         predYield = asimov.weight(rt.RooArgSet(th1x))
         dataYield = dataHist_reduce.weight(rt.RooArgSet(th1x))
         rss += float(predYield-dataYield) * float(predYield-dataYield)
-        print "%i <= mgg < %i; prediction: %.2f; data %i"  % (x[i],x[i+1],predYield,dataYield)
-    print "RSS = ", rss 
+        # print "%i <= mgg < %i; prediction: %.2f; data %i"  % (x[i],x[i+1],predYield,dataYield)
+    # print "RSS = ", rss
         
     rt.TH1D.SetDefaultSumw2()
     
@@ -819,6 +819,7 @@ if __name__ == '__main__':
     
     background_pdf = w.pdf('%s_bkg_unbin'%box)
     print(background_pdf)
+    print(options.config)
     #background= background_pdf.asTF(rt.RooArgList(w.var('th1x')),rt.RooArgList(w.var('p0_%s'%box)))
     if "dijet" in options.config: 
         background= background_pdf.asTF(rt.RooArgList(w.var('mgg')),rt.RooArgList(w.var('p0_%s'%box), w.var('p1_%s'%box), w.var('p2_%s'%box)))
@@ -830,9 +831,9 @@ if __name__ == '__main__':
         background= background_pdf.asTF(rt.RooArgList(w.var('mgg')),rt.RooArgList(w.var('p0_%s'%box), w.var('pil1_1_%s'%box), w.var('pil1_2_%s'%box), w.var('pil1_3_%s'%box)))
     #background= background_pdf.asTF(rt.RooArgList(w.var('mgg')),rt.RooArgList(w.var('p0_%s'%box), w.var('p1_%s'%box), w.var('p2_%s'%box), w.var('p3_%s'%box), w.var('sqrts') ))
     #background= background_pdf.asTF(rt.RooArgList(w.var('mgg')),rt.RooArgList(w.var('p0_%s'%box) ))
-    print("DO I REACH HERE?")
+    # print("DO I REACH HERE?")
     #int_b = background.Integral(w.var('th1x').getMin(),w.var('th1x').getMax())
-    print(w.var('mgg').getMin(),w.var('mgg').getMax())
+    # print(w.var('mgg').getMin(),w.var('mgg').getMax())
     int_b = background.Integral(w.var('mgg').getMin(),w.var('mgg').getMax())
     #p0_b = w.var('Ntot_%s_bkg'%box).getVal() / (int_b * lumi)
 
@@ -841,7 +842,7 @@ if __name__ == '__main__':
         p0_b =  w.var('Ntot_%s_bkg'%(box)).getVal() / int_b
     else: 
         p0_b =  w.var('Ntot_%s_bkg%s'%(box,options.config.split("_")[-1].split(".")[-2])).getVal() / int_b
-        print(int_b,p0_b, w.var('Ntot_%s_bkg%s'%(box,options.config.split("_")[-1].split(".")[-2])).getVal() )
+        # print(int_b,p0_b, w.var('Ntot_%s_bkg%s'%(box,options.config.split("_")[-1].split(".")[-2])).getVal() )
 
     #print(int_b,p0_b, w.var('Ntot_%s_bkg'%box).getVal() )
     #print(int_b,p0_b, w.var('Ntot_%s_bkg%s'%(box,options.config.split("_")[-1].split(".")[-2])).getVal() )
@@ -854,9 +855,9 @@ if __name__ == '__main__':
     alpha = 1-0.6827
     for i in range(0,g_data.GetN()):
         N = g_data.GetY()[i]
-        print(N)
+        # print(N)
         binWidth = g_data.GetEXlow()[i] + g_data.GetEXhigh()[i]
-        print(binWidth)
+        # print(binWidth)
         L = 0
         if N!=0:
             L = rt.Math.gamma_quantile(alpha/2,N,1.)
@@ -872,18 +873,18 @@ if __name__ == '__main__':
         g_data.SetPointEYhigh(i, (U-N)/(binWidth ))
         g_data.SetPoint(i, g_data.GetX()[i], N/(binWidth ))
 
-        #print(i, g_data.GetX()[i], N/(binWidth * lumi) )
-        print(i, g_data.GetX()[i] )
+        # #print(i, g_data.GetX()[i], N/(binWidth * lumi) )
+        # print(i, g_data.GetX()[i] )
 
 
         plotRegions = plotRegion.split(',')
-        print(plotRegions)
+        # print(plotRegions)
         checkInRegions = [g_data.GetX()[i]>w.var('mgg').getMin(reg) and g_data.GetX()[i]<w.var('mgg').getMax(reg) for reg in plotRegions]
         if not any(checkInRegions):
             g_data.SetPointEYlow(i, 0)
             g_data.SetPointEYhigh(i, 0)
             g_data.SetPoint(i, g_data.GetX()[i], 0)
-            print("AM I IN HERE?")
+            # print("AM I IN HERE?")
             
     h_background = convertFunctionToHisto(background,"h_background",len(x)-1,x)
     #i have data 
@@ -1413,12 +1414,13 @@ if __name__ == '__main__':
         
     #c.RedrawAxis() # request from David
    
-    if not options.linearX:
-        c.Print(options.outDir+"/fit_mgg_%s_%s_%s.pdf"%(fitRegion.replace(',','_'),box,options.year))
+    # if not options.linearX:
+    #     c.Print(options.outDir+"/fit_mgg_%s_%s_%s.pdf"%(fitRegion.replace(',','_'),box,options.year))
+    #     c.Print(options.outDir+"/fit_mgg_%s_%s_%s.png"%(fitRegion.replace(',','_'),box,options.year))
         #c.Print(options.outDir+"/fit_mgg_%s_%s_%s_%s.C"%(fitRegion.replace(',','_'),box,options.coup,options.year))
-    else:
-        c.Print(options.outDir+"/fit_mgg_%s_%s_linearX.pdf"%(fitRegion.replace(',','_'),box))
-        c.Print(options.outDir+"/fit_mgg_%s_%s_linearX.C"%(fitRegion.replace(',','_'),box))
+    # else:
+        # c.Print(options.outDir+"/fit_mgg_%s_%s_linearX.pdf"%(fitRegion.replace(',','_'),box))
+        # c.Print(options.outDir+"/fit_mgg_%s_%s_linearX.C"%(fitRegion.replace(',','_'),box))
         
     tdirectory.cd()
     c.Write()

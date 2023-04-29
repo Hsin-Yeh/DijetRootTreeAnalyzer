@@ -24,17 +24,17 @@ def luminosityErrorFrac(year):
 
     lumierror = {}
     
-    lumierror["2015"] =  0.016
-    lumierror["2016"] =  0.016
-    lumierror["2017"] =  0.016
-    lumierror["2018"] =  0.016
-    lumierror["2018_newjson"] =  0.016
-    lumierror["2018ABC_prompt"] =  0.016
-    lumierror["2018ABC_rereco"] =  0.016
-    lumierror["2018AB"] =  0.016
-    lumierror["2018ABC"] =  0.016
-    lumierror["2018CD"] =  0.016
-    lumierror["2018D"] =  0.016
+    lumierror["2015"] =  0.023
+    lumierror["2016"] =  0.025
+    lumierror["2017"] =  0.023
+    lumierror["2018"] =  0.025
+    lumierror["2018_newjson"] =  0.025
+    lumierror["2018ABC_prompt"] =  0.025
+    lumierror["2018ABC_rereco"] =  0.025
+    lumierror["2018AB"] =  0.025
+    lumierror["2018ABC"] =  0.025
+    lumierror["2018CD"] =  0.025
+    lumierror["2018D"] =  0.025
 
     return 1. + lumierror[year]
 

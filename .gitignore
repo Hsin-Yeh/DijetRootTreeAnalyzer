@@ -29,6 +29,7 @@
 *.log
 *.sql
 *.sqlite
+combine_logger.out
 
 # OS generated files #
 ######################
@@ -39,6 +40,8 @@
 .Trashes
 ehthumbs.db
 Thumbs.db
+*.swp
+.bash_history
 
 # Pictures and plots #
 ######################
@@ -51,11 +54,33 @@ Thumbs.db
 #################
 *.root
 
-
+# Files
 ##################
 \#*
 *~
+main
+pptt
+path.txt
 
 # Directory #
 ###########
 batch
+inputs
+test_directory
+test_directory_backup
+test_directory_ParamSigNorm
+bkgAltModels
+FinalResults
+ParallelForBias
+output_backup
+AllBkgModels
+signal_bias
+
+# Except These Files #
+##########
+!FinalResults/loopAllMassPoints.csh
+!ParallelForBias/setupCombineBias.sh
+!ParallelForBias/sendCombineBias_multiplejobs_advanced.csh
+!ParallelForBias/mergeCombineBiasJobs.csh
+!ParallelForBias/createCombineBias_multiplejobs_advanced.csh
+!ParallelForBias/mergeBiasOutput.csh

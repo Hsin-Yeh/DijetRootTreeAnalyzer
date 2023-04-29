@@ -8,14 +8,14 @@ import sys
 
 def sigma_function(category, width, value):
     fun = 0.
-    if category == "EBEB": 
+    if category == "EBEB":
         if width == "kMpl001":
              fun =  0.484 + 0.012 * value
         elif width == "kMpl01":
              fun =  0.823 + 0.017 * value
         elif width == "kMpl02":
              fun =  3.180 + 0.040 * value
-    if category == "EBEE": 
+    if category == "EBEE":
         if width == "kMpl001":
              fun =  -0.259 + 0.021 * value
         elif width == "kMpl01":
@@ -50,3 +50,17 @@ if __name__ == '__main__':
             print(bins)
 
     
+    # if category == "EBEB":
+    #     if width == "kMpl001":
+    #          fun =  0.484 + 0.012 * value
+    #     elif width == "kMpl01":
+    #          fun =  0.823 + 0.017 * value
+    #     elif width == "kMpl02":
+    #          fun =  3.180 + 0.040 * value
+    # if category == "EBEE":
+    #     if width == "kMpl001":
+    #          fun =  -0.259 + 0.021 * value
+    #     elif width == "kMpl01":
+    #          fun =  -0.065 + 0.025 * value
+    #     elif width == "kMpl02":
+    #          fun =  2.892 + 0.044 * value

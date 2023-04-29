@@ -1,38 +1,230 @@
 #+TITLE: README_diphotons
-#+Author: Andreas
+#+Author: Hsin-Yeh, Andreas
 Starting from dijet analysis
 
-* ADD Signals
-*** Norm
+* Prepare samples
+** prepare trees for BB and BE seperately
+
+- Lxplus kills the process if we run all the samples at once (chain too many samples)
+- Run RS, HeavyHiggs, data one by one ( Comment out the others in "Tools/interface/sampleList.hh" )
 
 #+begin_src bash
+prepareTrees.exe BB 2016 "/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/input"
+prepareTrees.exe BE 2016 "/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/input"
+prepareTrees.exe BB 2017 "/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/input"
+prepareTrees.exe BE 2017 "/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/input"
+prepareTrees.exe BB 2018 "/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/input"
+prepareTrees.exe BE 2018 "/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/input"
+#+end_src
 
+** Merge files
+#+begin_src bash
+cd input
+./haddsamples.sh
+#+end_src
+
+* Parametric signal model
+This is the old method for getting the signal shapes. We fit the input gen & response
+shapes with Double Crystal function and get the parametrization of the signal
+shapes for all masses. We now use it for binning only
+** Second step : Fit response and gen distribution
+#+begin_src bash
+#make some structure
+mkdir -p input/{2016,2017,2018}/workspaces
+mkdir -p input/{2016,2017,2018}/responsefcnfit
+mkdir -p input/{2016,2017,2018}/mgen
+
+export mainpath="/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/"
+
+#The commands below will take long time to run.
+prepareWorkspaces.exe 2016 "${mainpath}/input/trees" "${mainpath}/input" all
+prepareWorkspaces.exe 2017 "${mainpath}/input/trees" "${mainpath}/input" all
+prepareWorkspaces.exe 2018 "${mainpath}/input/trees" "${mainpath}/input" all
+
+#To speed up things, study the scripts, change to your username and path and only then run them
+#Create the jobs
+./createSignalJobs.csh
+#Sent them to condor
+./sendSignalJobs.csh
+
+#Let's make the txt files to see how the fits performed.
+./gatherfitresults.csh
+
+#To easily check all plots put them in a www area
+dateDir=$(date +"%Y%m%d_%H%M%S")
+for i in {2016,2017,2018}; do echo $i;
+cpwww input/$i/responsefcnfit ~/www/diphoton-analysis/$i/responsefcnfit/${dateDir}
+cpwww input/$i/mgen ~/www/diphoton-analysis/$i/mgen/${dateDir}
+done
+#+end_src
+** Third step : Convolution and closure test
+#+begin_src bash
+#make some structure
+
+export mainpath="/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/"
+
+for i in {2016,2017,2018}; do echo $i;
+mkdir -p output/${i}/FinalConvShapes;
+mkdir -p output/${i}/workspaces;
+prepareShapes.exe $i "${mainpath}/input/trees" "${mainpath}/input/$i/workspaces" "${mainpath}/output/$i/workspaces" all
+done
+
+#Or if you want to run them year by year
+prepareShapes.exe 2017 "${mainpath}/input/trees" "${mainpath}/input/2017/workspaces" "${mainpath}/output/2017/workspaces" all
+
+#Beware to put 2018 in all places below
+prepareShapes.exe 2018 "${mainpath}/input/trees" "${mainpath}/input/2018/workspaces" "${mainpath}/output/2018/workspaces" all
+
+dateDir=$(date +"%Y%m%d_%H%M%S")
+for i in {2016,2017,2018}; do
+echo $i
+cpwww output/${i}/FinalConvShapes ~/www/diphoton-analysis/${i}/FinalConvShapes/${dateDir}
+done
+#+end_src
+** Fourth step : Final Shapes
+#+begin_src bash
+#make some structure
+for i in {2016,2017,2018}; do echo $i;
+mkdir -p output/${i}/FinalParametricShape/workspaces;
+mkdir -p output/${i}/FinalParametricShape/plots;
+done;
+
+export mainpath="/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis"
+
+#2017
+#RS
+prepareParametricShape.exe 2017 "${mainpath}/Tools/bin/input/trees" "${mainpath}/output/2017/workspaces" "${mainpath}/output/2017/FinalParametricShape/workspaces" "kMpl001"
+prepareParametricShape.exe 2017 "${mainpath}/Tools/bin/input/trees" "${mainpath}/output/2017/workspaces" "${mainpath}/output/2017/FinalParametricShape/workspaces" "kMpl01"
+prepareParametricShape.exe 2017 "${mainpath}/Tools/bin/input/trees" "${mainpath}/output/2017/workspaces" "${mainpath}/output/2017/FinalParametricShape/workspaces" "kMpl02"
+#Heavy Higgs
+prepareParametricShape.exe 2017 "${mainpath}/Tools/bin/input/trees" "${mainpath}/output/2017/workspaces" "${mainpath}/output/2017/FinalParametricShape/workspaces" "0p014"
+prepareParametricShape.exe 2017 "${mainpath}/Tools/bin/input/trees" "${mainpath}/output/2017/workspaces" "${mainpath}/output/2017/FinalParametricShape/workspaces" "1p4"
+prepareParametricShape.exe 2017 "${mainpath}/Tools/bin/input/trees" "${mainpath}/output/2017/workspaces" "${mainpath}/output/2017/FinalParametricShape/workspaces" "5p6"
+#2018
+#RS
+prepareParametricShape.exe 2018 "${mainpath}/Tools/bin/input/trees" "${mainpath}/output/2018/workspaces" "${mainpath}/output/2018/FinalParametricShape/workspaces" "kMpl001"
+prepareParametricShape.exe 2018 "${mainpath}/Tools/bin/input/trees" "${mainpath}/output/2018/workspaces" "${mainpath}/output/2018/FinalParametricShape/workspaces" "kMpl01"
+prepareParametricShape.exe 2018 "${mainpath}/Tools/bin/input/trees" "${mainpath}/output/2018/workspaces" "${mainpath}/output/2018/FinalParametricShape/workspaces" "kMpl02"
+#Heavy higgs
+prepareParametricShape.exe 2018 "${mainpath}/Tools/bin/input/trees" "${mainpath}/output/2018/workspaces" "${mainpath}/output/2018/FinalParametricShape/workspaces" "0p014"
+prepareParametricShape.exe 2018 "${mainpath}/Tools/bin/input/trees" "${mainpath}/output/2018/workspaces" "${mainpath}/output/2018/FinalParametricShape/workspaces" "1p4"
+prepareParametricShape.exe 2018 "${mainpath}/Tools/bin/input/trees" "${mainpath}/output/2018/workspaces" "${mainpath}/output/2018/FinalParametricShape/workspaces" "5p6"
+
+#Or run all of them
+#no 2016 samples at the moment of writing
+rm ${mainpath}/output/{2016,2017,2018}/FinalParametricShape/plots/*
+for i in {2016,2017,2018}; do echo $i; for coup in {"kMpl001","kMpl01","kMpl02","0p014","1p4","5p6"}; do prepareParametricShape.exe $i "${mainpath}/Tools/bin/input/trees" "${mainpath}/output/${i}/workspaces" "${mainpath}/output/${i}/FinalParametricShape/workspaces" ${coup}; done; done;
+
+dateDir=$(date +"%Y%m%d_%H%M%S")
+#To view all plots easily put them in eos www.
+for i in {2016,2017,2018}; do echo $i;
+cpwww ${mainpath}/output/$i/FinalParametricShape/plots ~/www/diphoton-analysis/$i/FinalParametricShape/${dateDir}
+done;
+#+end_src
+** Fifth step : Test the final shape against the reconstructed one
+#+begin_src bash
+#make some structure
+for i in {2016,2017,2018}; do echo $i;
+mkdir -p output/${i}/FinalParametricShape/comparison;
+mkdir -p /eos/user/a/apsallid/www/exodiphotons/$i/FinalParametricShape/comparison;
+cp /eos/user/a/apsallid/www/exodiphotons/index.php /eos/user/a/apsallid/www/exodiphotons/$i/FinalParametricShape/comparison/.;
+done;
+
+export mainpath="/afs/cern.ch/work/a/apsallid/CMS/Hgg/exodiphotons/seconditeration/CMSSW_10_2_13/src/diphoton-analysis"
+
+#2017
+testShapes.exe 2017 "${mainpath}/input/trees" "${mainpath}/input/2017/workspaces" "${mainpath}/output/2017/FinalParametricShape/workspaces" "kMpl001"
+testShapes.exe 2017 "${mainpath}/input/trees" "${mainpath}/input/2017/workspaces" "${mainpath}/output/2017/FinalParametricShape/workspaces" "kMpl01"
+testShapes.exe 2017 "${mainpath}/input/trees" "${mainpath}/input/2017/workspaces" "${mainpath}/output/2017/FinalParametricShape/workspaces" "kMpl02"
+testShapes.exe 2017 "${mainpath}/input/trees" "${mainpath}/input/2017/workspaces" "${mainpath}/output/2017/FinalParametricShape/workspaces" "0p014"
+testShapes.exe 2017 "${mainpath}/input/trees" "${mainpath}/input/2017/workspaces" "${mainpath}/output/2017/FinalParametricShape/workspaces" "1p4"
+testShapes.exe 2017 "${mainpath}/input/trees" "${mainpath}/input/2017/workspaces" "${mainpath}/output/2017/FinalParametricShape/workspaces" "5p6"
+
+#2018
+testShapes.exe 2018 "${mainpath}/input/trees" "${mainpath}/input/2018/workspaces" "${mainpath}/output/2018/FinalParametricShape/workspaces" "kMpl001"
+testShapes.exe 2018 "${mainpath}/input/trees" "${mainpath}/input/2018/workspaces" "${mainpath}/output/2018/FinalParametricShape/workspaces" "kMpl01"
+testShapes.exe 2018 "${mainpath}/input/trees" "${mainpath}/input/2018/workspaces" "${mainpath}/output/2018/FinalParametricShape/workspaces" "kMpl02"
+testShapes.exe 2018 "${mainpath}/input/trees" "${mainpath}/input/2018/workspaces" "${mainpath}/output/2018/FinalParametricShape/workspaces" "0p014"
+testShapes.exe 2018 "${mainpath}/input/trees" "${mainpath}/input/2018/workspaces" "${mainpath}/output/2018/FinalParametricShape/workspaces" "1p4"
+testShapes.exe 2018 "${mainpath}/input/trees" "${mainpath}/input/2018/workspaces" "${mainpath}/output/2018/FinalParametricShape/workspaces" "5p6"
+
+#Save in webpage for quick inspection
+for i in {2017,2018}; do echo $i;
+cp ${mainpath}/output/$i/FinalParametricShape/comparison/*.png /eos/user/a/apsallid/www/exodiphotons/$i/FinalParametricShape/comparison/.;
+done;
+#+end_src
+** Sixth step : Calculate parametric signal nuisances
+#+begin_src bash
+#make some structure
+for i in {2016,2017,2018}; do echo $i;
+mkdir -p output/${i}/FinalParametricShape/systematics;
+mkdir -p /eos/user/a/apsallid/www/exodiphotons/$i/FinalParametricShape/systematics;
+cp /eos/user/a/apsallid/www/exodiphotons/index.php /eos/user/a/apsallid/www/exodiphotons/$i/FinalParametricShape/systematics/.;
+done;
+
+export mainpath="/afs/cern.ch/work/a/apsallid/CMS/Hgg/exodiphotons/seconditeration/CMSSW_10_2_13/src/diphoton-analysis"
+
+#2017
+testSystematics.exe 2017 "${mainpath}/Tools/bin/input/trees" "${mainpath}/output/2017/FinalParametricShape/workspaces" "${mainpath}/output/2017/FinalParametricShape/systematics" "kMpl001"
+testSystematics.exe 2017 "${mainpath}/Tools/bin/input/trees" "${mainpath}/output/2017/FinalParametricShape/workspaces" "${mainpath}/output/2017/FinalParametricShape/systematics" "kMpl01"
+testSystematics.exe 2017 "${mainpath}/Tools/bin/input/trees" "${mainpath}/output/2017/FinalParametricShape/workspaces" "${mainpath}/output/2017/FinalParametricShape/systematics" "kMpl02"
+testSystematics.exe 2017 "${mainpath}/Tools/bin/input/trees" "${mainpath}/output/2017/FinalParametricShape/workspaces" "${mainpath}/output/2017/FinalParametricShape/systematics" "0p014"
+testSystematics.exe 2017 "${mainpath}/Tools/bin/input/trees" "${mainpath}/output/2017/FinalParametricShape/workspaces" "${mainpath}/output/2017/FinalParametricShape/systematics" "1p4"
+testSystematics.exe 2017 "${mainpath}/Tools/bin/input/trees" "${mainpath}/output/2017/FinalParametricShape/workspaces" "${mainpath}/output/2017/FinalParametricShape/systematics" "5p6"
+#2018
+testSystematics.exe 2018 "${mainpath}/Tools/bin/input/trees" "${mainpath}/output/2018/FinalParametricShape/workspaces" "${mainpath}/output/2018/FinalParametricShape/systematics" "kMpl001"
+testSystematics.exe 2018 "${mainpath}/Tools/bin/input/trees" "${mainpath}/output/2018/FinalParametricShape/workspaces" "${mainpath}/output/2018/FinalParametricShape/systematics" "kMpl01"
+testSystematics.exe 2018 "${mainpath}/Tools/bin/input/trees" "${mainpath}/output/2018/FinalParametricShape/workspaces" "${mainpath}/output/2018/FinalParametricShape/systematics" "kMpl02"
+testSystematics.exe 2018 "${mainpath}/Tools/bin/input/trees" "${mainpath}/output/2018/FinalParametricShape/workspaces" "${mainpath}/output/2018/FinalParametricShape/systematics" "0p014"
+testSystematics.exe 2018 "${mainpath}/Tools/bin/input/trees" "${mainpath}/output/2018/FinalParametricShape/workspaces" "${mainpath}/output/2018/FinalParametricShape/systematics" "1p4"
+testSystematics.exe 2018 "${mainpath}/Tools/bin/input/trees" "${mainpath}/output/2018/FinalParametricShape/workspaces" "${mainpath}/output/2018/FinalParametricShape/systematics" "5p6"
+
+#Save in webpage for quick inspection
+for i in {2017,2018}; do echo $i;
+cp ${mainpath}/output/$i/FinalParametricShape/systematics/*.png /eos/user/a/apsallid/www/exodiphotons/$i/FinalParametricShape/systematics/.;
+done;
+#+end_src
+* ADD Samples
+*** Data
+
+#+begin_src bash
+#Data
+for year in {2016,2017,2018}; do echo $year; python python/AddDataSamples.py -t nom -d output -c EBEB /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/input/trees/data_${year}.root; python python/AddDataSamples.py -t nom -d output -c EBEE /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/input/trees/data_${year}.root; done;
+#+end_src
+
+*** Nom Signal
+
+#+begin_src bash
 cd /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/CMSDIJET/DijetRootTreeAnalyzer/
 cmsenv
 mkdir -p output/plots
 
+# method="full"
+# method="truncate"
+method="genFiducial"
+mkdir -p output/${method}
 #RS
-for year in {2017,2018}; do echo $year; for coup in {"kMpl001","kMpl01","kMpl02"}; do echo $coup; files_RS=`ls /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/input/trees/RSGravitonToGammaGamma_${coup}*${year}*.root`; python python/AddSignalShapes.py -t nom -d output -c EBEB ${files_RS}; python python/AddSignalShapes.py -t nom -d output -c EBEE ${files_RS}; done; done;
+for year in {2016,2017,2018}; do echo $year; for coup in {"kMpl001","kMpl01","kMpl02"}; do echo $coup; files_RS=`ls /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/input/trees/RSGravitonToGammaGamma_${coup}*${year}*.root`; python python/AddSignalShapes.py -e ${method} -t nom -d output/${method} -c EBEB ${files_RS}; python python/AddSignalShapes.py -e ${method} -t nom -d output/${method} -c EBEE ${files_RS}; done; done;
 
 #GluGlu
-for year in {2017,2018}; do echo $year; for coup in {"0p014","1p4","5p6"}; do echo $coup; files_GluGlu=`ls /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/input/trees/GluGluSpin0ToGammaGamma_W_${coup}*${year}*.root`; python python/AddSignalShapes.py -t nom -d output -c EBEB ${files_GluGlu}; python python/AddSignalShapes.py -t nom -d output -c EBEE ${files_GluGlu}; done; done;
-
+for year in {2016,2017,2018}; do echo $year; for coup in {"0p014","1p4","5p6"}; do echo $coup; files_GluGlu=`ls /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/input/trees/GluGluSpin0ToGammaGamma_W_${coup}*${year}*.root`; python python/AddSignalShapes.py -e ${method} -t nom -d output/${method} -c EBEB ${files_GluGlu}; python python/AddSignalShapes.py -e ${method} -t nom -d output/${method} -c EBEE ${files_GluGlu}; done; done;
 #+end_src
 
 *** Systematics
 "energyScaleStatUp","energyScaleSystUp","energyScaleGainUp","energySigmaUp",
-"energyScaleStatDown","energyScaleSystDown","energyScaleGainDown","energySigmaDown"
+"energyScaleStatDown","energyScaleSystDown","energyScaleGainDown","energySigmaDown",
+"SFScaleUp","SFScaleDown","PUScaleUp","PUScaleDown","testScaleUp","testScaleDown"
 
 #+begin_src bash
 
+# method="full"
+# method="truncate"
+method="genFiducial"
 #RS
-for year in {2017,2018}; do echo $year; for coup in {"kMpl001","kMpl01","kMpl02"}; do echo $coup; files_RS=`ls /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/input/trees/RSGravitonToGammaGamma_${coup}*${year}*.root`; for syst in {"energyScaleStatUp","energyScaleSystUp","energyScaleGainUp","energySigmaUp","energyScaleStatDown","energyScaleSystDown","energyScaleGainDown","energySigmaDown"}; do echo ${syst}; python python/AddSignalShapes.py -t systematics -s ${syst} -d output -c EBEB ${files_RS}; python python/AddSignalShapes.py -t systematics -s ${syst} -d output -c EBEE ${files_RS}; done; done; done;
+for year in {2016,2017,2018}; do echo $year; for coup in {"kMpl001","kMpl01","kMpl02"}; do echo $coup; files_RS=`ls /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/input/trees/RSGravitonToGammaGamma_${coup}*${year}*.root`; for syst in {"energyScaleStatUp","energyScaleSystUp","energyScaleGainUp","energySigmaUp","energyScaleStatDown","energyScaleSystDown","energyScaleGainDown","energySigmaDown","SFScaleUp","SFScaleDown","PUScaleUp","PUScaleDown"}; do echo ${syst}; python python/AddSignalShapes.py -e ${method} -t systematics -s ${syst} -d output/${method} -c EBEB ${files_RS}; python python/AddSignalShapes.py -e ${method} -t systematics -s ${syst} -d output/${method} -c EBEE ${files_RS}; done; done; done;
 
 #GluGlu
-for year in {2017,2018}; do echo $year; for coup in {"0p014","1p4","5p6"}; do echo $coup; files_GluGlu=`ls /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/input/trees/GluGluSpin0ToGammaGamma_W_${coup}*${year}*.root`;for syst in {"energyScaleStatUp","energyScaleSystUp","energyScaleGainUp","energySigmaUp","energyScaleStatDown","energyScaleSystDown","energyScaleGainDown","energySigmaDown"}; do echo ${syst}; python python/AddSignalShapes.py -t systematics -s ${syst} -d output -c EBEB ${files_GluGlu}; python python/AddSignalShapes.py -t systematics -s ${syst} -d output -c EBEE ${files_GluGlu}; done; done; done;
-
-#Data
-for year in {2017,2018}; do echo $year; python python/AddDataSamples.py -t nom -d output -c EBEB /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/input/trees/data_${year}.root; python python/AddDataSamples.py -t nom -d output -c EBEE /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/input/trees/data_${year}.root; done;
+for year in {2016,2017,2018}; do echo $year; for coup in {"0p014","1p4","5p6"}; do echo $coup; files_GluGlu=`ls /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/input/trees/GluGluSpin0ToGammaGamma_W_${coup}*${year}*.root`;for syst in {"energyScaleStatUp","energyScaleSystUp","energyScaleGainUp","energySigmaUp","energyScaleStatDown","energyScaleSystDown","energyScaleGainDown","energySigmaDown","SFScaleUp","SFScaleDown","PUScaleUp","PUScaleDown"}; do echo ${syst}; python python/AddSignalShapes.py -e ${method} -t systematics -s ${syst} -d output/${method} -c EBEB ${files_GluGlu}; python python/AddSignalShapes.py -e ${method} -t systematics -s ${syst} -d output/${method} -c EBEE ${files_GluGlu}; done; done; done;
 
 #+end_src
 
@@ -62,20 +254,70 @@ python python/AddSignalShapes.py -t nom -d output ${files_RS_001_2017} ${files_R
 
 #+end_src
 
+* Signal Normalization
+
+- Check "Tools/interface/sampleList.hh"
+  - Signal samples are initialized
+  - Data samples are commented out
+
+
+#+begin_src bash
+#make some structure
+export mainpath="/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/"
+mkdir -p datacards
+for i in {2016,2017,2018}; do echo $i;
+mkdir -p ${mainpath}/output/${i}/signalNorm;
+done;
+
+export mainpath="/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/"
+export method="full"
+# export method="truncate"
+#With the createJson option the insigname argument is dull and the code will run through all signals.
+#2016 (Both RS and heavy higgs)
+signalNorm.exe 2016 createJson "${mainpath}/output/2016/FinalParametricShape/workspaces" "${mainpath}/datacards" "${mainpath}/output/2016/signalNorm" "grav" ${method}
+#2017 (Both RS and heavy higgs)
+signalNorm.exe 2017 createJson "${mainpath}/output/2017/FinalParametricShape/workspaces" "${mainpath}/datacards" "${mainpath}/output/2017/signalNorm" "grav" ${method}
+#2018 (Both RS and heavy higgs)
+signalNorm.exe 2018 createJson "${mainpath}/output/2018/FinalParametricShape/workspaces" "${mainpath}/datacards" "${mainpath}/output/2018/signalNorm" "grav" ${method}
+#2016 (Both RS and heavy higgs)
+
+rm SignalNorm.txt
+rm SignalNorm_Splines.txt
+#2016 RS
+signalNorm.exe 2016 readJson "${mainpath}/output/2016/FinalParametricShape/workspaces" "${mainpath}/datacards" "${mainpath}/output/2016/signalNorm" "grav" "${method}"
+#2017 RS
+signalNorm.exe 2017 readJson "${mainpath}/output/2017/FinalParametricShape/workspaces" "${mainpath}/datacards" "${mainpath}/output/2017/signalNorm" "grav" "${method}"
+#2018 RS
+signalNorm.exe 2018 readJson "${mainpath}/output/2018/FinalParametricShape/workspaces" "${mainpath}/datacards" "${mainpath}/output/2018/signalNorm" "grav" "${method}"
+#2016 Heavy Higgs
+signalNorm.exe 2016 readJson "${mainpath}/output/2016/FinalParametricShape/workspaces" "${mainpath}/datacards" "${mainpath}/output/2016/signalNorm" "heavyhiggs" "${method}"
+#2017 Heavy Higgs
+signalNorm.exe 2017 readJson "${mainpath}/output/2017/FinalParametricShape/workspaces" "${mainpath}/datacards" "${mainpath}/output/2017/signalNorm" "heavyhiggs" "${method}"
+#2018 Heavy Higgs
+signalNorm.exe 2018 readJson "${mainpath}/output/2018/FinalParametricShape/workspaces" "${mainpath}/datacards" "${mainpath}/output/2018/signalNorm" "heavyhiggs" "${method}"
+
+cp SignalNorm.txt SignalNorm_${method}.txt
+cp SignalNorm_Splines.txt SignalNorm_Splines_${method}.txt
+dateDir=$(date +"%Y%m%d_%H%M%S")
+for year in {"2016","2017","2018"};
+do
+    cpwww output/${year}/signalNorm ~/www/diphoton-analysis/${year}/signalNorm/${method}/${dateDir}
+done
+#+end_src
+
 * Save Normalization <<<--- DON'T USE THAT NO MORE.
 #=======================================================
-The signal samples trees and the initial histos that are input to the interpolation package are 
+The signal samples trees and the initial histos that are input to the interpolation package are
 normalized to 1000/pb luminosity.
 
 Then, the interpolation code outputs histograms normalized to unity. So, to get the correct
 normalization we save the initial integral of the histos
 
-Remember that in the preparation of the trees we have 
-                #used the weightAll cut to normalize the signal samples to 1000/pb luminosity.
+Remember that in the preparation of the trees we have
+#used the weightAll cut to normalize the signal samples to 1000/pb luminosity.
 
 
 #Be CAREFUL: We will append so remove the file first!
-rm SignalNorm.txt
 #=======================================================
 #RS
 for year in {2017,2018}; do echo $year; for coup in {"kMpl001","kMpl01","kMpl02"}; do echo $coup; files_RS=`ls /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/input/trees/RSGravitonToGammaGamma_${coup}*${year}*.root`; python python/SaveSignalNormalization.py -t nom -d output --year ${year} ${files_RS}; done; done;
@@ -88,36 +330,48 @@ for year in {2017,2018}; do echo $year; for coup in {"0p014","1p4","5p6"}; do ec
 
 #+begin_src bash
 
-cd /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/DijetShapeInterpolator
+# export method="full"
+# export method="truncate"
+export method="genFiducial"
+mkdir /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/${method}
+cd /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/${method}
 
 rm -rf inputs *.root
 mkdir inputs
 
-filesToExtractRS=`ls /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/CMSDIJET/DijetRootTreeAnalyzer/output |grep .root | grep RSG`
+filesToExtractRS=`ls /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/CMSDIJET/DijetRootTreeAnalyzer/output/${method} |grep .root | grep RSG`
 
-for file in ${filesToExtractRS}; do echo ${file}; cp /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/CMSDIJET/DijetRootTreeAnalyzer/output/${file} .; filename=`echo ${file} | cut -d'.' -f 1`; rm -rf inputs/${filename}.py; ./extractShapes.py -i ${file} > inputs/${filename}.py; done;
+for file in ${filesToExtractRS}; do echo ${file}; cp /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/CMSDIJET/DijetRootTreeAnalyzer/output/${method}/${file} .; filename=`echo ${file} | cut -d'.' -f 1`; rm -rf inputs/${filename}.py; ../extractShapes.py -i ${file} > inputs/${filename}.py; done;
 
-filesToExtractGluGlu=`ls /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/CMSDIJET/DijetRootTreeAnalyzer/output |grep .root | grep GluGlu`
+filesToExtractGluGlu=`ls /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/CMSDIJET/DijetRootTreeAnalyzer/output/${method} |grep .root | grep GluGlu`
 
-for file in ${filesToExtractGluGlu}; do echo ${file}; cp /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/CMSDIJET/DijetRootTreeAnalyzer/output/${file} .; filename=`echo ${file} | cut -d'.' -f 1`; rm -rf inputs/${filename}.py; ./extractShapes.py -i ${file} > inputs/${filename}.py; done;
+for file in ${filesToExtractGluGlu}; do echo ${file}; cp /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/CMSDIJET/DijetRootTreeAnalyzer/output/${method}/${file} .; filename=`echo ${file} | cut -d'.' -f 1`; rm -rf inputs/${filename}.py; ../extractShapes.py -i ${file} > inputs/${filename}.py; done;
 
 #+end_src
 
 * Get Resonance shapes
 
 #+begin_src bash
+# export method="full"
+# export method="truncate"
+export method="genFiducial"
+cd /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/${method}
 
-cd /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/DijetShapeInterpolator
+filesToExtractRS=`ls /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/CMSDIJET/DijetRootTreeAnalyzer/output/${method} |grep .root | grep RSG`
 
-filesToExtractRS=`ls /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/CMSDIJET/DijetRootTreeAnalyzer/output |grep .root | grep RSG`
-
-filesToExtractGluGlu=`ls /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/CMSDIJET/DijetRootTreeAnalyzer/output |grep .root | grep GluGlu`
+filesToExtractGluGlu=`ls /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/CMSDIJET/DijetRootTreeAnalyzer/output/${method} |grep .root | grep GluGlu`
 
 for file in ${filesToExtractRS};
-do echo ${file}; coup=`echo ${file} | cut -d'_' -f 3`; echo $coup; filename=`echo ${file} | cut -d'.' -f 1`; ./getResonanceShapes.py -i inputs/${filename}.py -c ${coup} -f gg --massrange 500 10000 100 -o ResonanceShapes_${filename}.root; done;
+do echo ${file}; coup=`echo ${file} | cut -d'_' -f 3`; echo $coup; filename=`echo ${file} | cut -d'.' -f 1`; ../getResonanceShapes.py -i inputs/${filename}.py -c ${coup} -f gg --massrange 500 10000 10 -o ResonanceShapes_${filename}.root; done;
 
 for file in ${filesToExtractGluGlu};
-do echo ${file}; coup=`echo ${file} | cut -d'_' -f 4`; echo $coup; filename=`echo ${file} | cut -d'.' -f 1`; ./getResonanceShapes.py -i inputs/${filename}.py -c ${coup} -f gg --massrange 500 10000 100 -o ResonanceShapes_${filename}.root; done;
+do echo ${file}; coup=`echo ${file} | cut -d'_' -f 4`; echo $coup; filename=`echo ${file} | cut -d'.' -f 1`; ../getResonanceShapes.py -i inputs/${filename}.py -c ${coup} -f gg --massrange 500 10000 10 -o ResonanceShapes_${filename}.root; done;
+
+#Copy the root files for later usage
+# export method="full"
+# export method="truncate"
+export method="genFiducial"
+cp /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/${method}/ResonanceShapes*.root /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator
 
 #Below an example when debugging
 ./getResonanceShapes.py -i inputs/InputShapes_GluGluSpin0ToGammaGamma_W_1p4_EBEB_2017.py -c kMpl001 -f gg --massrange 500 10000 100 -o ResonanceShapes_GluGluSpin0ToGammaGamma_W_1p4_EBEB_2017.root
@@ -128,52 +382,64 @@ do echo ${file}; coup=`echo ${file} | cut -d'_' -f 4`; echo $coup; filename=`ech
 
 #+begin_src bash
 
-cd /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/CMSDIJET/DijetRootTreeAnalyzer/
+cd /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/CMSDIJET/DijetRootTreeAnalyzer/
 cmsenv
 mkdir output/plots
 
+# export method="full"
+# export method="truncate"
+export method="genFiducial"
 #=======================================================
 #RS
-for year in {2017,2018}; do echo $year; for coup in {"kMpl001","kMpl01","kMpl02"}; do echo $coup; files_RS=`ls /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/input/trees/RSGravitonToGammaGamma_${coup}*${year}*.root`; python python/CompareShapes.py -d output -c EBEB -w ${coup} ${files_RS}; python python/CompareShapes.py -d output -c EBEE -w ${coup} ${files_RS}; done; done;
+for year in {2016,2017,2018}; do echo $year; for coup in {"kMpl001","kMpl01","kMpl02"}; do echo $coup; files_RS=`ls /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/input/trees/RSGravitonToGammaGamma_${coup}*${year}*.root`; python python/CompareShapes.py -e ${method} -d output -c EBEB -w ${coup} ${files_RS}; python python/CompareShapes.py -e ${method} -d output -c EBEE -w ${coup} ${files_RS}; done; done;
 
 #=======================================================
 #GluGlu
-for year in {2017,2018}; do echo $year; for coup in {"0p014","1p4","5p6"}; do echo $coup; files_GluGlu=`ls /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/input/trees/GluGluSpin0ToGammaGamma_W_${coup}*${year}*.root`; python python/CompareShapes.py -d output -c EBEB -w ${coup} ${files_GluGlu}; python python/CompareShapes.py -d output -c EBEE -w ${coup} ${files_GluGlu}; done; done;
-
+for year in {2016,2017,2018}; do echo $year; for coup in {"0p014","1p4","5p6"}; do echo $coup; files_GluGlu=`ls /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/input/trees/GluGluSpin0ToGammaGamma_W_${coup}*${year}*.root`; python python/CompareShapes.py -e ${method} -d output -c EBEB -w ${coup} ${files_GluGlu}; python python/CompareShapes.py -e ${method} -d output -c EBEE -w ${coup} ${files_GluGlu}; done; done;
 
 #Below an example when debugging
-python python/CompareShapes.py -d output -c EBEB -w kMpl001 /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/input/trees/RSGravitonToGammaGamma_kMpl01_M_1000_TuneCP2_13TeV_pythia8_2018.root
+python python/CompareShapes.py -e ${method} -d output -c EBEB -w kMpl01 /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/input/trees/RSGravitonToGammaGamma_kMpl01_M_1000_TuneCP2_13TeV_pythia8_2018.root
 
 #+end_src
 
-
-#=======================================================
 * Compare shapes - Closure Test - multi plot comparison
 
 #+begin_src bash
 
-cd /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/CMSDIJET/DijetRootTreeAnalyzer/
+cd /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/CMSDIJET/DijetRootTreeAnalyzer/
 cmsenv
 
+# export method="full"
+# export method="truncate"
+export method="genFiducial"
 #Will plot 1 TeV, 2 TeV, 3 TeV, 4 TeV, 5 TeV.
-for year in {2017,2018}; do echo $year; for coup in {"kMpl001","kMpl01","kMpl02"}; do echo $coup;
-files_Selection_RS=`ls /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/input/trees/RSGravitonToGammaGamma_${coup}*${year}*.root`; python python/CompareShapes.py -d output -c EBEB -m -w ${coup} ${files_Selection}; python python/CompareShapes.py -d output -c EBEE -m -w ${coup} ${files_Selection};
-done; done;
+for year in {2016,2017,2018}; do echo $year; for coup in {"kMpl001","kMpl01","kMpl02"}; do echo $coup; files_Selection_RS=`ls /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/input/trees/RSGravitonToGammaGamma_${coup}*${year}*.root`; python python/CompareShapes.py -e ${method} -d output -c EBEB -m -w ${coup} ${files_Selection_RS}; python python/CompareShapes.py -e ${method} -d output -c EBEE -m -w ${coup} ${files_Selection_RS}; done; done;
+
+for year in {2016,2017,2018}; do echo $year; for coup in {"0p014","1p4","5p6"}; do echo $coup; files_GluGlu=`ls /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/input/trees/GluGluSpin0ToGammaGamma_W_${coup}*${year}*.root`; python python/CompareShapes.py -e ${method} -d output -c EBEB -m -w ${coup} ${files_GluGlu}; python python/CompareShapes.py -e ${method} -d output -c EBEE -m -w ${coup} ${files_GluGlu}; done; done;
+
+dateDir=$(date +"%Y%m%d_%H%M%S")
+cpwww output/plots ~/www/diphoton-analysis/SignalShapeInterpolation/${method}/${dateDir}
 
 #+end_src
 
-* Background model TODO
+* Background model
+** higgs combine function addons
+
+- Prepare the functions for background fit in Higgs combine of commit from Andreas.
+#+begin_src bash
+git cherry-pick 723a25391ae4d3c1f28ca2f8c53f3f44c5641eaa
+#+end_src
+
+** Bkg fit
 
 #+begin_src bash
 
-You should create the config file. For the number of bins do :
-
+# You should create the config file. For the number of bins do :
 python python/BinningDiPhotons.py -m 500
 
 #below is for equal width bins.
 #seq 500 5 6000 > tt
 #sed ':a;N;$!ba;s/\n/,/g' tt
-
 
 #BLIND with adding --plot-region Low
 #kMpl001
@@ -191,17 +457,19 @@ python python/BinnedFit.py -c config/diphotons_kMpl02.config -l 41527 -b DiPhoto
 
 python python/BinnedFit.py -c config/diphotons_kMpl02.config -l 41527 -b DiPhotons -d test_directory --fit-spectrum --coup kMpl02 --cat EBEE --year 2017 output/InputShapes_data_EBEE_2017.root
 
+python python/BinnedFit.py -c config/diphotons_dijet.config -l 35900 -b DiPhotons_kMpl01_EBEB -d test_directory --fit-spectrum --plot-region Low --coup kMpl01 --cat EBEB --year 2016 output/InputShapes_data_EBEB_2016.root
+
 # NOMINAL MODEL: dijet
 
 #All at once
 #2016 Lumi 35900
-for coup in {"kMpl001","kMpl01","kMpl02"}; do echo $coup; for cat in {"EBEB","EBEE"}; do echo $cat; python python/BinnedFit.py -c config/diphotons_dijet.config -l 35900 -b DiPhotons_${coup}_${cat} -d test_directory --fit-spectrum --plot-region Low --coup $coup --cat $cat --year 2016 output/InputShapes_data_${cat}_2016.root; done; done;
+for coup in {"kMpl001","kMpl01","kMpl02","0p014","1p4","5p6"}; do echo $coup; for cat in {"EBEB","EBEE"}; do echo $cat; python python/BinnedFit.py -c config/diphotons_dijet.config -l 35900 -b DiPhotons_${coup}_${cat} -d test_directory --fit-spectrum --plot-region Low --coup $coup --cat $cat --year 2016 output/InputShapes_data_${cat}_2016.root; done; done;
 
 #2017 Lumi 41527
-for coup in {"kMpl001","kMpl01","kMpl02"}; do echo $coup; for cat in {"EBEB","EBEE"}; do echo $cat; python python/BinnedFit.py -c config/diphotons_dijet.config -l 41527 -b DiPhotons_${coup}_${cat} -d test_directory --fit-spectrum --plot-region Low --coup $coup --cat $cat --year 2017 output/InputShapes_data_${cat}_2017.root; done; done;
+for coup in {"kMpl001","kMpl01","kMpl02","0p014","1p4","5p6"}; do echo $coup; for cat in {"EBEB","EBEE"}; do echo $cat; python python/BinnedFit.py -c config/diphotons_dijet.config -l 41527 -b DiPhotons_${coup}_${cat} -d test_directory --fit-spectrum --plot-region Low --coup $coup --cat $cat --year 2017 output/InputShapes_data_${cat}_2017.root; done; done;
 
 #2018 Lumi 59670
-for coup in {"kMpl001","kMpl01","kMpl02"}; do echo $coup; for cat in {"EBEB","EBEE"}; do echo $cat; python python/BinnedFit.py -c config/diphotons_dijet.config -l 59670 -b DiPhotons_${coup}_${cat} -d test_directory --fit-spectrum --plot-region Low --coup $coup --cat $cat --year 2018 output/InputShapes_data_${cat}_2018.root; done; done;
+for coup in {"kMpl001","kMpl01","kMpl02","0p014","1p4","5p6"}; do echo $coup; for cat in {"EBEB","EBEE"}; do echo $cat; python python/BinnedFit.py -c config/diphotons_dijet.config -l 59670 -b DiPhotons_${coup}_${cat} -d test_directory --fit-spectrum --plot-region Low --coup $coup --cat $cat --year 2018 output/InputShapes_data_${cat}_2018.root; done; done;
 
 
 
@@ -212,24 +480,28 @@ mkdir -p AllBkgModels/blind
 
 #BLIND with adding --plot-region Low
 #2016 Lumi 35900
-for coup in {"kMpl001","kMpl01","kMpl02"}; do echo $coup; for cat in {"EBEB","EBEE"}; do echo $cat; python python/BinnedFitForPlottingMulti.py -c config/diphotons_multiplot.config -l 35900 -b DiPhotons_${coup}_${cat} -d AllBkgModels/blind --fit-spectrum --plot-region Low --coup $coup --cat $cat --year 2016 output/InputShapes_data_${cat}_2016.root; done; done;
+for coup in {"kMpl001","kMpl01","kMpl02","0p014","1p4","5p6"}; do echo $coup; for cat in {"EBEB","EBEE"}; do echo $cat; python python/BinnedFitForPlottingMulti.py -c config/diphotons_multiplot.config -l 35900 -b DiPhotons_${coup}_${cat} -d AllBkgModels/blind --fit-spectrum --plot-region Low --coup $coup --cat $cat --year 2016 output/InputShapes_data_${cat}_2016.root; done; done;
 
 #2017 Lumi 41527
-for coup in {"kMpl001","kMpl01","kMpl02"}; do echo $coup; for cat in {"EBEB","EBEE"}; do echo $cat; python python/BinnedFitForPlottingMulti.py -c config/diphotons_multiplot.config -l 41527 -b DiPhotons_${coup}_${cat} -d AllBkgModels/blind --fit-spectrum --plot-region Low --coup $coup --cat $cat --year 2017 output/InputShapes_data_${cat}_2017.root; done; done;
+for coup in {"kMpl001","kMpl01","kMpl02","0p014","1p4","5p6"}; do echo $coup; for cat in {"EBEB","EBEE"}; do echo $cat; python python/BinnedFitForPlottingMulti.py -c config/diphotons_multiplot.config -l 41527 -b DiPhotons_${coup}_${cat} -d AllBkgModels/blind --fit-spectrum --plot-region Low --coup $coup --cat $cat --year 2017 output/InputShapes_data_${cat}_2017.root; done; done;
 
 #2018 Lumi 59670
-for coup in {"kMpl001","kMpl01","kMpl02"}; do echo $coup; for cat in {"EBEB","EBEE"}; do echo $cat; python python/BinnedFitForPlottingMulti.py -c config/diphotons_multiplot.config -l 59670 -b DiPhotons_${coup}_${cat} -d AllBkgModels/blind --fit-spectrum --plot-region Low --coup $coup --cat $cat --year 2018 output/InputShapes_data_${cat}_2018.root; done; done;
+for coup in {"kMpl001","kMpl01","kMpl02","0p014","1p4","5p6"}; do echo $coup; for cat in {"EBEB","EBEE"}; do echo $cat; python python/BinnedFitForPlottingMulti.py -c config/diphotons_multiplot.config -l 59670 -b DiPhotons_${coup}_${cat} -d AllBkgModels/blind --fit-spectrum --plot-region Low --coup $coup --cat $cat --year 2018 output/InputShapes_data_${cat}_2018.root; done; done;
 
 mkdir -p AllBkgModels/unblind
 #UNBLIND removing --plot-region Low
 #2016 Lumi 35900
-for coup in {"kMpl001","kMpl01","kMpl02"}; do echo $coup; for cat in {"EBEB","EBEE"}; do echo $cat; python python/BinnedFitForPlottingMulti.py -c config/diphotons_multiplot.config -l 35900 -b DiPhotons_${coup}_${cat} -d AllBkgModels/unblind --fit-spectrum --coup $coup --cat $cat --year 2016 output/InputShapes_data_${cat}_2016.root; done; done;
+for coup in {"kMpl001","kMpl01","kMpl02","0p014","1p4","5p6"}; do echo $coup; for cat in {"EBEB","EBEE"}; do echo $cat; python python/BinnedFitForPlottingMulti.py -c config/diphotons_multiplot.config -l 35900 -b DiPhotons_${coup}_${cat} -d AllBkgModels/unblind --fit-spectrum --coup $coup --cat $cat --year 2016 output/InputShapes_data_${cat}_2016.root; done; done;
 
 #2017 Lumi 41527
-for coup in {"kMpl001","kMpl01","kMpl02"}; do echo $coup; for cat in {"EBEB","EBEE"}; do echo $cat; python python/BinnedFitForPlottingMulti.py -c config/diphotons_multiplot.config -l 41527 -b DiPhotons_${coup}_${cat} -d AllBkgModels/unblind --fit-spectrum --coup $coup --cat $cat --year 2017 output/InputShapes_data_${cat}_2017.root; done; done;
+for coup in {"kMpl001","kMpl01","kMpl02","0p014","1p4","5p6"}; do echo $coup; for cat in {"EBEB","EBEE"}; do echo $cat; python python/BinnedFitForPlottingMulti.py -c config/diphotons_multiplot.config -l 41527 -b DiPhotons_${coup}_${cat} -d AllBkgModels/unblind --fit-spectrum --coup $coup --cat $cat --year 2017 output/InputShapes_data_${cat}_2017.root; done; done;
 
 #2018 Lumi 59670
-for coup in {"kMpl001","kMpl01","kMpl02"}; do echo $coup; for cat in {"EBEB","EBEE"}; do echo $cat; python python/BinnedFitForPlottingMulti.py -c config/diphotons_multiplot.config -l 59670 -b DiPhotons_${coup}_${cat} -d AllBkgModels/unblind --fit-spectrum --coup $coup --cat $cat --year 2018 output/InputShapes_data_${cat}_2018.root; done; done;
+for coup in {"kMpl001","kMpl01","kMpl02"}; do echo $coup; for cat in {"EBEB","EBEE"}; do echo $cat; python python/BinnedFitForPlottingMulti_test.py -c config/diphotons_multiplot.config -l 59670 -b DiPhotons_${coup}_${cat} -d AllBkgModels/unblind --fit-spectrum --coup $coup --cat $cat --year 2018 output/InputShapes_data_${cat}_2018.root; done; done;
+
+for coup in {"kMpl01","kMpl02"}; do echo $coup; for cat in {"EBEB","EBEE"}; do echo $cat; python python/BinnedFitForPlottingMulti.py -c config/diphotons_multiplot.config -l 59670 -b DiPhotons_${coup}_${cat} -d AllBkgModels/unblind --fit-spectrum --coup $coup --cat $cat --year 2018 output/InputShapes_data_${cat}_2018.root; done; done;
+
+python python/BinnedFitForPlottingMulti.py -c config/diphotons_multiplot.config -l 59670 -b DiPhotons_kMpl01_EBEE -d AllBkgModels/unblind --fit-spectrum --coup kMpl01 --cat EBEE --year 2018 output/InputShapes_data_EBEE_2018.root
 
 #----------------------
 #Test command
@@ -239,49 +511,71 @@ python python/BinnedFitForPlottingMulti.py -c config/diphotons_multiplot.config 
 
 #+end_src
 
-
-
-
-
-#=======================================================
 * Create the datacard
-#=======================================================
+** WriteDataCard naming
+- Comment these lines in the "WriteDataCard.py" like this to run the RunBias.py.
 
-IMPORTANT COMMENTS: 
+#+begin_src python
+# rates.extend([w.var('Ntot_%s_%s'%(box,bkg)).getVal() for bkg in bkgs]) #FIXME
+rates.extend([w.var('Ntot_%s'%(bkg)).getVal() for bkg in bkgs])
+# processes.extend(["%s_%s"%(box,bkg) for bkg in bkgs])
+processes.extend(["%s"%(bkg) for bkg in bkgs])
+#+end_src
 
-1. The normalization is done through the file: 
+** Write datacards
+*** IMPORTANT COMMENTS:
+
+1. The normalization is done through the file:
 
 /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/SignalNorm.txt
 
 which is created from the signalNorm.cc code based on efficiency x acceptance!
 
-2. The -i option needs the results from the bkg only fit which I am putting in 
+2. The -i option needs the results from the bkg only fit which I am putting in
 bkgAltModels/dijet/blind/FitResults_${box}_YEAR.root
 
-#2016 
-# Remember for me the yield was initially normalized to 1000/pb. So, here lumi 35900 (-d test_directory/2016/${box} omitted and moved 
-# due to combine issues adding channels)
-for mass in `seq 500 100 6000`; do for box in {"DiPhotons_kMpl001_EBEB","DiPhotons_kMpl001_EBEE","DiPhotons_kMpl01_EBEB","DiPhotons_kMpl01_EBEE","DiPhotons_kMpl02_EBEB","DiPhotons_kMpl02_EBEE"}; do echo ${box}; cat=`echo ${box}| cut -d"_" -f 3`; coup=`echo ${box}| cut -d"_" -f 2`; mkdir -p test_directory/2016/${box}; python python/WriteDataCard.py -m gg --mass ${mass} output/InputShapes_data_${cat}_2016.root -i bkgAltModels/dijet/blind/FitResults_${box}_2016.root --lumi 35.9 -c config/diphotons.config -b ${box} --year 2016 --eneScStatUp /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/DijetShapeInterpolator/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_${coup}_${cat}_2016_energyScaleStatUp.root --eneScStatDown /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/DijetShapeInterpolator/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_${coup}_${cat}_2016_energyScaleStatDown.root --eneScSystUp /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/DijetShapeInterpolator/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_${coup}_${cat}_2016_energyScaleSystUp.root --eneScSystDown /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/DijetShapeInterpolator/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_${coup}_${cat}_2016_energyScaleSystDown.root --eneScGainUp /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/DijetShapeInterpolator/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_${coup}_${cat}_2016_energyScaleGainUp.root --eneScGainDown /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/DijetShapeInterpolator/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_${coup}_${cat}_2016_energyScaleGainDown.root --eneScSigmaUp /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/DijetShapeInterpolator/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_${coup}_${cat}_2016_energySigmaUp.root --eneScSigmaDown /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/DijetShapeInterpolator/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_${coup}_${cat}_2016_energySigmaDown.root /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/DijetShapeInterpolator/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_${coup}_${cat}_2016.root; mv diphoton_combine_${mass}_${box}_2016.* test_directory/2016/${box}/.; done; done;
+*** Run grav
+#+begin_src bash
+#2016
+# Remember for me the yield was initially normalized to 1000/pb. So, here lumi 35.9 (-d test_directory/2016/${box} omitted)
+for mass in `seq 500 100 5000`; do for box in {"DiPhotons_kMpl001_EBEB","DiPhotons_kMpl001_EBEE"}; do echo ${box}; cat=`echo ${box}| cut -d"_" -f 3`; coup=`echo ${box}| cut -d"_" -f 2`; mkdir -p test_directory/2016/${box}; python python/WriteDataCard.py -m gg --mass ${mass} output/InputShapes_data_${cat}_2016.root -i bkgAltModels/dijet/blind/FitResults_${box}_2016.root --lumi 35.9 -c config/diphotons.config -b ${box} --year 2016 --eneScStatUp /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_${coup}_${cat}_2016_energyScaleStatUp.root --eneScStatDown /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_${coup}_${cat}_2016_energyScaleStatDown.root --eneScSystUp /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_${coup}_${cat}_2016_energyScaleSystUp.root --eneScSystDown /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_${coup}_${cat}_2016_energyScaleSystDown.root --eneScGainUp /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_${coup}_${cat}_2016_energyScaleGainUp.root --eneScGainDown /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_${coup}_${cat}_2016_energyScaleGainDown.root --eneScSigmaUp /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_${coup}_${cat}_2016_energySigmaUp.root --eneScSigmaDown /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_${coup}_${cat}_2016_energySigmaDown.root   --SFScaleUp /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_${coup}_${cat}_2016_SFScaleUp.root      --SFScaleDown /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_${coup}_${cat}_2016_SFScaleDown.root      --PUScaleUp /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_${coup}_${cat}_2016_PUScaleUp.root      --PUScaleDown /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_${coup}_${cat}_2016_PUScaleDown.root /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_${coup}_${cat}_2016.root; mv diphoton_combine_${mass}_${box}_2016.* test_directory/2016/${box}/.; done; done;
 
-#2017 
+for mass in `seq 500 100 7000`; do for box in {"DiPhotons_kMpl01_EBEB","DiPhotons_kMpl01_EBEE","DiPhotons_kMpl02_EBEB","DiPhotons_kMpl02_EBEE"}; do echo ${box}; cat=`echo ${box}| cut -d"_" -f 3`; coup=`echo ${box}| cut -d"_" -f 2`; mkdir -p test_directory/2016/${box}; python python/WriteDataCard.py -m gg --mass ${mass} output/InputShapes_data_${cat}_2016.root -i bkgAltModels/dijet/blind/FitResults_${box}_2016.root --lumi 35.9 -c config/diphotons.config -b ${box} --year 2016 --eneScStatUp /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_${coup}_${cat}_2016_energyScaleStatUp.root --eneScStatDown /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_${coup}_${cat}_2016_energyScaleStatDown.root --eneScSystUp /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_${coup}_${cat}_2016_energyScaleSystUp.root --eneScSystDown /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_${coup}_${cat}_2016_energyScaleSystDown.root --eneScGainUp /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_${coup}_${cat}_2016_energyScaleGainUp.root --eneScGainDown /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_${coup}_${cat}_2016_energyScaleGainDown.root --eneScSigmaUp /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_${coup}_${cat}_2016_energySigmaUp.root --eneScSigmaDown /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_${coup}_${cat}_2016_energySigmaDown.root   --SFScaleUp /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_${coup}_${cat}_2016_SFScaleUp.root      --SFScaleDown /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_${coup}_${cat}_2016_SFScaleDown.root      --PUScaleUp /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_${coup}_${cat}_2016_PUScaleUp.root      --PUScaleDown /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_${coup}_${cat}_2016_PUScaleDown.root /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_${coup}_${cat}_2016.root; mv diphoton_combine_${mass}_${box}_2016.* test_directory/2016/${box}/.; done; done;
+
+
+
+#2017
 # Remember for me the yield was initially normalized to 1000/pb. So, here lumi 41.527 (-d test_directory/2017/${box} omitted)
-for mass in `seq 500 100 6000`; do for box in {"DiPhotons_kMpl001_EBEB","DiPhotons_kMpl001_EBEE","DiPhotons_kMpl01_EBEB","DiPhotons_kMpl01_EBEE","DiPhotons_kMpl02_EBEB","DiPhotons_kMpl02_EBEE"}; do echo ${box}; cat=`echo ${box}| cut -d"_" -f 3`; coup=`echo ${box}| cut -d"_" -f 2`; mkdir -p test_directory/2017/${box}; python python/WriteDataCard.py -m gg --mass ${mass} output/InputShapes_data_${cat}_2017.root -i bkgAltModels/dijet/blind/FitResults_${box}_2017.root --lumi 41.527 -c config/diphotons.config -b ${box} --year 2017 --eneScStatUp /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/DijetShapeInterpolator/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_${coup}_${cat}_2017_energyScaleStatUp.root --eneScStatDown /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/DijetShapeInterpolator/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_${coup}_${cat}_2017_energyScaleStatDown.root --eneScSystUp /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/DijetShapeInterpolator/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_${coup}_${cat}_2017_energyScaleSystUp.root --eneScSystDown /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/DijetShapeInterpolator/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_${coup}_${cat}_2017_energyScaleSystDown.root --eneScGainUp /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/DijetShapeInterpolator/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_${coup}_${cat}_2017_energyScaleGainUp.root --eneScGainDown /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/DijetShapeInterpolator/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_${coup}_${cat}_2017_energyScaleGainDown.root --eneScSigmaUp /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/DijetShapeInterpolator/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_${coup}_${cat}_2017_energySigmaUp.root --eneScSigmaDown /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/DijetShapeInterpolator/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_${coup}_${cat}_2017_energySigmaDown.root /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/DijetShapeInterpolator/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_${coup}_${cat}_2017.root; mv diphoton_combine_${mass}_${box}_2017.* test_directory/2017/${box}/.; done; done;
+for mass in `seq 500 100 5000`; do for box in {"DiPhotons_kMpl001_EBEB","DiPhotons_kMpl001_EBEE"}; do echo ${box}; cat=`echo ${box}| cut -d"_" -f 3`; coup=`echo ${box}| cut -d"_" -f 2`; mkdir -p test_directory/2017/${box}; python python/WriteDataCard.py -m gg --mass ${mass} output/InputShapes_data_${cat}_2017.root -i bkgAltModels/dijet/blind/FitResults_${box}_2017.root --lumi 41.527 -c config/diphotons.config -b ${box} --year 2017 --eneScStatUp /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_${coup}_${cat}_2017_energyScaleStatUp.root --eneScStatDown /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_${coup}_${cat}_2017_energyScaleStatDown.root --eneScSystUp /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_${coup}_${cat}_2017_energyScaleSystUp.root --eneScSystDown /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_${coup}_${cat}_2017_energyScaleSystDown.root --eneScGainUp /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_${coup}_${cat}_2017_energyScaleGainUp.root --eneScGainDown /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_${coup}_${cat}_2017_energyScaleGainDown.root --eneScSigmaUp /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_${coup}_${cat}_2017_energySigmaUp.root --eneScSigmaDown /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_${coup}_${cat}_2017_energySigmaDown.root   --SFScaleUp /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_${coup}_${cat}_2017_SFScaleUp.root      --SFScaleDown /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_${coup}_${cat}_2017_SFScaleDown.root      --PUScaleUp /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_${coup}_${cat}_2017_PUScaleUp.root      --PUScaleDown /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_${coup}_${cat}_2017_PUScaleDown.root /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_${coup}_${cat}_2017.root; mv diphoton_combine_${mass}_${box}_2017.* test_directory/2017/${box}/.; done; done;
 
-#2018 
-# Remember for me the yield was initially normalized to 1000/pb. So, here lumi 59.670 (-d test_directory/2018/${box} omitted)
-for mass in `seq 500 100 6000`; do for box in {"DiPhotons_kMpl001_EBEB","DiPhotons_kMpl001_EBEE","DiPhotons_kMpl01_EBEB","DiPhotons_kMpl01_EBEE","DiPhotons_kMpl02_EBEB","DiPhotons_kMpl02_EBEE"}; do echo ${box}; cat=`echo ${box}| cut -d"_" -f 3`; coup=`echo ${box}| cut -d"_" -f 2`; mkdir -p test_directory/2018/${box}; python python/WriteDataCard.py -m gg --mass ${mass} output/InputShapes_data_${cat}_2018.root -i bkgAltModels/dijet/blind/FitResults_${box}_2018.root --lumi 59.670 -c config/diphotons.config -b ${box} --year 2018 --eneScStatUp /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/DijetShapeInterpolator/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_${coup}_${cat}_2018_energyScaleStatUp.root --eneScStatDown /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/DijetShapeInterpolator/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_${coup}_${cat}_2018_energyScaleStatDown.root --eneScSystUp /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/DijetShapeInterpolator/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_${coup}_${cat}_2018_energyScaleSystUp.root --eneScSystDown /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/DijetShapeInterpolator/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_${coup}_${cat}_2018_energyScaleSystDown.root --eneScGainUp /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/DijetShapeInterpolator/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_${coup}_${cat}_2018_energyScaleGainUp.root --eneScGainDown /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/DijetShapeInterpolator/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_${coup}_${cat}_2018_energyScaleGainDown.root --eneScSigmaUp /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/DijetShapeInterpolator/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_${coup}_${cat}_2018_energySigmaUp.root --eneScSigmaDown /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/DijetShapeInterpolator/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_${coup}_${cat}_2018_energySigmaDown.root /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/DijetShapeInterpolator/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_${coup}_${cat}_2018.root; mv diphoton_combine_${mass}_${box}_2018.* test_directory/2018/${box}/. ;done; done;
+for mass in `seq 500 100 7000`; do for box in {"DiPhotons_kMpl01_EBEB","DiPhotons_kMpl01_EBEE","DiPhotons_kMpl02_EBEB","DiPhotons_kMpl02_EBEE"}; do echo ${box}; cat=`echo ${box}| cut -d"_" -f 3`; coup=`echo ${box}| cut -d"_" -f 2`; mkdir -p test_directory/2017/${box}; python python/WriteDataCard.py -m gg --mass ${mass} output/InputShapes_data_${cat}_2017.root -i bkgAltModels/dijet/blind/FitResults_${box}_2017.root --lumi 41.527 -c config/diphotons.config -b ${box} --year 2017 --eneScStatUp /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_${coup}_${cat}_2017_energyScaleStatUp.root --eneScStatDown /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_${coup}_${cat}_2017_energyScaleStatDown.root --eneScSystUp /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_${coup}_${cat}_2017_energyScaleSystUp.root --eneScSystDown /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_${coup}_${cat}_2017_energyScaleSystDown.root --eneScGainUp /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_${coup}_${cat}_2017_energyScaleGainUp.root --eneScGainDown /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_${coup}_${cat}_2017_energyScaleGainDown.root --eneScSigmaUp /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_${coup}_${cat}_2017_energySigmaUp.root --eneScSigmaDown /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_${coup}_${cat}_2017_energySigmaDown.root   --SFScaleUp /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_${coup}_${cat}_2017_SFScaleUp.root      --SFScaleDown /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_${coup}_${cat}_2017_SFScaleDown.root      --PUScaleUp /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_${coup}_${cat}_2017_PUScaleUp.root      --PUScaleDown /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_${coup}_${cat}_2017_PUScaleDown.root /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_${coup}_${cat}_2017.root; mv diphoton_combine_${mass}_${box}_2017.* test_directory/2017/${box}/.; done; done;
+
+#2018
+# Remember for me the yield was initially normalized to 1000/pb. So, here lumi 59.67 (-d test_directory/2018/${box} omitted)
+for mass in `seq 500 100 5000`; do for box in {"DiPhotons_kMpl001_EBEB","DiPhotons_kMpl001_EBEE"}; do echo ${box}; cat=`echo ${box}| cut -d"_" -f 3`; coup=`echo ${box}| cut -d"_" -f 2`; mkdir -p test_directory/2018/${box}; python python/WriteDataCard.py -m gg --mass ${mass} output/InputShapes_data_${cat}_2018.root -i bkgAltModels/dijet/blind/FitResults_${box}_2018.root --lumi 59.670 -c config/diphotons.config -b ${box} --year 2018 --eneScStatUp /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_${coup}_${cat}_2018_energyScaleStatUp.root --eneScStatDown /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_${coup}_${cat}_2018_energyScaleStatDown.root --eneScSystUp /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_${coup}_${cat}_2018_energyScaleSystUp.root --eneScSystDown /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_${coup}_${cat}_2018_energyScaleSystDown.root --eneScGainUp /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_${coup}_${cat}_2018_energyScaleGainUp.root --eneScGainDown /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_${coup}_${cat}_2018_energyScaleGainDown.root --eneScSigmaUp /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_${coup}_${cat}_2018_energySigmaUp.root --eneScSigmaDown /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_${coup}_${cat}_2018_energySigmaDown.root   --SFScaleUp /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_${coup}_${cat}_2018_SFScaleUp.root      --SFScaleDown /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_${coup}_${cat}_2018_SFScaleDown.root      --PUScaleUp /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_${coup}_${cat}_2018_PUScaleUp.root      --PUScaleDown /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_${coup}_${cat}_2018_PUScaleDown.root /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_${coup}_${cat}_2018.root; mv diphoton_combine_${mass}_${box}_2018.* test_directory/2018/${box}/.; done; done;
+
+for mass in `seq 500 100 7000`; do for box in {"DiPhotons_kMpl01_EBEB","DiPhotons_kMpl01_EBEE","DiPhotons_kMpl02_EBEB","DiPhotons_kMpl02_EBEE"}; do echo ${box}; cat=`echo ${box}| cut -d"_" -f 3`; coup=`echo ${box}| cut -d"_" -f 2`; mkdir -p test_directory/2018/${box}; python python/WriteDataCard.py -m gg --mass ${mass} output/InputShapes_data_${cat}_2018.root -i bkgAltModels/dijet/blind/FitResults_${box}_2018.root --lumi 59.670 -c config/diphotons.config -b ${box} --year 2018 --eneScStatUp /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_${coup}_${cat}_2018_energyScaleStatUp.root --eneScStatDown /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_${coup}_${cat}_2018_energyScaleStatDown.root --eneScSystUp /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_${coup}_${cat}_2018_energyScaleSystUp.root --eneScSystDown /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_${coup}_${cat}_2018_energyScaleSystDown.root --eneScGainUp /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_${coup}_${cat}_2018_energyScaleGainUp.root --eneScGainDown /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_${coup}_${cat}_2018_energyScaleGainDown.root --eneScSigmaUp /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_${coup}_${cat}_2018_energySigmaUp.root --eneScSigmaDown /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_${coup}_${cat}_2018_energySigmaDown.root   --SFScaleUp /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_${coup}_${cat}_2018_SFScaleUp.root      --SFScaleDown /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_${coup}_${cat}_2018_SFScaleDown.root      --PUScaleUp /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_${coup}_${cat}_2018_PUScaleUp.root      --PUScaleDown /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_${coup}_${cat}_2018_PUScaleDown.root /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_${coup}_${cat}_2018.root; mv diphoton_combine_${mass}_${box}_2018.* test_directory/2018/${box}/.; done; done;
 
 #combine years and channels
-themainpath="/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/CMSDIJET/DijetRootTreeAnalyzer/test_directory"
+themainpath="/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/CMSDIJET/DijetRootTreeAnalyzer/test_directory"
 
 cd ${themainpath}/
 mkdir fullRun2
 cd fullRun2
 
-for scenario in {"DiPhotons_kMpl001","DiPhotons_kMpl01","DiPhotons_kMpl02"}; do echo ${scenario}; for mass in `seq 500 100 6000`; do echo ${mass}; combineCards.py ${themainpath}/2016/${scenario}_EBEB/diphoton_combine_${mass}_${scenario}_EBEB_2016.txt ${themainpath}/2016/${scenario}_EBEE/diphoton_combine_${mass}_${scenario}_EBEE_2016.txt ${themainpath}/2017/${scenario}_EBEB/diphoton_combine_${mass}_${scenario}_EBEB_2017.txt ${themainpath}/2017/${scenario}_EBEE/diphoton_combine_${mass}_${scenario}_EBEE_2017.txt ${themainpath}/2018/${scenario}_EBEB/diphoton_combine_${mass}_${scenario}_EBEB_2018.txt ${themainpath}/2018/${scenario}_EBEE/diphoton_combine_${mass}_${scenario}_EBEE_2018.txt > diphoton_combine_${mass}_${scenario}.txt; done; done; 
+for scenario in {"DiPhotons_kMpl001","DiPhotons_kMpl01","DiPhotons_kMpl02"}; do echo ${scenario}; for mass in `seq 500 100 7000`; do echo ${mass}; combineCards.py ${themainpath}/2016/${scenario}_EBEB/diphoton_combine_${mass}_${scenario}_EBEB_2016.txt ${themainpath}/2016/${scenario}_EBEE/diphoton_combine_${mass}_${scenario}_EBEE_2016.txt ${themainpath}/2017/${scenario}_EBEB/diphoton_combine_${mass}_${scenario}_EBEB_2017.txt ${themainpath}/2017/${scenario}_EBEE/diphoton_combine_${mass}_${scenario}_EBEE_2017.txt ${themainpath}/2018/${scenario}_EBEB/diphoton_combine_${mass}_${scenario}_EBEB_2018.txt ${themainpath}/2018/${scenario}_EBEE/diphoton_combine_${mass}_${scenario}_EBEE_2018.txt > diphoton_combine_${mass}_${scenario}.txt; done; done;
 
+cd ${themainpath}/
+mkdir 2016
+cd fullRun2
 
-The datacard should be in fullRun2 directory, one for each coupling scenario. 
+for year in {2016,2017,2018}; do echo ${year}; cd ${themainpath}/${year}; for scenario in {"DiPhotons_kMpl001","DiPhotons_kMpl01","DiPhotons_kMpl02"}; do echo ${scenario}; for mass in `seq 500 100 7000`; do echo ${mass}; combineCards.py  ${themainpath}/${year}/${scenario}_EBEB/diphoton_combine_${mass}_${scenario}_EBEB_${year}.txt ${themainpath}/${year}/${scenario}_EBEE/diphoton_combine_${mass}_${scenario}_EBEE_${year}.txt  > diphoton_combine_${mass}_${scenario}_${year}.txt; done; done;
+
+for scenario in {"DiPhotons_kMpl001","DiPhotons_kMpl01","DiPhotons_kMpl02"}; do echo ${scenario}; for mass in `seq 500 100 7000`; do echo ${mass}; combineCards.py  ${themainpath}/2017/${scenario}_EBEB/diphoton_combine_${mass}_${scenario}_EBEB_2017.txt ${themainpath}/2017/${scenario}_EBEE/diphoton_combine_${mass}_${scenario}_EBEE_2017.txt  > diphoton_combine_${mass}_${scenario}_2017.txt; done; done;
+
+for scenario in {"DiPhotons_kMpl001","DiPhotons_kMpl01","DiPhotons_kMpl02"}; do echo ${scenario}; for mass in `seq 500 100 7000`; do echo ${mass}; combineCards.py  ${themainpath}/2018/${scenario}_EBEB/diphoton_combine_${mass}_${scenario}_EBEB_2018.txt ${themainpath}/2018/${scenario}_EBEE/diphoton_combine_${mass}_${scenario}_EBEE_2018.txt  > diphoton_combine_${mass}_${scenario}_2018.txt; done; done;
+
+The datacard should be in fullRun2 directory, one for each coupling scenario.
 
 Single mass point cat coupling example
 python python/WriteDataCard.py \
@@ -295,13 +589,115 @@ output/InputShapes_data_EBEB_2017.root \
 -d test_directory \
 --year 2017 \
 /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/DijetShapeInterpolator/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_kMpl001_EBEB_2017.root
+#+end_src
 
 #=======================================================
+*** Run heavyhiggs
+#+begin_src bash
+#2016
+# Remember for me the yield was initially normalized to 1000/pb. So, here lumi 41.527 (-d test_directory/2016/${box} omitted)
+for mass in `seq 500 100 5000`; do for box in {"DiPhotons_0p014_EBEB","DiPhotons_0p014_EBEE","DiPhotons_1p4_EBEB","DiPhotons_1p4_EBEE","DiPhotons_5p6_EBEB","DiPhotons_5p6_EBEE"}; do echo ${box}; cat=`echo ${box}| cut -d"_" -f 3`; coup=`echo ${box}| cut -d"_" -f 2`; mkdir -p test_directory/2016/${box}; python python/WriteDataCard.py -m gg --mass ${mass} output/InputShapes_data_${cat}_2016.root -i bkgAltModels/dijet/blind/FitResults_${box}_2016.root --lumi 35.9 -c config/diphotons.config -b ${box} --year 2016 --eneScStatUp /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/ResonanceShapes_InputShapes_GluGluSpin0ToGammaGamma_W_${coup}_${cat}_2016_energyScaleStatUp.root --eneScStatDown /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/ResonanceShapes_InputShapes_GluGluSpin0ToGammaGamma_W_${coup}_${cat}_2016_energyScaleStatDown.root --eneScSystUp /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/ResonanceShapes_InputShapes_GluGluSpin0ToGammaGamma_W_${coup}_${cat}_2016_energyScaleSystUp.root --eneScSystDown /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/ResonanceShapes_InputShapes_GluGluSpin0ToGammaGamma_W_${coup}_${cat}_2016_energyScaleSystDown.root --eneScGainUp /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/ResonanceShapes_InputShapes_GluGluSpin0ToGammaGamma_W_${coup}_${cat}_2016_energyScaleGainUp.root --eneScGainDown /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/ResonanceShapes_InputShapes_GluGluSpin0ToGammaGamma_W_${coup}_${cat}_2016_energyScaleGainDown.root --eneScSigmaUp /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/ResonanceShapes_InputShapes_GluGluSpin0ToGammaGamma_W_${coup}_${cat}_2016_energySigmaUp.root --eneScSigmaDown /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/ResonanceShapes_InputShapes_GluGluSpin0ToGammaGamma_W_${coup}_${cat}_2016_energySigmaDown.root   --SFScaleUp /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/ResonanceShapes_InputShapes_GluGluSpin0ToGammaGamma_W_${coup}_${cat}_2016_SFScaleUp.root      --SFScaleDown /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/ResonanceShapes_InputShapes_GluGluSpin0ToGammaGamma_W_${coup}_${cat}_2016_SFScaleDown.root      --PUScaleUp /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/ResonanceShapes_InputShapes_GluGluSpin0ToGammaGamma_W_${coup}_${cat}_2016_PUScaleUp.root      --PUScaleDown /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/ResonanceShapes_InputShapes_GluGluSpin0ToGammaGamma_W_${coup}_${cat}_2016_PUScaleDown.root /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/ResonanceShapes_InputShapes_GluGluSpin0ToGammaGamma_W_${coup}_${cat}_2016.root; mv diphoton_combine_${mass}_${box}_2016.* test_directory/2016/${box}/.; done; done;
+
+
+#2017
+# Remember for me the yield was initially normalized to 1000/pb. So, here lumi 41.527 (-d test_directory/2017/${box} omitted)
+for mass in `seq 500 100 5000`; do for box in {"DiPhotons_0p014_EBEB","DiPhotons_0p014_EBEE","DiPhotons_1p4_EBEB","DiPhotons_1p4_EBEE","DiPhotons_5p6_EBEB","DiPhotons_5p6_EBEE"}; do echo ${box}; cat=`echo ${box}| cut -d"_" -f 3`; coup=`echo ${box}| cut -d"_" -f 2`; mkdir -p test_directory/2017/${box}; python python/WriteDataCard.py -m gg --mass ${mass} output/InputShapes_data_${cat}_2017.root -i bkgAltModels/dijet/blind/FitResults_${box}_2017.root --lumi 41.527 -c config/diphotons.config -b ${box} --year 2017 --eneScStatUp /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/ResonanceShapes_InputShapes_GluGluSpin0ToGammaGamma_W_${coup}_${cat}_2017_energyScaleStatUp.root --eneScStatDown /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/ResonanceShapes_InputShapes_GluGluSpin0ToGammaGamma_W_${coup}_${cat}_2017_energyScaleStatDown.root --eneScSystUp /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/ResonanceShapes_InputShapes_GluGluSpin0ToGammaGamma_W_${coup}_${cat}_2017_energyScaleSystUp.root --eneScSystDown /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/ResonanceShapes_InputShapes_GluGluSpin0ToGammaGamma_W_${coup}_${cat}_2017_energyScaleSystDown.root --eneScGainUp /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/ResonanceShapes_InputShapes_GluGluSpin0ToGammaGamma_W_${coup}_${cat}_2017_energyScaleGainUp.root --eneScGainDown /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/ResonanceShapes_InputShapes_GluGluSpin0ToGammaGamma_W_${coup}_${cat}_2017_energyScaleGainDown.root --eneScSigmaUp /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/ResonanceShapes_InputShapes_GluGluSpin0ToGammaGamma_W_${coup}_${cat}_2017_energySigmaUp.root --eneScSigmaDown /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/ResonanceShapes_InputShapes_GluGluSpin0ToGammaGamma_W_${coup}_${cat}_2017_energySigmaDown.root   --SFScaleUp /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/ResonanceShapes_InputShapes_GluGluSpin0ToGammaGamma_W_${coup}_${cat}_2017_SFScaleUp.root      --SFScaleDown /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/ResonanceShapes_InputShapes_GluGluSpin0ToGammaGamma_W_${coup}_${cat}_2017_SFScaleDown.root      --PUScaleUp /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/ResonanceShapes_InputShapes_GluGluSpin0ToGammaGamma_W_${coup}_${cat}_2017_PUScaleUp.root      --PUScaleDown /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/ResonanceShapes_InputShapes_GluGluSpin0ToGammaGamma_W_${coup}_${cat}_2017_PUScaleDown.root /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/ResonanceShapes_InputShapes_GluGluSpin0ToGammaGamma_W_${coup}_${cat}_2017.root; mv diphoton_combine_${mass}_${box}_2017.* test_directory/2017/${box}/.; done; done;
+
+#2018
+# Remember for me the yield was initially normalized to 1000/pb. So, here lumi 41.527 (-d test_directory/2018/${box} omitted)
+for mass in `seq 500 100 5000`; do for box in {"DiPhotons_0p014_EBEB","DiPhotons_0p014_EBEE","DiPhotons_1p4_EBEB","DiPhotons_1p4_EBEE","DiPhotons_5p6_EBEB","DiPhotons_5p6_EBEE"}; do echo ${box}; cat=`echo ${box}| cut -d"_" -f 3`; coup=`echo ${box}| cut -d"_" -f 2`; mkdir -p test_directory/2018/${box}; python python/WriteDataCard.py -m gg --mass ${mass} output/InputShapes_data_${cat}_2018.root -i bkgAltModels/dijet/blind/FitResults_${box}_2018.root --lumi 59.670 -c config/diphotons.config -b ${box} --year 2018 --eneScStatUp /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/ResonanceShapes_InputShapes_GluGluSpin0ToGammaGamma_W_${coup}_${cat}_2018_energyScaleStatUp.root --eneScStatDown /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/ResonanceShapes_InputShapes_GluGluSpin0ToGammaGamma_W_${coup}_${cat}_2018_energyScaleStatDown.root --eneScSystUp /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/ResonanceShapes_InputShapes_GluGluSpin0ToGammaGamma_W_${coup}_${cat}_2018_energyScaleSystUp.root --eneScSystDown /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/ResonanceShapes_InputShapes_GluGluSpin0ToGammaGamma_W_${coup}_${cat}_2018_energyScaleSystDown.root --eneScGainUp /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/ResonanceShapes_InputShapes_GluGluSpin0ToGammaGamma_W_${coup}_${cat}_2018_energyScaleGainUp.root --eneScGainDown /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/ResonanceShapes_InputShapes_GluGluSpin0ToGammaGamma_W_${coup}_${cat}_2018_energyScaleGainDown.root --eneScSigmaUp /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/ResonanceShapes_InputShapes_GluGluSpin0ToGammaGamma_W_${coup}_${cat}_2018_energySigmaUp.root --eneScSigmaDown /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/ResonanceShapes_InputShapes_GluGluSpin0ToGammaGamma_W_${coup}_${cat}_2018_energySigmaDown.root   --SFScaleUp /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/ResonanceShapes_InputShapes_GluGluSpin0ToGammaGamma_W_${coup}_${cat}_2018_SFScaleUp.root      --SFScaleDown /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/ResonanceShapes_InputShapes_GluGluSpin0ToGammaGamma_W_${coup}_${cat}_2018_SFScaleDown.root      --PUScaleUp /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/ResonanceShapes_InputShapes_GluGluSpin0ToGammaGamma_W_${coup}_${cat}_2018_PUScaleUp.root      --PUScaleDown /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/ResonanceShapes_InputShapes_GluGluSpin0ToGammaGamma_W_${coup}_${cat}_2018_PUScaleDown.root /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/ResonanceShapes_InputShapes_GluGluSpin0ToGammaGamma_W_${coup}_${cat}_2018.root; mv diphoton_combine_${mass}_${box}_2018.* test_directory/2018/${box}/.; done; done;
+
+#combine years and channels
+themainpath="/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/CMSDIJET/DijetRootTreeAnalyzer/test_directory"
+
+cd ${themainpath}/
+mkdir fullRun2
+cd fullRun2
+
+for scenario in {"DiPhotons_0p014","DiPhotons_1p4","DiPhotons_5p6"}; do echo ${scenario}; for mass in `seq 500 100 7000`; do echo ${mass}; combineCards.py ${themainpath}/2016/${scenario}_EBEB/diphoton_combine_${mass}_${scenario}_EBEB_2016.txt ${themainpath}/2016/${scenario}_EBEE/diphoton_combine_${mass}_${scenario}_EBEE_2016.txt ${themainpath}/2017/${scenario}_EBEB/diphoton_combine_${mass}_${scenario}_EBEB_2017.txt ${themainpath}/2017/${scenario}_EBEE/diphoton_combine_${mass}_${scenario}_EBEE_2017.txt ${themainpath}/2018/${scenario}_EBEB/diphoton_combine_${mass}_${scenario}_EBEB_2018.txt ${themainpath}/2018/${scenario}_EBEE/diphoton_combine_${mass}_${scenario}_EBEE_2018.txt > diphoton_combine_${mass}_${scenario}.txt; done; done;
+
+for scenario in {"DiPhotons_0p014","DiPhotons_1p4","DiPhotons_5p6"}; do echo ${scenario}; for mass in `seq 500 100 7000`; do echo ${mass}; combineCards.py  ${themainpath}/2016/${scenario}_EBEB/diphoton_combine_${mass}_${scenario}_EBEB_2016.txt ${themainpath}/2016/${scenario}_EBEE/diphoton_combine_${mass}_${scenario}_EBEE_2016.txt  > diphoton_combine_${mass}_${scenario}_2016.txt; done; done;
+
+for scenario in {"DiPhotons_0p014","DiPhotons_1p4","DiPhotons_5p6"}; do echo ${scenario}; for mass in `seq 500 100 7000`; do echo ${mass}; combineCards.py  ${themainpath}/2017/${scenario}_EBEB/diphoton_combine_${mass}_${scenario}_EBEB_2017.txt ${themainpath}/2017/${scenario}_EBEE/diphoton_combine_${mass}_${scenario}_EBEE_2017.txt  > diphoton_combine_${mass}_${scenario}_2017.txt; done; done;
+
+for scenario in {"DiPhotons_0p014","DiPhotons_1p4","DiPhotons_5p6"}; do echo ${scenario}; for mass in `seq 500 100 7000`; do echo ${mass}; combineCards.py  ${themainpath}/2018/${scenario}_EBEB/diphoton_combine_${mass}_${scenario}_EBEB_2018.txt ${themainpath}/2018/${scenario}_EBEE/diphoton_combine_${mass}_${scenario}_EBEE_2018.txt  > diphoton_combine_${mass}_${scenario}_2018.txt; done; done;
+
+
+The datacard should be in fullRun2 directory, one for each coupling scenario.
+
+Single mass point cat coupling example
+python python/WriteDataCard.py \
+-m gg \
+--mass 1000 \
+output/InputShapes_data_EBEB_2017.root \
+-i test_directory/FitResults_DiPhotons_kMpl001_EBEB_2017.root \
+--lumi 41527 \
+-c config/diphotons.config \
+-b DiPhotons_kMpl001_EBEB \
+-d test_directory \
+--year 2017 \
+/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/DijetShapeInterpolator/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_kMpl001_EBEB_2017.root
+#+end_src
+
+** Write test datacards (large scale factor systematics)
+
+*** IMPORTANT COMMENTS:
+
+1. The normalization is done through the file:
+
+/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/SignalNorm.txt
+
+which is created from the signalNorm.cc code based on efficiency x acceptance!
+
+2. The -i option needs the results from the bkg only fit which I am putting in
+bkgAltModels/dijet/blind/FitResults_${box}_YEAR.root
+
+*** run code
+#+begin_src bash
+#2016
+# Remember for me the yield was initially normalized to 1000/pb. So, here lumi 41.527 (-d test_directory/2016/${box} omitted)
+for mass in `seq 500 100 6000`; do for box in {"DiPhotons_kMpl001_EBEB","DiPhotons_kMpl001_EBEE","DiPhotons_kMpl01_EBEB","DiPhotons_kMpl01_EBEE","DiPhotons_kMpl02_EBEB","DiPhotons_kMpl02_EBEE"}; do echo ${box}; cat=`echo ${box}| cut -d"_" -f 3`; coup=`echo ${box}| cut -d"_" -f 2`; mkdir -p test_directory/2016/${box}; python python/WriteDataCard.py -m gg --mass ${mass} output/InputShapes_data_${cat}_2016.root -i bkgAltModels/dijet/blind/FitResults_${box}_2016.root --lumi 35.9 -c config/diphotons.config -b ${box} --year 2016 --eneScStatUp /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_${coup}_${cat}_2016_energyScaleStatUp.root --eneScStatDown /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_${coup}_${cat}_2016_energyScaleStatDown.root --eneScSystUp /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_${coup}_${cat}_2016_energyScaleSystUp.root --eneScSystDown /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_${coup}_${cat}_2016_energyScaleSystDown.root --eneScGainUp /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_${coup}_${cat}_2016_energyScaleGainUp.root --eneScGainDown /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_${coup}_${cat}_2016_energyScaleGainDown.root --eneScSigmaUp /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_${coup}_${cat}_2016_energySigmaUp.root --eneScSigmaDown /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_${coup}_${cat}_2016_energySigmaDown.root   --SFScaleUp /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_${coup}_${cat}_2016_SFScaleUp.root      --SFScaleDown /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_${coup}_${cat}_2016_SFScaleDown.root      --PUScaleUp /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_${coup}_${cat}_2016_PUScaleUp.root      --PUScaleDown /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_${coup}_${cat}_2016_PUScaleDown.root /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_${coup}_${cat}_2016.root; mv diphoton_combine_${mass}_${box}_2016.* test_directory/2016/${box}/.; done; done;
+
+
+#2017
+# Remember for me the yield was initially normalized to 1000/pb. So, here lumi 41.527 (-d test_directory/2017/${box} omitted)
+for mass in `seq 500 100 6000`; do for box in {"DiPhotons_kMpl001_EBEB","DiPhotons_kMpl001_EBEE","DiPhotons_kMpl01_EBEB","DiPhotons_kMpl01_EBEE","DiPhotons_kMpl02_EBEB","DiPhotons_kMpl02_EBEE"}; do echo ${box}; cat=`echo ${box}| cut -d"_" -f 3`; coup=`echo ${box}| cut -d"_" -f 2`; mkdir -p test_directory/2017/${box}; python python/WriteDataCard.py -m gg --mass ${mass} output/InputShapes_data_${cat}_2017.root -i bkgAltModels/dijet/blind/FitResults_${box}_2017.root --lumi 41.527 -c config/diphotons.config -b ${box} --year 2017 --eneScStatUp /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_${coup}_${cat}_2017_energyScaleStatUp.root --eneScStatDown /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_${coup}_${cat}_2017_energyScaleStatDown.root --eneScSystUp /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_${coup}_${cat}_2017_energyScaleSystUp.root --eneScSystDown /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_${coup}_${cat}_2017_energyScaleSystDown.root --eneScGainUp /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_${coup}_${cat}_2017_energyScaleGainUp.root --eneScGainDown /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_${coup}_${cat}_2017_energyScaleGainDown.root --eneScSigmaUp /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_${coup}_${cat}_2017_energySigmaUp.root --eneScSigmaDown /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_${coup}_${cat}_2017_energySigmaDown.root   --SFScaleUp /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_${coup}_${cat}_2017_SFScaleUp.root      --SFScaleDown /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_${coup}_${cat}_2017_SFScaleDown.root      --PUScaleUp /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_${coup}_${cat}_2017_PUScaleUp.root      --PUScaleDown /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_${coup}_${cat}_2017_PUScaleDown.root /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_${coup}_${cat}_2017.root; mv diphoton_combine_${mass}_${box}_2017.* test_directory/2017/${box}/.; done; done;
+
+#2018
+# Remember for me the yield was initially normalized to 1000/pb. So, here lumi 41.527 (-d test_directory/2018/${box} omitted)
+for mass in `seq 500 100 6000`; do for box in {"DiPhotons_kMpl001_EBEB","DiPhotons_kMpl001_EBEE","DiPhotons_kMpl01_EBEB","DiPhotons_kMpl01_EBEE","DiPhotons_kMpl02_EBEB","DiPhotons_kMpl02_EBEE"}; do echo ${box}; cat=`echo ${box}| cut -d"_" -f 3`; coup=`echo ${box}| cut -d"_" -f 2`; mkdir -p test_directory/2018/${box}; python python/WriteDataCard.py -m gg --mass ${mass} output/InputShapes_data_${cat}_2018.root -i bkgAltModels/dijet/blind/FitResults_${box}_2018.root --lumi 59.670 -c config/diphotons.config -b ${box} --year 2018 --eneScStatUp /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_${coup}_${cat}_2018_energyScaleStatUp.root --eneScStatDown /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_${coup}_${cat}_2018_energyScaleStatDown.root --eneScSystUp /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_${coup}_${cat}_2018_energyScaleSystUp.root --eneScSystDown /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_${coup}_${cat}_2018_energyScaleSystDown.root --eneScGainUp /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_${coup}_${cat}_2018_energyScaleGainUp.root --eneScGainDown /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_${coup}_${cat}_2018_energyScaleGainDown.root --eneScSigmaUp /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_${coup}_${cat}_2018_energySigmaUp.root --eneScSigmaDown /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_${coup}_${cat}_2018_energySigmaDown.root   --SFScaleUp /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_${coup}_${cat}_2018_SFScaleUp.root      --SFScaleDown /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_${coup}_${cat}_2018_SFScaleDown.root      --PUScaleUp /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_${coup}_${cat}_2018_PUScaleUp.root      --PUScaleDown /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_${coup}_${cat}_2018_PUScaleDown.root /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_${coup}_${cat}_2018.root; mv diphoton_combine_${mass}_${box}_2018.* test_directory/2018/${box}/.; done; done;
+
+#combine years and channels
+themainpath="/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/CMSDIJET/DijetRootTreeAnalyzer/test_directory"
+
+cd ${themainpath}/
+mkdir fullRun2
+cd fullRun2
+
+for scenario in {"DiPhotons_kMpl001","DiPhotons_kMpl01","DiPhotons_kMpl02"}; do echo ${scenario}; for mass in `seq 500 100 6000`; do echo ${mass}; combineCards.py ${themainpath}/2016/${scenario}_EBEB/diphoton_combine_${mass}_${scenario}_EBEB_2016.txt ${themainpath}/2016/${scenario}_EBEE/diphoton_combine_${mass}_${scenario}_EBEE_2016.txt ${themainpath}/2017/${scenario}_EBEB/diphoton_combine_${mass}_${scenario}_EBEB_2017.txt ${themainpath}/2017/${scenario}_EBEE/diphoton_combine_${mass}_${scenario}_EBEE_2017.txt ${themainpath}/2018/${scenario}_EBEB/diphoton_combine_${mass}_${scenario}_EBEB_2018.txt ${themainpath}/2018/${scenario}_EBEE/diphoton_combine_${mass}_${scenario}_EBEE_2018.txt > diphoton_combine_${mass}_${scenario}.txt; done; done;
+
+for scenario in {"DiPhotons_kMpl001","DiPhotons_kMpl01","DiPhotons_kMpl02"}; do echo ${scenario}; for mass in `seq 500 100 6000`; do echo ${mass}; combineCards.py  ${themainpath}/2017/${scenario}_EBEB/diphoton_combine_${mass}_${scenario}_EBEB_2017.txt ${themainpath}/2017/${scenario}_EBEE/diphoton_combine_${mass}_${scenario}_EBEE_2017.txt  > diphoton_combine_${mass}_${scenario}_2017.txt; done; done;
+
+The datacard should be in fullRun2 directory, one for each coupling scenario.
+
+Single mass point cat coupling example
+python python/WriteDataCard.py \
+-m gg \
+--mass 1000 \
+output/InputShapes_data_EBEB_2017.root \
+-i test_directory/FitResults_DiPhotons_kMpl001_EBEB_2017.root \
+--lumi 41527 \
+-c config/diphotons.config \
+-b DiPhotons_kMpl001_EBEB \
+-d test_directory \
+--year 2017 \
+/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/DijetShapeInterpolator/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_kMpl001_EBEB_2017.root
+#+end_src
+
 * Bias
-#=======================================================
-
-We will first need to define the alternative background models. 
-Functions that work are: 
+** Alternative bkg models
+We will first need to define the alternative background models.
+Functions that work are:
 
 {"dijet","expow1","invpow1","invpowlin1"}
 
@@ -309,48 +705,58 @@ Functions that work are:
 #BLIND
 #------
 
+#+begin_src bash
 #2016 Lumi 35900  {"dijet","expow1","invpow1","invpowlin1"}
 for bkgmodel in {"dijet","expow1","invpow1","invpowlin1"}; do echo ${bkgmodel}; mkdir -p bkgAltModels/${bkgmodel}/blind; for coup in {"kMpl001","kMpl01","kMpl02","0p014","1p4","5p6"}; do echo $coup; for cat in {"EBEB","EBEE"}; do echo $cat; python python/BinnedFit.py -c config/diphotons_${bkgmodel}.config -l 35900 -b DiPhotons_${coup}_${cat} -d bkgAltModels/${bkgmodel}/blind --fit-spectrum --plot-region Low --coup $coup --cat $cat --year 2016 output/InputShapes_data_${cat}_2016.root; done; done; done;
 
 #2017 Lumi 41527 {"dijet","expow1","invpow1","invpowlin1"}
 for bkgmodel in {"dijet","expow1","invpow1","invpowlin1"}; do echo ${bkgmodel}; mkdir -p bkgAltModels/${bkgmodel}/blind; for coup in {"kMpl001","kMpl01","kMpl02","0p014","1p4","5p6"}; do echo $coup; for cat in {"EBEB","EBEE"}; do echo $cat; python python/BinnedFit.py -c config/diphotons_${bkgmodel}.config -l 41527 -b DiPhotons_${coup}_${cat} -d bkgAltModels/${bkgmodel}/blind --fit-spectrum --plot-region Low --coup $coup --cat $cat --year 2017 output/InputShapes_data_${cat}_2017.root; done; done; done;
 
-#2018 Lumi 59670 
+#2018 Lumi 59670
 for bkgmodel in {"dijet","expow1","invpow1","invpowlin1"}; do echo ${bkgmodel}; mkdir -p bkgAltModels/${bkgmodel}/blind; for coup in {"kMpl001","kMpl01","kMpl02","0p014","1p4","5p6"}; do echo $coup; for cat in {"EBEB","EBEE"}; do echo $cat; python python/BinnedFit.py -c config/diphotons_${bkgmodel}.config -l 59670 -b DiPhotons_${coup}_${cat} -d bkgAltModels/${bkgmodel}/blind --fit-spectrum --plot-region Low --coup $coup --cat $cat --year 2018 output/InputShapes_data_${cat}_2018.root; done; done; done;
 
 #-------
 #UNBLIND
 #-------
 
-#2016 Lumi 35900  
+#2016 Lumi 35900
 for bkgmodel in {"dijet","expow1","invpow1","invpowlin1"}; do echo ${bkgmodel}; mkdir -p bkgAltModels/${bkgmodel}/unblind; for coup in {"kMpl001","kMpl01","kMpl02","0p014","1p4","5p6"}; do echo $coup; for cat in {"EBEB","EBEE"}; do echo $cat; python python/BinnedFit.py -c config/diphotons_${bkgmodel}.config -l 35900 -b DiPhotons_${coup}_${cat} -d bkgAltModels/${bkgmodel}/unblind --fit-spectrum --coup $coup --cat $cat --year 2016 output/InputShapes_data_${cat}_2016.root; done; done; done;
 
-#2017 Lumi 41527 
+#2017 Lumi 41527
 for bkgmodel in {"dijet","expow1","invpow1","invpowlin1"}; do echo ${bkgmodel}; mkdir -p bkgAltModels/${bkgmodel}/unblind; for coup in {"kMpl001","kMpl01","kMpl02","0p014","1p4","5p6"}; do echo $coup; for cat in {"EBEB","EBEE"}; do echo $cat; python python/BinnedFit.py -c config/diphotons_${bkgmodel}.config -l 41527 -b DiPhotons_${coup}_${cat} -d bkgAltModels/${bkgmodel}/unblind --fit-spectrum --coup $coup --cat $cat --year 2017 output/InputShapes_data_${cat}_2017.root; done; done; done;
 
-#2018 Lumi 59670 
+#2018 Lumi 59670
 for bkgmodel in {"dijet","expow1","invpow1","invpowlin1"}; do echo ${bkgmodel}; mkdir -p bkgAltModels/${bkgmodel}/unblind; for coup in {"kMpl001","kMpl01","kMpl02","0p014","1p4","5p6"}; do echo $coup; for cat in {"EBEB","EBEE"}; do echo $cat; python python/BinnedFit.py -c config/diphotons_${bkgmodel}.config -l 59670 -b DiPhotons_${coup}_${cat} -d bkgAltModels/${bkgmodel}/unblind --fit-spectrum --coup $coup --cat $cat --year 2018 output/InputShapes_data_${cat}_2018.root; done; done; done;
-
+#+end_src
 #-----------
 
-With the above results we should make the bias config files. To avoid mistakes we should read the results automatically. 
+** WriteDataCard naming
+- Comment these lines in the "WriteDataCard.py" like this to run the RunBias.py.
 
----->>>>> NOT NEEDED THE ONE BELOW!
-for year in {2017,2018}; do echo "====================================================";echo ${year};for box in {"DiPhotons_kMpl001_EBEB","DiPhotons_kMpl001_EBEE","DiPhotons_kMpl01_EBEB","DiPhotons_kMpl01_EBEE","DiPhotons_kMpl02_EBEB","DiPhotons_kMpl02_EBEE","DiPhotons_0p014_EBEB","DiPhotons_0p014_EBEE","DiPhotons_1p4_EBEB","DiPhotons_1p4_EBEE","DiPhotons_5p6_EBEB","DiPhotons_5p6_EBEE"}; do echo "==================================";echo \#${box}; for bkgmodel in {"dijet","expow1","invpow1","invpowlin1"}; do echo \#${bkgmodel}; python python/PrintMultiPdfVars.py -b ${box} bkgAltModels/${bkgmodel}/blind/FitResults_${box}_${year}.root -m ${bkgmodel}; done; done; done;
+#+begin_src python
+rates.extend([w.var('Ntot_%s_%s'%(box,bkg)).getVal() for bkg in bkgs]) #FIXME
+# rates.extend([w.var('Ntot_%s'%(bkg)).getVal() for bkg in bkgs])
+processes.extend(["%s_%s"%(box,bkg) for bkg in bkgs])
+# processes.extend(["%s"%(bkg) for bkg in bkgs])
+#+end_src
 
-You can now make the bias config file, one for each year. 
----->>>>> NOT NEEDED THE ONE ABOVE!
+** Run Bias Study
+With the above results we should make the bias config files. To avoid mistakes we should read the results automatically.
 
 Run combine-based bias studies with 1000 toys for r = 1 and XX pb cross section using 4-parameter modified exponential for generation and 4-parameter dijet functi0n for fitting (defined in confif/dijet_bias.config)
 
+
+#+begin_src bash
 mkdir signal_bias/
 
-#expow1
-
-time python python/RunBias.py -c config/diphotons_bias_2017.config -i bkgAltModels/expow1/blind/FitResults_DiPhotons_kMpl001_EBEB_2017.root -b DiPhotons_kMpl001_EBEB --mass 1000 -m gg -d signal_bias -r 1 -l 41.527 --year 2017 -t 10 --gen-pdf expow1 --fit-pdf dijet 
-
+# example test
+time python python/RunBias.py -c config/diphotons_bias_2017.config -i bkgAltModels/expow1/blind/FitResults_DiPhotons_kMpl001_EBEB_2017.root -b DiPhotons_kMpl001_EBEB --mass 1000 -m gg -d signal_bias -r 1 -l 41.527 --year 2017 -t 10 --gen-pdf expow1 --fit-pdf dijet
 
 
+
+#+end_src
+** plot
+#+begin_src bash
 export mainpath="/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis"
 
 for year in 2016; do echo "combine_bias_study.exe ${year} "${mainpath}/output/${year}/combine_bias/finaloutput" "${mainpath}/output/${year}/combine_bias/plots" "; combine_bias_study.exe ${year} "${mainpath}/output/${year}/combine_bias/finaloutput" "${mainpath}/output/${year}/combine_bias/plots"; done;
@@ -358,53 +764,101 @@ for year in 2016; do echo "combine_bias_study.exe ${year} "${mainpath}/output/${
 for year in 2017; do echo "combine_bias_study.exe ${year} "${mainpath}/output/${year}/combine_bias/finaloutput" "${mainpath}/output/${year}/combine_bias/plots" "; combine_bias_study.exe ${year} "${mainpath}/output/${year}/combine_bias/finaloutput" "${mainpath}/output/${year}/combine_bias/plots"; done;
 
 for year in 2018; do echo "combine_bias_study.exe ${year} "${mainpath}/output/${year}/combine_bias/finaloutput" "${mainpath}/output/${year}/combine_bias/plots" "; combine_bias_study.exe ${year} "${mainpath}/output/${year}/combine_bias/finaloutput" "${mainpath}/output/${year}/combine_bias/plots"; done;
+#+end_src
+** NOT NEEDED
+#+begin_src bash
+---->>>>> NOT NEEDED THE ONE BELOW!
+#+begin_src bash
+for year in {2017,2018}; do echo "====================================================";echo ${year};for box in {"DiPhotons_kMpl001_EBEB","DiPhotons_kMpl001_EBEE","DiPhotons_kMpl01_EBEB","DiPhotons_kMpl01_EBEE","DiPhotons_kMpl02_EBEB","DiPhotons_kMpl02_EBEE","DiPhotons_0p014_EBEB","DiPhotons_0p014_EBEE","DiPhotons_1p4_EBEB","DiPhotons_1p4_EBEE","DiPhotons_5p6_EBEB","DiPhotons_5p6_EBEE"}; do echo "==================================";echo \#${box}; for bkgmodel in {"dijet","expow1","invpow1","invpowlin1"}; do echo \#${bkgmodel}; python python/PrintMultiPdfVars.py -b ${box} bkgAltModels/${bkgmodel}/blind/FitResults_${box}_${year}.root -m ${bkgmodel}; done; done; done;
+#+end_src
+You can now make the bias config file, one for each year.
+---->>>>> NOT NEEDED THE ONE ABOVE!
+#+end_src
 
-
-#=======================================================
 * Combine: checks, limits
-#=======================================================
 
+** Systematics plots
+#+begin_src bash
+mkdir output/plots/sysplots
+export inputDir="/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/input/trees"
+for year in {"2016","2017","2018"}; do
+    for coup in {"kMpl001","kMpl01","kMpl02","0p014","1p4","5p6"}; do
+        echo "${inputDir}/*${coup}_M_*${year}.root"
+        python python/plotSystematics.py ${inputDir}/*${coup}_M_*${year}.root
+    done
+done
 
+#+end_src
+** Standard Checks
+
+#+begin_src bash
 #make some structure
 mkdir -p FinalResults/StandardChecks
 
 
-combine -M FitDiagnostics -t -1 --expectSignal 0 /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/CMSDIJET/DijetRootTreeAnalyzer/test_directory/diphoton_combine_1000_DiPhotons_kMpl001_2017.txt
+combine -M FitDiagnostics -t -1 --expectSignal 0 /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/CMSDIJET/DijetRootTreeAnalyzer/test_directory/2017/diphoton_combine_1000_DiPhotons_kMpl001_2017.txt
 
-combine -M FitDiagnostics -t -1 --expectSignal 1 /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/CMSDIJET/DijetRootTreeAnalyzer/test_directory/diphoton_combine_1000_DiPhotons_kMpl001_2017.txt
-------------------------------------
-Yields 
+combine -M FitDiagnostics -t -1 --expectSignal 1 /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/CMSDIJET/DijetRootTreeAnalyzer/test_directory/2017/diphoton_combine_1000_DiPhotons_kMpl001_2017.txt
+#+end_src
 
-We will perform a maximum likelihood fit to extract the signal/bkg yield. 
+** Yields
+We will perform a maximum likelihood fit to extract the signal/bkg yield.
 
+#+begin_src bash
 combine -M FitDiagnostics /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/CMSDIJET/DijetRootTreeAnalyzer/test_directory/diphoton_combine_1000_DiPhotons_kMpl001_2017.txt --saveNormalizations --saveShapes --saveWithUncertainties
 python /afs/cern.ch/work/a/apsallid/CMS/Hgg/exodiphotons/seconditeration/CMSSW_10_2_13/src/HiggsAnalysis/CombinedLimit/test/mlfitNormsToText.py --uncertainties fitDiagnostics.root
 
-
-
-
 #make some structure
-mkdir -p FinalResults/Limits
+cd /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/CMSDIJET/DijetRootTreeAnalyzer/FinalResults
 
 #Then, run (will take some time depending on the mass points number)
+#2016 RS
+./loopAllMassPoints.csh 2016 grav kMpl001 &
+./loopAllMassPoints.csh 2016 grav kMpl01 &
+./loopAllMassPoints.csh 2016 grav kMpl02 &
 #2017 RS
-./loopAllMassPoints.csh 2017 grav kMpl001
-./loopAllMassPoints.csh 2017 grav kMpl01
-./loopAllMassPoints.csh 2017 grav kMpl02
+./loopAllMassPoints.csh 2017 grav kMpl001 &
+./loopAllMassPoints.csh 2017 grav kMpl01 &
+./loopAllMassPoints.csh 2017 grav kMpl02 &
 #2018 RS
-./loopAllMassPoints.csh 2018 grav kMpl001
-./loopAllMassPoints.csh 2018 grav kMpl01
-./loopAllMassPoints.csh 2018 grav kMpl02
+./loopAllMassPoints.csh 2018 grav kMpl001 &
+./loopAllMassPoints.csh 2018 grav kMpl01 &
+./loopAllMassPoints.csh 2018 grav kMpl02 &
 #Full Run2 RS
-./loopAllMassPoints.csh fullRun2 grav kMpl001
-./loopAllMassPoints.csh fullRun2 grav kMpl01
-./loopAllMassPoints.csh fullRun2 grav kMpl02
+./loopAllMassPoints.csh fullRun2 grav kMpl001 &
+./loopAllMassPoints.csh fullRun2 grav kMpl01 &
+./loopAllMassPoints.csh fullRun2 grav kMpl02 &
+#+end_src
+
+** Limits
+
+- Make sure the signal samples in "sampleList.hh" are uncommented for the
+  plotLimit.cc to find the sample xsecs.
+
+#+begin_src bash
 
 #To produce the plot run the command with the above output txt file as input :
-export mainpath="/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/CMSDIJET/DijetRootTreeAnalyzer/FinalResults"
+export mainpath="/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/CMSDIJET/DijetRootTreeAnalyzer/FinalResults"
+export main_method="full"
+# export main_method="genFiducial"
+export compare_method="genFiducial"
+# export method="truncate"
 
-mkdir Limits
-cd ${mainpath}/Limits
+mkdir ${mainpath}/Limits/${main_method}
+cd ${mainpath}/Limits/${main_method}
+
+# RS
+for year in {"2016","2017","2018","fullRun2"}; do echo $year; for coup in {"kMpl001","kMpl01","kMpl02"}; do echo ${coup}; plotLimit.exe "${mainpath}/${main_method}/finalResults_${year}_grav_${coup}" "${mainpath}/${compare_method}/finalResults_${year}_grav_${coup}" ${coup} ${year} "${mainpath}/Limits/${main_method}" grav; done; done;
+
+# for year in {"2018","fullRun2"}; do echo $year; echo kMpl02; plotLimit.exe "${mainpath}/${main_method}/finalResults_${year}_grav_kMpl02" "${mainpath}/${compare_method}/finalResults_${year}_grav_kMpl02" kMpl02 ${year} "${mainpath}/Limits/${main_method}" grav; done;
+
+# heavy higgs
+for year in {"2016","2017","2018","fullRun2"}; do echo $year; for coup in {"0p014","1p4","5p6"}; do echo ${coup}; plotLimit.exe "${mainpath}/${main_method}/finalResults_${year}_heavyhiggs_${coup}" "${mainpath}/${compare_method}/finalResults_${year}_heavyhiggs_${coup}" ${coup} ${year} "${mainpath}/Limits/${main_method}" heavyhiggs; done; done;
+
+dateDir=$(date +"%Y%m%d_%H%M%S")
+cpwww ${mainpath}/Limits/${main_method} ~/www/diphoton-analysis/FinalResults/Limits/${method}/${dateDir}
+
+export mainpath="/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/CMSDIJET/DijetRootTreeAnalyzer/FinalResults"
 
 # Full Run2 RS
 plotLimit.exe "${mainpath}/combineJobs13TeV/fullRun2/grav/kMpl001/AsymptoticLimits/All/finalResults" kMpl001 fullRun2 "${mainpath}/Limits" grav
@@ -413,20 +867,45 @@ plotLimit.exe "${mainpath}/combineJobs13TeV/fullRun2/grav/kMpl01/AsymptoticLimit
 
 plotLimit.exe "${mainpath}/combineJobs13TeV/fullRun2/grav/kMpl01/AsymptoticLimits/All/finalResults" kMpl02 fullRun2 "${mainpath}/Limits" grav
 
+#2016 RS
+plotLimit.exe "${mainpath}/combineJobs13TeV/2016/grav/kMpl001/AsymptoticLimits/All/finalResults" kMpl001 2016 "${mainpath}/Limits" grav
+
+plotLimit.exe "${mainpath}/combineJobs13TeV/2016/grav/kMpl01/AsymptoticLimits/All/finalResults" kMpl01 2016 "${mainpath}/Limits" grav
+
+plotLimit.exe "${mainpath}/combineJobs13TeV/2016/grav/kMpl02/AsymptoticLimits/All/finalResults" kMpl02 2016 "${mainpath}/Limits" grav
 
 #2017 RS
-plotLimit.exe "${mainpath}/combineJobs13TeV/2017/grav/kMpl001/AsymptoticLimits/All/finalResults" kMpl001 2017 "${mainpath}/FinalResults/Limits" grav
+plotLimit.exe "${mainpath}/combineJobs13TeV/2017/grav/kMpl001/AsymptoticLimits/All/finalResults" kMpl001 2017 "${mainpath}/Limits" grav
 
-plotLimit.exe "${mainpath}/datacards/FinalResults/combineJobs13TeV/2017/grav/kMpl01/AsymptoticLimits/All/finalResults" kMpl01 2017 "${mainpath}/datacards/FinalResults/Limits" grav
-plotLimit.exe "${mainpath}/datacards/FinalResults/combineJobs13TeV/2017/grav/kMpl02/AsymptoticLimits/All/finalResults" kMpl02 2017 "${mainpath}/datacards/FinalResults/Limits" grav
+plotLimit.exe "${mainpath}/combineJobs13TeV/2017/grav/kMpl01/AsymptoticLimits/All/finalResults" kMpl01 2017 "${mainpath}/Limits" grav
+
+plotLimit.exe "${mainpath}/combineJobs13TeV/2017/grav/kMpl02/AsymptoticLimits/All/finalResults" kMpl02 2017 "${mainpath}/Limits" grav
+
+#2017 Heavyhiggs
+plotLimit.exe "${mainpath}/full/combineJobs13TeV/2017/heavyhiggs/0p014/AsymptoticLimits/All/finalResults" "${mainpath}/${compare_method}/combineJobs13TeV/2017/heavyhiggs/0p014/AsymptoticLimits/All/finalResults" 0p014 2017 "${mainpath}/Limits" heavyhiggs;
+
+plotLimit.exe "${mainpath}/full/combineJobs13TeV/2017/heavyhiggs/1p4/AsymptoticLimits/All/finalResults" "${mainpath}/${compare_method}/combineJobs13TeV/2017/heavyhiggs/1p4/AsymptoticLimits/All/finalResults" 1p4 2017 "${mainpath}/Limits" heavyhiggs;
+
+plotLimit.exe "${mainpath}/full/combineJobs13TeV/2017/heavyhiggs/5p6/AsymptoticLimits/All/finalResults" "${mainpath}/${compare_method}/combineJobs13TeV/2017/heavyhiggs/5p6/AsymptoticLimits/All/finalResults" 5p6 2017 "${mainpath}/Limits" heavyhiggs;
 
 
-#For the observed and expected significance run the same script as above but open and edit as mentioned. 
-#We do not wish to give this as an extra argument so that the user open and inspect the scripts. 
-#So, go to `${mainpath}/datacards/FinalResults` and merge the output. We need `combineHarvester.py` and 
-#`makeCombinePlots.py` from the Hgg group. 
+for year in {"2016","2017","2018","fullRun2"}; do echo $year; for coup in {"0p014","1p4","5p6"}; do echo ${coup}; plotLimit.exe "${mainpath}/full/combineJobs13TeV/${year}/heavyhiggs/${coup}/AsymptoticLimits/All/finalResults" "${mainpath}/${compare_method}/combineJobs13TeV/${year}/heavyhiggs/${coup}/AsymptoticLimits/All/finalResults" ${coup} ${year} "${mainpath}/Limits" heavyhiggs; done; done;
 
-#merge 
+# heavy higgs
+for year in {"2016","2017","2018","fullRun2"}; do echo $year; for coup in {"0p014","1p4","5p6"}; do echo ${coup}; plotLimit.exe "${mainpath}/${compare_method}/combineJobs13TeV/${year}/heavyhiggs/${coup}/AsymptoticLimits/All/finalResults" "${mainpath}/full/combineJobs13TeV/${year}/heavyhiggs/${coup}/AsymptoticLimits/All/finalResults" ${coup} ${year} "${mainpath}/Limits" heavyhiggs; done; done;
+
+
+#+end_src
+
+** Observed Significance
+For the observed and expected significance run the same script as above but open and edit as mentioned.
+We do not wish to give this as an extra argument so that the user open and inspect the scripts.
+So, go to `${mainpath}/datacards/FinalResults` and merge the output. We need `combineHarvester.py` and
+`makeCombinePlots.py` from the Hgg group.
+
+#+begin_src bash
+
+#merge
 ./combineHarvester.py --hadd combineJobs13TeV
 
 #make dedicated directory to hold results for each method. e.g
@@ -435,9 +914,40 @@ cd ObsSignificance
 
 #make plot
 #2017 RS
-../makeCombinePlots.py -m pval -f "${mainpath}/datacards/FinalResults/combineJobs13TeV/2017/grav/kMpl001/ObsSignificance/All/All.root" -c 1 -s 1 -w 2 -x 500,2900 -y 1e-4,1 -n Observed -t '41.527 fb^{-1} (13TeV)' -o pval13TeV_observed_kMpl001 -b --coupling kMpl001 
-../makeCombinePlots.py -m pval -f "${mainpath}/datacards/FinalResults/combineJobs13TeV/2017/grav/kMpl01/ObsSignificance/All/All.root" -c 1 -s 1 -w 2 -x 500,2900 -y 1e-4,1 -n Observed -t '41.527 fb^{-1} (13TeV)' -o pval13TeV_observed_kMpl01 -b --coupling kMpl01 
-../makeCombinePlots.py -m pval -f "${mainpath}/datacards/FinalResults/combineJobs13TeV/2017/grav/kMpl02/ObsSignificance/All/All.root" -c 1 -s 1 -w 2 -x 500,2900 -y 1e-4,1 -n Observed -t '41.527 fb^{-1} (13TeV)' -o pval13TeV_observed_kMpl02 -b --coupling kMpl02 
+../makeCombinePlots.py -m pval -f "${mainpath}/datacards/FinalResults/combineJobs13TeV/2017/grav/kMpl001/ObsSignificance/All/All.root" -c 1 -s 1 -w 2 -x 500,2900 -y 1e-4,1 -n Observed -t '41.527 fb^{-1} (13TeV)' -o pval13TeV_observed_kMpl001 -b --coupling kMpl001
+../makeCombinePlots.py -m pval -f "${mainpath}/datacards/FinalResults/combineJobs13TeV/2017/grav/kMpl01/ObsSignificance/All/All.root" -c 1 -s 1 -w 2 -x 500,2900 -y 1e-4,1 -n Observed -t '41.527 fb^{-1} (13TeV)' -o pval13TeV_observed_kMpl01 -b --coupling kMpl01
+../makeCombinePlots.py -m pval -f "${mainpath}/datacards/FinalResults/combineJobs13TeV/2017/grav/kMpl02/ObsSignificance/All/All.root" -c 1 -s 1 -w 2 -x 500,2900 -y 1e-4,1 -n Observed -t '41.527 fb^{-1} (13TeV)' -o pval13TeV_observed_kMpl02 -b --coupling kMpl02
+#+end_src
 
+** Impact plots
+#+begin_src bash
 
+#+end_src
 
+** cutflow
+#+begin_src bash
+rm cutFlow.txt
+rm out*.root
+for coup in {"kMpl001","kMpl01","kMpl02"}
+do
+    echo $coup
+    for mass in {1000..5000..1000}
+    do
+        echo $mass
+        hadd out_RSGravitonToGammaGamma_${coup}_M_${mass}_TuneCP2.root ~/eos/exodiphoton/c841c3d/RSG/2017/RSGravitonToGammaGamma_${coup}_M_${mass}_TuneCP2_13TeV_pythia8__Fall17_PU2017-v1/*.root;
+        python python/cutFlow.py ./out*.root;
+        rm out*.root;
+    done
+done
+for coup in {"0p014","1p4","5p6"}
+do
+    echo $coup
+    for mass in {1000..5000..1000}
+    do
+        echo $mass
+        hadd out_GluGluSpin0ToGammaGamma_W_${coup}_M_${mass}_TuneCP2.root ~/eos/exodiphoton/c841c3d/HeavyHiggs/2017/GluGluSpin0ToGammaGamma_W_${coup}_M_${mass}_TuneCP2_13TeV_pythia8__Fall17_PU2017-v1/*.root
+        python python/cutFlow.py ./out*.root;
+        rm out*.root;
+    done
+done
+#+end_src
