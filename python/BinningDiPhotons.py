@@ -46,6 +46,7 @@ if __name__ == '__main__':
                 binwidth = sigma_function(cat,width,mass)
                 mass += binwidth
                 bins.append(int(mass))
+            print(len(bins))
             print(bins)
 
     
