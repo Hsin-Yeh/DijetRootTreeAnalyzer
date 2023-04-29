@@ -1,6 +1,7 @@
 #!/usr/bin/env sh
 
-export method="genFiducial"
+# export method="genFiducial"
+export method="full"
 export InterpolateShapePath="/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/${method}"
 
 ############################################################

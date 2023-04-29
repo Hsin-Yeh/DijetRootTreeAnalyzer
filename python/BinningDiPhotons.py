@@ -10,19 +10,18 @@ def sigma_function(category, width, value):
     fun = 0.
     if category == "EBEB":
         if width == "kMpl001":
-             fun =  0.484 + 0.012 * value
+             fun =  -0.3060 + 0.013 * value
         elif width == "kMpl01":
-             fun =  0.823 + 0.017 * value
+             fun =  0.8195 + 0.017 * value
         elif width == "kMpl02":
-             fun =  3.180 + 0.040 * value
+             fun =  5.7590 + 0.036 * value
     if category == "EBEE":
         if width == "kMpl001":
-             fun =  -0.259 + 0.021 * value
+             fun =  -0.3060 + 0.013 * value
         elif width == "kMpl01":
-             fun =  -0.065 + 0.025 * value
+             fun =  0.8195 + 0.017 * value
         elif width == "kMpl02":
-             fun =  2.892 + 0.044 * value
-
+             fun =  5.7590 + 0.036 * value
     return fun
 
 if __name__ == '__main__':
