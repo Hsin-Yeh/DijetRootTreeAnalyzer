@@ -28,7 +28,7 @@ touch ${finalResults}
 
 #a priori limits. I see in the post-fit or a-posteriori expected limit weird
 #one and two sigma region above 1.2 TeV. So, I will go to a priori limits at the moment.
-time parallel --progress --jobs 10 'mass={1}; echo \"====================================================================\"; echo $mass; datacardfile=${mainpath}/${method}/${year}/diphoton_combine_${mass}_DiPhotons_${coupling}_${year}.txt); echo $datacardfile; echo \"combine -M AsymptoticLimits -s -1 --bypassFrequentistFit $datacardfile\"; ' ::: $(seq ${massMin} ${massInterval} ${massMax})
+time parallel --progress --jobs 10 'mass={1}; echo \"====================================================================\"; echo $mass; datacardfile=${mainpath}/${method}/${year}/diphoton_combine_${mass}_DiPhotons_${coupling}_${year}.txt; echo $datacardfile; echo \"combine -M AsymptoticLimits -s -1 --bypassFrequentistFit $datacardfile\";' ::: $(seq ${massMin} ${massInterval} ${massMax})
 
 #a-posteriori expected limit
 # echo "combine -M AsymptoticLimits -s -1 $datacardfile"
