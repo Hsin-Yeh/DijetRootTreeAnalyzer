@@ -42,7 +42,7 @@ if __name__ == '__main__':
             bins = []
             mass = float(options.initmass)
             bins.append(int(mass))
-            while ( mass < 8000.):
+            while ( mass < 6000.):
                 binwidth = sigma_function(cat,width,mass)
                 mass += binwidth
                 bins.append(int(mass))
