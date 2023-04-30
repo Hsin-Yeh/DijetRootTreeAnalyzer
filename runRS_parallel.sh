@@ -5,7 +5,7 @@ export InterpolateShapePath="/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysi
 export configFile="config/diphotons_500GeV.config"
 export bkgFitResultsPath="test_directory"
 export SignalNormFile="/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/SignalNorm_Splines_${method}.txt"
-export massInterval=500
+export massInterval=100
 export massMin=500
 export massMax=7000
 
