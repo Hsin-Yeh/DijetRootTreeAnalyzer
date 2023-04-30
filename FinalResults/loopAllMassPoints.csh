@@ -4,7 +4,15 @@ setenv year $1
 setenv signal $2
 setenv coupling $3
 setenv method $4
-setenv mass $5
+setenv massInterval $5
+
+setenv masslist `seq 750 ${massInterval} 7000`
+
+if ($coupling == "kMpl001" || $coupling == "0p014" || $coupling == "1p4" || $coupling == "5p6") then
+setenv masslist `seq 750 ${massInterval} 5000`
+endif
+
+echo $masslist
 
 # setenv masslist "500 600 700 800 900 1000 1100 1200 1300 1400 1500 1600 1700 1800 1900 2000 2100 2200 2300 2400 2500 2600 2700 2800 2900 3000 3100 3200 3300 3400 3500 3600 3700 3800 3900 4000 4100 4200 4300 4400 4500 4600 4700 4800 4900 5000"
 # setenv masslist "4500 4600 4700 4800 4900 5000"
@@ -26,6 +34,8 @@ setenv finalResults2 "finalResults_${year}_${signal}_${coupling}_2"
 
 rm ${finalResults}
 touch ${finalResults}
+
+foreach mass ($masslist)
 
 echo "====================================================================="
 echo $mass
@@ -86,6 +96,9 @@ echo $mass $obs $expM2s $expM1s $exp $expP1s $expP2s
 echo $mass $obs $expM2s $expM1s $exp $expP1s $expP2s >> ${finalResults}
 
 endif
+
+#end of loop over masses
+end
 
 cat ${finalResults} | sort -n > ${finalResults2}
 mv ${finalResults2} combineJobs13TeV/${year}/${signal}/${coupling}/${combine_method}/All/finalResults
