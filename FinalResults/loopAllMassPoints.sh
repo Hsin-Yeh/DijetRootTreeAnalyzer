@@ -11,7 +11,6 @@ massMax=$7
 masslist=$(seq ${massMin} ${massInterval} ${massMax})
 
 echo $masslist
-echo $year $signal $coupling $method
 
 # Combine_Method in this script are: AsymptoticLimits, ExpSignificance, ExpSignificanceWithPval, ObsSignificance, ObsSignificanceWithPval
 #setenv combine_methods "ObsSignificance"
@@ -29,12 +28,12 @@ touch ${finalResults}
 
 #a priori limits. I see in the post-fit or a-posteriori expected limit weird
 #one and two sigma region above 1.2 TeV. So, I will go to a priori limits at the moment.
-time parallel --progress --jobs 10 'mass={1}; echo \"====================================================================\"; echo $mass; datacardfile=${mainpath}/${method}/${year}/diphoton_combine_${mass}_DiPhotons_${coupling}_${year}.txt; echo $datacardfile; echo \"combine -M AsymptoticLimits -s -1 --bypassFrequentistFit $datacardfile\";' ::: $(seq ${massMin} ${massInterval} ${massMax})
+time parallel --progress --jobs 10 'mass={1}; year={2}; coupling={3}; echo \"====================================================================\"; echo $mass; datacardfile=${mainpath}/${method}/${year}/diphoton_combine_${mass}_DiPhotons_${coupling}_${year}.txt; echo $datacardfile; echo \"combine -M AsymptoticLimits -s -1 --bypassFrequentistFit $datacardfile\"; combine -M AsymptoticLimits  -s -1 --bypassFrequentistFit $datacardfile > ${datacardfile}_results; mv higgsCombineTest.AsymptoticLimits.mH*.root combineJobs13TeV/${year}/${signal}/${coupling}/${combine_method}/All/.; obs=$(cat ${datacardfile}_results  | grep  \"Observed Limit:\" | awk \"{print $5}\"); expM2s=$(cat ${datacardfile}_results  | grep  \"Expected  2.5%:\" | awk \"{print $5}\"); expM1s=$(cat ${datacardfile}_results  | grep  \"Expected 16.0%:\" | awk \"{print $5}\"); exp=$(cat ${datacardfile}_results  | grep  \"Expected 50.0%:\" | awk \"{print $5}\"); expP1s=$(cat ${datacardfile}_results  | grep  \"Expected 84.0%:\" | awk \"{print $5}\"); expP2s=$(cat ${datacardfile}_results  | grep  \"Expected 97.5%:\" | awk \"{print $5}\"); echo $mass $obs $expM2s $expM1s $exp $expP1s $expP2s; echo $mass $obs $expM2s $expM1s $exp $expP1s $expP2s >> ${finalResults}' ::: $(seq ${massMin} ${massInterval} ${massMax}) ::: ${year} ::: ${coupling}
 
 #a-posteriori expected limit
 # echo "combine -M AsymptoticLimits -s -1 $datacardfile"
 # combine -M AsymptoticLimits  -s -1 $datacardfile > ${datacardfile}_results
 
 
-# cat ${finalResults} | sort -n > ${finalResults2}
-# mv ${finalResults2} combineJobs13TeV/${year}/${signal}/${coupling}/${combine_method}/All/finalResults
+cat ${finalResults} | sort -n > ${finalResults2}
+mv ${finalResults2} combineJobs13TeV/${year}/${signal}/${coupling}/${combine_method}/All/finalResults
