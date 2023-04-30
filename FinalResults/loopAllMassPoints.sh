@@ -11,6 +11,7 @@ massMax=$7
 masslist=$(seq ${massMin} ${massInterval} ${massMax})
 
 echo $masslist
+echo $year $signal $coupling $method
 
 # Combine_Method in this script are: AsymptoticLimits, ExpSignificance, ExpSignificanceWithPval, ObsSignificance, ObsSignificanceWithPval
 #setenv combine_methods "ObsSignificance"
