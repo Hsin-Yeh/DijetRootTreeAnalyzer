@@ -478,6 +478,10 @@ Plot all models together - Not all couplings needed but OK run on all.
 
 mkdir -p AllBkgModels/blind
 
+time parallel --progress --jobs 10 'echo year={1}; echo Lumi={2}; echo coup={3}; echo cat={4}; python python/BinnedFitForPlottingMulti.py -c config/diphotons_multiplot.config -l {2} -b DiPhotons_{3}_{4} -d AllBkgModels/blind --fit-spectrum --plot-region Low --coup {3} --cat {4} --year {1} output/InputShapes_data_{4}_{1}.root' ::: 2016 2017 2018 :::+ 35900 41527 59670 ::: "kMpl001" "kMpl01" "kMpl02" ::: "EBEB" "EBEE"
+dateDir=$(date +"%Y%m%d_%H%M%S")
+cpwww AllBkgModels/blind/*.png ~/www/diphoton-analysis/AllBkgModels/blind/${dateDir}
+
 #BLIND with adding --plot-region Low
 #2016 Lumi 35900
 for coup in {"kMpl001","kMpl01","kMpl02","0p014","1p4","5p6"}; do echo $coup; for cat in {"EBEB","EBEE"}; do echo $cat; python python/BinnedFitForPlottingMulti.py -c config/diphotons_multiplot.config -l 35900 -b DiPhotons_${coup}_${cat} -d AllBkgModels/blind --fit-spectrum --plot-region Low --coup $coup --cat $cat --year 2016 output/InputShapes_data_${cat}_2016.root; done; done;
