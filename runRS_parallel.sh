@@ -26,7 +26,7 @@ cd /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphot
 
 # mkdir -p ${bkgFitResultsPath}
 #
-time parallel --dryrun --progress --jobs 10 'echo year={1}; echo Lumi={2}; echo coup={3}; echo cat={4}; python python/BinnedFit.py -c config/diphotons_dijet.config -l {2} -b DiPhotons_{3}_{4} -d ${bkgFitResultsPath} --fit-spectrum --plot-region Low --coup {3} --cat {4} --year {1} output/InputShapes_data_{4}_{1}.root' ::: 2016 2017 2018 :::+ 35900 41527 59670 ::: "kMpl001" "kMpl01" "kMpl02" ::: "EBEB" "EBEE"
+time parallel --progress --jobs 10 'echo year={1}; echo Lumi={2}; echo coup={3}; echo cat={4}; python python/BinnedFit.py -c config/diphotons_dijet.config -l {2} -b DiPhotons_{3}_{4} -d ${bkgFitResultsPath} --fit-spectrum --plot-region Low --coup {3} --cat {4} --year {1} output/InputShapes_data_{4}_{1}.root' ::: 2016 2017 2018 :::+ 35900 41527 59670 ::: "kMpl001" "kMpl01" "kMpl02" ::: "EBEB" "EBEE"
 
 # #-------
 # #UNBLIND
@@ -53,7 +53,7 @@ time parallel --progress --jobs 10 'year={1}; coup={2}; mass={3}; echo ${year}; 
 
 mkdir ${themainpath}/${method}/fullRun2
 cd ${themainpath}/${method}/fullRun2
-time parallel --progress --jobs 10 'year={1}; coup={2}; mass={3}; echo ${year}; echo ${coup}; echo ${mass}; combineCards.py ${themainpath}/${method}/2016/DiPhotons_${coup}_EBEB/diphoton_combine_${mass}_DiPhotons_${coup}_EBEB_2016.txt ${themainpath}/${method}/2016/DiPhotons_${coup}_EBEE/diphoton_combine_${mass}_DiPhotons_${coup}_EBEE_2016.txt ${themainpath}/${method}/2017/DiPhotons_${coup}_EBEB/diphoton_combine_${mass}_DiPhotons_${coup}_EBEB_2017.txt ${themainpath}/${method}/2017/DiPhotons_${coup}_EBEE/diphoton_combine_${mass}_DiPhotons_${coup}_EBEE_2017.txt ${themainpath}/${method}/2018/DiPhotons_${coup}_EBEB/diphoton_combine_${mass}_DiPhotons_${coup}_EBEB_2018.txt ${themainpath}/${method}/2018/DiPhotons_${coup}_EBEE/diphoton_combine_${mass}_DiPhotons_${coup}_EBEE_2018.txt > diphoton_combine_${mass}_DiPhotons_${coup}.txt;' ::: 2016 2017 2018 ::: "kMpl001" "kMpl01" "kMpl02" ::: $(seq ${massMin} ${massInterval} ${massMax})
+time parallel --progress --jobs 10 'year={1}; coup={2}; mass={3}; echo ${year}; echo ${coup}; echo ${mass}; combineCards.py ${themainpath}/${method}/2016/DiPhotons_${coup}_EBEB/diphoton_combine_${mass}_DiPhotons_${coup}_EBEB_2016.txt ${themainpath}/${method}/2016/DiPhotons_${coup}_EBEE/diphoton_combine_${mass}_DiPhotons_${coup}_EBEE_2016.txt ${themainpath}/${method}/2017/DiPhotons_${coup}_EBEB/diphoton_combine_${mass}_DiPhotons_${coup}_EBEB_2017.txt ${themainpath}/${method}/2017/DiPhotons_${coup}_EBEE/diphoton_combine_${mass}_DiPhotons_${coup}_EBEE_2017.txt ${themainpath}/${method}/2018/DiPhotons_${coup}_EBEB/diphoton_combine_${mass}_DiPhotons_${coup}_EBEB_2018.txt ${themainpath}/${method}/2018/DiPhotons_${coup}_EBEE/diphoton_combine_${mass}_DiPhotons_${coup}_EBEE_2018.txt > diphoton_combine_${mass}_DiPhotons_${coup}_fullRun2.txt;' ::: 2016 2017 2018 ::: "kMpl001" "kMpl01" "kMpl02" ::: $(seq ${massMin} ${massInterval} ${massMax})
 
 
 # ############################## combine yields ##############################
@@ -63,18 +63,18 @@ cd /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphot
 
 #Then, run (will take some time depending on the mass points number)
 #2016 RS
-./loopAllMassPoints.csh 2016 grav kMpl001 ${method} ${massInterval} &
-./loopAllMassPoints.csh 2016 grav kMpl01 ${method} ${massInterval} &
-./loopAllMassPoints.csh 2016 grav kMpl02 ${method} ${massInterval} &
+./loopAllMassPoints.sh 2016 grav kMpl001 ${method} ${massInterval} 500 5000
+./loopAllMassPoints.sh 2016 grav kMpl01 ${method} ${massInterval} 500 7000
+./loopAllMassPoints.sh 2016 grav kMpl02 ${method} ${massInterval} 500 7000
 # #2017 RS
-./loopAllMassPoints.csh 2017 grav kMpl001 ${method} ${massInterval} &
-./loopAllMassPoints.csh 2017 grav kMpl01 ${method} ${massInterval} &
-./loopAllMassPoints.csh 2017 grav kMpl02 ${method} ${massInterval} &
+./loopAllMassPoints.sh 2017 grav kMpl001 ${method} ${massInterval} 500 5000
+./loopAllMassPoints.sh 2017 grav kMpl01 ${method} ${massInterval} 500 7000
+./loopAllMassPoints.sh 2017 grav kMpl02 ${method} ${massInterval} 500 7000
 #2018 RS
-./loopAllMassPoints.csh 2018 grav kMpl001 ${method} ${massInterval} &
-./loopAllMassPoints.csh 2018 grav kMpl01 ${method} ${massInterval} &
-./loopAllMassPoints.csh 2018 grav kMpl02 ${method} ${massInterval} &
+./loopAllMassPoints.sh 2018 grav kMpl001 ${method} ${massInterval} 500 5000
+./loopAllMassPoints.sh 2018 grav kMpl01 ${method} ${massInterval} 500 7000
+./loopAllMassPoints.sh 2018 grav kMpl02 ${method} ${massInterval} 500 7000
 #Full Run2 RS
-./loopAllMassPoints.csh fullRun2 grav kMpl001 ${method} ${massInterval} &
-./loopAllMassPoints.csh fullRun2 grav kMpl01 ${method} ${massInterval} &
-./loopAllMassPoints.csh fullRun2 grav kMpl02 ${method} ${massInterval} &
+./loopAllMassPoints.sh fullRun2 grav kMpl001 ${method} ${massInterval} 500 5000
+./loopAllMassPoints.sh fullRun2 grav kMpl01 ${method} ${massInterval} 500 7000
+./loopAllMassPoints.sh fullRun2 grav kMpl02 ${method} ${massInterval} 500 7000

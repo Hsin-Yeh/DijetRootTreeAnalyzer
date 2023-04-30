@@ -79,6 +79,7 @@ signal_bias
 # Except These Files #
 ##########
 !FinalResults/loopAllMassPoints.csh
+!FinalResults/loopAllMassPoints.sh
 !ParallelForBias/setupCombineBias.sh
 !ParallelForBias/sendCombineBias_multiplejobs_advanced.csh
 !ParallelForBias/mergeCombineBiasJobs.csh
