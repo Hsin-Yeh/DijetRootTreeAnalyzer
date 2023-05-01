@@ -975,5 +975,6 @@ done
 
 * Scripts
 #+begin_src bash
-./afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/CMSDIJET/DijetRootTreeAnalyzer/runRS_parallel.sh
+cd /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/CMSDIJET/DijetRootTreeAnalyzer
+./runRS_parallel.sh
 #+end_src
