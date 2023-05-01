@@ -64,18 +64,20 @@ cd /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphot
 
 #Then, run (will take some time depending on the mass points number)
 #2016 RS
-./loopAllMassPoints.sh 2016 grav kMpl001 ${method} ${massInterval} 750 5000
-./loopAllMassPoints.sh 2016 grav kMpl01 ${method} ${massInterval} 750 7000
-./loopAllMassPoints.sh 2016 grav kMpl02 ${method} ${massInterval} 750 7000
+# combine_method="AsymptoticLimits_bypassFrequentistFit"
+combine_method="AsymptoticLimits"
+./loopAllMassPoints.sh 2016 grav kMpl001 ${method} ${massInterval} 750 5000 ${combine_method}
+./loopAllMassPoints.sh 2016 grav kMpl01 ${method} ${massInterval} 750 7000 ${combine_method}
+./loopAllMassPoints.sh 2016 grav kMpl02 ${method} ${massInterval} 750 7000 ${combine_method}
 # #2017 RS
-./loopAllMassPoints.sh 2017 grav kMpl001 ${method} ${massInterval} 750 5000
-./loopAllMassPoints.sh 2017 grav kMpl01 ${method} ${massInterval} 750 7000
-./loopAllMassPoints.sh 2017 grav kMpl02 ${method} ${massInterval} 750 7000
+./loopAllMassPoints.sh 2017 grav kMpl001 ${method} ${massInterval} 750 5000 ${combine_method}
+./loopAllMassPoints.sh 2017 grav kMpl01 ${method} ${massInterval} 750 7000 ${combine_method}
+./loopAllMassPoints.sh 2017 grav kMpl02 ${method} ${massInterval} 750 7000 ${combine_method}
 #2018 RS
-./loopAllMassPoints.sh 2018 grav kMpl001 ${method} ${massInterval} 750 5000
-./loopAllMassPoints.sh 2018 grav kMpl01 ${method} ${massInterval} 750 7000
-./loopAllMassPoints.sh 2018 grav kMpl02 ${method} ${massInterval} 750 7000
+./loopAllMassPoints.sh 2018 grav kMpl001 ${method} ${massInterval} 750 5000 ${combine_method}
+./loopAllMassPoints.sh 2018 grav kMpl01 ${method} ${massInterval} 750 7000 ${combine_method}
+./loopAllMassPoints.sh 2018 grav kMpl02 ${method} ${massInterval} 750 7000 ${combine_method}
 #Full Run2 RS
-./loopAllMassPoints.sh fullRun2 grav kMpl001 ${method} ${massInterval} 750 5000
-./loopAllMassPoints.sh fullRun2 grav kMpl01 ${method} ${massInterval} 750 7000
-./loopAllMassPoints.sh fullRun2 grav kMpl02 ${method} ${massInterval} 750 7000
+./loopAllMassPoints.sh fullRun2 grav kMpl001 ${method} ${massInterval} 750 5000 ${combine_method}
+./loopAllMassPoints.sh fullRun2 grav kMpl01 ${method} ${massInterval} 750 7000 ${combine_method}
+./loopAllMassPoints.sh fullRun2 grav kMpl02 ${method} ${massInterval} 750 7000 ${combine_method}
