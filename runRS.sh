@@ -2,7 +2,7 @@
 
 export method="full"
 export InterpolateShapePath="/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/${method}"
-export configFile="config/diphotons.config"
+export configFile="config/diphotons_500GeV.config"
 export bkgFitResultsPath="test_directory"
 export SignalNormFile="/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/SignalNorm_Splines_${method}.txt"
 export massInterval=10

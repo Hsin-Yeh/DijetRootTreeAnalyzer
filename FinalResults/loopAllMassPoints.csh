@@ -74,12 +74,12 @@ if ($combine_method == "AsymptoticLimits") then
 
 #a priori limits. I see in the post-fit or a-posteriori expected limit weird 
 #one and two sigma region above 1.2 TeV. So, I will go to a priori limits at the moment. 
-echo "combine -M AsymptoticLimits -s -1 --bypassFrequentistFit $datacardfile"
-combine -M AsymptoticLimits  -s -1 --bypassFrequentistFit $datacardfile > ${datacardfile}_results
+# echo "combine -M AsymptoticLimits -s -1 --bypassFrequentistFit $datacardfile"
+# combine -M AsymptoticLimits  -s -1 --bypassFrequentistFit $datacardfile > ${datacardfile}_results
 
 #a-posteriori expected limit
-# echo "combine -M AsymptoticLimits -s -1 $datacardfile"
-# combine -M AsymptoticLimits  -s -1 $datacardfile > ${datacardfile}_results
+echo "combine -M AsymptoticLimits -s -1 $datacardfile"
+combine -M AsymptoticLimits  -s -1 $datacardfile > ${datacardfile}_results
 
 #echo "combine -M AsymptoticLimits -s -1 --bypassFrequentistFit /afs/cern.ch/work/a/apsallid/CMS/Hgg/exodiphotons/seconditeration/CMSSW_10_2_13/src/diphoton-analysis/CMSDIJET/DijetRootTreeAnalyzer/test_directory/diphoton_combine_${mass}_DiPhotons_${coupling}_${year}.txt"
 #combine -M AsymptoticLimits  -s -1 --bypassFrequentistFit /afs/cern.ch/work/a/apsallid/CMS/Hgg/exodiphotons/seconditeration/CMSSW_10_2_13/src/diphoton-analysis/CMSDIJET/DijetRootTreeAnalyzer/test_directory/diphoton_combine_${mass}_DiPhotons_${coupling}_${year}.txt > /afs/cern.ch/work/a/apsallid/CMS/Hgg/exodiphotons/seconditeration/CMSSW_10_2_13/src/diphoton-analysis/CMSDIJET/DijetRootTreeAnalyzer/test_directory/diphoton_combine_${mass}_DiPhotons_${coupling}_${year}.txt_results
