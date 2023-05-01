@@ -5,10 +5,11 @@ export InterpolateShapePath="/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysi
 export configFile="config/diphotons_500GeV.config"
 export bkgFitResultsPath="test_directory"
 export SignalNormFile="/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/SignalNorm_Splines_${method}.txt"
-export massInterval=100
-export massMin=500
+export massInterval=10
+export massMin=750
 export massMax=7000
 
+cmsenv
 
 # ############################## signal interpolation ##############################
 
@@ -63,18 +64,18 @@ cd /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphot
 
 #Then, run (will take some time depending on the mass points number)
 #2016 RS
-./loopAllMassPoints.sh 2016 grav kMpl001 ${method} ${massInterval} 500 5000
-./loopAllMassPoints.sh 2016 grav kMpl01 ${method} ${massInterval} 500 7000
-./loopAllMassPoints.sh 2016 grav kMpl02 ${method} ${massInterval} 500 7000
+./loopAllMassPoints.sh 2016 grav kMpl001 ${method} ${massInterval} 750 5000
+./loopAllMassPoints.sh 2016 grav kMpl01 ${method} ${massInterval} 750 7000
+./loopAllMassPoints.sh 2016 grav kMpl02 ${method} ${massInterval} 750 7000
 # #2017 RS
-./loopAllMassPoints.sh 2017 grav kMpl001 ${method} ${massInterval} 500 5000
-./loopAllMassPoints.sh 2017 grav kMpl01 ${method} ${massInterval} 500 7000
-./loopAllMassPoints.sh 2017 grav kMpl02 ${method} ${massInterval} 500 7000
+./loopAllMassPoints.sh 2017 grav kMpl001 ${method} ${massInterval} 750 5000
+./loopAllMassPoints.sh 2017 grav kMpl01 ${method} ${massInterval} 750 7000
+./loopAllMassPoints.sh 2017 grav kMpl02 ${method} ${massInterval} 750 7000
 #2018 RS
-./loopAllMassPoints.sh 2018 grav kMpl001 ${method} ${massInterval} 500 5000
-./loopAllMassPoints.sh 2018 grav kMpl01 ${method} ${massInterval} 500 7000
-./loopAllMassPoints.sh 2018 grav kMpl02 ${method} ${massInterval} 500 7000
+./loopAllMassPoints.sh 2018 grav kMpl001 ${method} ${massInterval} 750 5000
+./loopAllMassPoints.sh 2018 grav kMpl01 ${method} ${massInterval} 750 7000
+./loopAllMassPoints.sh 2018 grav kMpl02 ${method} ${massInterval} 750 7000
 #Full Run2 RS
-./loopAllMassPoints.sh fullRun2 grav kMpl001 ${method} ${massInterval} 500 5000
-./loopAllMassPoints.sh fullRun2 grav kMpl01 ${method} ${massInterval} 500 7000
-./loopAllMassPoints.sh fullRun2 grav kMpl02 ${method} ${massInterval} 500 7000
+./loopAllMassPoints.sh fullRun2 grav kMpl001 ${method} ${massInterval} 750 5000
+./loopAllMassPoints.sh fullRun2 grav kMpl01 ${method} ${massInterval} 750 7000
+./loopAllMassPoints.sh fullRun2 grav kMpl02 ${method} ${massInterval} 750 7000
