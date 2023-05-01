@@ -44,21 +44,21 @@ combine -M AsymptoticLimits  -s -1 $datacardfile > ${datacardfile}_results;
 mv higgsCombineTest.AsymptoticLimits.mH*.root combineJobs13TeV/${year}/${signal}/${coupling}/${combine_method}/All/.;' ::: $(seq ${massMin} ${massInterval} ${massMax}) ::: ${year} ::: ${coupling} ::: ${signal} ::: $combine_method
 fi
 
-for mass in $masslist; do
-    datacardfile=${mainpath}/${method}/${year}/diphoton_combine_${mass}_DiPhotons_${coupling}_${year}.txt
-    obs=$(cat ${datacardfile}_results  | grep  "Observed Limit:" | awk '{print $5}')
-    expM2s=$(cat ${datacardfile}_results  | grep  "Expected  2.5%:" | awk '{print $5}')
-    expM1s=$(cat ${datacardfile}_results  | grep  "Expected 16.0%:" | awk '{print $5}')
-    exp=$(cat ${datacardfile}_results  | grep  "Expected 50.0%:" | awk '{print $5}')
-    expP1s=$(cat ${datacardfile}_results  | grep  "Expected 84.0%:" | awk '{print $5}')
-    expP2s=$(cat ${datacardfile}_results  | grep  "Expected 97.5%:" | awk '{print $5}')
-    echo $mass $obs $expM2s $expM1s $exp $expP1s $expP2s
-    echo $mass $obs $expM2s $expM1s $exp $expP1s $expP2s >> ${finalResults}
-done
+# for mass in $masslist; do
+#     datacardfile=${mainpath}/${method}/${year}/diphoton_combine_${mass}_DiPhotons_${coupling}_${year}.txt
+#     obs=$(cat ${datacardfile}_results  | grep  "Observed Limit:" | awk '{print $5}')
+#     expM2s=$(cat ${datacardfile}_results  | grep  "Expected  2.5%:" | awk '{print $5}')
+#     expM1s=$(cat ${datacardfile}_results  | grep  "Expected 16.0%:" | awk '{print $5}')
+#     exp=$(cat ${datacardfile}_results  | grep  "Expected 50.0%:" | awk '{print $5}')
+#     expP1s=$(cat ${datacardfile}_results  | grep  "Expected 84.0%:" | awk '{print $5}')
+#     expP2s=$(cat ${datacardfile}_results  | grep  "Expected 97.5%:" | awk '{print $5}')
+#     echo $mass $obs $expM2s $expM1s $exp $expP1s $expP2s
+#     echo $mass $obs $expM2s $expM1s $exp $expP1s $expP2s >> ${finalResults}
+# done
 
 
-cat ${finalResults} | sort -n > ${finalResults2}
-mv ${finalResults2} combineJobs13TeV/${year}/${signal}/${coupling}/${combine_method}/All/finalResults
+# cat ${finalResults} | sort -n > ${finalResults2}
+# mv ${finalResults2} combineJobs13TeV/${year}/${signal}/${coupling}/${combine_method}/All/finalResults
 
 
 #a-posteriori expected limit
