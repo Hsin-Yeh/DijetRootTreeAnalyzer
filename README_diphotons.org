@@ -281,6 +281,8 @@ signalNorm.exe 2017 createJson "${mainpath}/output/2017/FinalParametricShape/wor
 signalNorm.exe 2018 createJson "${mainpath}/output/2018/FinalParametricShape/workspaces" "${mainpath}/datacards" "${mainpath}/output/2018/signalNorm" "grav" ${method}
 #2016 (Both RS and heavy higgs)
 
+time parallel --progress --jobs 3 'year={1}; method={2}; signalNorm.exe ${year} createJson "${mainpath}/output/2016/FinalParametricShape/workspaces" "${mainpath}/datacards" "${mainpath}/output/2016/signalNorm" "grav" ${method}' ::: 2016 2017 2018 ::: "full" "genFiducial"
+
 rm SignalNorm.txt
 rm SignalNorm_Splines.txt
 #2016 RS
