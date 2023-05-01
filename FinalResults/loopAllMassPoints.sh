@@ -14,7 +14,8 @@ echo $masslist
 
 # Combine_Method in this script are: AsymptoticLimits, ExpSignificance, ExpSignificanceWithPval, ObsSignificance, ObsSignificanceWithPval
 #setenv combine_methods "ObsSignificance"
-combine_methods="AsymptoticLimits_bypassFrequentistFit"
+# combine_methods="AsymptoticLimits_bypassFrequentistFit"
+combine_methods="AsymptoticLimits"
 mainpath="/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/CMSDIJET/DijetRootTreeAnalyzer/test_directory"
 
 rm -rf combineJobs13TeV/${year}/${signal}/${coupling}/${combine_method}/All
