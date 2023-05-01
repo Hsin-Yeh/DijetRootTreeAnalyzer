@@ -270,6 +270,7 @@ mkdir -p ${mainpath}/output/${i}/signalNorm;
 done;
 
 export mainpath="/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/"
+cd $mainpath
 export method="full"
 # export method="truncate"
 #With the createJson option the insigname argument is dull and the code will run through all signals.
@@ -280,9 +281,6 @@ signalNorm.exe 2017 createJson "${mainpath}/output/2017/FinalParametricShape/wor
 #2018 (Both RS and heavy higgs)
 signalNorm.exe 2018 createJson "${mainpath}/output/2018/FinalParametricShape/workspaces" "${mainpath}/datacards" "${mainpath}/output/2018/signalNorm" "grav" ${method}
 #2016 (Both RS and heavy higgs)
-
-time parallel --progress --jobs 3 'year={1}; method={2}; signalNorm.exe ${year} createJson "${mainpath}/output/2016/FinalParametricShape/workspaces" "${mainpath}/datacards" "${mainpath}/output/2016/signalNorm" "grav" ${method}' ::: 2016 2017 2018 ::: "full" "genFiducial"
-
 rm SignalNorm.txt
 rm SignalNorm_Splines.txt
 #2016 RS
@@ -305,6 +303,18 @@ for year in {"2016","2017","2018"};
 do
     cpwww output/${year}/signalNorm ~/www/diphoton-analysis/${year}/signalNorm/${method}/${dateDir}
 done
+#+end_src
+
+Parallelized
+#+begin_src bash
+export mainpath="/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/"
+cd $mainpath
+# Create json ( Compute efficiency )
+time parallel --progress --jobs 6 'year={1}; method={2}; signalNorm.exe ${year} createJson "${mainpath}/output/${year}/FinalParametricShape/workspaces" "${mainpath}/datacards" "${mainpath}/output/${year}/signalNorm/${method}" "grav" ${method}' ::: 2016 2017 2018 ::: "full" "genFiducial"
+# Spline Fit, get signalNorm txt file
+time parallel --progress --jobs 6 'year={1}; method={2}; signalNorm.exe ${year} readJson "${mainpath}/output/${year}/FinalParametricShape/workspaces" "${mainpath}/datacards" "${mainpath}/output/${year}/signalNorm/${method}" "grav" "${method}"' ::: 2016 2017 2018 ::: "full" "genFiducial"
+# Copy png to website
+time parallel --progress -jobs 6 'year={1}; method={2}; dateDir=$(date +"%Y%m%d_%H%M%S"); cpwww_png output/${year}/signalNorm ~/www/diphoton-analysis/${year}/signalNorm/${method}/${dateDir}' ::: 2016 2017 2018 ::: "full" "genFiducial"
 #+end_src
 
 * Save Normalization <<<--- DON'T USE THAT NO MORE.
@@ -956,4 +966,9 @@ do
         rm out*.root;
     done
 done
+#+end_src
+
+* Scripts
+#+begin_src bash
+./afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/CMSDIJET/DijetRootTreeAnalyzer/runRS_parallel.sh
 #+end_src
