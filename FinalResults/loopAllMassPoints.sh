@@ -36,7 +36,7 @@ echo $datacardfile; echo \"combine -M AsymptoticLimits -s -1 --bypassFrequentist
 combine -M AsymptoticLimits  -s -1 --bypassFrequentistFit $datacardfile > ${datacardfile}_results;
 mv higgsCombineTest.AsymptoticLimits.mH*.root combineJobs13TeV/${year}/${signal}/${coupling}/${combine_method}/All/.;' ::: $(seq ${massMin} ${massInterval} ${massMax}) ::: ${year} ::: ${coupling} ::: ${signal} ::: $combine_method
 
-elif [${combine_methods} == "AsymptoticLimits"]; then
+elif [[ ${combine_methods} == "AsymptoticLimits" ]]; then
     time parallel --progress --jobs 10 'mass={1}; year={2}; coupling={3}; signal={4}; combine_method={5};
 echo \"====================================================================\"; echo $mass; datacardfile=${mainpath}/${method}/${year}/diphoton_combine_${mass}_DiPhotons_${coupling}_${year}.txt;
 echo $datacardfile; echo \"combine -M AsymptoticLimits -s -1 $datacardfile\";
