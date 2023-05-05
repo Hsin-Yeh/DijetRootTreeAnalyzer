@@ -304,6 +304,8 @@ if __name__ == '__main__':
                 project(thetreeMin,h_min, "mgg", 'eventClass==%d && mgg>%f && mgg<%f'%(cat,massMin,massMax) )
             elif options.method=="full":
                 project(thetreeMin,h_min, "mgg", 'eventClass==%d'%(cat) )
+            elif options.method=="genFiducial":
+                project(thetree,h_mgg_varbins, "mgg", 'eventClass==%d'%(cat) )
 
             mass2 = M_bins[options.coup][M_bins[options.coup].index(mass)+1]
             tfileMax = rt.TFile.Open(f.replace(str(mass), str(mass2)))
