@@ -9,7 +9,7 @@ setenv massInterval $5
 setenv masslist `seq 750 ${massInterval} 7000`
 
 if ($coupling == "kMpl001" || $coupling == "0p014" || $coupling == "1p4" || $coupling == "5p6") then
-setenv masslist `seq 750 ${massInterval} 5000`
+setenv masslist `seq 500 ${massInterval} 1000`
 endif
 
 echo $masslist
