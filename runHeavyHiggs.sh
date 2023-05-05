@@ -4,19 +4,19 @@
 # export method="full"
 export method="genFiducial"
 export InterpolateShapePath="/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/${method}"
-export configFile="config/diphotons.config"
+export configFile="config/diphotons_500GeV.config"
 export bkgFitResultsPath="test_directory"
 export SignalNormFile="/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/SignalNorm_Splines.txt"
 export massInterval=100
 
 ############################## signal Interpolation ##############################
 
-cd /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/${method}
+# cd /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/${method}
 
-filesToExtractGluGlu=`ls /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/CMSDIJET/DijetRootTreeAnalyzer/output/${method} |grep .root | grep GluGlu`
+# filesToExtractGluGlu=`ls /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/CMSDIJET/DijetRootTreeAnalyzer/output/${method} |grep .root | grep GluGlu`
 
-for file in ${filesToExtractGluGlu};
-do echo ${file}; coup=`echo ${file} | cut -d'_' -f 4`; echo $coup; filename=`echo ${file} | cut -d'.' -f 1`; ../getResonanceShapes.py -i inputs/${filename}.py -c ${coup} -f gg --massrange 500 5000 ${massInterval} -o ResonanceShapes_${filename}.root; done;
+# for file in ${filesToExtractGluGlu};
+# do echo ${file}; coup=`echo ${file} | cut -d'_' -f 4`; echo $coup; filename=`echo ${file} | cut -d'.' -f 1`; ../getResonanceShapes.py -i inputs/${filename}.py -c ${coup} -f gg --massrange 500 5000 ${massInterval} -o ResonanceShapes_${filename}.root; done;
 
 ############################## fit nominal bkg model ##############################
 
@@ -27,10 +27,10 @@ cd /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphot
 for coup in {"0p014","1p4","5p6"}; do echo $coup; for cat in {"EBEB","EBEE"}; do echo $cat; python python/BinnedFit.py -c config/diphotons_dijet.config -l 35900 -b DiPhotons_${coup}_${cat} -d ${bkgFitResultsPath} --fit-spectrum --plot-region Low --coup $coup --cat $cat --year 2016 output/InputShapes_data_${cat}_2016.root; done; done;
 
 # #2017 Lumi 41527
-for coup in {"0p014","1p4","5p6"}; do echo $coup; for cat in {"EBEB","EBEE"}; do echo $cat; python python/BinnedFit.py -c config/diphotons_dijet.config -l 41527 -b DiPhotons_${coup}_${cat} -d ${bkgFitResultsPath} --fit-spectrum --plot-region Low --coup $coup --cat $cat --year 2017 output/InputShapes_data_${cat}_2017.root; done; done;
+# for coup in {"0p014","1p4","5p6"}; do echo $coup; for cat in {"EBEB","EBEE"}; do echo $cat; python python/BinnedFit.py -c config/diphotons_dijet.config -l 41527 -b DiPhotons_${coup}_${cat} -d ${bkgFitResultsPath} --fit-spectrum --plot-region Low --coup $coup --cat $cat --year 2017 output/InputShapes_data_${cat}_2017.root; done; done;
 
-# #2018 Lumi 59670
-for coup in {"0p014","1p4","5p6"}; do echo $coup; for cat in {"EBEB","EBEE"}; do echo $cat; python python/BinnedFit.py -c config/diphotons_dijet.config -l 59670 -b DiPhotons_${coup}_${cat} -d ${bkgFitResultsPath} --fit-spectrum --plot-region Low --coup $coup --cat $cat --year 2018 output/InputShapes_data_${cat}_2018.root; done; done;
+# # #2018 Lumi 59670
+# for coup in {"0p014","1p4","5p6"}; do echo $coup; for cat in {"EBEB","EBEE"}; do echo $cat; python python/BinnedFit.py -c config/diphotons_dijet.config -l 59670 -b DiPhotons_${coup}_${cat} -d ${bkgFitResultsPath} --fit-spectrum --plot-region Low --coup $coup --cat $cat --year 2018 output/InputShapes_data_${cat}_2018.root; done; done;
 
 
 ############################## WriteDataCard.py heavyhiggs ##############################
