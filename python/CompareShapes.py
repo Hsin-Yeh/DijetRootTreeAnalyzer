@@ -151,7 +151,7 @@ if __name__ == '__main__':
                 project(thetree,h_mgg_varbins, "mgg", 'eventClass==%d && mgg>%f && mgg<%f'%(cat,massMin,massMax) )
             elif options.method=="full":
                 project(thetree,h_mgg_varbins, "mgg", 'eventClass==%d'%(cat) )
-            elif options.method=="fiducial":
+            elif options.method=="genFiducial":
                 project(thetree,h_mgg_varbins, "mgg", 'eventClass==%d && mgg>%f && mgg<%f'%(cat,mass*0.8,mass*1.2) )
 
 
@@ -162,7 +162,7 @@ if __name__ == '__main__':
             histos.append(h_mgg_varbins)
 
             #Now to the interpolated shape
-            tfileRes = rt.TFile("/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/ResonanceShapes_InputShapes_%s_%s_%s.root" %(title,options.cat,year) , "read")
+            tfileRes = rt.TFile("/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/%s/ResonanceShapes_InputShapes_%s_%s_%s.root" %(method,title,options.cat,year) , "read")
             tfileRes.cd()
 
             #tfileRes.Print()
@@ -388,7 +388,7 @@ if __name__ == '__main__':
 
             h_min.SetLineColor(1);
             h_min.SetLineStyle(9);
-            h_min.GetXaxis().SetRangeUser(mass1*0.93,mass2*1.04);
+            h_min.GetXaxis().SetRangeUser(mass1*0.5,mass2*1.04);
             h_min.GetXaxis().SetTitle("DiPhoton mass [GeV]");
             h_min.GetYaxis().SetTitle("Normalized yield");
             h_min.Scale(1/h_min.GetSumOfWeights());

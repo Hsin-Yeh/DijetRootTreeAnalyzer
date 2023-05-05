@@ -126,11 +126,9 @@ done;
 #make some structure
 for i in {2016,2017,2018}; do echo $i;
 mkdir -p output/${i}/FinalParametricShape/comparison;
-mkdir -p /eos/user/a/apsallid/www/exodiphotons/$i/FinalParametricShape/comparison;
-cp /eos/user/a/apsallid/www/exodiphotons/index.php /eos/user/a/apsallid/www/exodiphotons/$i/FinalParametricShape/comparison/.;
 done;
 
-export mainpath="/afs/cern.ch/work/a/apsallid/CMS/Hgg/exodiphotons/seconditeration/CMSSW_10_2_13/src/diphoton-analysis"
+export mainpath="/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis"
 
 #2017
 testShapes.exe 2017 "${mainpath}/input/trees" "${mainpath}/input/2017/workspaces" "${mainpath}/output/2017/FinalParametricShape/workspaces" "kMpl001"
@@ -149,8 +147,9 @@ testShapes.exe 2018 "${mainpath}/input/trees" "${mainpath}/input/2018/workspaces
 testShapes.exe 2018 "${mainpath}/input/trees" "${mainpath}/input/2018/workspaces" "${mainpath}/output/2018/FinalParametricShape/workspaces" "5p6"
 
 #Save in webpage for quick inspection
+dateDir=$(date +"%Y%m%d_%H%M%S")
 for i in {2017,2018}; do echo $i;
-cp ${mainpath}/output/$i/FinalParametricShape/comparison/*.png /eos/user/a/apsallid/www/exodiphotons/$i/FinalParametricShape/comparison/.;
+cpwww ${mainpath}/output/$i/FinalParametricShape/comparison ~/www/diphoton-analysis/$i/FinalParametricShape/comparison/${dateDir}/.;
 done;
 #+end_src
 ** Sixth step : Calculate parametric signal nuisances
@@ -158,11 +157,9 @@ done;
 #make some structure
 for i in {2016,2017,2018}; do echo $i;
 mkdir -p output/${i}/FinalParametricShape/systematics;
-mkdir -p /eos/user/a/apsallid/www/exodiphotons/$i/FinalParametricShape/systematics;
-cp /eos/user/a/apsallid/www/exodiphotons/index.php /eos/user/a/apsallid/www/exodiphotons/$i/FinalParametricShape/systematics/.;
 done;
 
-export mainpath="/afs/cern.ch/work/a/apsallid/CMS/Hgg/exodiphotons/seconditeration/CMSSW_10_2_13/src/diphoton-analysis"
+export mainpath="/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis"
 
 #2017
 testSystematics.exe 2017 "${mainpath}/Tools/bin/input/trees" "${mainpath}/output/2017/FinalParametricShape/workspaces" "${mainpath}/output/2017/FinalParametricShape/systematics" "kMpl001"
@@ -180,8 +177,9 @@ testSystematics.exe 2018 "${mainpath}/Tools/bin/input/trees" "${mainpath}/output
 testSystematics.exe 2018 "${mainpath}/Tools/bin/input/trees" "${mainpath}/output/2018/FinalParametricShape/workspaces" "${mainpath}/output/2018/FinalParametricShape/systematics" "5p6"
 
 #Save in webpage for quick inspection
+dateDir=$(date +"%Y%m%d_%H%M%S")
 for i in {2017,2018}; do echo $i;
-cp ${mainpath}/output/$i/FinalParametricShape/systematics/*.png /eos/user/a/apsallid/www/exodiphotons/$i/FinalParametricShape/systematics/.;
+cpwww ${mainpath}/output/$i/FinalParametricShape/systematics ~/www/diphoton-analysis/$i/FinalParametricShape/systematics/${dateDir};
 done;
 #+end_src
 * ADD Samples
@@ -365,9 +363,9 @@ for file in ${filesToExtractGluGlu}; do echo ${file}; cp /afs/cern.ch/work/h/hsi
 * Get Resonance shapes
 
 #+begin_src bash
-# export method="full"
+export method="full"
 # export method="truncate"
-export method="genFiducial"
+# export method="genFiducial"
 cd /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/${method}
 
 filesToExtractRS=`ls /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/CMSDIJET/DijetRootTreeAnalyzer/output/${method} |grep .root | grep RSG`
@@ -375,10 +373,10 @@ filesToExtractRS=`ls /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_
 filesToExtractGluGlu=`ls /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/CMSDIJET/DijetRootTreeAnalyzer/output/${method} |grep .root | grep GluGlu`
 
 for file in ${filesToExtractRS};
-do echo ${file}; coup=`echo ${file} | cut -d'_' -f 3`; echo $coup; filename=`echo ${file} | cut -d'.' -f 1`; ../getResonanceShapes.py -i inputs/${filename}.py -c ${coup} -f gg --massrange 500 10000 10 -o ResonanceShapes_${filename}.root; done;
+do echo ${file}; coup=`echo ${file} | cut -d'_' -f 3`; echo $coup; filename=`echo ${file} | cut -d'.' -f 1`; ../getResonanceShapes.py -i inputs/${filename}.py -c ${coup} -f gg --massrange 500 10000 100 -o ResonanceShapes_${filename}.root; done;
 
 for file in ${filesToExtractGluGlu};
-do echo ${file}; coup=`echo ${file} | cut -d'_' -f 4`; echo $coup; filename=`echo ${file} | cut -d'.' -f 1`; ../getResonanceShapes.py -i inputs/${filename}.py -c ${coup} -f gg --massrange 500 10000 10 -o ResonanceShapes_${filename}.root; done;
+do echo ${file}; coup=`echo ${file} | cut -d'_' -f 4`; echo $coup; filename=`echo ${file} | cut -d'.' -f 1`; ../getResonanceShapes.py -i inputs/${filename}.py -c ${coup} -f gg --massrange 500 800 100 -o ResonanceShapes_${filename}.root; done;
 
 #Copy the root files for later usage
 # export method="full"
@@ -387,7 +385,7 @@ export method="genFiducial"
 cp /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/${method}/ResonanceShapes*.root /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator
 
 #Below an example when debugging
-./getResonanceShapes.py -i inputs/InputShapes_GluGluSpin0ToGammaGamma_W_1p4_EBEB_2017.py -c kMpl001 -f gg --massrange 500 10000 100 -o ResonanceShapes_GluGluSpin0ToGammaGamma_W_1p4_EBEB_2017.root
+./getResonanceShapes.py -i inputs/InputShapes_GluGluSpin0ToGammaGamma_W_1p4_EBEB_2017.py -c kMpl001 -f gg --massrange 500 800 50 -o ResonanceShapes_GluGluSpin0ToGammaGamma_W_1p4_EBEB_2017.root
 
 #+end_src
 
