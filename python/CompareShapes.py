@@ -62,6 +62,11 @@ def color(i):
     elif i == 1: return 800
     elif i == 2: return 209
     elif i == 3: return 862
+    elif i == 4: return 2
+    elif i == 5: return 4
+    elif i == 6: return 5
+    elif i == 7: return 6
+
     else: return 0
 
 def project(tree, h, var, cut):
@@ -410,7 +415,7 @@ if __name__ == '__main__':
             tfileRes.cd()
 
             i=0
-            for mass in range(mass1-250, mass2, 50):
+            for mass in range(mass1-250, mass2, 100):
                 hist =  tfileRes.Get("h_gg_%i"%mass)
                 hist.SetLineColor(color(i));
                 hist.SetFillColor(color(i));
