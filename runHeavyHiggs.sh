@@ -68,18 +68,18 @@ cd ${mainpath}
 
 #Then, run (will take some time depending on the mass points number)
 #2016 RS
-./loopAllMassPoints.csh 2016 heavyhiggs kMpl001 ${method} ${massInterval} &
-./loopAllMassPoints.csh 2016 heavyhiggs kMpl01 ${method} ${massInterval} &
-./loopAllMassPoints.csh 2016 heavyhiggs kMpl02 ${method} ${massInterval} &
+./loopAllMassPoints.csh 2016 heavyhiggs 0p014 ${method} ${massInterval} &
+./loopAllMassPoints.csh 2016 heavyhiggs 1p4 ${method} ${massInterval} &
+./loopAllMassPoints.csh 2016 heavyhiggs 5p6 ${method} ${massInterval} &
 # #2017 RS
-./loopAllMassPoints.csh 2017 heavyhiggs kMpl001 ${method} ${massInterval} &
-./loopAllMassPoints.csh 2017 heavyhiggs kMpl01 ${method} ${massInterval} &
-./loopAllMassPoints.csh 2017 heavyhiggs kMpl02 ${method} ${massInterval} &
+./loopAllMassPoints.csh 2017 heavyhiggs 0p014 ${method} ${massInterval} &
+./loopAllMassPoints.csh 2017 heavyhiggs 1p4 ${method} ${massInterval} &
+./loopAllMassPoints.csh 2017 heavyhiggs 5p6 ${method} ${massInterval} &
 #2018 RS
-./loopAllMassPoints.csh 2018 heavyhiggs kMpl001 ${method} ${massInterval} &
-./loopAllMassPoints.csh 2018 heavyhiggs kMpl01 ${method} ${massInterval} &
-./loopAllMassPoints.csh 2018 heavyhiggs kMpl02 ${method} ${massInterval} &
+./loopAllMassPoints.csh 2018 heavyhiggs 0p014 ${method} ${massInterval} &
+./loopAllMassPoints.csh 2018 heavyhiggs 1p4 ${method} ${massInterval} &
+./loopAllMassPoints.csh 2018 heavyhiggs 5p6 ${method} ${massInterval} &
 #Full Run2 RS
-./loopAllMassPoints.csh fullRun2 heavyhiggs kMpl001 ${method} ${massInterval} &
-./loopAllMassPoints.csh fullRun2 heavyhiggs kMpl01 ${method} ${massInterval} &
-./loopAllMassPoints.csh fullRun2 heavyhiggs kMpl02 ${method} ${massInterval} &
+./loopAllMassPoints.csh fullRun2 heavyhiggs 0p014 ${method} ${massInterval} &
+./loopAllMassPoints.csh fullRun2 heavyhiggs 1p4 ${method} ${massInterval} &
+./loopAllMassPoints.csh fullRun2 heavyhiggs 5p6 ${method} ${massInterval} &
