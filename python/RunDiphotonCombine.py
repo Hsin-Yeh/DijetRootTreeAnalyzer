@@ -172,11 +172,17 @@ if __name__ == '__main__':
         freezeStringFit += ',pil1_1_%s,pil1_2_%s,pil1_3_%s' % (box,box,box)
     #if options.fitPdf != 'moddijet1':
     #    freezeStringFit += ',pmd1_1_%s,pmd1_2_%s,pmd1_3_%s,pmd1_4_%s' % (box,box,box,box)
+    pdf_index=0
+    if options.fitPdf == 'dijet': pdf_index = 0
+    elif options.fitPdf == 'expow1': pdf_index = 1
+    elif options.fitPdf == 'invpow1': pdf_index = 2
+    elif options.fitPdf == 'invpowlin1': pdf_index = 3
 
     for massPoint in massIterable(options.mass):
         exec_me('python python/WriteDataCard.py -m %s --year %s --mass %s %s -i %s -l %f -c %s -b %s -d %s %s %s --multi --SigNorm %s'%(model, options.year, massPoint,backgroundDsName[box], options.inputFitFile,1000*lumi,options.config,box,options.outDir, signalDsName,signalSys, options.SignalNormFile),options.dryRun)
         # exec_me('combine -M GenerateOnly %s/diphoton_combine_%i_%s_%s.txt -n %s_r-%.3f_%s_%s_%s_%s %s %s %s --bypassFrequentistFit --seed -1 --saveToys --expectSignal %.3f -t %i'%(options.outDir,int(massPoint),box,options.year,int(massPoint),rDict[int(massPoint)],box,options.genPdf,options.fitPdf,options.year,rRangeString,fixStringGen,freezeStringGen,rDict[int(massPoint)],options.toys),options.dryRun)
-        exec_me('combine -M AsymptoticLimits -s -1 %s/diphoton_combine_%i_%s_%s.txt %s %s > %s/diphoton_combine_%i_%s_%s.txt_results'%(options.outDir,int(massPoint),box,options.year,fixStringFit,freezeStringFit,options.outDir,int(massPoint),box,options.year))
+        # exec_me('combine -M AsymptoticLimits -s -1 %s/diphoton_combine_%i_%s_%s.txt %s %s > %s/diphoton_combine_%i_%s_%s.txt_results'%(options.outDir,int(massPoint),box,options.year,fixStringFit,freezeStringFit,options.outDir,int(massPoint),box,options.year))
+        exec_me('combine -M MultiDimFit -m %s -d %s/diphoton_combine_%i_%s_%s.txt %s %s %s --algo grid --cminDefaultMinimizerStrategy 0 --saveNLL -n fixed_pdf_%d --X-rtd REMOVE_CONSTANT_ZERO_POINT=1'%(int(massPoint),options.outDir,int(massPoint),box,options.year,rRangeString,fixStringGen,freezeStringGen),pdf_index)
 
         # toysfile = glob.glob('./higgsCombine%s_r-%.3f_%s_%s_%s_%s.GenerateOnly.mH*.root' %(int(massPoint),rDict[int(massPoint)],box,options.genPdf,options.fitPdf,options.year))
 
