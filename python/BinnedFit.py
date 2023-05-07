@@ -27,7 +27,7 @@ def binnedFit(pdf, data, fitRange='Full',useWeight=False):
             hesse_status = -1        
         else:
             print(data,pdf)
-            nll = pdf.createNLL(data,rt.RooFit.Range(fitRange),rt.RooFit.Extended(True),rt.RooFit.Offset(True))
+            nll = pdf.createNLL(data,rt.RooFit.Range(fitRange),rt.RooFit.Extended(True),rt.RooFit.Offset(True)) # Create extended negaive log likelihood
             #nll = pdf.createNLL(data,rt.RooFit.Range(500.,1503.),rt.RooFit.Extended(True),rt.RooFit.Offset(True))
             #nll = pdf.createNLL(data,rt.RooFit.Range(500.,1300.),rt.RooFit.Offset(True))
             m2 = rt.RooMinimizer(nll)
@@ -448,7 +448,7 @@ if __name__ == '__main__':
     sideband = convertSideband(fitRegion,w,x)
     plotband = convertSideband(plotRegion,w,x)
 
-    extDijetPdf = w.pdf('extDijetPdf_%s_%s'%(options.coup,options.cat))
+    extDijetPdf = w.pdf('extDijetPdf_%s_%s'%(options.coup,options.cat)) # Retrieve p.d.f --> Background pdf which will be fit with extended maximum likelihood method
     print(extDijetPdf)
     #extDijetPdf = w.pdf('DiPhotons_bkg_dijet_unbin')
 

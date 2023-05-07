@@ -225,10 +225,12 @@ def writeDataCard(box,model,txtfileName,bkgs,paramNames,w,penalty,fixed,year,sha
                         effErrs = [1.06]
         for bkg in bkgs: print(bkg)             
         #rates.extend([w.var('Ntot_%s_%s'%(bkg,box)).getVal() for bkg in bkgs])
-        # rates.extend([w.var('Ntot_%s_%s'%(box,bkg)).getVal() for bkg in bkgs]) #FIXME
-        rates.extend([w.var('Ntot_%s'%(bkg)).getVal() for bkg in bkgs])
-        # processes.extend(["%s_%s"%(box,bkg) for bkg in bkgs])
-        processes.extend(["%s"%(bkg) for bkg in bkgs])
+        if multi:
+            rates.extend([w.var('Ntot_%s_%s'%(box,bkg)).getVal() for bkg in bkgs]) #FIXME
+            processes.extend(["%s_%s"%(box,bkg) for bkg in bkgs])
+        else:
+            rates.extend([w.var('Ntot_%s'%(bkg)).getVal() for bkg in bkgs])
+            processes.extend(["%s"%(bkg) for bkg in bkgs])
         lumiErrs.extend([1.00 for bkg in bkgs])
         pdfsErrs.extend([1.00 for bkg in bkgs])
         effErrs.extend([1.00 for bkg in bkgs])
