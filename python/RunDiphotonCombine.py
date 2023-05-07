@@ -63,6 +63,7 @@ if __name__ == '__main__':
                    'expow1': 1,
                    'invpow1': 2,
                    'invpowlin1': 3
+                   'envelope': -1
                    #'moddijet1': 4,
                    }
 
