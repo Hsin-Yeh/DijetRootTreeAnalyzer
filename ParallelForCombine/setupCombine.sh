@@ -37,7 +37,7 @@ cp /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphot
 
 time python python/RunBias.py -c config/diphotons_bias_${THEYEAR}.config -i bkgAltModels/${THEMODEL}/blind/FitResults_DiPhotons_${THECOUP}_${THECAT}_${THEYEAR}.root -b DiPhotons_${THECOUP}_${THECAT} --mass ${THEMASS} -m gg -d signal_bias -r ${THEMUIN} --rMin -3 --rMax 3 -l ${THELUMI} --year ${THEYEAR} --fit-pdf ${THEMODEL} --SigNorm SignalNorm.txt
 
-time python python/RunDiphotonCombine.py -c config/diphotons_bias_${THEYEAR}.config -i bkgAltModels/${THEMODEL}/blind/FitResults_DiPhotons_kMpl001_EBEB_2017.root -b DiPhotons_kMpl001_EBEB --mass 4000 -m gg -d signal_bias -r 1 --rMin -3 --rMax 3 -l 41.527 --year 2017 --fit-pdf ${fitmethod} --SigNorm $SigNormFile
+time python python/RunDiphotonCombine.py -c config/diphotons_bias_${THEYEAR}.config -i bkgAltModels/${THEMODEL}/blind/FitResults_DiPhotons_kMpl001_EBEB_2017.root -b DiPhotons_kMpl001_EBEB --mass 4000 -m gg -d signal_bias -r 1 --rMin -3 --rMax 3 -l 41.527 --year 2017 --fit-pdf ${THEMODEL} --SigNorm $SigNormFile
 
 outfile=`ls fitDiagnostics*|grep ${THECOUP}|grep ${THEMODEL}|grep ${THENOMINALMODEL}|grep .root`
 
