@@ -16,8 +16,8 @@ for coup in {"kMpl001","kMpl01","kMpl02"}; do
     for cat in {"EBEB","EBEE"}; do
         for mass in `seq 500 ${massInterval} 5000`; do
             for fitmethod in {"dijet","expow1","invpow1","invpowlin1","envelope"}; do
-                mkdir -p output/envelope/${year}/${coup}/${cat}
-                time python python/RunDiphotonCombine.py -c config/diphotons_bias_${year}.config -i bkgAltModels/${fitmethod}/blind/FitResults_DiPhotons_${coup}_${cat}_${year}.root -b DiPhotons_${coup}_${cat} --mass ${mass} -m gg -d output/envelope/${year}/${model}/${coup}/${cat} -r 1 --rMin -3 --rMax 3 -l ${lumi} --year ${year} --fit-pdf ${fitmethod} --SigNorm $SigNormFile --method ${method}
+                mkdir -p output/envelope/${model}/${year}/${coup}/${cat}
+                time python python/RunDiphotonCombine.py -c config/diphotons_bias_${year}.config -i bkgAltModels/${fitmethod}/blind/FitResults_DiPhotons_${coup}_${cat}_${year}.root -b DiPhotons_${coup}_${cat} --mass ${mass} -m gg -d output/envelope/${year}/${model}/${coup}/${cat} -r 1 --rMin -3 --rMax 3 -l ${lumi} --year ${year} --fit-pdf ${fitmethod}  --method ${method} --SigNorm $SigNormFile
             done
         done
     done
@@ -31,7 +31,7 @@ for coup in {"kMpl001","kMpl01","kMpl02"}; do
     for cat in {"EBEB","EBEE"}; do
         for mass in `seq 500 ${massInterval} 5000`; do
             for fitmethod in {"dijet","expow1","invpow1","invpowlin1","envelope"}; do
-                mkdir -p output/envelope/${year}/${coup}/${cat}
+                mkdir -p output/envelope/${model}/${year}/${coup}/${cat}
                 time python python/RunDiphotonCombine.py -c config/diphotons_bias_${year}.config -i bkgAltModels/${fitmethod}/blind/FitResults_DiPhotons_${coup}_${cat}_${year}.root -b DiPhotons_${coup}_${cat} --mass ${mass} -m gg -d output/envelope/${year}/${model}/${coup}/${cat} -r 1 --rMin -3 --rMax 3 -l ${lumi} --year ${year} --fit-pdf ${fitmethod} --SigNorm $SigNormFile --method ${method}
             done
         done
@@ -46,7 +46,7 @@ for coup in {"kMpl001","kMpl01","kMpl02"}; do
     for cat in {"EBEB","EBEE"}; do
         for mass in `seq 500 ${massInterval} 5000`; do
             for fitmethod in {"dijet","expow1","invpow1","invpowlin1","envelope"}; do
-                mkdir -p output/envelope/${year}/${coup}/${cat}
+                mkdir -p output/envelope/${model}/${year}/${coup}/${cat}
                 time python python/RunDiphotonCombine.py -c config/diphotons_bias_${year}.config -i bkgAltModels/${fitmethod}/blind/FitResults_DiPhotons_${coup}_${cat}_${year}.root -b DiPhotons_${coup}_${cat} --mass ${mass} -m gg -d output/envelope/${year}/${model}/${coup}/${cat} -r 1 --rMin -3 --rMax 3 -l ${lumi} --year ${year} --fit-pdf ${fitmethod} --SigNorm $SigNormFile --method ${method}
             done
         done
