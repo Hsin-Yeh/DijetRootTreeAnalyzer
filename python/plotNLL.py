@@ -37,4 +37,5 @@ if __name__ == "__main__":
         ax.scatter(r,total,color=color_template[ifile],label=name)
 
     ax.legend()
+    ax.xlim([-1,0])
     plt.savefig("test.png")
