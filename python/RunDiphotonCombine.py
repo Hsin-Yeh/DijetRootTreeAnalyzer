@@ -179,11 +179,12 @@ if __name__ == '__main__':
         # exec_me('combine -M GenerateOnly %s/diphoton_combine_%i_%s_%s.txt -n %s_r-%.3f_%s_%s_%s_%s %s %s %s --bypassFrequentistFit --seed -1 --saveToys --expectSignal %.3f -t %i'%(options.outDir,int(massPoint),box,options.year,int(massPoint),rDict[int(massPoint)],box,options.genPdf,options.fitPdf,options.year,rRangeString,fixStringGen,freezeStringGen,rDict[int(massPoint)],options.toys),options.dryRun)
         # exec_me('combine -M AsymptoticLimits -s -1 %s/diphoton_combine_%i_%s_%s.txt %s %s > %s/diphoton_combine_%i_%s_%s.txt_results'%(options.outDir,int(massPoint),box,options.year,fixStringFit,freezeStringFit,options.outDir,int(massPoint),box,options.year))
         if (options.fitPdf == 'envelope'):
-            exec_me('combine -M MultiDimFit -m %s -d %s/diphoton_combine_%i_%s_%s.txt %s --algo grid --cminDefaultMinimizerStrategy 0 --saveNLL -n Envelope --setParameters myIndex=-1 --X-rtd REMOVE_CONSTANT_ZERO_POINT=1'%(int(massPoint),options.outDir,int(massPoint),box,options.year,rRangeString),options.dryRun)
+            exec_me('combine -M MultiDimFit -m %s -d %s/diphoton_combine_%i_%s_%s.txt %s --algo grid --cminDefaultMinimizerStrategy 0 --saveNLL -n %s_%s_%s_Envelope --setParameters myIndex=-1 --X-rtd REMOVE_CONSTANT_ZERO_POINT=1'%(int(massPoint),options.outDir,int(massPoint),box,options.year,rRangeString,options.year,box,int(massPoint)),options.dryRun)
+            # outputfile = glob.glob('higgsCombinefixed_pdf_%d.MultiDimFit.mH%d.root ./higgsCombine%s_r-%.3f_%s_%s_%s_%s.GenerateOnly.mH*.root' %(int(massPoint),rDict[int(massPoint)],box,options.genPdf,options.fitPdf,options.year))
         else:
-            exec_me('combine -M MultiDimFit -m %s -d %s/diphoton_combine_%i_%s_%s.txt %s %s %s --algo grid --cminDefaultMinimizerStrategy 0 --saveNLL -n fixed_pdf_%d --X-rtd REMOVE_CONSTANT_ZERO_POINT=1'%(int(massPoint),options.outDir,int(massPoint),box,options.year,rRangeString,fixStringFit,freezeStringFit,pdfIndexMap[options.fitPdf]),options.dryRun)
+            exec_me('combine -M MultiDimFit -m %s -d %s/diphoton_combine_%i_%s_%s.txt %s %s %s --algo grid --cminDefaultMinimizerStrategy 0 --saveNLL -n %s_%s_%s_fixed_pdf_%d --X-rtd REMOVE_CONSTANT_ZERO_POINT=1'%(int(massPoint),options.outDir,int(massPoint),box,options.year,rRangeString,fixStringFit,freezeStringFit,options.year,box,int(massPoint),pdfIndexMap[options.fitPdf]),options.dryRun)
 
-        # toysfile = glob.glob('./higgsCombine%s_r-%.3f_%s_%s_%s_%s.GenerateOnly.mH*.root' %(int(massPoint),rDict[int(massPoint)],box,options.genPdf,options.fitPdf,options.year))
+        # exec_me('mv %s %s/.'%(toysfile[0],options.outDir),options.dryRun)
 
         # exec_me('combine -M FitDiagnostics --robustFit=1 %s/diphoton_combine_%i_%s_%s.txt -n %s_r-%.3f_%s_%s_%s_%s --toysFile %s -t %i %s %s %s --cminDefaultMinimizerStrategy=2 --saveWorkspace -v -1'%(
         #     options.outDir,int(massPoint),box,options.year,
@@ -193,7 +194,6 @@ if __name__ == '__main__':
         #     rRangeString,fixStringFit,freezeStringFit),
         #         options.dryRun)
 
-        # exec_me('mv %s %s/.'%(toysfile[0],options.outDir),options.dryRun)
        #Test one by one. See if the above work and then uncomment
          #exec_me('mv higgsCombine%s_%s_lumi-%.3f_r-%.3f_%s_%s_%s.MaxLikelihoodFit.mH120.123456.root %s/'%(model,massPoint,lumi,rDict[int(massPoint)],box,options.genPdf,options.fitPdf,options.outDir),options.dryRun)
         #exec_me('mv mlfit%s_%s_lumi-%.3f_r-%.3f_%s_%s_%s.root %s/'%(model,massPoint,lumi,rDict[int(massPoint)],box,options.genPdf,options.fitPdf,options.outDir),options.dryRun)
