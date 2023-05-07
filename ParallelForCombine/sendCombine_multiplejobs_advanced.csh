@@ -14,9 +14,9 @@ setenv cats "EBEB EBEE"
 # Years
 setenv years "2016 2017 2018"
 
-# setenv musinjected `seq 1 1`
+setenv musinjected `seq 1 1`
 #setenv musinjected `seq 1 5`
-setenv musinjected "0.1 1 2"
+# setenv musinjected "0.1 1 2"
 
 # Year first
 foreach year ($years)
@@ -39,14 +39,18 @@ if (${insigname} == "grav") then
 setenv couplings "kMpl001 kMpl01 kMpl02"
 endif
 
+set method "full"
+if (${insigname} == "heavyhiggs") then
+setenv method "genFiducial"
+
 # Coupling now
 foreach coup ($couplings)
 echo "------------------------"
 echo "Coupling ${coup}"
 
-setenv masses "800 900 1000 1100 1200 1500 1800 2100 2400 2700 3000 3500 4000 4500 5000 5500 6000 6500 7000"
+setenv masses "500 600 700 800 900 1000 1100 1200 1500 1800 2100 2400 2700 3000 3500 4000 4500 5000 5500 6000 6500 7000"
 if ($coup == "kMpl001" || $coup == "0p014" || $coup == "1p4" || $coup == "5p6") then
-setenv masses "800 900 1000 1100 1200 1500 1800 2100 2400 2700 3000 3500 4000 4500 5000"
+setenv masses "500 600 700 800 900 1000 1100 1200 1500 1800 2100 2400 2700 3000 3500 4000 4500 5000"
 endif
 
 # Cat now
@@ -70,7 +74,7 @@ echo "------------------------"
 echo "Mass ${mass}"
 
 #setenv workpath "/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/ParallelForCombine/${year}/${insigname}/${combmode}/${coup}/${cat}/mu${muin}/${model}/mass${mass}/jobs"
-setenv workpath "/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/CMSDIJET/DijetRootTreeAnalyzer/ParallelForBias/${year}/${insigname}/${combmode}/${coup}/${cat}/mu${muin}/${model}/mass${mass}/jobs"
+setenv workpath "/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/CMSDIJET/DijetRootTreeAnalyzer/ParallelForCombine/${year}/${insigname}/${combmode}/${coup}/${cat}/mu${muin}/${model}/mass${mass}/jobs"
 
 setenv runumberslist ` ls ${workpath} | grep .sub `
 

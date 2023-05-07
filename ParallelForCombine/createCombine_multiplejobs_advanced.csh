@@ -1,7 +1,7 @@
 #!/bin/tcsh
 
 #setenv combmode "samefunfit" 
-setenv combmode "diffunfit"
+setenv combmode "MultiDimFit"
 
 setenv nominalmodel "dijet"
 
@@ -14,11 +14,11 @@ setenv cats "EBEB EBEE"
 # Years
 setenv years "2016 2017 2018"
 
-# setenv musinjected `seq 1 1`
+setenv musinjected `seq 1 1`
 #setenv musinjected "5 10 15"
 #setenv musinjected `seq 1 3`
 #setenv musinjected `seq 1 1`
-setenv musinjected "0.1 1 2"
+# setenv musinjected "0.1 1 2"
 setenv ntoys 1000
 setenv theseed 397
 
@@ -48,17 +48,21 @@ if (${insigname} == "grav") then
 setenv couplings "kMpl001 kMpl01 kMpl02"
 endif
 
+set method "full"
+if (${insigname} == "heavyhiggs") then
+setenv method "genFiducial"
+
 # This is for the output files
-setenv inoutpath "/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/output/${year}/combine_bias/${insigname}/${combmode}"
+setenv inoutpath "/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/CMSDIJET/DijetRootTreeAnalyzer/output/envelope/${year}/${insigname}/${combmode}"
 
 # Coupling now
 foreach coup ($couplings)
 echo "------------------------"
 echo "Coupling ${coup}"
 
-setenv masses "800 900 1000 1100 1200 1500 1800 2100 2400 2700 3000 3500 4000 4500 5000 5500 6000 6500 7000"
+setenv masses "500 600 700 800 900 1000 1100 1200 1500 1800 2100 2400 2700 3000 3500 4000 4500 5000 5500 6000 6500 7000"
 if ($coup == "kMpl001" || $coup == "0p014" || $coup == "1p4" || $coup == "5p6") then
-setenv masses "800 900 1000 1100 1200 1500 1800 2100 2400 2700 3000 3500 4000 4500 5000"
+setenv masses "500 600 700 800 900 1000 1100 1200 1500 1800 2100 2400 2700 3000 3500 4000 4500 5000"
 endif
 
 
@@ -94,21 +98,21 @@ mkdir -p ${inoutpath}/${coup}/${cat}/mu${muin}/${model}/mass${mass}
 #foreach batch (`seq 0 100`)
 foreach batch (`seq 0 0`)
 
-echo '+JobFlavour = "tomorrow" ' > bias_$batch.sub
+echo '+JobFlavour = "tomorrow" ' > combine_$batch.sub
 #echo '+JobFlavour = "microcentury" ' > bias_$batch.sub
-echo ' ' >> bias_$batch.sub
-echo "executable  = ${PWD}/setupCombineBias.sh" >> bias_$batch.sub
+echo ' ' >> combine_$batch.sub
+echo "executable  = ${PWD}/setupCombine.sh" >> combine_$batch.sub
 #echo "arguments   = "'$(ClusterID) $(ProcId)'" ${ncut} ${thick} ${file} ${thicknum} " >> bias_${file}.sub
-echo "arguments   = "'$(ClusterID) $(ProcId)'" ${inoutpath} ${model} ${ntoys} ${coup} ${insigname} ${theseed} ${year} ${muin} ${mass} ${combmode} ${nominalmodel} ${cat} ${lumi} "'$(infile)'" " >> bias_$batch.sub
-echo "output      = ${PWD}/${year}/${insigname}/${combmode}/${coup}/${cat}/mu${muin}/${model}/mass${mass}/logs/bias_"'$(infile)'".out " >> bias_$batch.sub
-echo "error       = ${PWD}/${year}/${insigname}/${combmode}/${coup}/${cat}/mu${muin}/${model}/mass${mass}/logs/bias_"'$(infile)'".err " >> bias_$batch.sub
-echo "log         = ${PWD}/${year}/${insigname}/${combmode}/${coup}/${cat}/mu${muin}/${model}/mass${mass}/logs/bias_"'$(infile)'"_htc.log " >> bias_$batch.sub
+echo "arguments   = "'$(ClusterID) $(ProcId)'" ${inoutpath} ${model} ${ntoys} ${coup} ${insigname} ${theseed} ${year} ${muin} ${mass} ${combmode} ${nominalmodel} ${method} ${cat} ${lumi} "'$(infile)'" " >> combine_$batch.sub
+echo "output      = ${PWD}/${year}/${insigname}/${combmode}/${coup}/${cat}/mu${muin}/${model}/mass${mass}/logs/combine_"'$(infile)'".out " >> combine_$batch.sub
+echo "error       = ${PWD}/${year}/${insigname}/${combmode}/${coup}/${cat}/mu${muin}/${model}/mass${mass}/logs/combine_"'$(infile)'".err " >> combine_$batch.sub
+echo "log         = ${PWD}/${year}/${insigname}/${combmode}/${coup}/${cat}/mu${muin}/${model}/mass${mass}/logs/combine_"'$(infile)'"_htc.log " >> combine_$batch.sub
 #echo "output      = ${PWD}/${year}/${insigname}/${combmode}/${coup}/bias_"'$(infile)'".out " >> bias_$batch.sub
 #echo "error       = ${PWD}/${year}/${insigname}/${combmode}/${coup}/bias_"'$(infile)'".err " >> bias_$batch.sub
 #echo "log         = ${PWD}/${year}/${insigname}/${combmode}/${coup}/bias_"'$(infile)'"_htc.log " >> bias_$batch.sub
 
 #echo 'requirements = (OpSysAndVer =?= "CentOS7") ' >> bias_${batch}.sub
-echo 'max_retries = 1' >> bias_$batch.sub
+echo 'max_retries = 1' >> combine_$batch.sub
 
 rm voodoo
 touch voodoo
@@ -120,12 +124,12 @@ echo -n "${num} " >> voodoo
 end
 
 setenv batchfilelist `cat voodoo`
-echo "queue infile in (${batchfilelist}) " >> bias_$batch.sub
+echo "queue infile in (${batchfilelist}) " >> combine_$batch.sub
 
-mv bias_$batch.sub ${year}/${insigname}/${combmode}/${coup}/${cat}/mu${muin}/${model}/mass${mass}/jobs/bias_$batch.sub
-chmod 755 ${year}/${insigname}/${combmode}/${coup}/${cat}/mu${muin}/${model}/mass${mass}/jobs/bias_$batch.sub
+mv combine_$batch.sub ${year}/${insigname}/${combmode}/${coup}/${cat}/mu${muin}/${model}/mass${mass}/jobs/combine_$batch.sub
+chmod 755 ${year}/${insigname}/${combmode}/${coup}/${cat}/mu${muin}/${model}/mass${mass}/jobs/combine_$batch.sub
 
-echo bias_$batch.sub
+echo combine_$batch.sub
 
 end 
 

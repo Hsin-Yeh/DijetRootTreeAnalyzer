@@ -15,9 +15,10 @@ THEMUIN=${10}
 THEMASS=${11}
 THECOMBCHOICE=${12}
 THENOMINALMODEL=${13}
-THECAT=${14}
-THELUMI=${15}
-CURRENTTOY=${16}
+THEMETHOD=${14}
+THECAT=${15}
+THELUMI=${16}
+CURRENTTOY=${17}
 
 export mainpath="/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/CMSDIJET/DijetRootTreeAnalyzer"
 
@@ -32,9 +33,11 @@ cp -r ${mainpath}/python .
 cp -r ${mainpath}/config .
 cp -r ${mainpath}/output .
 cp -r ${mainpath}/bkgAltModels .
-cp /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/SignalNorm.txt .
+cp /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/SignalNorm_Splines_${THEMETHOD}.txt ./SignalNorm.txt
 
-time python python/RunBias.py -c config/diphotons_bias_${THEYEAR}.config -i bkgAltModels/${THEMODEL}/blind/FitResults_DiPhotons_${THECOUP}_${THECAT}_${THEYEAR}.root -b DiPhotons_${THECOUP}_${THECAT} --mass ${THEMASS} -m gg -d signal_bias -r${THEMUIN} -l ${THELUMI} --year ${THEYEAR} -t ${THENTOYS} --gen-pdf ${THEMODEL} --fit-pdf ${THENOMINALMODEL} --SigNorm SignalNorm.txt
+time python python/RunBias.py -c config/diphotons_bias_${THEYEAR}.config -i bkgAltModels/${THEMODEL}/blind/FitResults_DiPhotons_${THECOUP}_${THECAT}_${THEYEAR}.root -b DiPhotons_${THECOUP}_${THECAT} --mass ${THEMASS} -m gg -d signal_bias -r ${THEMUIN} --rMin -3 --rMax 3 -l ${THELUMI} --year ${THEYEAR} --fit-pdf ${THEMODEL} --SigNorm SignalNorm.txt
+
+time python python/RunDiphotonCombine.py -c config/diphotons_bias_${THEYEAR}.config -i bkgAltModels/${THEMODEL}/blind/FitResults_DiPhotons_kMpl001_EBEB_2017.root -b DiPhotons_kMpl001_EBEB --mass 4000 -m gg -d signal_bias -r 1 --rMin -3 --rMax 3 -l 41.527 --year 2017 --fit-pdf ${fitmethod} --SigNorm $SigNormFile
 
 outfile=`ls fitDiagnostics*|grep ${THECOUP}|grep ${THEMODEL}|grep ${THENOMINALMODEL}|grep .root`
 
