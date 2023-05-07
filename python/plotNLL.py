@@ -11,6 +11,9 @@ import numpy as np
 parser = argparse.ArgumentParser(description='')
 parser.add_argument('in_filenames',nargs="+",help='input filenames')
 parser.add_argument('--outputDir','-d',default="output/plots/sysplots",type=str,help='output plot directory')
+parser.add_argument('--xMax',default=3,type=float,help='plot x max')
+parser.add_argument('--xMin',default=-1,type=float,help='plot x min')
+
 args = parser.parse_args()
 
 if __name__ == "__main__":
@@ -37,5 +40,5 @@ if __name__ == "__main__":
         ax.scatter(r,total,color=color_template[ifile],label=name)
 
     ax.legend()
-    # ax.set_xlim([-1,0])
+    ax.set_xlim([args.xMin,args.xMax])
     plt.savefig("test.png")
