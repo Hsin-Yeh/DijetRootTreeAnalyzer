@@ -51,6 +51,7 @@ endif
 setenv method "full"
 if (${insigname} == "heavyhiggs") then
 setenv method "genFiducial"
+endif
 
 # This is for the output files
 setenv inoutpath "/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/CMSDIJET/DijetRootTreeAnalyzer/output/envelope/${year}/${insigname}/${combmode}"
