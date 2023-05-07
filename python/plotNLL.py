@@ -13,6 +13,8 @@ parser.add_argument('in_filenames',nargs="+",help='input filenames')
 parser.add_argument('--outputDir','-d',default="output/plots/sysplots",type=str,help='output plot directory')
 parser.add_argument('--xMax',default=3,type=float,help='plot x max')
 parser.add_argument('--xMin',default=-1,type=float,help='plot x min')
+parser.add_argument('--yMax',default=-1,type=float,help='plot y max')
+parser.add_argument('--yMin',default=-1,type=float,help='plot y min')
 
 args = parser.parse_args()
 
@@ -41,4 +43,5 @@ if __name__ == "__main__":
 
     ax.legend()
     ax.set_xlim([args.xMin,args.xMax])
+    if (args.yMax != -1 ): ax.set_ylim([args.yMin,args.yMax])
     plt.savefig("test.png")
