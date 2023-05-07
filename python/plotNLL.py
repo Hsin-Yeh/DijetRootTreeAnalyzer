@@ -29,6 +29,6 @@ if __name__ == "__main__":
         deltaNLL = root_numpy.tree2array(tree,'deltaNLL')
         total = 2*(deltaNLL+nll+nll0)
         print(r, nll, nll0, deltaNLL, total)
-        plt.scatter(r,total,color=color_template(ifile))
+        plt.scatter(r,total,color=color_template[ifile])
 
     plt.savefig("test.png")
