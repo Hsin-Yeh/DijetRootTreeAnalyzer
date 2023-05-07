@@ -22,11 +22,11 @@ if __name__ == "__main__":
 
     for ifile,in_filename in enumerate(args.in_filenames):
         tfileIn = ROOT.TFile.Open(in_filename)
-        if (in_filename.find("Envelope")): name="Envelope"
-        elif (in_filename.find("pdf_0")): name="dijet"
-        elif (in_filename.find("pdf_1")): name="expow1"
-        elif (in_filename.find("pdf_2")): name="invpow1"
-        elif (in_filename.find("pdf_3")): name="invpowlin1"
+        if (in_filename.find("Envelope") != 0): name="Envelope"
+        elif (in_filename.find("pdf_0") != 0): name="dijet"
+        elif (in_filename.find("pdf_1") != 0): name="expow1"
+        elif (in_filename.find("pdf_2") != 0): name="invpow1"
+        elif (in_filename.find("pdf_3") != 0): name="invpowlin1"
         tree=tfileIn.Get("limit")
         r = root_numpy.tree2array(tree,'r')
         nll= root_numpy.tree2array(tree,'nll')
