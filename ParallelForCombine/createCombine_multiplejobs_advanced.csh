@@ -48,7 +48,7 @@ if (${insigname} == "grav") then
 setenv couplings "kMpl001 kMpl01 kMpl02"
 endif
 
-set method "full"
+setenv method "full"
 if (${insigname} == "heavyhiggs") then
 setenv method "genFiducial"
 
