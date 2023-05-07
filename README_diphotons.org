@@ -376,8 +376,8 @@ filesToExtractRS=`ls /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_
 
 filesToExtractGluGlu=`ls /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/CMSDIJET/DijetRootTreeAnalyzer/output/${method} |grep .root | grep GluGlu`
 
-# for file in ${filesToExtractRS};
-# do echo ${file}; coup=`echo ${file} | cut -d'_' -f 3`; echo $coup; filename=`echo ${file} | cut -d'.' -f 1`; ../getResonanceShapes.py -i inputs/${filename}.py -c ${coup} -f gg --massrange 500 7000 100 -o ResonanceShapes_${filename}.root; done;
+for file in ${filesToExtractRS};
+do echo ${file}; coup=`echo ${file} | cut -d'_' -f 3`; echo $coup; filename=`echo ${file} | cut -d'.' -f 1`; ../getResonanceShapes.py -i inputs/${filename}.py -c ${coup} -f gg --massrange 500 7000 100 -o ResonanceShapes_${filename}.root; done;
 
 for file in ${filesToExtractGluGlu};
 do echo ${file}; coup=`echo ${file} | cut -d'_' -f 4`; echo $coup; filename=`echo ${file} | cut -d'.' -f 1`; ../getResonanceShapes.py -i inputs/${filename}.py -c ${coup} -f gg --massrange 500 5000 100 -o ResonanceShapes_${filename}.root; done;
@@ -776,7 +776,6 @@ mkdir signal_bias/
 time python python/RunBias.py -c config/diphotons_bias_2017.config -i bkgAltModels/expow1/blind/FitResults_DiPhotons_kMpl001_EBEB_2017.root -b DiPhotons_kMpl001_EBEB --mass 1000 -m gg -d signal_bias -r 1 -l 41.527 --year 2017 -t 10 --gen-pdf expow1 --fit-pdf dijet
 
 
-
 #+end_src
 ** plot
 #+begin_src bash
@@ -862,8 +861,8 @@ cd /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphot
 
 #To produce the plot run the command with the above output txt file as input :
 export mainpath="/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/CMSDIJET/DijetRootTreeAnalyzer/FinalResults"
-# export main_method="full"
-export main_method="genFiducial"
+export main_method="full"
+# export main_method="genFiducial"
 export compare_method="genFiducial"
 # export method="truncate"
 
@@ -871,12 +870,12 @@ mkdir ${mainpath}/Limits/${main_method}
 cd ${mainpath}/Limits/${main_method}
 
 # RS
-for year in {"2016","2017","2018","fullRun2"}; do echo $year; for coup in {"kMpl001","kMpl01","kMpl02"}; do echo ${coup}; plotLimit.exe "${mainpath}/${main_method}/finalResults_${year}_grav_${coup}" "${mainpath}/${compare_method}/finalResults_${year}_grav_${coup}" ${coup} ${year} "${mainpath}/Limits/${main_method}" grav; done; done;
+for year in {"2016","2017","2018","fullRun2"}; do echo $year; for coup in {"kMpl001","kMpl01","kMpl02"}; do echo ${coup}; plotLimit.exe "${mainpath}/finalResults_${year}_grav_${coup}" "${mainpath}/${compare_method}/finalResults_${year}_grav_${coup}" ${coup} ${year} "${mainpath}/Limits/${main_method}" grav; done; done;
 
 # for year in {"2018","fullRun2"}; do echo $year; echo kMpl02; plotLimit.exe "${mainpath}/${main_method}/finalResults_${year}_grav_kMpl02" "${mainpath}/${compare_method}/finalResults_${year}_grav_kMpl02" kMpl02 ${year} "${mainpath}/Limits/${main_method}" grav; done;
 
 # heavy higgs
-for year in {"2016","2017","2018","fullRun2"}; do echo $year; for coup in {"0p014","1p4","5p6"}; do echo ${coup}; plotLimit.exe "${mainpath}/${main_method}/finalResults_${year}_heavyhiggs_${coup}" "${mainpath}/${compare_method}/finalResults_${year}_heavyhiggs_${coup}" ${coup} ${year} "${mainpath}/Limits/${main_method}" heavyhiggs; done; done;
+for year in {"2016","2017","2018","fullRun2"}; do echo $year; for coup in {"0p014","1p4","5p6"}; do echo ${coup}; plotLimit.exe "${mainpath}/finalResults_${year}_heavyhiggs_${coup}" "${mainpath}/${compare_method}/finalResults_${year}_heavyhiggs_${coup}" ${coup} ${year} "${mainpath}/Limits/${main_method}" heavyhiggs; done; done;
 
 dateDir=$(date +"%Y%m%d_%H%M%S")
 cpwww ${mainpath}/Limits/${main_method} ~/www/diphoton-analysis/FinalResults/Limits/${method}/${dateDir}
@@ -975,6 +974,12 @@ do
 done
 #+end_src
 
+** discrete
+#+begin_src bash
+for fitmethod in {"dijet","expow1","invpow1","invpowlin1","envelope"}; do
+    time python python/RunDiphotonCombine.py -c config/diphotons_bias_2017.config -i bkgAltModels/${fitmethod}/blind/FitResults_DiPhotons_kMpl001_EBEB_2017.root -b DiPhotons_kMpl001_EBEB --mass 1000 -m gg -d signal_bias -r 1 -l 41.527 --year 2017 -t 10 --fit-pdf ${fitmethod} --dry-run
+done
+#+end_src
 * Scripts
 #+begin_src bash
 cd /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/CMSDIJET/DijetRootTreeAnalyzer
