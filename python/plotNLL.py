@@ -21,7 +21,7 @@ if __name__ == "__main__":
         nll0 = root_numpy.tree2array(tree,'nll0')
         deltaNLL = root_numpy.tree2array(tree,'deltaNLL')
         total = 2*(deltaNLL+nll+nll0)
-        print(r[0], nll, nll0, deltaNLL, total)
+        print(r, nll, nll0, deltaNLL, total)
         import matplotlib.pyplot as plt
-        plt.scatter(r[0],total)
-        plt.savefig("test.png")
+        # plt.scatter(r,total)
+        # plt.savefig("test.png")
