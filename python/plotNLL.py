@@ -15,7 +15,12 @@ args = parser.parse_args()
 
 if __name__ == "__main__":
 
-    for in_filename in args.in_filenames:
+    # Define a list of colors
+    color_template = ['blue', 'green', 'red', 'purple', 'orange', 'yellow']
+    # Create a figure and axes object
+    fig, ax = plt.subplots()
+
+    for ifile,in_filename in enumerate(args.in_filenames):
         tfileIn = ROOT.TFile.Open(in_filename)
         tree=tfileIn.Get("limit")
         r = root_numpy.tree2array(tree,'r')
@@ -24,5 +29,6 @@ if __name__ == "__main__":
         deltaNLL = root_numpy.tree2array(tree,'deltaNLL')
         total = 2*(deltaNLL+nll+nll0)
         print(r, nll, nll0, deltaNLL, total)
-        plt.scatter(r,total)
-        plt.savefig("test.png")
+        plt.scatter(r,total,color=color_template(ifile))
+
+    plt.savefig("test.png")
