@@ -1,7 +1,8 @@
 #!/bin/tcsh
 
 #setenv combmode "samefunfit"
-setenv combmode "diffunfit"
+# setenv combmode "diffunfit"
+setenv combmode "MultiDimFit"
 
 setenv nominalmodel "dijet"
 
