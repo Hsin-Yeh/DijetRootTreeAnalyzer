@@ -5,7 +5,7 @@ setenv combmode "MultiDimFit"
 
 setenv nominalmodel "dijet"
 
-setenv models "dijet expow1 invpow1 invpowlin1"
+setenv models "dijet expow1 invpow1 invpowlin1 envelope"
 
 setenv insignames "grav heavyhiggs"
 
