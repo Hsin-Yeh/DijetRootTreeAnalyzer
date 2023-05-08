@@ -126,13 +126,13 @@ if __name__ == '__main__':
 
     if not options.multi:
 
-        filename = args.ws + "/SignalParametricShapes_ws_" + args.coup + ".root"
+        filename = options.ws + "/SignalParametricShapes_ws_" + options.coup + ".root"
         fparamshape = ROOT.TFile(filename);
         wsparamshape = fparamshape.Get("ws_inputs");
         mgg = wsparamshape.var("mgg")
         MH = wsparamshape.var("MH");
-        MH.setVal(args.mass);
-        h_mgg_fit = mgg.frame(binBoundaries[args.coup])
+        MH.setVal(options.mass);
+        h_mgg_fit = mgg.frame(binBoundaries[options.coup])
 
         # hist_mass_list_rsg = ROOT.TH1D()
 
