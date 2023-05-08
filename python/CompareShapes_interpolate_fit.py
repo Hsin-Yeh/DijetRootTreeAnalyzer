@@ -128,7 +128,7 @@ if __name__ == '__main__':
 
         filename = options.ws + "/SignalParametricShapes_ws_" + options.coup + ".root"
         fparamshape = ROOT.TFile(filename);
-        wsparamshape = fparamshape.Get("ws_inputs");
+        wsparamshape = (ROOT.RooWorkspace)fparamshape.Get("ws_inputs");
         mgg = wsparamshape.var("mgg")
         MH = wsparamshape.var("MH");
         MH.setVal(options.mass);
