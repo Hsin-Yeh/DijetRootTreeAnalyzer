@@ -128,9 +128,9 @@ if __name__ == '__main__':
 
         filename = options.ws + "/SignalParametricShapes_ws_" + options.coup + ".root"
         fparamshape = ROOT.TFile(filename);
-        wsparamshape = (ROOT.RooWorkspace)fparamshape.Get("ws_inputs");
-        mgg = wsparamshape.var("mgg")
-        MH = wsparamshape.var("MH");
+        wsparamshape = fparamshape.Get("ws_inputs");
+        mgg = wsparamshape["mgg"]
+        MH  = wsparamshape["MH"]
         MH.setVal(options.mass);
         h_mgg_fit = mgg.frame(binBoundaries[options.coup])
 
