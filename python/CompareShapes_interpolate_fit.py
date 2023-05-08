@@ -80,6 +80,7 @@ if __name__ == '__main__':
     parser = OptionParser()
     parser.add_option('--cat',    dest="cat",    default="EBEB",    type="string", help="category")
     parser.add_option('--coup',   dest="coup",   default="kMpl001", type="string", help="coupling")
+    parser.add_option('--mass',   dest="mass",   default="750",     type="int",    help="category")
     parser.add_option('--outdir', dest="outDir", default="./",      type="string", help="Output directory to store output histograms")
     parser.add_option('--ws_dir', dest="ws_dir", default="./",      type="string", help="input directory of parametric fit results")
     parser.add_option("--method", dest="method", default="full",    type="string", help="Choose between full range or truncate with the fwhm mass range")
@@ -128,7 +129,8 @@ if __name__ == '__main__':
         fparamshape = ROOT.TFile("%s/SignalParametricShapes_ws_%s.root"%(args.ws_dir,args.coup));
         wsparamshape = fparamshape->Get("ws_inputs");
         mgg = wsparamshape->var("mgg")
-        MH[tmpin.name] = wsparamshape->var("MH");
+        MH = wsparamshape->var("MH");
+        MH.setVal(args.mass);
         h_mgg_fit = mgg.frame(binBoundaries[args.coup])
 
         # hist_mass_list_rsg = ROOT.TH1D()
