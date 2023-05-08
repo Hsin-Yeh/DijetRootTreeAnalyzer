@@ -45,4 +45,4 @@ if __name__ == "__main__":
     ax.legend()
     ax.set_xlim([args.xMin,args.xMax])
     if (args.yMax != -1 ): ax.set_ylim([args.yMin,args.yMax])
-    plt.savefig(f"test_{args.mass}.png")
+    plt.savefig("test_%s.png"%(args.mass))
