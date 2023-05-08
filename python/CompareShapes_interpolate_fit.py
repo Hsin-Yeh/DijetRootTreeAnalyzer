@@ -126,7 +126,8 @@ if __name__ == '__main__':
 
     if not options.multi:
 
-        fparamshape = ROOT.TFile("%s/SignalParametricShapes_ws_%s.root"%(args.ws_dir,args.coup));
+        filename = args.ws_dir + "/SignalParametricShapes_ws_" + args.coup + ".root"
+        fparamshape = ROOT.TFile(filename);
         wsparamshape = fparamshape.Get("ws_inputs");
         mgg = wsparamshape.var("mgg")
         MH = wsparamshape.var("MH");
