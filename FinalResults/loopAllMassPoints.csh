@@ -5,6 +5,7 @@ setenv signal $2
 setenv coupling $3
 setenv method $4
 setenv massInterval $5
+setenv datacardsDir $6
 
 setenv masslist `seq 600 ${massInterval} 7000`
 
@@ -40,10 +41,10 @@ foreach mass ($masslist)
 echo "====================================================================="
 echo $mass
 
-setenv datacardfile `echo /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/CMSDIJET/DijetRootTreeAnalyzer/test_directory/${method}/${year}/diphoton_combine_${mass}_DiPhotons_${coupling}_${year}.txt`
+setenv datacardfile `echo ${datacardsDir}/${method}/${year}/diphoton_combine_${mass}_DiPhotons_${coupling}_${year}.txt`
 
 if ($year == "fullRun2") then
-setenv datacardfile `echo /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/CMSDIJET/DijetRootTreeAnalyzer/test_directory/${method}/fullRun2/diphoton_combine_${mass}_DiPhotons_${coupling}.txt`
+setenv datacardfile `echo ${datacardsDir}/${method}/fullRun2/diphoton_combine_${mass}_DiPhotons_${coupling}.txt`
 endif
 
 echo $datacardfile
