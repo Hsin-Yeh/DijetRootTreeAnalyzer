@@ -78,11 +78,12 @@ def project(tree, h, var, cut):
 if __name__ == '__main__':
 
     parser = OptionParser()
-    parser.add_option('-c','--cat',       dest="cat",      default="EBEB",    type="string", help="category")
-    parser.add_option('-w','--coup',      dest="coup",     default="kMpl001", type="string", help="coupling")
-    parser.add_option('-d','--outdir',    dest="outDir",   default="./",      type="string", help="Output directory to store output histograms")
-    parser.add_option("-e","--method",   dest="method",    default="full",    type="string", help="Choose between full range or truncate with the fwhm mass range")
-    parser.add_option('-m','--multi',     dest="multi",    default=False,     action="store_true", help="Make a single comparison plot or multi")
+    parser.add_option('--cat',    dest="cat",    default="EBEB",    type="string", help="category")
+    parser.add_option('--coup',   dest="coup",   default="kMpl001", type="string", help="coupling")
+    parser.add_option('--outdir', dest="outDir", default="./",      type="string", help="Output directory to store output histograms")
+    parser.add_option('--ws_dir', dest="ws_dir", default="./",      type="string", help="input directory of parametric fit results")
+    parser.add_option("--method", dest="method", default="full",    type="string", help="Choose between full range or truncate with the fwhm mass range")
+    parser.add_option('--multi',  dest="multi",  default=False,     action="store_true", help="Make a single comparison plot or multi")
     (options,args) = parser.parse_args()
 
     histos = []
@@ -124,7 +125,7 @@ if __name__ == '__main__':
 
     if not options.multi:
 
-        fparamshape = ROOT.TFile("%s/SignalParametricShapes_ws_%s.root"%(,));
+        fparamshape = ROOT.TFile("%s/SignalParametricShapes_ws_%s.root"%(args.ws_dir,args.coup));
         wsparamshape = fparamshape->Get("ws_inputs");
         mgg = wsparamshape->var("mgg")
         MH[tmpin.name] = wsparamshape->var("MH");
