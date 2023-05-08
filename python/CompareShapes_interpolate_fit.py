@@ -127,9 +127,9 @@ if __name__ == '__main__':
     if not options.multi:
 
         fparamshape = ROOT.TFile("%s/SignalParametricShapes_ws_%s.root"%(args.ws_dir,args.coup));
-        wsparamshape = fparamshape->Get("ws_inputs");
-        mgg = wsparamshape->var("mgg")
-        MH = wsparamshape->var("MH");
+        wsparamshape = fparamshape.Get("ws_inputs");
+        mgg = wsparamshape.var("mgg")
+        MH = wsparamshape.var("MH");
         MH.setVal(args.mass);
         h_mgg_fit = mgg.frame(binBoundaries[args.coup])
 
