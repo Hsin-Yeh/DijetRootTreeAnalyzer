@@ -15,6 +15,7 @@ parser.add_argument('--xMax',default=3,type=float,help='plot x max')
 parser.add_argument('--xMin',default=-1,type=float,help='plot x min')
 parser.add_argument('--yMax',default=-1,type=float,help='plot y max')
 parser.add_argument('--yMin',default=-1,type=float,help='plot y min')
+parser.add_argument('--mass',default=750,type=int,help='plot name mass')
 
 args = parser.parse_args()
 
@@ -44,4 +45,4 @@ if __name__ == "__main__":
     ax.legend()
     ax.set_xlim([args.xMin,args.xMax])
     if (args.yMax != -1 ): ax.set_ylim([args.yMin,args.yMax])
-    plt.savefig("test.png")
+    plt.savefig(f"test_{args.mass}.png")
