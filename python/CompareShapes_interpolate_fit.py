@@ -82,7 +82,7 @@ if __name__ == '__main__':
     parser.add_option('--coup',   dest="coup",   default="kMpl001", type="string", help="coupling")
     parser.add_option('--mass',   dest="mass",   default="750",     type="int",    help="category")
     parser.add_option('--outdir', dest="outDir", default="./",      type="string", help="Output directory to store output histograms")
-    parser.add_option('--ws_dir', dest="ws_dir", default="./",      type="string", help="input directory of parametric fit results")
+    parser.add_option('--ws',     dest="ws",     default="./",      type="string", help="input directory of parametric fit results")
     parser.add_option("--method", dest="method", default="full",    type="string", help="Choose between full range or truncate with the fwhm mass range")
     parser.add_option('--multi',  dest="multi",  default=False,     action="store_true", help="Make a single comparison plot or multi")
     (options,args) = parser.parse_args()
@@ -126,7 +126,7 @@ if __name__ == '__main__':
 
     if not options.multi:
 
-        filename = args.ws_dir + "/SignalParametricShapes_ws_" + args.coup + ".root"
+        filename = args.ws + "/SignalParametricShapes_ws_" + args.coup + ".root"
         fparamshape = ROOT.TFile(filename);
         wsparamshape = fparamshape.Get("ws_inputs");
         mgg = wsparamshape.var("mgg")
