@@ -132,8 +132,9 @@ if __name__ == '__main__':
         mgg = wsparamshape["mgg"]
         MH  = wsparamshape["MH"]
         MH.setVal(options.mass);
-        h_mgg_fit = mgg.frame(binBoundaries[options.coup])
-
+        p = mgg.frame()
+        shape = wsparamshape.pdf("SignalShape_%s_EBEB"%(options.coup));
+        shape.plotOn(p)
         # hist_mass_list_rsg = ROOT.TH1D()
 
         # #Now to the interpolated shape
@@ -199,12 +200,12 @@ if __name__ == '__main__':
 
         # pave_gof = ROOT.TPaveText(0.65,0.85,0.95,1.0,"NDC")
 
-        h_mgg_fit.SetLineColor(1)
-        h_mgg_fit.GetXaxis().SetRangeUser(massMin, massMax)
-        h_mgg_fit.GetXaxis().SetTitle("DiPhoton mass [GeV]")
-        h_mgg_fit.GetYaxis().SetTitle("Normalized yield/bin width")
-        h_mgg_fit.Scale(1/h_mgg_fit.GetSumOfWeights())
-        h_mgg_fit.Draw("hist")
+        p.SetLineColor(1)
+        p.GetXaxis().SetRangeUser(massMin, massMax)
+        p.GetXaxis().SetTitle("DiPhoton mass [GeV]")
+        p.GetYaxis().SetTitle("Normalized yield/bin width")
+        p.Scale(1/h_mgg_fit.GetSumOfWeights())
+        p.Draw("hist")
         # hist_mass_list_rsg.GetXaxis().SetRangeUser(massMin, massMax)
         # hist_mass_list_rsg.SetLineColor(2)
         # hist_mass_list_rsg.Draw("hist same")
