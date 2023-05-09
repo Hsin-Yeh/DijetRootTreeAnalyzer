@@ -138,14 +138,15 @@ if __name__ == '__main__':
         # hist_mass_list_rsg = ROOT.TH1D()
 
         # #Now to the interpolated shape
-        # tfileRes = ROOT.TFile("/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/%s/ResonanceShapes_InputShapes_%s_%s_%s.root" %(method,title,options.cat,year) , "read")
-        # tfileRes.cd()
+        tfileRes = ROOT.TFile("/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/%s/ResonanceShapes_InputShapes_%s_%s_%s.root" %(method,title,options.cat,year) , "read")
+        tfileRes.cd()
 
         # #tfileRes.Print()
 
-        # #hist_mass_list_rsg.append( tfileRes.Get("h_gg_%s"%mass) )
-        # #hist_mass_list_rsg = tfileRes.FindObject("h_gg_%i"%mass)
-        # hist_mass_list_rsg =  tfileRes.Get("h_gg_%i"%mass)
+        # hist_mass_list_rsg.append( tfileRes.Get("h_gg_%s"%mass) )
+        # hist_mass_list_rsg = tfileRes.FindObject("h_gg_%i"%mass)
+        hist_mass_list_rsg =  tfileRes.Get("h_gg_%i"%mass)
+        h = ROOT.RooDataHist("h","h",mgg,Import(hist_mass_list_rsg)) ;
         # histosRes.append(hist_mass_list_rsg)
 
         # hist_mass_list_rsg.Print()
@@ -162,6 +163,8 @@ if __name__ == '__main__':
         canvas.SetTickx()
         canvas.SetTicky()
         canvas.cd()
+
+
 
         # leg = ROOT.TLegend(0.65,0.45,0.95,0.6)
         # leg.SetBorderSize(0)
