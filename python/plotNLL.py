@@ -82,7 +82,7 @@ if __name__ == "__main__":
     ax.legend()
     ax.set_xlim([args.xMin,args.xMax])
     average_total = average_total/len(args.in_filenames)
-    print(average_total)
+    print(average_total,minimum,maximum)
     # ax.set_ylim(average_total*0.9,average_total*1.1)
     ax.set_ylim(minimum,maximum)
     if (args.yMax != -1 ): ax.set_ylim([args.yMin,args.yMax])
