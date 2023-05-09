@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+# python python/CompareShapes_interpolate_fit.py --cat EBEB --coup kMpl001 --mass 650 --year 2017 --outdir ./ --ws ../../output/2017/FinalParametricShape/workspaces --method full
 
 from optparse import OptionParser
 import ROOT
@@ -133,7 +134,7 @@ if __name__ == '__main__':
         mgg = wsparamshape.var("mgg")
         MH  = wsparamshape.var("MH")
         MH.setVal(options.mass);
-        p = mgg.frame(125,1000,500)
+        p = mgg.frame(500,1000,500)
         shape = wsparamshape.pdf("SignalShape_%s_EBEB"%(options.coup));
         shape.plotOn(p,ROOT.RooFit.LineColor(4))
         # hist_mass_list_rsg = ROOT.TH1D()
