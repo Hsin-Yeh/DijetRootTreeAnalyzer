@@ -148,7 +148,7 @@ if __name__ == '__main__':
         # hist_mass_list_rsg = tfileRes.FindObject("h_gg_%i"%mass)
         hist_mass_list_rsg =  tfileRes.Get("h_gg_%i"%(options.mass))
         h = ROOT.RooDataHist("h","h",ROOT.RooArgList(mgg),ROOT.RooFit.Import(hist_mass_list_rsg)) ;
-        h.plotOn(p)
+        h.plotOn(p.ROOT.RooFit.DrawOption("B"), ROOT.RooFit.DataError(RooAbsData::None), ROOT.RooFit.XErrorSize(0))
         # histosRes.append(hist_mass_list_rsg)
 
         # hist_mass_list_rsg.Print()
@@ -210,7 +210,7 @@ if __name__ == '__main__':
         p.GetXaxis().SetTitle("DiPhoton mass [GeV]")
         p.GetYaxis().SetTitle("Normalized yield/bin width")
         # p.Scale(1/h_mgg_fit.GetSumOfWeights())
-        p.Draw("hist")
+        p.Draw("HIST")
         # hist_mass_list_rsg.GetXaxis().SetRangeUser(massMin, massMax)
         # hist_mass_list_rsg.SetLineColor(2)
         # hist_mass_list_rsg.Draw("hist same")
