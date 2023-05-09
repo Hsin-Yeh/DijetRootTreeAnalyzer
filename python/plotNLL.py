@@ -29,7 +29,10 @@ if __name__ == "__main__":
 
     for ifile,in_filename in enumerate(args.in_filenames):
         tfileIn = ROOT.TFile.Open(in_filename)
-        if (in_filename.find("Envelope") != -1): name="Envelope"
+        linestyle='solid'
+        if (in_filename.find("Envelope") != -1):
+            name="Envelope"
+            linestyle='dashed'
         elif (in_filename.find("pdf_0") != -1): name="dijet"
         elif (in_filename.find("pdf_1") != -1): name="expow1"
         elif (in_filename.find("pdf_2") != -1): name="invpow1"
@@ -42,7 +45,7 @@ if __name__ == "__main__":
         total = 2*(deltaNLL+nll+nll0)
         print(r, nll, nll0, deltaNLL, total)
         average_total += total[25]
-        ax.scatter(r,total,color=color_template[ifile],label=name)
+        ax.scatter(r,total,color=color_template[ifile],linestyle=linestyle,label=name)
 
     ax.legend()
     ax.set_xlim([args.xMin,args.xMax])
