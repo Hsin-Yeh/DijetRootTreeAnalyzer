@@ -79,7 +79,7 @@ if __name__ == "__main__":
         print(average_total,minimum,maximum)
         ax.scatter(r,total,color=color_template[ifile],linestyle=linestyle,label=name)
 
-    ax.legend(loc="best")
+    ax.legend(loc="upper left")
     ax.set_xlim([args.xMin,args.xMax])
     average_total = average_total/len(args.in_filenames)
     print(average_total,minimum,maximum)
