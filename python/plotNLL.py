@@ -49,7 +49,7 @@ if __name__ == "__main__":
         total = 2*(deltaNLL+nll+nll0)
         print(r, nll, nll0, deltaNLL, total)
         average_total += total[25]
-        ax.scatter(r,total,color=color_template[ifile],linestyle=linestyle,linewidth=1.5, label=name)
+        ax.scatter(r,total,color=color_template[ifile],linestyle=linestyle,label=name)
 
     ax.legend()
     ax.set_xlim([args.xMin,args.xMax])
