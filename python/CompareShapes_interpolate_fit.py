@@ -130,7 +130,7 @@ if __name__ == '__main__':
         fparamshape = ROOT.TFile(filename);
         wsparamshape = fparamshape.Get("ws_inputs");
         mgg = wsparamshape.var("mgg")
-        MH  = wsparamshap.var("MH")
+        MH  = wsparamshape.var("MH")
         MH.setVal(options.mass);
         p = mgg.frame()
         shape = wsparamshape.pdf("SignalShape_%s_EBEB"%(options.coup));
