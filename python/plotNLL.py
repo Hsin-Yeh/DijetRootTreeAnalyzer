@@ -46,7 +46,7 @@ if __name__ == "__main__":
         total = 2*(deltaNLL+nll+nll0)
         print(r, nll, nll0, deltaNLL, total)
         average_total += total[25]
-        ax.scatter(r,total,color=color_template[ifile],linestyle=linestyle,label=name)
+        ax.scatter(r,total,color=color_template[ifile],linestyle=linestyle,linewidth=1.5, label=name)
 
     ax.legend()
     ax.set_xlim([args.xMin,args.xMax])
@@ -55,4 +55,4 @@ if __name__ == "__main__":
     if (args.yMax != -1 ): ax.set_ylim([args.yMin,args.yMax])
     ax.set_xlabel("r")
     ax.set_ylabel("2*(deltaNLL+nll+nll0)")
-    plt.savefig("test_%s.png"%(args.mass))
+    plt.savefig("discrete_profiling_%s_%s_%s_%s.png"%(args.year, args.coup, args.cat, args.mass))
