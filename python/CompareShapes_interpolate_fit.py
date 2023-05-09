@@ -146,7 +146,7 @@ if __name__ == '__main__':
 
         # hist_mass_list_rsg.append( tfileRes.Get("h_gg_%s"%mass) )
         # hist_mass_list_rsg = tfileRes.FindObject("h_gg_%i"%mass)
-        hist_mass_list_rsg =  tfileRes.Get("h_gg_%i"%mass)
+        hist_mass_list_rsg =  tfileRes.Get("h_gg_%i"%(options.mass))
         h = ROOT.RooDataHist("h","h",mgg,Import(hist_mass_list_rsg)) ;
         # histosRes.append(hist_mass_list_rsg)
 
