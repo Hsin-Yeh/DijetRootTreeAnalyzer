@@ -244,7 +244,7 @@ if __name__ == '__main__':
         # pave_fit.Draw();
         # pave_gof.Draw();
 
-        canvas.SaveAs("%s/plots/Closure_%s_%i_%s_%s.png" %(options.outDir,title,mass,options.cat,year) );
+        canvas.SaveAs("%s/test.png" %(options.outDir) );
 
 
     #UNFINISHED WORK DOWN BELOW
