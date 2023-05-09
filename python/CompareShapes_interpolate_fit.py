@@ -135,7 +135,7 @@ if __name__ == '__main__':
         MH.setVal(options.mass);
         p = mgg.frame(0,1000,1000)
         shape = wsparamshape.pdf("SignalShape_%s_EBEB"%(options.coup));
-        # shape.plotOn(p)
+        shape.plotOn(p)
         # hist_mass_list_rsg = ROOT.TH1D()
 
         # #Now to the interpolated shape
@@ -147,8 +147,9 @@ if __name__ == '__main__':
         # hist_mass_list_rsg.append( tfileRes.Get("h_gg_%s"%mass) )
         # hist_mass_list_rsg = tfileRes.FindObject("h_gg_%i"%mass)
         hist_mass_list_rsg =  tfileRes.Get("h_gg_%i"%(options.mass))
-        h = ROOT.RooDataHist("h","h",ROOT.RooArgList(mgg),ROOT.RooFit.Import(hist_mass_list_rsg)) ;
-        h.plotOn(p,ROOT.RooFit.DrawOption("B"),ROOT.RooFit.XErrorSize(0))
+        ROOT.RooPlot.addTH1(hist_mass_list_rsg,"HISTsame")
+        # h = ROOT.RooDataHist("h","h",ROOT.RooArgList(mgg),ROOT.RooFit.Import(hist_mass_list_rsg)) ;
+        # h.plotOn(p,ROOT.RooFit.DrawOption("B"),ROOT.RooFit.XErrorSize(0))
         # histosRes.append(hist_mass_list_rsg)
 
         # hist_mass_list_rsg.Print()
@@ -210,7 +211,7 @@ if __name__ == '__main__':
         p.GetXaxis().SetTitle("DiPhoton mass [GeV]")
         p.GetYaxis().SetTitle("Normalized yield/bin width")
         # p.Scale(1/h_mgg_fit.GetSumOfWeights())
-        p.Draw("HIST")
+        p.Draw()
         # hist_mass_list_rsg.GetXaxis().SetRangeUser(massMin, massMax)
         # hist_mass_list_rsg.SetLineColor(2)
         # hist_mass_list_rsg.Draw("hist same")
