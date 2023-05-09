@@ -135,7 +135,7 @@ if __name__ == '__main__':
         MH.setVal(options.mass);
         p = mgg.frame(0,1000,1000)
         shape = wsparamshape.pdf("SignalShape_%s_EBEB"%(options.coup));
-        shape.plotOn(p)
+        # shape.plotOn(p)
         # hist_mass_list_rsg = ROOT.TH1D()
 
         # #Now to the interpolated shape
