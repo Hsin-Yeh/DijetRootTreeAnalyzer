@@ -23,6 +23,15 @@ parser.add_argument('--mass',default=750,type=int,help='plot name mass')
 
 args = parser.parse_args()
 
+def average_total(array):
+    count=0
+    average_total=0
+    for num in array:
+        if math.isnan(num) != True and num < 1e7:
+            count++
+            average_total+=num
+    return average_total/count
+
 if __name__ == "__main__":
 
     # Define a list of colors
@@ -48,7 +57,7 @@ if __name__ == "__main__":
         deltaNLL = root_numpy.tree2array(tree,'deltaNLL')
         total = 2*(deltaNLL+nll+nll0)
         print(r, nll, nll0, deltaNLL, total)
-        average_total += total[25]
+        average_total = average_total(total)
         ax.scatter(r,total,color=color_template[ifile],linestyle=linestyle,label=name)
 
     ax.legend()

@@ -1002,9 +1002,10 @@ for year in ${yearlist[@]}; do
         for cat in ${catlist[@]}; do
             for mass in ${masslist[@]}; do
                 for fitmethod in {"expow1","invpow1","invpowlin1","dijet","envelope"}; do
+                    echo ${fitmethod}
                     # time python python/RunDiphotonCombine.py -c config/diphotons_bias_${year}.config -i bkgAltModels/${fitmethod}/blind/FitResults_DiPhotons_${coup}_${cat}_${year}.root -b DiPhotons_${coup}_${cat} --mass ${mass} -m gg -d signal_bias -r 1 --rMin ${rMin} --rMax ${rMax} -l ${lumi} --year ${year} --fit-pdf ${fitmethod} --SigNorm $SigNormFile
                 done
-                python python/plotNLL.py signal_bias/higgsCombine${year}_DiPhotons_${coup}_${cat}_fixed_pdf_*mH${mass}.root signal_bias/higgsCombine${year}_DiPhotons_${coup}_${cat}_Envelope.MultiDimFit.mH${mass}.root --mass ${mass} --year ${year} --cat ${cat} --coup ${coup}
+                python python/plotNLL.py signal_bias/higgsCombine${year}_DiPhotons_${coup}_${cat}_fixed_pdf_*mH${mass}.root signal_bias/higgsCombine${year}_DiPhotons_${coup}_${cat}_Envelope.MultiDimFit.mH${mass}.root --mass ${mass} --year ${year} --cat ${cat} --coup ${coup} --xMin ${rMin} --xMax ${rMax}
             done
         done
     done
