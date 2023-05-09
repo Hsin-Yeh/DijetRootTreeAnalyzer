@@ -135,7 +135,7 @@ if __name__ == '__main__':
         MH.setVal(options.mass);
         p = mgg.frame(500,1000,500)
         shape = wsparamshape.pdf("SignalShape_%s_EBEB"%(options.coup));
-        shape.plotOn(p,ROOT.RooPlot.LineColor="r")
+        shape.plotOn(p,ROOT.RooPlot.LineColor("r"))
         # hist_mass_list_rsg = ROOT.TH1D()
 
         # #Now to the interpolated shape
