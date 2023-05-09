@@ -981,6 +981,7 @@ done
 ** discrete
 
 #+begin_src bash
+lumi=35.9
 yearlist=( 2016 )
 couplist=( "kMpl001" "kMpl01" "kMpl02")
 catlist=( "EBEB" )
@@ -990,11 +991,11 @@ rMin=-20
 rMax=20
 SigNormFile="/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/SignalNorm_Splines_full.txt"
 for year in ${yearlist[@]}; do
-    if [[ year == 2016 ]]; then
+    if [[ $year == 2016 ]]; then
         lumi=35.9
-    elif [[ year == 2017 ]]; then
+    elif [[ $year == 2017 ]]; then
         lumi=41.527
-    elif [[ year == 2018 ]]; then
+    elif [[ $year == 2018 ]]; then
         lumi=59.670
     fi
     for coup in ${couplist[@]}; do
