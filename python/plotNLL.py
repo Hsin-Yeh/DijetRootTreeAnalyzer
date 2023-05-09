@@ -51,7 +51,7 @@ if __name__ == "__main__":
     ax.legend()
     ax.set_xlim([args.xMin,args.xMax])
     average_total = average_total/len(args.in_filenames)
-    ax.set_ylim(average_total*0.8,average_total*1.2)
+    ax.set_ylim(average_total*0.95,average_total*1.05)
     if (args.yMax != -1 ): ax.set_ylim([args.yMin,args.yMax])
     ax.set_xlabel("r")
     ax.set_ylabel("2*(deltaNLL+nll+nll0)")
