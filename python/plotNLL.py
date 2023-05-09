@@ -84,7 +84,7 @@ if __name__ == "__main__":
     average_total = average_total/len(args.in_filenames)
     print(average_total,minimum,maximum)
     # ax.set_ylim(average_total*0.9,average_total*1.1)
-    ax.set_ylim(minimum,maximum)
+    ax.set_ylim(minimum-2,maximum+2)
     if (args.yMax != -1 ): ax.set_ylim([args.yMin,args.yMax])
     ax.set_xlabel("r")
     ax.set_ylabel("2*(deltaNLL+nll+nll0)")
