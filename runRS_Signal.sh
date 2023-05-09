@@ -4,38 +4,38 @@
 export method="full"
 export InterpolateShapePath="/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/${method}"
 
-export mainpath="/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/"
-cd $mainpath
-#With the createJson option the insigname argument is dull and the code will run through all signals.
-#2016 (Both RS and heavy higgs)
-signalNorm.exe 2016 createJson "${mainpath}/output/2016/FinalParametricShape/workspaces" "${mainpath}/datacards" "${mainpath}/output/2016/signalNorm" "grav" ${method}
-#2017 (Both RS and heavy higgs)
-signalNorm.exe 2017 createJson "${mainpath}/output/2017/FinalParametricShape/workspaces" "${mainpath}/datacards" "${mainpath}/output/2017/signalNorm" "grav" ${method}
-#2018 (Both RS and heavy higgs)
-signalNorm.exe 2018 createJson "${mainpath}/output/2018/FinalParametricShape/workspaces" "${mainpath}/datacards" "${mainpath}/output/2018/signalNorm" "grav" ${method}
-#2016 (Both RS and heavy higgs)
-rm SignalNorm_${method}.txt
-rm SignalNorm_Splines_${method}.txt
-#2016 RS
-signalNorm.exe 2016 readJson "${mainpath}/output/2016/FinalParametricShape/workspaces" "${mainpath}/datacards" "${mainpath}/output/2016/signalNorm" "grav" "${method}"
-#2017 RS
-signalNorm.exe 2017 readJson "${mainpath}/output/2017/FinalParametricShape/workspaces" "${mainpath}/datacards" "${mainpath}/output/2017/signalNorm" "grav" "${method}"
-#2018 RS
-signalNorm.exe 2018 readJson "${mainpath}/output/2018/FinalParametricShape/workspaces" "${mainpath}/datacards" "${mainpath}/output/2018/signalNorm" "grav" "${method}"
-#2016 Heavy Higgs
-signalNorm.exe 2016 readJson "${mainpath}/output/2016/FinalParametricShape/workspaces" "${mainpath}/datacards" "${mainpath}/output/2016/signalNorm" "heavyhiggs" "${method}"
-#2017 Heavy Higgs
-signalNorm.exe 2017 readJson "${mainpath}/output/2017/FinalParametricShape/workspaces" "${mainpath}/datacards" "${mainpath}/output/2017/signalNorm" "heavyhiggs" "${method}"
-#2018 Heavy Higgs
-signalNorm.exe 2018 readJson "${mainpath}/output/2018/FinalParametricShape/workspaces" "${mainpath}/datacards" "${mainpath}/output/2018/signalNorm" "heavyhiggs" "${method}"
+# export mainpath="/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/"
+# cd $mainpath
+# #With the createJson option the insigname argument is dull and the code will run through all signals.
+# #2016 (Both RS and heavy higgs)
+# signalNorm.exe 2016 createJson "${mainpath}/output/2016/FinalParametricShape/workspaces" "${mainpath}/datacards" "${mainpath}/output/2016/signalNorm" "grav" ${method}
+# #2017 (Both RS and heavy higgs)
+# signalNorm.exe 2017 createJson "${mainpath}/output/2017/FinalParametricShape/workspaces" "${mainpath}/datacards" "${mainpath}/output/2017/signalNorm" "grav" ${method}
+# #2018 (Both RS and heavy higgs)
+# signalNorm.exe 2018 createJson "${mainpath}/output/2018/FinalParametricShape/workspaces" "${mainpath}/datacards" "${mainpath}/output/2018/signalNorm" "grav" ${method}
+# #2016 (Both RS and heavy higgs)
+# rm SignalNorm_${method}.txt
+# rm SignalNorm_Splines_${method}.txt
+# #2016 RS
+# signalNorm.exe 2016 readJson "${mainpath}/output/2016/FinalParametricShape/workspaces" "${mainpath}/datacards" "${mainpath}/output/2016/signalNorm" "grav" "${method}"
+# #2017 RS
+# signalNorm.exe 2017 readJson "${mainpath}/output/2017/FinalParametricShape/workspaces" "${mainpath}/datacards" "${mainpath}/output/2017/signalNorm" "grav" "${method}"
+# #2018 RS
+# signalNorm.exe 2018 readJson "${mainpath}/output/2018/FinalParametricShape/workspaces" "${mainpath}/datacards" "${mainpath}/output/2018/signalNorm" "grav" "${method}"
+# #2016 Heavy Higgs
+# signalNorm.exe 2016 readJson "${mainpath}/output/2016/FinalParametricShape/workspaces" "${mainpath}/datacards" "${mainpath}/output/2016/signalNorm" "heavyhiggs" "${method}"
+# #2017 Heavy Higgs
+# signalNorm.exe 2017 readJson "${mainpath}/output/2017/FinalParametricShape/workspaces" "${mainpath}/datacards" "${mainpath}/output/2017/signalNorm" "heavyhiggs" "${method}"
+# #2018 Heavy Higgs
+# signalNorm.exe 2018 readJson "${mainpath}/output/2018/FinalParametricShape/workspaces" "${mainpath}/datacards" "${mainpath}/output/2018/signalNorm" "heavyhiggs" "${method}"
 
-# cp SignalNorm.txt SignalNorm_${method}.txt
-# cp SignalNorm_Splines.txt SignalNorm_Splines_${method}.txt
-dateDir=$(date +"%Y%m%d_%H%M%S")
-for year in {"2016","2017","2018"};
-do
-    cpwww output/${year}/signalNorm ~/www/diphoton-analysis/${year}/signalNorm/${method}/${dateDir}
-done
+# # cp SignalNorm.txt SignalNorm_${method}.txt
+# # cp SignalNorm_Splines.txt SignalNorm_Splines_${method}.txt
+# dateDir=$(date +"%Y%m%d_%H%M%S")
+# for year in {"2016","2017","2018"};
+# do
+#     cpwww output/${year}/signalNorm ~/www/diphoton-analysis/${year}/signalNorm/${method}/${dateDir}
+# done
 
 
 ############################################################
