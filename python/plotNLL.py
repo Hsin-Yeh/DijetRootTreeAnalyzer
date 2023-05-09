@@ -28,7 +28,7 @@ def average_total(array):
     average_total=0
     for num in array:
         if math.isnan(num) != True and num < 1e7:
-            count++
+            count+=1
             average_total+=num
     return average_total/count
 
