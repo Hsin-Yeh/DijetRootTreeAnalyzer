@@ -27,6 +27,7 @@ if __name__ == "__main__":
     # Create a figure and axes object
     fig, ax = plt.subplots()
 
+    average_total = 0
     for ifile,in_filename in enumerate(args.in_filenames):
         tfileIn = ROOT.TFile.Open(in_filename)
         linestyle='solid'
