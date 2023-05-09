@@ -215,7 +215,7 @@ if __name__ == '__main__':
         p.GetXaxis().SetTitle("DiPhoton mass [GeV]")
         p.GetYaxis().SetTitle("Normalized yield/bin width")
         # p.Scale(1/h_mgg_fit.GetSumOfWeights())
-        p.Draw()
+        p.Draw("HIST")
         # hist_mass_list_rsg.GetXaxis().SetRangeUser(massMin, massMax)
         # hist_mass_list_rsg.SetLineColor(2)
         # hist_mass_list_rsg.Draw("hist same")
