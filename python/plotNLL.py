@@ -59,6 +59,7 @@ if __name__ == "__main__":
         total = 2*(deltaNLL+nll+nll0)
         print(r, nll, nll0, deltaNLL, total)
         average_total = average_array(total)
+        print(average_total)
         ax.scatter(r,total,color=color_template[ifile],linestyle=linestyle,label=name)
 
     ax.legend()
