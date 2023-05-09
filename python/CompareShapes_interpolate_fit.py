@@ -211,7 +211,7 @@ if __name__ == '__main__':
         # pave_gof = ROOT.TPaveText(0.65,0.85,0.95,1.0,"NDC")
 
         p.SetLineColor(1)
-        # p.GetXaxis().SetRangeUser(massMin, massMax)
+        p.GetXaxis().SetRangeUser(500, 800)
         p.GetXaxis().SetTitle("DiPhoton mass [GeV]")
         p.GetYaxis().SetTitle("Normalized yield/bin width")
         # p.Scale(1/h_mgg_fit.GetSumOfWeights())
