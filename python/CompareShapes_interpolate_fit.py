@@ -148,7 +148,7 @@ if __name__ == '__main__':
         # hist_mass_list_rsg = tfileRes.FindObject("h_gg_%i"%mass)
         hist_mass_list_rsg =  tfileRes.Get("h_gg_%i"%(options.mass))
         h = ROOT.RooDataHist("h","h",ROOT.RooArgList(mgg),ROOT.RooFit.Import(hist_mass_list_rsg)) ;
-        h.plotOn(p,DrawOption="B",DataError=None, XErrorSize=0)
+        h.plotOn(p,ROOT.RooFit.DrawOption("B"),ROOT.RooFit.XErrorSize=0)
         # histosRes.append(hist_mass_list_rsg)
 
         # hist_mass_list_rsg.Print()
