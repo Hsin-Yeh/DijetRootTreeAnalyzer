@@ -983,7 +983,7 @@ done
 #+begin_src bash
 SigNormFile="/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/SignalNorm_Splines_full.txt"
 for fitmethod in {"expow1","invpow1","invpowlin1","dijet","envelope"}; do
-    time python python/RunDiphotonCombine.py -c config/diphotons_bias_2017.config -i bkgAltModels/${fitmethod}/blind/FitResults_DiPhotons_kMpl001_EBEB_2017.root -b DiPhotons_kMpl001_EBEB --mass 650 -m gg -d signal_bias -r 1 --rMin -2 --rMax 1 -l 41.527 --year 2017 --fit-pdf ${fitmethod} --SigNorm $SigNormFile
+    time python python/RunDiphotonCombine.py -c config/diphotons_bias_2017.config -i bkgAltModels/${fitmethod}/blind/FitResults_DiPhotons_kMpl001_EBEB_2017.root -b DiPhotons_kMpl001_EBEB --mass 650 -m gg -d signal_bias -r 1 --rMin -2 --rMax 2 -l 41.527 --year 2017 --fit-pdf ${fitmethod} --SigNorm $SigNormFile
 done
 #+end_src
 * Scripts
