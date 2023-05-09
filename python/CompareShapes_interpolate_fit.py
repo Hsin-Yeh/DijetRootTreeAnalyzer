@@ -133,7 +133,7 @@ if __name__ == '__main__':
         mgg = wsparamshape.var("mgg")
         MH  = wsparamshape.var("MH")
         MH.setVal(options.mass);
-        p = mgg.frame(500,1000,500)
+        p = mgg.frame(125,1000,500)
         shape = wsparamshape.pdf("SignalShape_%s_EBEB"%(options.coup));
         shape.plotOn(p,ROOT.RooFit.LineColor(4))
         # hist_mass_list_rsg = ROOT.TH1D()
