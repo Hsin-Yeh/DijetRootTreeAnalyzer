@@ -129,8 +129,8 @@ if __name__ == '__main__':
         filename = options.ws + "/SignalParametricShapes_ws_" + options.coup + ".root"
         fparamshape = ROOT.TFile(filename);
         wsparamshape = fparamshape.Get("ws_inputs");
-        mgg = wsparamshape["mgg"]
-        MH  = wsparamshape["MH"]
+        mgg = wsparamshape.var("mgg")
+        MH  = wsparamshap.var("MH")
         MH.setVal(options.mass);
         p = mgg.frame()
         shape = wsparamshape.pdf("SignalShape_%s_EBEB"%(options.coup));
