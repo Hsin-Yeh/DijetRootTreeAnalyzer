@@ -150,7 +150,7 @@ if __name__ == '__main__':
 
         # hist_mass_list_rsg.Print()
 
-        canvas = ROOT.TCanvas("c_%s_%i_%s_%s" %(title,mass,options.cat,year),"c_%s_%i_%s_%s" %(title,mass,options.cat,year),50,50,W,H)
+        canvas = ROOT.TCanvas()
         canvas.SetFillColor(0)
         canvas.SetBorderMode(0)
         canvas.SetFrameFillStyle(0)
