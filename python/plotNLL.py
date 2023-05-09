@@ -33,6 +33,20 @@ def average_array(array):
             average_total+=num
     return average_total/count
 
+def min_array(array):
+    minimum=1e7
+    for num in array:
+        if math.isnan(num) != True and num < 1e7 and num<minimum:
+            minimum=num
+    return minimum
+
+def max_array(array):
+    maximum=0
+    for num in array:
+        if math.isnan(num) != True and num < 1e7 and num>maximum:
+            maximum=num
+    return maximum
+
 if __name__ == "__main__":
 
     # Define a list of colors
@@ -41,6 +55,7 @@ if __name__ == "__main__":
     fig, ax = plt.subplots()
 
     average_total = 0
+    minimum, maximum = 0, 1e6
     for ifile,in_filename in enumerate(args.in_filenames):
         tfileIn = ROOT.TFile.Open(in_filename)
         linestyle='solid'
@@ -59,7 +74,9 @@ if __name__ == "__main__":
         total = 2*(deltaNLL+nll+nll0)
         print(r, nll, nll0, deltaNLL, total)
         average_total += average_array(total)
-        print(average_total)
+        minimum = min_array(total)
+        maximum = max_array(total)
+        print(average_total,minimum,maximum)
         ax.scatter(r,total,color=color_template[ifile],linestyle=linestyle,label=name)
 
     ax.legend()
