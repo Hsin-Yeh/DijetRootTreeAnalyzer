@@ -139,7 +139,7 @@ if __name__ == '__main__':
         p = mgg.frame()
         p = mgg.frame(500,1000,125)
         shape = wsparamshape.pdf("SignalShape_%s_EBEB"%(options.coup));
-        shape.plotOn(p,ROOT.RooFit.Binning(varbin),ROOT.RooFit.LineColor(4)))
+        shape.plotOn(p,ROOT.RooFit.Binning(varbin),ROOT.RooFit.LineColor(4))
         # hist_mass_list_rsg = ROOT.TH1D()
 
         # #Now to the interpolated shape
