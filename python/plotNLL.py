@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+# python python/plotNLL.py signal_bias/higgsCombine2017_DiPhotons_kMpl001_EBEB_fixed_pdf_*mH${mass}.root signal_bias/higgsCombine2017_DiPhotons_kMpl001_EBEB_Envelope.MultiDimFit.mH${mass}.root --mass ${mass}
 
 import ROOT
 import root_numpy
@@ -40,9 +41,14 @@ if __name__ == "__main__":
         deltaNLL = root_numpy.tree2array(tree,'deltaNLL')
         total = 2*(deltaNLL+nll+nll0)
         print(r, nll, nll0, deltaNLL, total)
+        average_total += total[25]
         ax.scatter(r,total,color=color_template[ifile],label=name)
 
     ax.legend()
     ax.set_xlim([args.xMin,args.xMax])
+    average_total = average_total/len(args.in_filenames)
+    ax.set_ylim(average_total*0.8,average_total*1.2)
     if (args.yMax != -1 ): ax.set_ylim([args.yMin,args.yMax])
+    ax.set_xlabel("r")
+    ax.set_ylabel("2*(deltaNLL+nll+nll0)")
     plt.savefig("test_%s.png"%(args.mass))
