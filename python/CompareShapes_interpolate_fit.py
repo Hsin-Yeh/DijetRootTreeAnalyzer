@@ -135,7 +135,7 @@ if __name__ == '__main__':
         mgg = wsparamshape.var("mgg")
         MH  = wsparamshape.var("MH")
         MH.setVal(options.mass);
-        varbin = ROOT.RooBinning(len(binBoundaries[option.coup])-1, array('d', binBoundaries[options.coup]))
+        varbin = ROOT.RooBinning(len(binBoundaries[options.coup])-1, array('d', binBoundaries[options.coup]))
         p = mgg.frame()
         p = mgg.frame(500,1000,125)
         shape = wsparamshape.pdf("SignalShape_%s_EBEB"%(options.coup));
