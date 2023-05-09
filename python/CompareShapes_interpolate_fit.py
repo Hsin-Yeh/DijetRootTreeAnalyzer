@@ -81,6 +81,7 @@ if __name__ == '__main__':
     parser.add_option('--cat',    dest="cat",    default="EBEB",    type="string", help="category")
     parser.add_option('--coup',   dest="coup",   default="kMpl001", type="string", help="coupling")
     parser.add_option('--mass',   dest="mass",   default="750",     type="int",    help="category")
+    parser.add_option('--year',   dest="year",   default="2016",    type="int",    help="year")
     parser.add_option('--outdir', dest="outDir", default="./",      type="string", help="Output directory to store output histograms")
     parser.add_option('--ws',     dest="ws",     default="./",      type="string", help="input directory of parametric fit results")
     parser.add_option("--method", dest="method", default="full",    type="string", help="Choose between full range or truncate with the fwhm mass range")
@@ -138,7 +139,7 @@ if __name__ == '__main__':
         # hist_mass_list_rsg = ROOT.TH1D()
 
         # #Now to the interpolated shape
-        tfileRes = ROOT.TFile("/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/%s/ResonanceShapes_InputShapes_%s_%s_%s.root" %(method,title,options.cat,year) , "read")
+        tfileRes = ROOT.TFile("/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/%s/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_%s_%s_%s.root" %(options.method,options.coup,options.cat,options.year) , "read")
         tfileRes.cd()
 
         # #tfileRes.Print()
