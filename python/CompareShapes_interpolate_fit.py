@@ -135,11 +135,11 @@ if __name__ == '__main__':
         MH.setVal(options.mass);
         p = mgg.frame(0,1000,1000)
         shape = wsparamshape.pdf("SignalShape_%s_EBEB"%(options.coup));
-        shape.plotOn(p)
+        # shape.plotOn(p)
         # hist_mass_list_rsg = ROOT.TH1D()
 
         # #Now to the interpolated shape
-        tfileRes = ROOT.TFile("/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/%s/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_%s_%s_%s.root" %(options.method,options.coup,options.cat,options.year) , "read")
+        tfileRes = ROOT.TFile("/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/%s/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_%s_%s_%s_finebinned.root" %(options.method,options.coup,options.cat,options.year) , "read")
         tfileRes.cd()
 
         # #tfileRes.Print()
@@ -148,6 +148,7 @@ if __name__ == '__main__':
         # hist_mass_list_rsg = tfileRes.FindObject("h_gg_%i"%mass)
         hist_mass_list_rsg =  tfileRes.Get("h_gg_%i"%(options.mass))
         h = ROOT.RooDataHist("h","h",ROOT.RooArgList(mgg),ROOT.RooFit.Import(hist_mass_list_rsg)) ;
+        h.plotOn(p)
         # histosRes.append(hist_mass_list_rsg)
 
         # hist_mass_list_rsg.Print()
