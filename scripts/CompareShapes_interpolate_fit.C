@@ -78,14 +78,14 @@ void CompareShapes_interpolate_fit(int mass){
 
 
 
-        TLegend* leg = new TLegend(0.5,0.5,0.95,0.7);
+        TLegend* leg = new TLegend(0.55,0.5,0.9,0.7);
         leg->SetBorderSize(0);
-        leg->SetLineColor(0);
-        leg->SetFillColor(0);
-        leg->SetFillStyle(0);
-        leg->SetLineWidth(0);
-        leg->SetTextFont(42);
-        leg->SetTextAlign(23);
+        // leg->SetLineColor(0);
+        // leg->SetFillColor(0);
+        // leg->SetFillStyle(0);
+        // leg->SetLineWidth(0);
+        // leg->SetTextFont(42);
+        // leg->SetTextAlign(23);
 
         p->SetLineColor(1);
         p->GetXaxis()->SetRangeUser(500, 800);
