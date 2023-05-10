@@ -77,7 +77,7 @@ if __name__ == "__main__":
         minimum = min_array(total)
         maximum = max_array(total)
         print(average_total,minimum,maximum)
-        ax.scatter(r,total,color=color_template[ifile],linestyle=linestyle,label=name)
+        ax.plot(r,total,color=color_template[ifile],linestyle=linestyle,label=name)
 
     ax.legend(loc="upper left")
     ax.set_xlim([args.xMin,args.xMax])
@@ -88,5 +88,4 @@ if __name__ == "__main__":
     if (args.yMax != -1 ): ax.set_ylim([args.yMin,args.yMax])
     ax.set_xlabel("r")
     ax.set_ylabel("2*(deltaNLL+nll+nll0)")
-    ax.plot()
     plt.savefig("discrete_profiling_%s_%s_%s_%s.png"%(args.year, args.coup, args.cat, args.mass))
