@@ -415,7 +415,7 @@ if __name__ == '__main__':
             tfileRes.cd()
 
             i=0
-            for mass in range(mass1-250, mass2, 100):
+            for mass in range(mass1-150, mass1, 50):
                 hist =  tfileRes.Get("h_gg_%i"%mass)
                 hist.SetLineColor(color(i));
                 hist.SetFillColor(color(i));
