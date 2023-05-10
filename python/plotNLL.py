@@ -88,5 +88,5 @@ if __name__ == "__main__":
     if (args.yMax != -1 ): ax.set_ylim([args.yMin,args.yMax])
     ax.set_xlabel("r")
     ax.set_ylabel("2*(deltaNLL+nll+nll0)")
-    ax.plot("-o")
+    ax.plot()
     plt.savefig("discrete_profiling_%s_%s_%s_%s.png"%(args.year, args.coup, args.cat, args.mass))
