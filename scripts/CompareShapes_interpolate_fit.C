@@ -59,6 +59,7 @@ void CompareShapes_interpolate_fit(int mass){
         tfileRes->cd();
 
         TH1D* hist_mass_list_rsg = (TH1D*)tfileRes->Get(Form("h_gg_%i",mass));
+        hist_mass_list_rsg->SetLineWidth(2)
         p->addTH1(hist_mass_list_rsg,"HISTsame");
         // h = RooDataHist("h","h",RooArgList(mgg),RooFit.Import(hist_mass_list_rsg)) ;
         // h.plotOn(p,RooFit.DrawOption("B"),RooFit.XErrorSize(0))
