@@ -78,7 +78,7 @@ void CompareShapes_interpolate_fit(int mass){
 
 
 
-        TLegend* leg = new TLegend(0.65,0.45,0.95,0.6);
+        TLegend* leg = new TLegend(0.5,0.5,0.95,0.7);
         leg->SetBorderSize(0);
         leg->SetLineColor(0);
         leg->SetFillColor(0);
@@ -94,7 +94,7 @@ void CompareShapes_interpolate_fit(int mass){
         p->Draw("HIST");
 
         leg->AddEntry("Parameterization","Parameterization","l");
-        leg->AddEntry(hist_mass_list_rsg,"Interpolated Shape","l");
+        leg->AddEntry(hist_mass_list_rsg,"Shape Extrapolation","l");
         leg->Draw();
 
         canvas->SaveAs(Form("%s/test.png",outDir.c_str()) );
