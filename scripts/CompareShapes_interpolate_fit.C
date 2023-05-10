@@ -98,5 +98,5 @@ void CompareShapes_interpolate_fit(int mass){
         leg->AddEntry(hist_mass_list_rsg,"Shape Extrapolation","l");
         leg->Draw();
 
-        canvas->SaveAs(Form("%s/test.png",outDir.c_str()) );
+        canvas->SaveAs(Form("%s/test_%i.png",outDir.c_str(),mass) );
 }
