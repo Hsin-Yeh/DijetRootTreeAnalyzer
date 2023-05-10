@@ -52,7 +52,7 @@ void CompareShapes_interpolate_fit(int mass){
         // # p = mgg.frame()
         RooPlot* p = mgg->frame(0,1000,125);
         RooAbsPdf* shape = wsparamshape->pdf(Form("SignalShape_%s_EBEB",coup.c_str()));
-        shape->plotOn(p,LineColor(4));
+        shape->plotOn(p,LineColor(2),Name("Parameterization"));
 
         // # #Now to the interpolated shape
         TFile* tfileRes = new TFile(Form("/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/%s/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_%s_%s_%s_finebinned.root",method.c_str(),coup.c_str(),cat.c_str(),year.c_str()) , "read");
@@ -93,9 +93,9 @@ void CompareShapes_interpolate_fit(int mass){
         p->GetYaxis()->SetTitle("Normalized yield/bin width");
         p->Draw("HIST");
 
-        // leg->AddEntry(h_mgg_varbins,"Input Shape","l");
-        // leg->AddEntry(hist_mass_list_rsg,"Interpolated Shape","l");
-        // leg->Draw();
+        leg->AddEntry("Parameterization","Parameterization","l");
+        leg->AddEntry(hist_mass_list_rsg,"Interpolated Shape","l");
+        leg->Draw();
 
         canvas->SaveAs(Form("%s/test.png",outDir.c_str()) );
 }
