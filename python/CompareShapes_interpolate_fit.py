@@ -174,14 +174,14 @@ if __name__ == '__main__':
 
 
 
-        # leg = ROOT.TLegend(0.65,0.45,0.95,0.6)
-        # leg.SetBorderSize(0)
-        # leg.SetLineColor(0)
-        # leg.SetFillColor(0)
-        # leg.SetFillStyle(0)
-        # leg.SetLineWidth(0)
-        # leg.SetTextFont(42)
-        # #leg.SetTextAlign(23)
+        leg = ROOT.TLegend(0.65,0.45,0.95,0.6)
+        leg.SetBorderSize(0)
+        leg.SetLineColor(0)
+        leg.SetFillColor(0)
+        leg.SetFillStyle(0)
+        leg.SetLineWidth(0)
+        leg.SetTextFont(42)
+        leg.SetTextAlign(23)
 
         # #Pave text
         # pave_fit = ROOT.TPaveText(0.56,0.65,0.95,0.85,"NDC")
@@ -248,9 +248,9 @@ if __name__ == '__main__':
         # pave_gof.AddText("#chi^{2} %f" %(pvalchi2test) )
         # #pave_gof.AddText("#chi^{2} %f" %(pvalchi2test) )
 
-        # leg.AddEntry(h_mgg_varbins,"Input Shape","l");
-        # leg.AddEntry(hist_mass_list_rsg,"Interpolated Shape","l");
-        # leg.Draw();
+        leg.AddEntry(h_mgg_varbins,"Input Shape","l");
+        leg.AddEntry(hist_mass_list_rsg,"Interpolated Shape","l");
+        leg.Draw();
 
         # pave_fit.Draw();
         # pave_gof.Draw();
