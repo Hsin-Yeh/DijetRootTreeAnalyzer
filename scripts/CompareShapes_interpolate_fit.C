@@ -50,7 +50,7 @@ void CompareShapes_interpolate_fit(int mass){
         // varbin = RooBinning(len(binBoundaries[options.coup])-1, array('d', binBoundaries[options.coup]))
         // # tbins = RooBinning(12);
         // # p = mgg.frame()
-        RooPlot* p = mgg->frame(0,1000,500);
+        RooPlot* p = mgg->frame(0,1000,125);
         RooAbsPdf* shape = wsparamshape->pdf(Form("SignalShape_%s_EBEB",coup.c_str()));
         shape->plotOn(p,MarkerColor(kRed),LineColor(2),Name("Parameterization"));
 
