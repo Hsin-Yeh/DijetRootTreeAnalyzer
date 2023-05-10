@@ -41,7 +41,7 @@ void CompareShapes_interpolate_fit(int mass){
         string outDir = "./"
 
         string filename = ws + "/SignalParametricShapes_ws_" + coup + ".root";
-        TFile* fparamshape = TFile(filename);
+        TFile* fparamshape = TFile(filename.c_str());
         RooWorkSpace* wsparamshape = fparamshape->Get("ws_inputs");
         // # RooRealVar x{"x", "x", 1.0, binEdges[0], binEdges.back()};
         RooRealVar* mgg = wsparamshape->var("mgg");
@@ -51,7 +51,7 @@ void CompareShapes_interpolate_fit(int mass){
         // # tbins = RooBinning(12);
         // # p = mgg.frame()
         RooPlot* p = mgg->frame(0,1000,125);
-        RooAbsPdf* shape = wsparamshape->pdf("SignalShape_%s_EBEB"%(coup.c_str()));
+        RooAbsPdf* shape = wsparamshape->pdf(Form("SignalShape_%s_EBEB",coup.c_str()));
         shape->plotOn(p,DrawOption("B"),LineColor(4));
 
         // # #Now to the interpolated shape
