@@ -77,7 +77,7 @@ if __name__ == "__main__":
         minimum = min_array(total)
         maximum = max_array(total)
         print(average_total,minimum,maximum)
-        ax.plot(r,total,color=color_template[ifile],linestyle=linestyle,label=name)
+        ax.scatter(r,total,color=color_template[ifile],linestyle=linestyle,label=name)
 
     ax.legend(loc="upper left")
     ax.set_xlim([args.xMin,args.xMax])
