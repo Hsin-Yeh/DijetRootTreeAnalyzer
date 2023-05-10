@@ -411,7 +411,7 @@ if __name__ == '__main__':
 
 
             #Now to the interpolated shape
-            tfileRes = rt.TFile("/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/%s/ResonanceShapes_InputShapes_%s_%s_%s.root" %(method,title,options.cat,year) , "read")
+            tfileRes = rt.TFile("/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/%s/ResonanceShapes_InputShapes_%s_%s_%s.root" %(options.method,title,options.cat,year) , "read")
             tfileRes.cd()
 
             i=0
