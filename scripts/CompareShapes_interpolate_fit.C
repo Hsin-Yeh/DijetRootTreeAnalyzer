@@ -38,11 +38,11 @@ void CompareShapes_interpolate_fit(int mass){
         string method = "full";
         string cat = "EBEB";
         string coup = "kMpl001";
-        string outDir = "./"
+        string outDir = "./";
 
         string filename = ws + "/SignalParametricShapes_ws_" + coup + ".root";
         TFile* fparamshape = new TFile(filename.c_str());
-        RooWorkspace* wsparamshape = fparamshape->Get("ws_inputs");
+        RooWorkspace* wsparamshape = (RooWorkspace*)fparamshape->Get("ws_inputs");
         // # RooRealVar x{"x", "x", 1.0, binEdges[0], binEdges.back()};
         RooRealVar* mgg = wsparamshape->var("mgg");
         RooRealVar* MH  = wsparamshape->var("MH");
@@ -55,10 +55,10 @@ void CompareShapes_interpolate_fit(int mass){
         shape->plotOn(p,DrawOption("B"),LineColor(4));
 
         // # #Now to the interpolated shape
-        TFile* tfileRes = new TFile(Form("/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/%s/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_%s_%s_%s_finebinned.root",(method.c_str(),coup.c_str(),cat.c_str(),year.c_str())) , "read");
+        TFile* tfileRes = new TFile(Form("/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/%s/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_%s_%s_%s_finebinned.root",method.c_str(),coup.c_str(),cat.c_str(),year.c_str()) , "read");
         tfileRes->cd();
 
-        TH1D hist_mass_list_rsg = (TH1D)tfileRes->Get("h_gg_%i"%(mass));
+        TH1D* hist_mass_list_rsg = (TH1D*)tfileRes->Get(Form("h_gg_%i",mass));
         p->addTH1(hist_mass_list_rsg,"HISTsame");
         // h = RooDataHist("h","h",RooArgList(mgg),RooFit.Import(hist_mass_list_rsg)) ;
         // h.plotOn(p,RooFit.DrawOption("B"),RooFit.XErrorSize(0))
