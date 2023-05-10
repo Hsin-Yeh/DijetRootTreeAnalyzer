@@ -42,7 +42,7 @@ void CompareShapes_interpolate_fit(int mass){
 
         string filename = ws + "/SignalParametricShapes_ws_" + coup + ".root";
         TFile* fparamshape = TFile(filename);
-        TWorkSpace* wsparamshape = fparamshape->Get("ws_inputs");
+        RooWorkSpace* wsparamshape = fparamshape->Get("ws_inputs");
         // # RooRealVar x{"x", "x", 1.0, binEdges[0], binEdges.back()};
         RooRealVar* mgg = wsparamshape->var("mgg");
         RooRealVar* MH  = wsparamshape->var("MH");
@@ -64,16 +64,16 @@ void CompareShapes_interpolate_fit(int mass){
         // h.plotOn(p,RooFit.DrawOption("B"),RooFit.XErrorSize(0))
 
         TCanvas* canvas = new TCanvas();
-        canvas->SetFillColor(0);
-        canvas->SetBorderMode(0);
-        canvas->SetFrameFillStyle(0);
-        canvas->SetFrameBorderMode(0);
-        canvas->SetLeftMargin(0->05+ L/W );
-        canvas->SetRightMargin( R/W );
-        canvas->SetTopMargin( T/H );
-        canvas->SetBottomMargin( B/H );
-        canvas->SetTickx();
-        canvas->SetTicky();
+        // canvas->SetFillColor(0);
+        // canvas->SetBorderMode(0);
+        // canvas->SetFrameFillStyle(0);
+        // canvas->SetFrameBorderMode(0);
+        // canvas->SetLeftMargin(0->05+ L/W );
+        // canvas->SetRightMargin( R/W );
+        // canvas->SetTopMargin( T/H );
+        // canvas->SetBottomMargin( B/H );
+        // canvas->SetTickx();
+        // canvas->SetTicky();
         canvas->cd();
 
 
@@ -93,9 +93,9 @@ void CompareShapes_interpolate_fit(int mass){
         p->GetYaxis()->SetTitle("Normalized yield/bin width");
         p->Draw("HIST");
 
-        leg->AddEntry(h_mgg_varbins,"Input Shape","l");
-        leg->AddEntry(hist_mass_list_rsg,"Interpolated Shape","l");
-        leg->Draw();
+        // leg->AddEntry(h_mgg_varbins,"Input Shape","l");
+        // leg->AddEntry(hist_mass_list_rsg,"Interpolated Shape","l");
+        // leg->Draw();
 
-        canvas->SaveAs("%s/test.png" %(outDir.c_str()) );
+        canvas->SaveAs(Form("%s/test.png",outDir.c_str()) );
 }
