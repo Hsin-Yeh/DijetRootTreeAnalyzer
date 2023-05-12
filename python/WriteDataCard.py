@@ -191,7 +191,8 @@ def initializeWorkspace(w,cfg,box,scaleFactor=1.,penalty=False,multi=False,x=Non
     w.Print('v')
     if multi:
         #print(pdf_index)
-        paramNames.append('pdf_index_%s'%(box.split('_')[1]))
+        print(box)
+        paramNames.append('pdf_index_%s'%(box.split('_')[2]))
         bkgs = ['multi']
     return paramNames, bkgs
 
