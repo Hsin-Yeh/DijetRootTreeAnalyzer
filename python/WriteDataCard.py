@@ -191,7 +191,7 @@ def initializeWorkspace(w,cfg,box,scaleFactor=1.,penalty=False,multi=False,x=Non
     w.Print('v')
     if multi:
         #print(pdf_index)
-        paramNames.append('pdf_index')
+        paramNames.append('pdf_index_%s'%(box.split('_')[1]))
         bkgs = ['multi']
     return paramNames, bkgs
 
@@ -296,7 +296,8 @@ def writeDataCard(box,model,txtfileName,bkgs,paramNames,w,penalty,fixed,year,sha
                 if "Ntot" in paramName:
                     continue
                 
-                elif paramName=='pdf_index':                            
+                # elif paramName=='pdf_index':
+                elif 'pdf_index' in paramName:
                     datacard += "%s\tdiscrete\n"%(paramName)
                 elif paramName in ["meff","seff"]:
                     datacard += "%s\tparam\t%e\t%e\n"%(paramName,w.var(paramName+"_Mean").getVal(),w.var(paramName+"_Sigma").getVal())

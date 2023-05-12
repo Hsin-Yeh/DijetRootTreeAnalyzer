@@ -983,12 +983,13 @@ done
 #+begin_src bash
 lumi=35.9
 yearlist=( 2016 )
-couplist=( "kMpl001" "kMpl01" "kMpl02")
-catlist=( "EBEB" )
-masslist=( 650 800 1000 1200 1500 2000 3000 4000 )
-# masslist=( 1000 2000 )
-rMin=-5
-rMax=5
+# couplist=( "kMpl001" "kMpl01" "kMpl02")
+couplist=( "kMpl001" )
+catlist=( "EBEB EBEE" )
+# masslist=( 650 800 1000 1200 1500 2000 3000 4000 )
+masslist=( 2000 )
+rMin=-10
+rMax=-5
 SigNormFile="/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/SignalNorm_Splines_full.txt"
 for year in ${yearlist[@]}; do
     if [[ $year == 2016 ]]; then
@@ -1003,7 +1004,7 @@ for year in ${yearlist[@]}; do
             for mass in ${masslist[@]}; do
                 for fitmethod in {"expow1","invpow1","invpowlin1","dijet","envelope"}; do
                     echo ${fitmethod}
-                    time python python/RunDiphotonCombine.py -c config/diphotons_bias_${year}.config -i bkgAltModels/${fitmethod}/blind/FitResults_DiPhotons_${coup}_${cat}_${year}.root -b DiPhotons_${coup}_${cat} --mass ${mass} -m gg -d signal_bias -r 1 --rMin ${rMin} --rMax ${rMax} -l ${lumi} --year ${year} --fit-pdf ${fitmethod} --SigNorm $SigNormFile
+                    time python python/RunDiphotonCombine.py -c config/diphotons_bias_${year}_pdf_index.config -i bkgAltModels/${fitmethod}/blind/FitResults_DiPhotons_${coup}_${cat}_${year}.root -b DiPhotons_${coup}_${cat} --mass ${mass} -m gg -d signal_bias -r 1 --rMin ${rMin} --rMax ${rMax} -l ${lumi} --year ${year} --fit-pdf ${fitmethod} --SigNorm $SigNormFile
                 done
                 python python/plotNLL.py signal_bias/higgsCombine${year}_DiPhotons_${coup}_${cat}_fixed_pdf_*mH${mass}.root signal_bias/higgsCombine${year}_DiPhotons_${coup}_${cat}_Envelope.MultiDimFit.mH${mass}.root --mass ${mass} --year ${year} --cat ${cat} --coup ${coup} --xMin ${rMin} --xMax ${rMax}
             done
