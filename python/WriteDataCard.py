@@ -471,7 +471,7 @@ if __name__ == '__main__':
                   help="penalty terms on background shape + norm parameters from input fit result")
     parser.add_option('--fixed',dest="fixed",default=False,action='store_true',
                   help="fixed background shape + norm parameters")
-    parser.add_option('-i','--input-fit-file',dest="inputFitFile", default=None,type="string",
+    parser.add_option('-i','--input-fit-file',dest="inputFitFile", default="",type="string",
                   help="input fit file")
     parser.add_option('-m','--model',dest="model", default="gg",type="string",
                   help="signal model name")
