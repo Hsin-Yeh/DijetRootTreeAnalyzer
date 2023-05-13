@@ -73,7 +73,7 @@ if __name__ == '__main__':
                    #'moddijet1': 4,
                    }
 
-    box = options.coup + '_' + options.cat + '_' + options.year
+    box = 'DiPhotons_' + options.coup + '_' + options.cat + '_' + options.year
     lumi = float(options.lumi)
     model = options.model
 
