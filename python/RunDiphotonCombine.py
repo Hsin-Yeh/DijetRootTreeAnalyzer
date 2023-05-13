@@ -37,7 +37,7 @@ if __name__ == '__main__':
                   help="minimum r value (for better precision)")
     parser.add_option('--xsec',dest="xsec",default=10,type="float",
                   help="xsec for signal in pb (r = 1)")
-    parser.add_option('-i','--input-fit-file',dest="inputFitFile", default='inputs/DijetFitResults.root',type="string",
+    parser.add_option('-i','--input-fit-file',dest="inputFitFile", default=None,type="string",
                   help="input fit file")
     parser.add_option('-d','--dir',dest="outDir",default="./",type="string",
                   help="Output directory to store everything")
