@@ -51,8 +51,14 @@ if __name__ == '__main__':
                   help="load asymptotic cross section results file")
     parser.add_option('--year',dest="year",default="2017",type="string",
                   help="year")
+    parser.add_option('--coup',dest="coup",default="kMpl001",type="string",
+                  help="coup")
+    parser.add_option('--cat',dest="cat",default="EBEB",type="string",
+                  help="cat")
     parser.add_option('--method',dest="method",default="full",type="string",
                   help="method")
+    parser.add_option('--combmode',dest="combmode",default="none",type="string",
+                  help="combine mode")
     parser.add_option('--SigNorm',dest="SignalNormFile",default="/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/SignalNorm.txt",type="string",
                   help="SignalNormFile")
 
@@ -67,30 +73,22 @@ if __name__ == '__main__':
                    #'moddijet1': 4,
                    }
 
-    box = options.box
+    box = options.coup + '_' + options.cat + '_' + options.year
     lumi = float(options.lumi)
     model = options.model
 
-    backgroundDsName = {'DiPhotons_kMpl001_EBEB': 'output/InputShapes_data_EBEB_%s.root' % options.year,
-                        'DiPhotons_kMpl001_EBEE': 'output/InputShapes_data_EBEE_%s.root' % options.year,
-                        'DiPhotons_kMpl01_EBEB': 'output/InputShapes_data_EBEB_%s.root' % options.year,
-                        'DiPhotons_kMpl01_EBEE': 'output/InputShapes_data_EBEE_%s.root' % options.year,
-                        'DiPhotons_kMpl02_EBEB': 'output/InputShapes_data_EBEB_%s.root' % options.year,
-                        'DiPhotons_kMpl02_EBEE': 'output/InputShapes_data_EBEE_%s.root' % options.year,
-                        'DiPhotons_0p014_EBEB': 'output/InputShapes_data_EBEB_%s.root' % options.year,
-                        'DiPhotons_0p014_EBEE': 'output/InputShapes_data_EBEE_%s.root' % options.year,
-                        'DiPhotons_1p4_EBEB': 'output/InputShapes_data_EBEB_%s.root' % options.year,
-                        'DiPhotons_1p4_EBEE': 'output/InputShapes_data_EBEE_%s.root' % options.year,
-                        'DiPhotons_5p6_EBEB': 'output/InputShapes_data_EBEB_%s.root' % options.year,
-                        'DiPhotons_5p6_EBEE': 'output/InputShapes_data_EBEE_%s.root' % options.year
-                        }
+    backgroundDsName = ''
+    if 'EBEB' in box:
+        backgroundDsName = 'output/InputShapes_data_EBEB_%s.root' % options.year
+    elif 'EBEE' in box:
+        backgroundDsName = 'output/InputShapes_data_EBEE_%s.root' % options.year
 
     signalDsName = ''
     if 'DiPhotons' in box:
         if 'kMpl' in box:
-            signalDsName = '/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/%s/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_%s_%s_%s.root'% (options.method, box.split("_")[-2], box.split("_")[-1], options.year)
+            signalDsName = '/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/%s/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_%s_%s_%s.root'% (options.method, options.coup, options.cat, options.year)
         else:
-            signalDsName = '/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/%s/ResonanceShapes_InputShapes_GluGluSpin0ToGammaGamma_W_%s_%s_%s.root'% (options.method, box.split("_")[-2], box.split("_")[-1], options.year)
+            signalDsName = '/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/%s/ResonanceShapes_InputShapes_GluGluSpin0ToGammaGamma_W_%s_%s_%s.root'% (options.method, options.coup, options.cat, options.year)
 
 
     signalSys = ''
@@ -104,15 +102,15 @@ if __name__ == '__main__':
     '''
     if 'DiPhotons' in box:
         if 'kMpl' in box:
-            signalSys  =   '--eneScStatUp /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/%s/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_%s_%s_%s_energyScaleStatUp.root --eneScStatDown /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/%s/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_%s_%s_%s_energyScaleStatDown.root'% (options.method, box.split("_")[-2], box.split("_")[-1], options.year, options.method, box.split("_")[-2], box.split("_")[-1], options.year)
-            signalSys  +=   ' --eneScSystUp /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/%s/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_%s_%s_%s_energyScaleSystUp.root --eneScSystDown /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/%s/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_%s_%s_%s_energyScaleSystDown.root'% (options.method, box.split("_")[-2], box.split("_")[-1], options.year, options.method, box.split("_")[-2], box.split("_")[-1], options.year)
-            signalSys  +=   ' --eneScGainUp /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/%s/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_%s_%s_%s_energyScaleGainUp.root --eneScGainDown /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/%s/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_%s_%s_%s_energyScaleGainDown.root'% (options.method, box.split("_")[-2], box.split("_")[-1], options.year, options.method, box.split("_")[-2], box.split("_")[-1], options.year)
-            signalSys  +=   ' --eneScSigmaUp /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/%s/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_%s_%s_%s_energySigmaUp.root --eneScSigmaDown /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/%s/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_%s_%s_%s_energySigmaDown.root'% (options.method, box.split("_")[-2], box.split("_")[-1], options.year, options.method, box.split("_")[-2], box.split("_")[-1], options.year)
+            signalSys  =   '--eneScStatUp /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/%s/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_%s_%s_%s_energyScaleStatUp.root --eneScStatDown /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/%s/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_%s_%s_%s_energyScaleStatDown.root'% (options.method, options.coup, options.cat, options.year, options.method, options.coup, options.cat, options.year)
+            signalSys  +=   ' --eneScSystUp /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/%s/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_%s_%s_%s_energyScaleSystUp.root --eneScSystDown /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/%s/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_%s_%s_%s_energyScaleSystDown.root'% (options.method, options.coup, options.cat, options.year, options.method, options.coup, options.cat, options.year)
+            signalSys  +=   ' --eneScGainUp /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/%s/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_%s_%s_%s_energyScaleGainUp.root --eneScGainDown /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/%s/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_%s_%s_%s_energyScaleGainDown.root'% (options.method, options.coup, options.cat, options.year, options.method, options.coup, options.cat, options.year)
+            signalSys  +=   ' --eneScSigmaUp /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/%s/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_%s_%s_%s_energySigmaUp.root --eneScSigmaDown /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/%s/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_%s_%s_%s_energySigmaDown.root'% (options.method, options.coup, options.cat, options.year, options.method, options.coup, options.cat, options.year)
         else:
-            signalSys  =   '--eneScStatUp /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/%s/ResonanceShapes_InputShapes_GluGluSpin0ToGammaGamma_W_%s_%s_%s_energyScaleStatUp.root --eneScStatDown /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/%s/ResonanceShapes_InputShapes_GluGluSpin0ToGammaGamma_W_%s_%s_%s_energyScaleStatDown.root'% (options.method, box.split("_")[-2], box.split("_")[-1], options.year, options.method, box.split("_")[-2], box.split("_")[-1], options.year)
-            signalSys  +=   ' --eneScSystUp /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/%s/ResonanceShapes_InputShapes_GluGluSpin0ToGammaGamma_W_%s_%s_%s_energyScaleSystUp.root --eneScSystDown /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/%s/ResonanceShapes_InputShapes_GluGluSpin0ToGammaGamma_W_%s_%s_%s_energyScaleSystDown.root'% (options.method, box.split("_")[-2], box.split("_")[-1], options.year, options.method, box.split("_")[-2], box.split("_")[-1], options.year)
-            signalSys  +=   ' --eneScGainUp /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/%s/ResonanceShapes_InputShapes_GluGluSpin0ToGammaGamma_W_%s_%s_%s_energyScaleGainUp.root --eneScGainDown /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/%s/ResonanceShapes_InputShapes_GluGluSpin0ToGammaGamma_W_%s_%s_%s_energyScaleGainDown.root'% (options.method, box.split("_")[-2], box.split("_")[-1], options.year, options.method, box.split("_")[-2], box.split("_")[-1], options.year)
-            signalSys  +=   ' --eneScSigmaUp /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/%s/ResonanceShapes_InputShapes_GluGluSpin0ToGammaGamma_W_%s_%s_%s_energySigmaUp.root --eneScSigmaDown /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/%s/ResonanceShapes_InputShapes_GluGluSpin0ToGammaGamma_W_%s_%s_%s_energySigmaDown.root'% (options.method, box.split("_")[-2], box.split("_")[-1], options.year, options.method, box.split("_")[-2], box.split("_")[-1], options.year)
+            signalSys  =   '--eneScStatUp /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/%s/ResonanceShapes_InputShapes_GluGluSpin0ToGammaGamma_W_%s_%s_%s_energyScaleStatUp.root --eneScStatDown /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/%s/ResonanceShapes_InputShapes_GluGluSpin0ToGammaGamma_W_%s_%s_%s_energyScaleStatDown.root'% (options.method, options.coup, options.cat, options.year, options.method, options.coup, options.cat, options.year)
+            signalSys  +=   ' --eneScSystUp /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/%s/ResonanceShapes_InputShapes_GluGluSpin0ToGammaGamma_W_%s_%s_%s_energyScaleSystUp.root --eneScSystDown /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/%s/ResonanceShapes_InputShapes_GluGluSpin0ToGammaGamma_W_%s_%s_%s_energyScaleSystDown.root'% (options.method, options.coup, options.cat, options.year, options.method, options.coup, options.cat, options.year)
+            signalSys  +=   ' --eneScGainUp /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/%s/ResonanceShapes_InputShapes_GluGluSpin0ToGammaGamma_W_%s_%s_%s_energyScaleGainUp.root --eneScGainDown /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/%s/ResonanceShapes_InputShapes_GluGluSpin0ToGammaGamma_W_%s_%s_%s_energyScaleGainDown.root'% (options.method, options.coup, options.cat, options.year, options.method, options.coup, options.cat, options.year)
+            signalSys  +=   ' --eneScSigmaUp /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/%s/ResonanceShapes_InputShapes_GluGluSpin0ToGammaGamma_W_%s_%s_%s_energySigmaUp.root --eneScSigmaDown /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/%s/ResonanceShapes_InputShapes_GluGluSpin0ToGammaGamma_W_%s_%s_%s_energySigmaDown.root'% (options.method, options.coup, options.cat, options.year, options.method, options.coup, options.cat, options.year)
 
     xsecTree = None
     rDict = {}
@@ -175,33 +173,15 @@ if __name__ == '__main__':
     #    freezeStringFit += ',pmd1_1_%s,pmd1_2_%s,pmd1_3_%s,pmd1_4_%s' % (box,box,box,box)
 
     for massPoint in massIterable(options.mass):
-        exec_me('python python/WriteDataCard.py -m %s --year %s --mass %s %s -i %s -l %f -c %s -b %s -d %s %s %s --multi --SigNorm %s'%(model, options.year, massPoint,backgroundDsName[box], options.inputFitFile,1000*lumi,options.config,box,options.outDir, signalDsName,signalSys, options.SignalNormFile),options.dryRun)
-        # exec_me('combine -M GenerateOnly %s/diphoton_combine_%i_%s_%s.txt -n %s_r-%.3f_%s_%s_%s_%s %s %s %s --bypassFrequentistFit --seed -1 --saveToys --expectSignal %.3f -t %i'%(options.outDir,int(massPoint),box,options.year,int(massPoint),rDict[int(massPoint)],box,options.genPdf,options.fitPdf,options.year,rRangeString,fixStringGen,freezeStringGen,rDict[int(massPoint)],options.toys),options.dryRun)
-        # exec_me('combine -M AsymptoticLimits -s -1 %s/diphoton_combine_%i_%s_%s.txt %s %s > %s/diphoton_combine_%i_%s_%s.txt_results'%(options.outDir,int(massPoint),box,options.year,fixStringFit,freezeStringFit,options.outDir,int(massPoint),box,options.year))
-        if (options.fitPdf == 'envelope'):
-            exec_me('combine -M MultiDimFit -m %s -d %s/diphoton_combine_%i_%s_%s.txt %s --algo grid --cminDefaultMinimizerStrategy 0 --saveNLL -n %s_%s_Envelope --setParameters myIndex=-1 --X-rtd REMOVE_CONSTANT_ZERO_POINT=1 --X-rtd MINIMIZER_freezeDisassociatedParams'%(int(massPoint),options.outDir,int(massPoint),box,options.year,rRangeString,options.year,box),options.dryRun)
-            outputfile = 'higgsCombine%s_%s_Envelope.MultiDimFit.mH%d.root' %(options.year,box,int(massPoint))
-        else:
-            exec_me('combine -M MultiDimFit -m %s -d %s/diphoton_combine_%i_%s_%s.txt %s %s %s --algo grid --cminDefaultMinimizerStrategy 0 --saveNLL -n %s_%s_fixed_pdf_%d --X-rtd REMOVE_CONSTANT_ZERO_POINT=1'%(int(massPoint),options.outDir,int(massPoint),box,options.year,rRangeString,fixStringFit,freezeStringFit,options.year,box,pdfIndexMap[options.fitPdf]),options.dryRun)
-            outputfile = 'higgsCombine%s_%s_fixed_pdf_%d.MultiDimFit.mH%d.root' %(options.year,box,pdfIndexMap[options.fitPdf],int(massPoint))
-
-        exec_me('mv %s %s/.'%(outputfile,options.outDir),options.dryRun)
-
-        # exec_me('combine -M FitDiagnostics --robustFit=1 %s/diphoton_combine_%i_%s_%s.txt -n %s_r-%.3f_%s_%s_%s_%s --toysFile %s -t %i %s %s %s --cminDefaultMinimizerStrategy=2 --saveWorkspace -v -1'%(
-        #     options.outDir,int(massPoint),box,options.year,
-        #     int(massPoint),rDict[int(massPoint)],box,options.genPdf,options.fitPdf,options.year,
-        #     toysfile[0],
-        #     options.toys,
-        #     rRangeString,fixStringFit,freezeStringFit),
-        #         options.dryRun)
-
-       #Test one by one. See if the above work and then uncomment
-         #exec_me('mv higgsCombine%s_%s_lumi-%.3f_r-%.3f_%s_%s_%s.MaxLikelihoodFit.mH120.123456.root %s/'%(model,massPoint,lumi,rDict[int(massPoint)],box,options.genPdf,options.fitPdf,options.outDir),options.dryRun)
-        #exec_me('mv mlfit%s_%s_lumi-%.3f_r-%.3f_%s_%s_%s.root %s/'%(model,massPoint,lumi,rDict[int(massPoint)],box,options.genPdf,options.fitPdf,options.outDir),options.dryRun)
-
-#toysfile=`ls |grep GenerateOnly`
-
-
-#mv fitDiagnostics_${THEINSIGNAME}_mu${THEMUIN}_${THECOUP}_${THEMODEL}_${THEMASS}.root fitDiagnostics_${THEINSIGNAME}_mu${THEMUIN}_${THECOUP}_${THEMODEL}_${THEMASS}_${CURRENTTOY}.root
-
-#cp fitDiagnostics_${THEINSIGNAME}_mu${THEMUIN}_${THECOUP}_${THEMODEL}_${THEMASS}_${CURRENTTOY}.root ${THEINOUTPATH}/${THECOUP}/mu${THEMUIN}/${THEMODEL}/mass${THEMASS}/.
+        exec_me('python python/WriteDataCard.py -m %s --year %s --mass %s %s -i %s -l %f -c %s -b %s -d %s %s %s --multi --SigNorm %s'%(model, options.year, massPoint,backgroundDsName, options.inputFitFile,1000*lumi,options.config,box,options.outDir, signalDsName,signalSys, options.SignalNormFile),options.dryRun)
+        if (options.combmode == 'envelope'):
+            for fitpdf in pdfIndexMap:
+                if (fitPdf == 'envelope'):
+                    exec_me('combine -M MultiDimFit -m %s -d %s/diphoton_combine_%i_%s_%s.txt %s --algo grid --cminDefaultMinimizerStrategy 0 --saveNLL -n %s_%s_Envelope --setParameters myIndex=-1 --X-rtd REMOVE_CONSTANT_ZERO_POINT=1 --X-rtd MINIMIZER_freezeDisassociatedParams'%(int(massPoint),options.outDir,int(massPoint),box,options.year,rRangeString,options.year,box),options.dryRun)
+                    outputfile = 'higgsCombine%s_%s_Envelope.MultiDimFit.mH%d.root' %(options.year,box,int(massPoint))
+                else:
+                    exec_me('combine -M MultiDimFit -m %s -d %s/diphoton_combine_%i_%s_%s.txt %s %s %s --algo grid --cminDefaultMinimizerStrategy 0 --saveNLL -n %s_%s_fixed_pdf_%d --X-rtd REMOVE_CONSTANT_ZERO_POINT=1'%(int(massPoint),options.outDir,int(massPoint),box,options.year,rRangeString,fixStringFit,freezeStringFit,options.year,box,pdfIndexMap[options.fitPdf]),options.dryRun)
+                    outputfile = 'higgsCombine%s_%s_fixed_pdf_%d.MultiDimFit.mH%d.root' %(options.year,box,pdfIndexMap[options.fitPdf],int(massPoint))
+            exec_me('mv %s %s/.'%(outputfile,options.outDir),options.dryRun)
+        elif (options.combmode == 'AsymptoticLimits'):
+            exec_me('combine -M AsymptoticLimits -d %s --X-rtd MINIMIZER_freezeDisassociatedParams'%s())
