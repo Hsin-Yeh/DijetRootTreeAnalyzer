@@ -449,7 +449,16 @@ if __name__ == '__main__':
     plotband = convertSideband(plotRegion,w,x)
 
     extDijetPdf = w.pdf('extDijetPdf_%s'%(options.box)) # Retrieve p.d.f --> Background pdf which will be fit with extended maximum likelihood method
+    print("====================\n")
+    print("====================\n")
+    print("====================\n")
+    print(options.box)
+    print("====================\n")
     print(extDijetPdf)
+    print("====================\n")
+    print("====================\n")
+    print("====================\n")
+
     #extDijetPdf = w.pdf('DiPhotons_bkg_dijet_unbin')
 
     #rebin the 1 GeV binned data according to the binning scheme
