@@ -1427,7 +1427,7 @@ if __name__ == '__main__':
     rootFile.Close()
     
 
-    outFileName = "FitResults_%s_%s.root"%(box)
+    outFileName = "FitResults_%s.root"%(options.box)
     outFile = rt.TFile.Open(options.outDir+"/"+outFileName,'recreate')
     outFile.cd()
     w.Write()
