@@ -11,8 +11,8 @@ export datacardsDir="/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_
 export SignalNormFile="/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/SignalNorm_Splines_${method}.txt"
 
 # Run flags
-export binnedFit_flag=false
-export writeDataCard_flag=false
+export binnedFit_flag=true
+export writeDataCard_flag=true
 export combineCard_flag=false
 export combineLimit_flag=true
 
