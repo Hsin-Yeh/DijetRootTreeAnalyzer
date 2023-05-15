@@ -12,9 +12,9 @@ export SignalNormFile="/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSS
 
 # Run flags
 export binnedFit_flag=false
-export writeDataCard_flag=true
-export combineCard_flag=true
-export combineLimit_flag=false
+export writeDataCard_flag=false
+export combineCard_flag=false
+export combineLimit_flag=true
 
 # ############################## signal interpolation ##############################
 
@@ -121,15 +121,15 @@ if $combineLimit_flag; then
     ./loopAllMassPoints.csh 2016 grav kMpl01 ${method} ${massInterval} ${datacardsDir} &
     ./loopAllMassPoints.csh 2016 grav kMpl02 ${method} ${massInterval} ${datacardsDir} &
     # #2017 RS
-    ./loopAllMassPoints.csh 2017 grav kMpl001 ${method} ${massInterval} ${datacardsDir} &
-    ./loopAllMassPoints.csh 2017 grav kMpl01 ${method} ${massInterval} ${datacardsDir} &
-    ./loopAllMassPoints.csh 2017 grav kMpl02 ${method} ${massInterval} ${datacardsDir} &
-    #2018 RS
-    ./loopAllMassPoints.csh 2018 grav kMpl001 ${method} ${massInterval} ${datacardsDir} &
-    ./loopAllMassPoints.csh 2018 grav kMpl01 ${method} ${massInterval} ${datacardsDir} &
-    ./loopAllMassPoints.csh 2018 grav kMpl02 ${method} ${massInterval} ${datacardsDir} &
-    #Full Run2 RS
-    ./loopAllMassPoints.csh fullRun2 grav kMpl001 ${method} ${massInterval} ${datacardsDir} &
-    ./loopAllMassPoints.csh fullRun2 grav kMpl01 ${method} ${massInterval} ${datacardsDir} &
-    ./loopAllMassPoints.csh fullRun2 grav kMpl02 ${method} ${massInterval} ${datacardsDir} &
+    # ./loopAllMassPoints.csh 2017 grav kMpl001 ${method} ${massInterval} ${datacardsDir} &
+    # ./loopAllMassPoints.csh 2017 grav kMpl01 ${method} ${massInterval} ${datacardsDir} &
+    # ./loopAllMassPoints.csh 2017 grav kMpl02 ${method} ${massInterval} ${datacardsDir} &
+    # #2018 RS
+    # ./loopAllMassPoints.csh 2018 grav kMpl001 ${method} ${massInterval} ${datacardsDir} &
+    # ./loopAllMassPoints.csh 2018 grav kMpl01 ${method} ${massInterval} ${datacardsDir} &
+    # ./loopAllMassPoints.csh 2018 grav kMpl02 ${method} ${massInterval} ${datacardsDir} &
+    # #Full Run2 RS
+    # ./loopAllMassPoints.csh fullRun2 grav kMpl001 ${method} ${massInterval} ${datacardsDir} &
+    # ./loopAllMassPoints.csh fullRun2 grav kMpl01 ${method} ${massInterval} ${datacardsDir} &
+    # ./loopAllMassPoints.csh fullRun2 grav kMpl02 ${method} ${massInterval} ${datacardsDir} &
 fi
