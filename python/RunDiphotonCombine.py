@@ -177,10 +177,10 @@ if __name__ == '__main__':
         if (options.combmode == 'envelope'):
             for options.fitpdf in pdfIndexMap:
                 if (options.fitPdf == 'envelope'):
-                    exec_me('combine -M MultiDimFit -m %s -d %s/diphoton_combine_%i_%s_%s.txt %s --algo grid --cminDefaultMinimizerStrategy 0 --saveNLL -n %s_%s_Envelope --setParameters myIndex=-1 --X-rtd REMOVE_CONSTANT_ZERO_POINT=1 --X-rtd MINIMIZER_freezeDisassociatedParams'%(int(massPoint),options.outDir,int(massPoint),box,options.year,rRangeString,options.year,box),options.dryRun)
+                    exec_me('combine -M MultiDimFit -m %s -d %s/diphoton_combine_%i_%s.txt %s --algo grid --cminDefaultMinimizerStrategy 0 --saveNLL -n %s_%s_Envelope --setParameters myIndex=-1 --X-rtd REMOVE_CONSTANT_ZERO_POINT=1 --X-rtd MINIMIZER_freezeDisassociatedParams'%(int(massPoint),options.outDir,int(massPoint),box,rRangeString,box),options.dryRun)
                     outputfile = 'higgsCombine%s_%s_Envelope.MultiDimFit.mH%d.root' %(options.year,box,int(massPoint))
                 else:
-                    exec_me('combine -M MultiDimFit -m %s -d %s/diphoton_combine_%i_%s_%s.txt %s %s %s --algo grid --cminDefaultMinimizerStrategy 0 --saveNLL -n %s_%s_fixed_pdf_%d --X-rtd REMOVE_CONSTANT_ZERO_POINT=1'%(int(massPoint),options.outDir,int(massPoint),box,options.year,rRangeString,fixStringFit,freezeStringFit,options.year,box,pdfIndexMap[options.fitPdf]),options.dryRun)
+                    exec_me('combine -M MultiDimFit -m %s -d %s/diphoton_combine_%i_%s.txt %s %s %s --algo grid --cminDefaultMinimizerStrategy 0 --saveNLL -n %s_%s_fixed_pdf_%d --X-rtd REMOVE_CONSTANT_ZERO_POINT=1'%(int(massPoint),options.outDir,int(massPoint),box,rRangeString,fixStringFit,freezeStringFit,box,pdfIndexMap[options.fitPdf]),options.dryRun)
                     outputfile = 'higgsCombine%s_%s_fixed_pdf_%d.MultiDimFit.mH%d.root' %(options.year,box,pdfIndexMap[options.fitPdf],int(massPoint))
             exec_me('mv %s %s/.'%(outputfile,options.outDir),options.dryRun)
         elif (options.combmode == 'AsymptoticLimits'):
