@@ -12,9 +12,9 @@ export SignalNormFile="/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSS
 
 # Run flags
 export binnedFit_flag=false
-export writeDataCard_flag=true
+export writeDataCard_flag=false
 export combineCard_flag=true
-export combineLimit_flag=true
+export combineLimit_flag=false
 
 # ############################## signal interpolation ##############################
 
