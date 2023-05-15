@@ -205,9 +205,9 @@ def writeDataCard(box,model,txtfileName,bkgs,paramNames,w,penalty,fixed,year,sha
         if signals>1:
                 rates = [w.data("%s_%s"%(box,sig)).sumEntries() for sig in model.split('p')]
                 processes = ["%s_%s"%(box,sig) for sig in model.split('p')]
-                if '2015' in box:
+                if '2015_' in box:
                         lumiErrs = [1.027 for sig in model.split('p')]
-                elif '2016' in box:
+                elif '2016_' in box:
                         lumiErrs = [1.062 for sig in model.split('p')]                  
                 elif 'DiPhotons' in box:
                         lumiErrs = [luminosityErrorFrac(year) for sig in model.split('p')]
@@ -216,9 +216,9 @@ def writeDataCard(box,model,txtfileName,bkgs,paramNames,w,penalty,fixed,year,sha
         else:
                 rates = [w.data("%s_%s"%(box,model)).sumEntries()]
                 processes = ["%s_%s"%(box,model)]
-                if '2015' in box:
+                if '2015_' in box:
                         lumiErrs = [1.027]
-                elif '2016' in box:
+                elif '2016_' in box:
                         lumiErrs = [1.062]            
                 elif 'DiPhotons' in box:
                         lumiErrs = [luminosityErrorFrac(year)]
