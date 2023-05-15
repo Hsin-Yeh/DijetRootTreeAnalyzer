@@ -817,7 +817,7 @@ if __name__ == '__main__':
         rootTools.Utils.importToWS(w,mcDataHist_mgg)
 
  
-    outFile = 'diphoton_combine_%i_%s_%s.root'%(massPoint,box,options.year)
+    outFile = 'diphoton_combine_%i_%s.root'%(massPoint,box)
     outputFile = rt.TFile.Open(options.outDir+"/"+outFile,"recreate")
     if options.mcFile is not None:
         writeDataCardMC(box,model,options.outDir+"/"+outFile.replace(".root",".txt"),bkgs,paramNames,w)
