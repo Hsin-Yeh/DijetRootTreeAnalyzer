@@ -159,7 +159,7 @@ if __name__ == '__main__':
     #    freezeStringGen += ',pmd1_1_%s,pmd1_2_%s,pmd1_3_%s,pmd1_4_%s' % (box,box,box,box)
 
 
-    fixStringFit = '--setParameters pdf_index=%i'%(pdfIndexMap[options.fitPdf])
+    fixStringFit = '--setParameters pdf_index_%s_%s=%i'%(options.cat, options.year, pdfIndexMap[options.fitPdf])
     freezeStringFit = '--freezeParameters pdf_index_%s_%s'%(options.cat, options.year)
     if options.fitPdf != 'dijet':
         freezeStringFit += ',p1_%s,p2_%s' % (box,box)
