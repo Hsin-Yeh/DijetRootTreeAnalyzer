@@ -160,7 +160,7 @@ if __name__ == '__main__':
 
 
     fixStringFit = '--setParameters pdf_index=%i'%(pdfIndexMap[options.fitPdf])
-    freezeStringFit = '--freezeParameters pdf_index'
+    freezeStringFit = '--freezeParameters pdf_index_%s_%s'%(options.cat, options.year)
     if options.fitPdf != 'dijet':
         freezeStringFit += ',p1_%s,p2_%s' % (box,box)
     if options.fitPdf != 'expow1':
