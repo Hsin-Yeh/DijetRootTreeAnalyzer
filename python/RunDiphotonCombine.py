@@ -67,8 +67,8 @@ if __name__ == '__main__':
 
     pdfIndexMap = {'dijet': 0,
                    'expow1': 1,
-                   'invpow1': 2,
-                   'invpowlin1': 3,
+                   'invpowlin1': 2,
+                   'invpow1': 3,
                    'envelope': -1
                    #'moddijet1': 4,
                    }
