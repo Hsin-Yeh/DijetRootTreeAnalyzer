@@ -34,13 +34,13 @@ if $binnedFit_flag; then
     # mkdir -p ${bkgFitResultsPath}
     #
     #2016 Lumi 35900
-    for coup in {"kMpl001","kMpl01","kMpl02"}; do echo $coup; for cat in {"EBEB","EBEE"}; do echo $cat; python python/BinnedFit.py -c config/diphotons_dijet_2016.config -l 35900 -b DiPhotons_${coup}_${cat}_2016 -d ${bkgFitResultsPath} --fit-spectrum --plot-region Low --coup $coup --cat $cat --year 2016 output/InputShapes_data_${cat}_2016.root; done; done;
+    for coup in {"kMpl001","kMpl01","kMpl02"}; do echo $coup; for cat in {"EBEB","EBEE"}; do echo $cat; python python/BinnedFit.py -c config/diphotons_dijet.config -l 35900 -b DiPhotons_${coup}_${cat} -d ${bkgFitResultsPath} --fit-spectrum --plot-region Low --coup $coup --cat $cat --year 2016 output/InputShapes_data_${cat}_2016.root; done; done;
 
     # #2017 Lumi 41527
-    for coup in {"kMpl001","kMpl01","kMpl02"}; do echo $coup; for cat in {"EBEB","EBEE"}; do echo $cat; python python/BinnedFit.py -c config/diphotons_dijet_2017.config -l 41527 -b DiPhotons_${coup}_${cat} -d ${bkgFitResultsPath} --fit-spectrum --plot-region Low --coup $coup --cat $cat --year 2017 output/InputShapes_data_${cat}_2017.root; done; done;
+    for coup in {"kMpl001","kMpl01","kMpl02"}; do echo $coup; for cat in {"EBEB","EBEE"}; do echo $cat; python python/BinnedFit.py -c config/diphotons_dijet.config -l 41527 -b DiPhotons_${coup}_${cat} -d ${bkgFitResultsPath} --fit-spectrum --plot-region Low --coup $coup --cat $cat --year 2017 output/InputShapes_data_${cat}_2017.root; done; done;
 
     # #2018 Lumi 59670
-    for coup in {"kMpl001","kMpl01","kMpl02"}; do echo $coup; for cat in {"EBEB","EBEE"}; do echo $cat; python python/BinnedFit.py -c config/diphotons_dijet_2018.config -l 59670 -b DiPhotons_${coup}_${cat} -d ${bkgFitResultsPath} --fit-spectrum --plot-region Low --coup $coup --cat $cat --year 2018 output/InputShapes_data_${cat}_2018.root; done; done;
+    for coup in {"kMpl001","kMpl01","kMpl02"}; do echo $coup; for cat in {"EBEB","EBEE"}; do echo $cat; python python/BinnedFit.py -c config/diphotons_dijet.config -l 59670 -b DiPhotons_${coup}_${cat} -d ${bkgFitResultsPath} --fit-spectrum --plot-region Low --coup $coup --cat $cat --year 2018 output/InputShapes_data_${cat}_2018.root; done; done;
 fi
 # #-------
 # #UNBLIND
