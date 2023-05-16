@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 export method="full"
-export massInterval=3000
+export massInterval=500
 
 # Paths
 export InterpolateShapePath="/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/${method}"
