@@ -175,8 +175,8 @@ if __name__ == '__main__':
     for massPoint in massIterable(options.mass):
         exec_me('python python/WriteDataCard.py -m %s --year %s --mass %s %s -i %s -l %f -c %s -b %s -d %s %s %s --multi --SigNorm %s'%(model, options.year, massPoint,backgroundDsName, options.inputFitFile,1000*lumi,options.config,box,options.outDir, signalDsName,signalSys, options.SignalNormFile),options.dryRun)
         if (options.combmode == 'envelope'):
-            for options.fitpdf in pdfIndexMap:
-                if (options.fitPdf == 'envelope'):
+            for fitpdf in pdfIndexMap:
+                if (fitpdf == 'envelope'):
                     exec_me('combine -M MultiDimFit -m %s -d %s/diphoton_combine_%i_%s.txt %s --algo grid --cminDefaultMinimizerStrategy 0 --saveNLL -n %s_Envelope --setParameters myIndex=-1 --X-rtd REMOVE_CONSTANT_ZERO_POINT=1 --X-rtd MINIMIZER_freezeDisassociatedParams'%(int(massPoint),options.outDir,int(massPoint),box,rRangeString,box),options.dryRun)
                     outputfile = 'higgsCombine%s_%s_Envelope.MultiDimFit.mH%d.root' %(options.year,box,int(massPoint))
                 else:
