@@ -166,6 +166,7 @@ if __name__ == '__main__':
         exec_me('python python/WriteDataCard.py -m %s --year %s --mass %s %s -i %s -l %f -c %s -b %s -d %s %s %s --multi --SigNorm %s'%(model, options.year, massPoint,backgroundDsName, options.inputFitFile,1000*lumi,options.config,box,options.outDir, signalDsName,signalSys, options.SignalNormFile),options.dryRun)
         if (options.combmode == 'envelope'):
             for fitpdf in pdfIndexMap:
+                if (fipdf == 'invpow'): continue
                 fixStringFit = '--setParameters pdf_index_%s_%s=%i'%(options.cat, options.year, pdfIndexMap[fitpdf])
                 freezeStringFit = '--freezeParameters pdf_index_%s_%s'%(options.cat, options.year)
                 if fitpdf != 'dijet':
