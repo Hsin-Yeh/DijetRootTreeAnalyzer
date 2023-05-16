@@ -165,17 +165,18 @@ if __name__ == '__main__':
     for massPoint in massIterable(options.mass):
         exec_me('python python/WriteDataCard.py -m %s --year %s --mass %s %s -i %s -l %f -c %s -b %s -d %s %s %s --multi --SigNorm %s'%(model, options.year, massPoint,backgroundDsName, options.inputFitFile,1000*lumi,options.config,box,options.outDir, signalDsName,signalSys, options.SignalNormFile),options.dryRun)
         if (options.combmode == 'envelope'):
-            fixStringFit = '--setParameters pdf_index_%s_%s=%i'%(options.cat, options.year, pdfIndexMap[options.fitPdf])
-            freezeStringFit = '--freezeParameters pdf_index_%s_%s'%(options.cat, options.year)
-            if options.fitPdf != 'dijet':
-                freezeStringFit += ',p1_%s,p2_%s' % (box,box)
-            if options.fitPdf != 'expow1':
-                freezeStringFit += ',pex1_1_%s,pex1_2_%s' % (box,box)
-            if options.fitPdf != 'invpow1':
-                freezeStringFit += ',pip1_1_%s,pip1_2_%s' % (box,box)
-            if options.fitPdf != 'invpowlin1':
-                freezeStringFit += ',pil1_1_%s,pil1_2_%s,pil1_3_%s' % (box,box,box)
             for fitpdf in pdfIndexMap:
+                fixStringFit = '--setParameters pdf_index_%s_%s=%i'%(options.cat, options.year, pdfIndexMap[fitpdf])
+                freezeStringFit = '--freezeParameters pdf_index_%s_%s'%(options.cat, options.year)
+                if fitpdf != 'dijet':
+                    freezeStringFit += ',p1_%s,p2_%s' % (box,box)
+                if fitpdf != 'expow1':
+                    freezeStringFit += ',pex1_1_%s,pex1_2_%s' % (box,box)
+                if fitpdf != 'invpow1':
+                    freezeStringFit += ',pip1_1_%s,pip1_2_%s' % (box,box)
+                if fitpdf != 'invpowlin1':
+                    freezeStringFit += ',pil1_1_%s,pil1_2_%s,pil1_3_%s' % (box,box,box)
+
                 if (fitpdf == 'envelope'):
                     exec_me('combine -M MultiDimFit -m %s -d %s/diphoton_combine_%i_%s.txt %s --algo grid --cminDefaultMinimizerStrategy 0 --saveNLL -n %s_Envelope --setParameters myIndex=-1 --X-rtd REMOVE_CONSTANT_ZERO_POINT=1 --X-rtd MINIMIZER_freezeDisassociatedParams'%(int(massPoint),options.outDir,int(massPoint),box,rRangeString,box),options.dryRun)
                     outputfile = 'higgsCombine%s_%s_Envelope.MultiDimFit.mH%d.root' %(options.year,box,int(massPoint))
