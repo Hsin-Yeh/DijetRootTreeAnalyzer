@@ -7,10 +7,10 @@ setenv method $4
 setenv massInterval $5
 setenv datacardsDir $6
 
-setenv masslist `seq 500 ${massInterval} 7000`
+setenv masslist `seq 600 ${massInterval} 7000`
 
 if ($coupling == "kMpl001" || $coupling == "0p014" || $coupling == "1p4" || $coupling == "5p6") then
-setenv masslist `seq 500 ${massInterval} 5000`
+setenv masslist `seq 600 ${massInterval} 5000`
 endif
 
 echo $masslist
