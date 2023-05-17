@@ -50,7 +50,7 @@ def max_array(array):
 if __name__ == "__main__":
 
     # Define a list of colors
-    color_template = ['blue', 'green', 'red', 'purple', 'orange', 'yellow']
+    color_template = ['blue', 'green', 'orange', 'purple']
     # Create a figure and axes object
     fig, ax = plt.subplots()
 
@@ -58,13 +58,6 @@ if __name__ == "__main__":
     minimum, maximum = 0, 1e6
     for ifile,in_filename in enumerate(args.in_filenames):
         tfileIn = ROOT.TFile.Open(in_filename)
-        linestyle='solid'
-        if (in_filename.find("Envelope") != -1):
-            name="Envelope"
-            linestyle='dashed'
-        elif (in_filename.find("pdf_0") != -1): name="dijet"
-        elif (in_filename.find("pdf_1") != -1): name="expow1"
-        elif (in_filename.find("pdf_2") != -1): name="invpowlin1"
         tree=tfileIn.Get("limit")
         r = root_numpy.tree2array(tree,'r')
         nll= root_numpy.tree2array(tree,'nll')
@@ -76,7 +69,15 @@ if __name__ == "__main__":
         minimum = min_array(total)
         maximum = max_array(total)
         print(average_total,minimum,maximum)
-        ax.scatter(r,total,color=color_template[ifile],linestyle=linestyle,label=name)
+        if (in_filename.find("Envelope") != -1):name="Envelope"
+        elif (in_filename.find("pdf_0") != -1): name="dijet"
+        elif (in_filename.find("pdf_1") != -1): name="expow1"
+        elif (in_filename.find("pdf_2") != -1): name="invpowlin1"
+        if (in_filename.find("Envelope") != -1):
+            ax.scatter(r,total,facecolors='none', edgecolors='r')
+        else:
+            ax.scatter(r,total,color=color_template[ifile],linestyle=linestyle,label=name)
+
 
     ax.legend(loc="upper left")
     ax.set_xlim([args.xMin,args.xMax])
