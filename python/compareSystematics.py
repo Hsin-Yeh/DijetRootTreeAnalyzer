@@ -27,5 +27,6 @@ for ifile, in_filename in enumerate(args.in_filenames):
     else:
         h[ifile].Draw("HISTsame")
 
-h[0].GetXaxis().SetRangeUser(0.6,1.4)
+h[0].GetXaxis().SetRangeUser(0.7,1.3)
+c1.SetLogy()
 c1.SaveAs("test.png")
