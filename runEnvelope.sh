@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 
-mass=1000
+mass=800
 coup="kMpl01"
 cat="EBEE"
 year=2016
