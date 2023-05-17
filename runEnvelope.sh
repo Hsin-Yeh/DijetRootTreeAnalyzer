@@ -2,7 +2,7 @@
 
 mass=1000
 coup="kMpl01"
-cat="EBEB"
+cat="EBEE"
 year=2016
 cardDir="./datacards/multi/full/${year}/DiPhotons_${coup}_${cat}_${year}/"
 cardName=${cardDir}/diphoton_combine_${mass}_DiPhotons_${coup}_${cat}_${year}.txt
