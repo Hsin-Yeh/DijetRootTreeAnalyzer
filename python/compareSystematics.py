@@ -14,7 +14,7 @@ coup="kMpl01"
 mass="1000"
 year="2017"
 c1 = ROOT.TCanvas()
-color_template = [1, 2, 4]
+color_template = [2, 2, 2]
 h={}
 for ifile, in_filename in enumerate(args.in_filenames):
     print(in_filename)
