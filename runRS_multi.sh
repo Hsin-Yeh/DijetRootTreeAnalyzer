@@ -54,6 +54,7 @@ fi
 # for bkgmodel in {"dijet","expow1","invpow1","invpowlin1"}; do echo ${bkgmodel}; mkdir -p bkgAltModels/${bkgmodel}/unblind; for coup in {"kMpl001","kMpl01","kMpl02"}; do echo $coup; for cat in {"EBEB","EBEE"}; do echo $cat; python python/BinnedFit.py -c config/diphotons_${bkgmodel}.config -l 41527 -b DiPhotons_${coup}_${cat} -d bkgAltModels/${bkgmodel}/unblind --fit-spectrum --coup $coup --cat $cat --year 2017 output/InputShapes_data_${cat}_2017.root; done; done; done;
 
 # #2018 Lumi 59670
+
 # for bkgmodel in {"dijet","expow1","invpow1","invpowlin1"}; do echo ${bkgmodel}; mkdir -p bkgAltModels/${bkgmodel}/unblind; for coup in {"kMpl001","kMpl01","kMpl02"}; do echo $coup; for cat in {"EBEB","EBEE"}; do echo $cat; python python/BinnedFit.py -c config/diphotons_${bkgmodel}.config -l 59670 -b DiPhotons_${coup}_${cat} -d bkgAltModels/${bkgmodel}/unblind --fit-spectrum --coup $coup --cat $cat --year 2018 output/InputShapes_data_${cat}_2018.root; done; done; done;
 
 ############################## WriteDataCard.py grav ##############################
