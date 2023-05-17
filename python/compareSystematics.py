@@ -14,7 +14,7 @@ coup="kMpl01"
 mass="1000"
 year="2017"
 c1 = ROOT.TCanvas()
-color_template = [2, 2, 2]
+color_template = [1, 2, 4]
 h={}
 for ifile, in_filename in enumerate(args.in_filenames):
     print(in_filename)
@@ -23,9 +23,9 @@ for ifile, in_filename in enumerate(args.in_filenames):
     h[ifile] = infile.Get("h_RSGravitonToGammaGamma_%s_M%s_%s"%(coup, mass, year))
     h[ifile].SetLineColor(color_template[ifile])
     if( ifile == 0 ):
-        h[ifile].GetXaxis().SetRangeUser(0.6,1.4)
         h[ifile].Draw("HIST")
     else:
         h[ifile].Draw("HISTsame")
 
+h[0].GetXaxis().SetRangeUser(0.6,1.4)
 c1.SaveAs("test.png")
