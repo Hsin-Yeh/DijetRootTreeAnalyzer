@@ -72,7 +72,7 @@ if __name__ == "__main__":
         markersize=20
         if (in_filename.find("Envelope") != -1):
             name="Envelope"
-            markersize=40
+            markersize=60
         elif (in_filename.find("pdf_0") != -1): name="dijet"
         elif (in_filename.find("pdf_1") != -1): name="expow1"
         elif (in_filename.find("pdf_2") != -1): name="invpowlin1"
