@@ -13,8 +13,8 @@ import math
 parser = argparse.ArgumentParser(description='')
 parser.add_argument('in_filenames',nargs="+",help='input filenames')
 parser.add_argument('--outputDir','-d',default="output/plots/sysplots",type=str,help='output plot directory')
-parser.add_argument('--xMax',default=2,type=float,help='plot x max')
-parser.add_argument('--xMin',default=-2,type=float,help='plot x min')
+parser.add_argument('--xMax',default=3,type=float,help='plot x max')
+parser.add_argument('--xMin',default=-1,type=float,help='plot x min')
 parser.add_argument('--yMax',default=-1,type=float,help='plot y max')
 parser.add_argument('--yMin',default=-1,type=float,help='plot y min')
 parser.add_argument('--year',default=2016,type=int,help='plot name year')
@@ -74,7 +74,7 @@ if __name__ == "__main__":
         elif (in_filename.find("pdf_1") != -1): name="expow1"
         elif (in_filename.find("pdf_2") != -1): name="invpowlin1"
         if (in_filename.find("Envelope") != -1):
-            ax.scatter(r,total,facecolors='none', edgecolors='r',markersize=20)
+            ax.scatter(r,total,facecolors='none', edgecolors='r',s=30)
         else:
             ax.scatter(r,total,color=color_template[ifile],label=name)
 
