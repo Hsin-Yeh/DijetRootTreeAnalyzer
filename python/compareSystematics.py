@@ -14,12 +14,16 @@ coup="kMpl01"
 mass="1000"
 year="2017"
 c1 = ROOT.TCanvas()
+color_template = [1, 2, 4]
+
 for ifile, in_filename in enumerate(args.in_filenames):
     infile = ROOT.TFile.Open(in_filename)
     infile.cd()
     h = infile.Get("h_RSGravitonToGammaGamma_%s_M%s_%s"%(coup, mass, year))
+    h.SetLineColor(color_template[ifile])
     if( ifile == 0 ):
         h.Draw()
+        h.GetXaxis().SetRangeUser(0.6,1.4)
     else:
         h.Draw("same")
 
