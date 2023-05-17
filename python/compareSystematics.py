@@ -23,8 +23,8 @@ for ifile, in_filename in enumerate(args.in_filenames):
     h[ifile] = infile.Get("h_RSGravitonToGammaGamma_%s_M%s_%s"%(coup, mass, year))
     h[ifile].SetLineColor(color_template[ifile])
     if( ifile == 0 ):
-        h[ifile].Draw("HIST")
         h[ifile].GetXaxis().SetRangeUser(0.6,1.4)
+        h[ifile].Draw("HIST")
     else:
         h[ifile].Draw("HISTsame")
 
