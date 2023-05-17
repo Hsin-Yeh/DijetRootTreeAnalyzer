@@ -2,7 +2,7 @@
 
 mass=1000
 coup="kMpl001"
-cat=( "EBEB" "EBEE" )
+catList=( "EBEB" "EBEE" )
 year=2016
 cardDir="./datacards/multi/full/${year}/DiPhotons_${coup}_${cat}_${year}/"
 
