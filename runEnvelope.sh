@@ -4,9 +4,9 @@ mass=1000
 coup="kMpl001"
 catList=( "EBEB" "EBEE" )
 year=2016
-cardDir="./datacards/multi/full/${year}/DiPhotons_${coup}_${cat}_${year}/"
 
 for cat in ${catList[@]}; do
+    cardDir="./datacards/multi/full/${year}/DiPhotons_${coup}_${cat}_${year}/"
     cardName=${cardDir}/diphoton_combine_${mass}_DiPhotons_${coup}_${cat}_${year}.txt
     echo ${cardName}
 
