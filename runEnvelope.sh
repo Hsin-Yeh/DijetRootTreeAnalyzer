@@ -13,4 +13,4 @@ combine -M MultiDimFit -d ${cardName} --algo grid --setParameterRanges r=-1,3 --
 combine -M MultiDimFit -d ${cardName} --algo grid --setParameterRanges r=-1,3 --cminDefaultMinimizerStrategy 0 --saveNLL --freezeParameters pdf_index_${cat}_${year} --setParameters pdf_index_${cat}_${year}=1 -n fixed_pdf_1 -m ${mass} --X-rtd REMOVE_CONSTANT_ZERO_POINT=1
 combine -M MultiDimFit -d ${cardName} --algo grid --setParameterRanges r=-1,3 --cminDefaultMinimizerStrategy 0 --saveNLL --freezeParameters pdf_index_${cat}_${year} --setParameters pdf_index_${cat}_${year}=2 -n fixed_pdf_2 -m ${mass} --X-rtd REMOVE_CONSTANT_ZERO_POINT=1
 
-python python/plotNLL.py higgs*fix*.root higgs*Envelope*.root --mass ${mass} --coup ${coup} --cat ${cat} --year ${year}
+python python/plotNLL.py higgsCombinefixed_pdf_*.MultiDimFit.mH${mass}.root higgsCombineEnvelope.MultiDimFit.mH${mass}.root --mass ${mass} --coup ${coup} --cat ${cat} --year ${year}
