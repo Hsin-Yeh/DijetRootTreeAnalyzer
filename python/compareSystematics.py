@@ -11,7 +11,7 @@ parser.add_argument('--debug','-d',action="store_true",help='debug mode')
 args = parser.parse_args()
 
 coup="kMpl01"
-mass="1000"
+mass="3000"
 year="2017"
 c1 = ROOT.TCanvas()
 color_template = [1, 2, 4]
@@ -25,7 +25,7 @@ for ifile, in_filename in enumerate(args.in_filenames):
     if( ifile == 0 ):
         h[ifile].Draw("HIST")
     else:
-        h[ifile].Draw("HISTsame")
+        h[ifile].Draw("HISTSame")
 
 h[0].GetXaxis().SetRangeUser(0.7,1.3)
 c1.SetLogy()
