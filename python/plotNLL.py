@@ -74,7 +74,7 @@ if __name__ == "__main__":
         elif (in_filename.find("pdf_1") != -1): name="expow1"
         elif (in_filename.find("pdf_2") != -1): name="invpowlin1"
         if (in_filename.find("Envelope") != -1):
-            ax.scatter(r,total,facecolors='none', edgecolors='r')
+            ax.scatter(r,total,facecolors='none', edgecolors='r',markersize=20)
         else:
             ax.scatter(r,total,color=color_template[ifile],linestyle=linestyle,label=name)
 
