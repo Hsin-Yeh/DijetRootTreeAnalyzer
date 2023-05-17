@@ -64,8 +64,7 @@ if __name__ == "__main__":
             linestyle='dashed'
         elif (in_filename.find("pdf_0") != -1): name="dijet"
         elif (in_filename.find("pdf_1") != -1): name="expow1"
-        elif (in_filename.find("pdf_2") != -1): name="invpow1"
-        elif (in_filename.find("pdf_3") != -1): name="invpowlin1"
+        elif (in_filename.find("pdf_2") != -1): name="invpowlin1"
         tree=tfileIn.Get("limit")
         r = root_numpy.tree2array(tree,'r')
         nll= root_numpy.tree2array(tree,'nll')
