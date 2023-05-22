@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 
-mass=2000
+mass=1200
 coup="kMpl01"
 catList=( "EBEB" "EBEE" )
 year=2018
