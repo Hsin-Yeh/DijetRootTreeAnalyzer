@@ -58,15 +58,15 @@ export InterpolateShapePath="/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysi
 # Extract shapes
 ############################################################
 
-mkdir /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/${method}
-cd /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/${method}
+# mkdir /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/${method}
+# cd /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/${method}
 
-rm -rf inputs *.root
-mkdir inputs
+# rm -rf inputs *.root
+# mkdir inputs
 
-filesToExtractRS=`ls /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/CMSDIJET/DijetRootTreeAnalyzer/output/${method} |grep .root | grep RSG `
+# filesToExtractRS=`ls /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/CMSDIJET/DijetRootTreeAnalyzer/output/${method} |grep .root | grep RSG `
 
-for file in ${filesToExtractRS}; do echo ${file}; cp /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/CMSDIJET/DijetRootTreeAnalyzer/output/${method}/${file} .; filename=`echo ${file} | cut -d'.' -f 1`; rm -rf inputs/${filename}.py; ../extractShapes.py -i ${file} > inputs/${filename}.py; done;
+# for file in ${filesToExtractRS}; do echo ${file}; cp /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/CMSDIJET/DijetRootTreeAnalyzer/output/${method}/${file} .; filename=`echo ${file} | cut -d'.' -f 1`; rm -rf inputs/${filename}.py; ../extractShapes.py -i ${file} > inputs/${filename}.py; done;
 
 ############################################################
 # Get Resonance shapes
@@ -77,7 +77,8 @@ cd /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphot
 filesToExtractRS=`ls /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/CMSDIJET/DijetRootTreeAnalyzer/output/${method} |grep .root | grep RSG `
 
 for file in ${filesToExtractRS};
-do echo ${file}; coup=`echo ${file} | cut -d'_' -f 3`; echo $coup; filename=`echo ${file} | cut -d'.' -f 1`; ../getResonanceShapes.py -i inputs/${filename}.py -c ${coup} -f gg --massrange 500 8000 10 -o ResonanceShapes_${filename}.root; done;
+# do echo ${file}; coup=`echo ${file} | cut -d'_' -f 3`; echo $coup; filename=`echo ${file} | cut -d'.' -f 1`; ../getResonanceShapes.py -i inputs/${filename}.py -c ${coup} -f gg --massrange 600 7000 10 -o ResonanceShapes_${filename}.root; done;
+do echo ${file}; coup=`echo ${file} | cut -d'_' -f 3`; echo $coup; filename=`echo ${file} | cut -d'.' -f 1`; ../getResonanceShapes.py -i inputs/${filename}.py -c ${coup} -f gg -o ResonanceShapes_${filename}.root; done;
 
 ############################################################
 # Compare shapes - Closure Test - single plot comparison
