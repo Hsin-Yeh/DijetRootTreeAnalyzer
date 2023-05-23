@@ -1,66 +1,52 @@
 #!/usr/bin/env bash
 
-year=$1
-signal=$2
-coupling=$3
-method=$4
-massInterval=$5
-massMin=$6
-massMax=$7
-combine_methods=$8
+export year=$1
+export signal=$2
+export coupling=$3
+export method=$4
+export datacardsDir=$5
+export version=$6
 
-masslist=$(seq ${massMin} ${massInterval} ${massMax})
-
+export masslist=(600 613 621 629 637 645 653 662 670 679 687 696 705 714 723 732 741 751 760 770 779 789 799 809 820 830 840 851 862 872 883 894 906 917 929 940 952 964 976 988 1001 1013 1026 1038 1051 1064 1078 1091 1105 1119 1132 1147 1161 1175 1190 1205 1219 1235 1250 1265 1281 1297 1313 1329 1346 1362 1379 1396 1413 1431 1449 1466 1485 1503 1521 1540 1559 1578 1598 1617 1637 1657 1678 1698 1719 1740 1762 1783 1805 1827 1850 1873 1895 1919 1942 1966 1990 2014 2039 2064 2089 2115 2141 2167 2193 2220 2247 2275 2303 2331 2359 2388 2417 2447 2477 2507 2537 2568 2600 2631 2663 2696 2729 2762 2795 2830 2864 2899 2934 2970 3006 3042 3079 3117 3155 3193 3232 3271 3311 3351 3392 3433 3475 3517 3560 3603 3647 3691 3736 3781 3827 3873 3920 3968 4016 4065 4114 4164 4214 4265 4317 4369 4422 4476 4530 4585 4640 4696 4753 4811 4869 4928 4987 5000)
+if [[ ${coupling} == "kMpl01" ]]; then
+    masslist=(600 611 622 634 645 657 669 681 694 707 719 732 746 759 773 787 801 816 830 845 860 876 892 908 924 940 957 974 992 1009 1027 1046 1064 1083 1102 1122 1142 1162 1183 1204 1225 1247 1269 1291 1314 1337 1361 1385 1409 1434 1459 1485 1511 1537 1564 1592 1619 1648 1677 1706 1736 1766 1797 1828 1860 1893 1926 1959 1993 2028 2064 2099 2136 2173 2211 2249 2288 2328 2368 2410 2451 2494 2537 2581 2626 2671 2718 2765 2812 2861 2910 2961 3012 3064 3117 3171 3225 3281 3338 3395 3454 3513 3574 3636 3698 3762 3827 3893 3960 4028 4097 4167 4239 4312 4386 4462 4538 4616 4696 4776 4858 4942 5027 5113 5201 5290 5381 5473 5567 5662 5759 5858 5958 6061 6164 6270 6377 6487 6598 6711 6826 6943 7000)
+elif [[ ${coupling} == "kMpl02" ]]; then
+    masslist=(600 625 653 683 713 745 778 812 848 885 924 964 1005 1049 1094 1141 1190 1241 1293 1348 1405 1465 1527 1591 1658 1727 1800 1875 1953 2034 2119 2207 2298 2393 2492 2595 2702 2813 2929 3050 3175 3305 3440 3581 3728 3880 4038 4203 4374 4553 4738 4931 5131 5339 5556 5782 6016 6260 6514 6777 7000)
+fi
 echo $masslist
 
-# Combine_Method in this script are: AsymptoticLimits, ExpSignificance, ExpSignificanceWithPval, ObsSignificance, ObsSignificanceWithPval
-#setenv combine_methods "ObsSignificance"
-# combine_methods="AsymptoticLimits_bypassFrequentistFit"
-mainpath="/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/CMSDIJET/DijetRootTreeAnalyzer/test_directory"
+rm -rf ${version}/${year}/${signal}/${coupling}/${combine_method}/All
+mkdir -p ${version}/${year}/${signal}/${coupling}/${combine_method}/All
 
-rm -rf combineJobs13TeV/${year}/${signal}/${coupling}/${combine_method}/All
-mkdir -p combineJobs13TeV/${year}/${signal}/${coupling}/${combine_method}/All
-
-finalResults="finalResults_${year}_${signal}_${coupling}"
-finalResults2="finalResults_${year}_${signal}_${coupling}_2"
+finalResults="${version}/finalResults_${year}_${signal}_${coupling}"
 
 rm ${finalResults}
 touch ${finalResults}
 
-#a priori limits. I see in the post-fit or a-posteriori expected limit weird
-#one and two sigma region above 1.2 TeV. So, I will go to a priori limits at the moment.
-if [[ ${combine_methods} == "AsymptoticLimits_bypassFrequentistFit" ]]; then
-    time parallel --progress --jobs 10 'mass={1}; year={2}; coupling={3}; signal={4}; combine_method={5};
-echo \"====================================================================\"; echo $mass; datacardfile=${mainpath}/${method}/${year}/diphoton_combine_${mass}_DiPhotons_${coupling}_${year}.txt;
-echo $datacardfile; echo \"combine -M AsymptoticLimits -s -1 --bypassFrequentistFit $datacardfile\";
-combine -M AsymptoticLimits  -s -1 --bypassFrequentistFit $datacardfile > ${datacardfile}_results;
-mv higgsCombineTest.AsymptoticLimits.mH*.root combineJobs13TeV/${year}/${signal}/${coupling}/${combine_method}/All/.;' ::: $(seq ${massMin} ${massInterval} ${massMax}) ::: ${year} ::: ${coupling} ::: ${signal} ::: $combine_method
+for mass in "${masslist[@]}"; do
+    echo "====================================================================="
+    echo $mass
 
-elif [[ ${combine_methods} == "AsymptoticLimits" ]]; then
-    time parallel --progress --jobs 10 'mass={1}; year={2}; coupling={3}; signal={4}; combine_method={5};
-echo \"====================================================================\"; echo $mass; datacardfile=${mainpath}/${method}/${year}/diphoton_combine_${mass}_DiPhotons_${coupling}_${year}.txt;
-echo $datacardfile; echo \"combine -M AsymptoticLimits -s -1 $datacardfile\";
-combine -M AsymptoticLimits  -s -1 $datacardfile > ${datacardfile}_results;
-mv higgsCombineTest.AsymptoticLimits.mH*.root combineJobs13TeV/${year}/${signal}/${coupling}/${combine_method}/All/.;' ::: $(seq ${massMin} ${massInterval} ${massMax}) ::: ${year} ::: ${coupling} ::: ${signal} ::: $combine_method
-fi
+    datacardfile="${datacardsDir}/${method}/${year}/diphoton_combine_${mass}_DiPhotons_${coupling}_${year}.txt"
 
-# for mass in $masslist; do
-#     datacardfile=${mainpath}/${method}/${year}/diphoton_combine_${mass}_DiPhotons_${coupling}_${year}.txt
-#     obs=$(cat ${datacardfile}_results  | grep  "Observed Limit:" | awk '{print $5}')
-#     expM2s=$(cat ${datacardfile}_results  | grep  "Expected  2.5%:" | awk '{print $5}')
-#     expM1s=$(cat ${datacardfile}_results  | grep  "Expected 16.0%:" | awk '{print $5}')
-#     exp=$(cat ${datacardfile}_results  | grep  "Expected 50.0%:" | awk '{print $5}')
-#     expP1s=$(cat ${datacardfile}_results  | grep  "Expected 84.0%:" | awk '{print $5}')
-#     expP2s=$(cat ${datacardfile}_results  | grep  "Expected 97.5%:" | awk '{print $5}')
-#     echo $mass $obs $expM2s $expM1s $exp $expP1s $expP2s
-#     echo $mass $obs $expM2s $expM1s $exp $expP1s $expP2s >> ${finalResults}
-# done
+    if [[ ${year} == "fullRun2" ]]; then
+        datacardfile="${datacardsDir}/${method}/fullRun2/diphoton_combine_${mass}_DiPhotons_${coupling}.txt"
+    fi
+    echo $datacardfile
 
+    # a priori
+    # combine -M AsymptoticLimits -s -1 -d $datacardfile --X-rtd MINIMIZER_freezeDisassociatedParams --bypassFrequentistFit > ${datacardfile}_results
+    # a posteriori
+    combine -M AsymptoticLimits -s -1 -d $datacardfile --X-rtd MINIMIZER_freezeDisassociatedParams > ${datacardfile}_results
+    mv higgsCombineTest.AsymptoticLimits.mH*.root ${version}/${year}/${signal}/${coupling}/${combine_method}/All/.
 
-# cat ${finalResults} | sort -n > ${finalResults2}
-# mv ${finalResults2} combineJobs13TeV/${year}/${signal}/${coupling}/${combine_method}/All/finalResults
+    export obs=`cat ${datacardfile}_results  | grep  "Observed Limit:" | awk '{print $5}'`
+    export expM2s=`cat ${datacardfile}_results  | grep  "Expected  2.5%:" | awk '{print $5}'`
+    export expM1s=`cat ${datacardfile}_results  | grep  "Expected 16.0%:" | awk '{print $5}'`
+    export exp=`cat ${datacardfile}_results  | grep  "Expected 50.0%:" | awk '{print $5}'`
+    export expP1s=`cat ${datacardfile}_results  | grep  "Expected 84.0%:" | awk '{print $5}'`
+    export expP2s=`cat ${datacardfile}_results  | grep  "Expected 97.5%:" | awk '{print $5}'`
 
-
-#a-posteriori expected limit
-# echo "combine -M AsymptoticLimits -s -1 $datacardfile"
-# combine -M AsymptoticLimits  -s -1 $datacardfile > ${datacardfile}_results
+    echo $mass $obs $expM2s $expM1s $exp $expP1s $expP2s
+    echo $mass $obs $expM2s $expM1s $exp $expP1s $expP2s >> ${finalResults}
+done
