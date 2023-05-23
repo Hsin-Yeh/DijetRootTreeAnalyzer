@@ -9,6 +9,17 @@
 # ./run_multi_combine.sh 2018 kMpl001
 # ./run_multi_combine.sh 2018 kMpl01
 # ./run_multi_combine.sh 2018 kMpl02
+#
+# ./run_multi_combine.sh 2016 0p014
+# ./run_multi_combine.sh 2016 1p4
+# ./run_multi_combine.sh 2016 5p6
+# ./run_multi_combine.sh 2017 0p014
+# ./run_multi_combine.sh 2017 1p4
+# ./run_multi_combine.sh 2017 5p6
+# ./run_multi_combine.sh 2018 0p014
+# ./run_multi_combine.sh 2018 1p4
+# ./run_multi_combine.sh 2018 5p6
+
 
 export version="2023-05-23"
 export year=$1
@@ -65,17 +76,6 @@ export binnedFit_flag=false
 export writeDataCard_flag=true
 export combineCard_flag=true
 export combineLimit_flag=true
-
-
-# ############################## signal interpolation ##############################
-
-# cd /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/${method}
-
-# filesToExtractRS=`ls /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/CMSDIJET/DijetRootTreeAnalyzer/output/${method} |grep .root | grep RSG`
-
-# for file in ${filesToExtractRS};
-# do echo ${file}; coup=`echo ${file} | cut -d'_' -f 3`; echo $coup; filename=`echo ${file} | cut -d'.' -f 1`; ../getResonanceShapes.py -i inputs/${filename}.py -c ${coup} -f gg --massrange 500 10000 ${massInterval} -o ResonanceShapes_${filename}.root; done;
-
 
 # ############################## bkg model ##############################
 
