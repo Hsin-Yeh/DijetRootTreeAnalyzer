@@ -21,7 +21,7 @@
 # ./run_multi_combine.sh 2018 5p6
 
 
-export version="2023-05-23"
+export version="2023-05-23-2"
 export year=$1
 export coupling=$2
 
@@ -58,6 +58,11 @@ if [[ ${coupling} == "0p014" || ${coupling} == "1p4" || ${coupling} == "5p6" ]];
     export signal="heavyhiggs"
     export signal_LongName="GluGluSpin0ToGammaGamma_W"
 fi
+# unblind
+export unblind=false
+if [[ ${year} == "2016" ]]; then
+    export unblind=true
+fi
 export massInterval=10
 
 #################### Paths ####################
@@ -66,10 +71,7 @@ export configFile="config/diphotons_500GeV.config"
 export bkgFitResultsPath="datacards/multi"
 export datacardsDir="/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/CMSDIJET/DijetRootTreeAnalyzer/datacards/multi/${version}"
 export SignalNormFile="/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/SignalNorm_Splines_${method}.txt"
-export datacard_configfile="config/diphotons_bias_${year}_pdf_index_wopip.config"
-if [[ ${year} == "2017" ]]; then
-    export datacard_configfile="config/diphotons_bias_2017_pdf_index_wopip_wopil.config"
-fi
+export datacard_configfile="config/diphotons_bias_${year}_pdf_index_wopip_wopil.config"
 
 #################### Run flags ####################
 export binnedFit_flag=false
@@ -161,5 +163,5 @@ if $combineLimit_flag; then
 
     # Limit Plot
     cd ${mainpath}/${version}
-    plotLimit.exe "finalResults_${year}_${signal}_${coupling}" "finalResults_${year}_${signal}_${coupling}" ${coupling} ${year} "./" ${signal}
+    plotLimit.exe "finalResults_${year}_${signal}_${coupling}" "finalResults_${year}_${signal}_${coupling}" ${coupling} ${year} "./" ${signal} ${unblind}
 fi
