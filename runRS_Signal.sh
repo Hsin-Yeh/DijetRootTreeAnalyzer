@@ -61,7 +61,7 @@ export InterpolateShapePath="/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysi
 # mkdir /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/${method}
 # cd /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/${method}
 
-# rm -rf inputs *.root
+# rm -rf inputs InputShapes.root
 # mkdir inputs
 
 # filesToExtractRS=`ls /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/CMSDIJET/DijetRootTreeAnalyzer/output/${method} |grep .root | grep RSG `
@@ -75,6 +75,8 @@ export InterpolateShapePath="/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysi
 cd /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/${method}
 
 filesToExtractRS=`ls /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/CMSDIJET/DijetRootTreeAnalyzer/output/${method} |grep .root | grep RSG `
+
+rm ResonanceShapes*.root
 
 for file in ${filesToExtractRS};
 # do echo ${file}; coup=`echo ${file} | cut -d'_' -f 3`; echo $coup; filename=`echo ${file} | cut -d'.' -f 1`; ../getResonanceShapes.py -i inputs/${filename}.py -c ${coup} -f gg --massrange 600 7000 10 -o ResonanceShapes_${filename}.root; done;
