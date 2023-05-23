@@ -15,8 +15,8 @@ elif [[ ${coupling} == "kMpl02" ]]; then
 fi
 echo $masslist
 
-rm -rf ${version}/${year}/${signal}/${coupling}/${combine_method}/All
-mkdir -p ${version}/${year}/${signal}/${coupling}/${combine_method}/All
+rm -rf ${version}/${year}/${signal}/${coupling}
+mkdir -p ${version}/${year}/${signal}/${coupling}
 
 finalResults="${version}/finalResults_${year}_${signal}_${coupling}"
 
@@ -37,8 +37,8 @@ for mass in "${masslist[@]}"; do
     # a priori
     # combine -M AsymptoticLimits -s -1 -d $datacardfile --X-rtd MINIMIZER_freezeDisassociatedParams --bypassFrequentistFit > ${datacardfile}_results
     # a posteriori
-    combine -M AsymptoticLimits -s -1 -d $datacardfile --X-rtd MINIMIZER_freezeDisassociatedParams > ${datacardfile}_results
-    mv higgsCombineTest.AsymptoticLimits.mH*.root ${version}/${year}/${signal}/${coupling}/${combine_method}/All/.
+    combine -M AsymptoticLimits -s -1 -d $datacardfile --X-rtd MINIMIZER_freezeDisassociatedParams -n ${year}_${signal}_${coupling} > ${datacardfile}_results
+    mv higgsCombine${year}_${signal}_${coupling}.AsymptoticLimits.mH${mass}*.root ${version}/${year}/${signal}/${coupling}/.
 
     export obs=`cat ${datacardfile}_results  | grep  "Observed Limit:" | awk '{print $5}'`
     export expM2s=`cat ${datacardfile}_results  | grep  "Expected  2.5%:" | awk '{print $5}'`
