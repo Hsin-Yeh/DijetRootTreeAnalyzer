@@ -64,7 +64,7 @@ export massInterval=10
 export InterpolateShapePath="/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/${method}"
 export configFile="config/diphotons_500GeV.config"
 export bkgFitResultsPath="datacards/multi"
-export datacardsDir="/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/CMSDIJET/DijetRootTreeAnalyzer/datacards/multi"
+export datacardsDir="/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/CMSDIJET/DijetRootTreeAnalyzer/datacards/multi/${version}"
 export SignalNormFile="/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/SignalNorm_Splines_${method}.txt"
 export datacard_configfile="config/diphotons_bias_${year}_pdf_index_wopip.config"
 if [[ ${year} == "2017" ]]; then
@@ -139,7 +139,7 @@ fi
 if $combineCard_flag; then
     echo ${year}
     cd ${datacardsDir}/${method}/${year}
-    scenario="DiPhotons_${coup}"
+    scenario="DiPhotons_${coupling}"
     echo ${scenario}
     for mass in "${masslist[@]}"; do
         echo ${mass}
@@ -161,5 +161,5 @@ if $combineLimit_flag; then
 
     # Limit Plot
     cd ${mainpath}/${version}
-    plotLimit.exe "finalResults_${year}_${signal}_${coup}" "finalResults_${year}_${signal}_${coup}" ${coup} ${year} "./" ${signal}
+    plotLimit.exe "finalResults_${year}_${signal}_${coupling}" "finalResults_${year}_${signal}_${coupling}" ${coupling} ${year} "./" ${signal}
 fi
