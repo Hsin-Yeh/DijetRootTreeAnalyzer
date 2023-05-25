@@ -69,14 +69,14 @@ def EE_L1_prefiring(year, sigma):
     reweightString1=""
     reweightString2=""
     corrHist=rt.TH2D()
-    if (year=="2016"):
+    if (year.find("2016")!=-1):
         corrFile = rt.TFile("/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/CMSDIJET/DijetRootTreeAnalyzer/data/EE_L1_prefiring/L1prefiring_photonpt_2016BtoH.root")
         corrHist = corrFile.Get("L1prefiring_photonpt_2016BtoH")
-    elif (year=="2017"):
+    elif (year.find("2017")!=-1):
         corrFile = rt.TFile("/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/CMSDIJET/DijetRootTreeAnalyzer/data/EE_L1_prefiring/L1prefiring_photonpt_2017BtoF.root")
         corrHist = corrFile.Get("L1prefiring_photonpt_2017BtoF")
 
-    if (year=="2018"):
+    if (year.find("2018")!=-1:
         return "1"
     else:
         Nbins = corrHist.GetNbinsX()*corrHist.GetNbinsY()
