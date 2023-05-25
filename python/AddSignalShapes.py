@@ -69,29 +69,29 @@ def EE_L1_prefiring(year, sigma):
     reweightString1=""
     reweightString2=""
     corrHist=rt.TH2D()
-    if (year==2016):
+    if (year=="2016"):
         corrFile = rt.TFile("/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/CMSDIJET/DijetRootTreeAnalyzer/data/EE_L1_prefiring/L1prefiring_photonpt_2016BtoH.root")
         corrHist = corrFile.Get("L1prefiring_photonpt_2016BtoH")
-    elif (year==2017):
+    elif (year=="2017"):
         corrFile = rt.TFile("/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/CMSDIJET/DijetRootTreeAnalyzer/data/EE_L1_prefiring/L1prefiring_photonpt_2017BtoF.root")
         corrHist = corrFile.Get("L1prefiring_photonpt_2017BtoF")
 
-    Nbins = corrHist.GetNbinsX()*corrHist.GetNbinsY()
-    print(Nbins)
-    for ibin in range(Nbins):
-        weight = 1 - corrHist.GetBinContent(ibin) # The content is prefire rate. The weight is non-prefiring probability
-        weightError = -corrHist.GetBinError(ibin) # minus sign to give the correct non-prefiring probability uncertainty
-        etaLow = corrHist.GetXaxis().GetBinLowEdge(ibin)
-        etaUp = corrHist.GetXaxis().GetBinUpEdge(ibin)
-        ptLow = corrHist.GetYaxis().GetBinLowEdge(ibin)
-        ptUp = corrHist.GetYaxis().GetBinUpEdge(ibin)
-
+    if (year=="2018"):
+        return "1"
+    else:
+        Nbins = corrHist.GetNbinsX()*corrHist.GetNbinsY()
+        for ibin in range(Nbins):
+            weight = 1 - corrHist.GetBinContent(ibin) # The content is prefire rate. The weight is non-prefiring probability
+            weightError = -corrHist.GetBinError(ibin) # minus sign to give the correct non-prefiring probability uncertainty
+            etaLow = corrHist.GetXaxis().GetBinLowEdge(ibin)
+            etaUp = corrHist.GetXaxis().GetBinUpEdge(ibin)
+            ptLow = corrHist.GetYaxis().GetBinLowEdge(ibin)
+            ptUp = corrHist.GetYaxis().GetBinUpEdge(ibin)
         reweightString1 += "(ph1pt>=%f && ph1pt<%f && ph1scEta>=%f && ph1scEta<%f)*(%f + %f*%d)" % (ptLow, ptUp, etaLow, etaUp, weight, weightError, sigma)
         if (ibin != Nbins-1): reweightString1 += "+"
-    reweightString2 = reweightString1.replace("ph1","ph2")
-    reweight = "(" + reweightString1 + ")*(" + reweightString2 + ")"
-    print reweight
-    return reweight
+        reweightString2 = reweightString1.replace("ph1","ph2")
+        reweight = "(" + reweightString1 + ")*(" + reweightString2 + ")"
+        return reweight
 
 
 if __name__ == '__main__':
@@ -189,6 +189,9 @@ if __name__ == '__main__':
         elif options.sys.find("PU")!=-1:
             allCuts = '(' + allCuts + ')*(' + npv_reweight_str(year, numSigma) + ')'
             project(thetree,h_mgg_ratio, "mgg/%f"%(float(mass)), allCuts )
+        elif options.sys.find("prefiring")!=-1:
+            allCuts = '(' + catCut + ')*(' + EE_L1_prefiring(year,numSigma) + ')'
+            project(thetree,h_mgg_ratio, "mgg/%f"%(float(mass)), allCuts )
         elif options.sys.find("test")!=-1:
             allCuts = '(' + allCuts + ')*(' + scale_factor_cut(year, numSigma*10) + ')'
             project(thetree,h_mgg_ratio, "mgg/%f"%(float(mass)), allCuts )
@@ -201,11 +204,11 @@ if __name__ == '__main__':
         histos.append(h_mgg_ratio)
 
 
-    # if options.type=='nom':
-    #     tfileOut = rt.TFile.Open('%s/InputShapes_%s_%s_%s.root'%(options.outDir,title,options.cat,year),'recreate')
-    # else:
-    #     tfileOut = rt.TFile.Open('%s/InputShapes_%s_%s_%s_%s.root'%(options.outDir,title,options.cat,year,options.sys),'recreate')
-    # tfileOut.cd()
-    # for h in histos:
-    #     h.Write()
-    # tfileOut.Close()
+    if options.type=='nom':
+        tfileOut = rt.TFile.Open('%s/InputShapes_%s_%s_%s.root'%(options.outDir,title,options.cat,year),'recreate')
+    else:
+        tfileOut = rt.TFile.Open('%s/InputShapes_%s_%s_%s_%s.root'%(options.outDir,title,options.cat,year,options.sys),'recreate')
+    tfileOut.cd()
+    for h in histos:
+        h.Write()
+    tfileOut.Close()
