@@ -298,7 +298,7 @@ void plotLimit(string year, string signame, string coupling, bool unblind) {
     thelumi = stream.str();
   } else {
     std::stringstream stream;
-    stream << std::fixed << std::setprecision(1) << luminosity[year];
+    stream << std::fixed << std::setprecision(1) << 35.9;
     thelumi = stream.str();
   }
   TLatex* lumiText=new TLatex(0.70,0.90, Form("%s fb^{-1} (13 TeV)", thelumi.c_str() ) );
@@ -323,7 +323,7 @@ void plotLimit(string year, string signame, string coupling, bool unblind) {
   obsGraph->Write();
   exp1SGraph->Write();
   exp2SGraph->Write();
-  grxs[coupling]->Write();
+  // grxs[coupling]->Write();
 
   outfile->Write();
   outfile->Close();
