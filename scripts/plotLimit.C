@@ -262,7 +262,7 @@ void plotLimit(string year, string signame, string coupling, bool unblind) {
 
   leg->SetHeader(plabel.c_str(),"C");
   if ( signame == "grav" ) {
-    leg->AddEntry(grxs[coupling],"G_{RS}#rightarrow#gamma#gamma (LO)","l");
+    // leg->AddEntry(grxs[coupling],"G_{RS}#rightarrow#gamma#gamma (LO)","l");
     leg->AddEntry(gr_2016,"Published 2016 Mass Limit","P");
   }
   leg->AddEntry(expGraph,"expected Limit","L"); //L_{int}=36.4/pb
@@ -318,12 +318,12 @@ void plotLimit(string year, string signame, string coupling, bool unblind) {
   obsGraph->SetName("obsGraph");
   exp1SGraph->SetName("exp1SGraph");
   exp2SGraph->SetName("exp2SGraph");
-  grxs[coupling]->SetName("theory");
+  // grxs[coupling]->SetName("theory");
   expGraph->Write();
   obsGraph->Write();
   exp1SGraph->Write();
   exp2SGraph->Write();
-  grxs[coupling]->Write();
+  // grxs[coupling]->Write();
 
   outfile->Write();
   outfile->Close();
