@@ -68,6 +68,7 @@ def EE_L1_prefiring(year, sigma):
 
     reweightString1=""
     reweightString2=""
+    corrHist=rt.TH2D()
     if (year==2016):
         corrFile = rt.TFile("/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/CMSDIJET/DijetRootTreeAnalyzer/data/EE_L1_prefiring/L1prefiring_photonpt_2016BtoH.root")
         corrHist = corrFile.Get("L1prefiring_photonpt_2016BtoH")
