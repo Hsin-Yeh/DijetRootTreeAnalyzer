@@ -4,12 +4,6 @@
 #include <cmath>
 #include <map>
 
-#include "diphoton-analysis/Tools/interface/sampleList.hh"
-#include "diphoton-analysis/Tools/interface/utilities.hh"
-#include "FWCore/Utilities/interface/Exception.h"
-#include "diphoton-analysis/CommonClasses/interface/CrossSections.h"
-#include "HiggsAnalysis/CombinedLimit/interface/RooSpline1D.h"
-
 //ROOT
 #include "TCanvas.h"
 #include "TString.h"
@@ -22,8 +16,6 @@
 #include "TGraphAsymmErrors.h"
 #include "TLatex.h"
 #include "TF1.h"
-
-#include "RooRealVar.h"
 
 //-----------------------------------------------------------------------------------
 struct xsec{
@@ -129,212 +121,212 @@ void plotLimit(string year, string signame, string coupling, bool unblind) {
     point++;
   }
 
-  // TCanvas *c1 = new TCanvas();
-  // expGraph_init->Draw("AP");
-  // c1->Update();
-  // c1->SaveAs("test.png");
-  // // TGraph* expGraph = new TGraph(mass.size(), &mass[0], &exp);
-  // // TGraph* obsGraph = new TGraph(mass.size(), &mass[0],&obs);
-  // // TGraph* exp1SGraph = new TGraph(mass.size(), &mass[0],&expM1s);
-  // // TGraph* exp2SGraph = new TGraph(mass.size(), &mass[0],&expM2s);
+  TCanvas *c1 = new TCanvas();
+  expGraph_init->Draw("AP");
+  c1->Update();
+  c1->SaveAs("test.png");
+  // TGraph* expGraph = new TGraph(mass.size(), &mass[0], &exp);
+  // TGraph* obsGraph = new TGraph(mass.size(), &mass[0],&obs);
+  // TGraph* exp1SGraph = new TGraph(mass.size(), &mass[0],&expM1s);
+  // TGraph* exp2SGraph = new TGraph(mass.size(), &mass[0],&expM2s);
 
-  // for( int i = 0 ; i < point ; ++i ) {
-  //   exp1SGraph_init->SetPoint(point+i,mass[point-1-i],expP1s[point-1-i]);
-  //   exp2SGraph_init->SetPoint(point+i,mass[point-1-i],expP2s[point-1-i]);
-  // }
+  for( int i = 0 ; i < point ; ++i ) {
+    exp1SGraph_init->SetPoint(point+i,mass[point-1-i],expP1s[point-1-i]);
+    exp2SGraph_init->SetPoint(point+i,mass[point-1-i],expP2s[point-1-i]);
+  }
 
-  // TGraph* expGraph = (TGraph*) expGraph_init->Clone();
-  // TGraph* expGraph_diff = (TGraph*) expGraph_init_diff->Clone();
-  // TGraph* exp1SGraph = (TGraph*) exp1SGraph_init->Clone();
-  // TGraph* exp2SGraph = (TGraph*) exp2SGraph_init->Clone();
-  // TGraph* obsGraph = (TGraph*) obsGraph_init->Clone();
+  TGraph* expGraph = (TGraph*) expGraph_init->Clone();
+  TGraph* expGraph_diff = (TGraph*) expGraph_init_diff->Clone();
+  TGraph* exp1SGraph = (TGraph*) exp1SGraph_init->Clone();
+  TGraph* exp2SGraph = (TGraph*) exp2SGraph_init->Clone();
+  TGraph* obsGraph = (TGraph*) obsGraph_init->Clone();
 
-  // //smooth
-  // TString fitstring = "[0] + [1]*x*x + [2]*x*x*x +[3]*x*x*x*x + [4]*x";
-  // TF1 *medfunc  = new TF1("medfunc" , fitstring, 500., 8000.);
-  // TF1 *up68func = new TF1("up68func", fitstring, 500., 8000.);
-  // TF1 *dn68func = new TF1("dn68func", fitstring, 500., 8000.);
-  // TF1 *up95func = new TF1("up95func", fitstring, 500., 8000.);
-  // TF1 *dn95func = new TF1("dn95func", fitstring, 500., 8000.);
+  //smooth
+  TString fitstring = "[0] + [1]*x*x + [2]*x*x*x +[3]*x*x*x*x + [4]*x";
+  TF1 *medfunc  = new TF1("medfunc" , fitstring, 500., 8000.);
+  TF1 *up68func = new TF1("up68func", fitstring, 500., 8000.);
+  TF1 *dn68func = new TF1("dn68func", fitstring, 500., 8000.);
+  TF1 *up95func = new TF1("up95func", fitstring, 500., 8000.);
+  TF1 *dn95func = new TF1("dn95func", fitstring, 500., 8000.);
 
-  // // expGraph->Fit(medfunc,"R,M,EX0","Q");
+  // expGraph->Fit(medfunc,"R,M,EX0","Q");
 
-  // graphmede->Fit(medfunc,"R,M,EX0","Q");
-  // graph68up->Fit(up68func,"R,M,EX0","Q");
-  // graph68dn->Fit(dn68func,"R,M,EX0","Q");
-  // graph95up->Fit(up95func,"R,M,EX0","Q");
-  // graph95dn->Fit(dn95func,"R,M,EX0","Q");
+  graphmede->Fit(medfunc,"R,M,EX0","Q");
+  graph68up->Fit(up68func,"R,M,EX0","Q");
+  graph68dn->Fit(dn68func,"R,M,EX0","Q");
+  graph95up->Fit(up95func,"R,M,EX0","Q");
+  graph95dn->Fit(dn95func,"R,M,EX0","Q");
 
-  // TCanvas *canv = new TCanvas("canv","Title",800,600);
-  // canv->SetLogy();
-  // canv->SetLogx();
-  // canv->SetRightMargin(0.08);
-  // canv->SetLeftMargin(0.15);
+  TCanvas *canv = new TCanvas("canv","Title",800,600);
+  canv->SetLogy();
+  canv->SetLogx();
+  canv->SetRightMargin(0.08);
+  canv->SetLeftMargin(0.15);
 
-  // exp1SGraph->SetFillColor(kGreen);
-  // exp2SGraph->SetFillColor(kYellow);
-  // exp2SGraph->GetXaxis()->SetTitleSize(0.045);
-  // exp2SGraph->GetYaxis()->SetTitleSize(0.045);
+  exp1SGraph->SetFillColor(kGreen);
+  exp2SGraph->SetFillColor(kYellow);
+  exp2SGraph->GetXaxis()->SetTitleSize(0.045);
+  exp2SGraph->GetYaxis()->SetTitleSize(0.045);
 
-  // // exp2SGraph->GetYaxis()->SetRangeUser(0.0001,30);
-  // exp2SGraph->GetYaxis()->SetRangeUser(0.005,20);
-  // exp2SGraph->GetYaxis()->SetTitle(signame == "grav" ?  "95% CL limit #sigma(pp#rightarrowG#rightarrow#gamma#gamma) (fb)" : "95% CL limit #sigma(pp#rightarrowS#rightarrow#gamma#gamma) (fb)" );
-  // exp2SGraph->GetXaxis()->SetTitle(signame == "grav" ? "m_{G} (GeV)" : "m_{S} (GeV)");
-  // exp2SGraph->GetXaxis()->SetMoreLogLabels();
-  // exp2SGraph->GetXaxis()->SetRangeUser(600,8000);
+  // exp2SGraph->GetYaxis()->SetRangeUser(0.0001,30);
+  exp2SGraph->GetYaxis()->SetRangeUser(0.005,20);
+  exp2SGraph->GetYaxis()->SetTitle(signame == "grav" ?  "95% CL limit #sigma(pp#rightarrowG#rightarrow#gamma#gamma) (fb)" : "95% CL limit #sigma(pp#rightarrowS#rightarrow#gamma#gamma) (fb)" );
+  exp2SGraph->GetXaxis()->SetTitle(signame == "grav" ? "m_{G} (GeV)" : "m_{S} (GeV)");
+  exp2SGraph->GetXaxis()->SetMoreLogLabels();
+  exp2SGraph->GetXaxis()->SetRangeUser(600,8000);
 
-  // exp2SGraph->Draw("AF");
-  // exp1SGraph->Draw("F");
-  // expGraph->SetLineColor(kBlue);
-  // expGraph->SetLineStyle(7);
-  // expGraph->SetLineWidth(3);
-  // // expGraph->Smooth();
-  // expGraph->Draw("CL");
+  exp2SGraph->Draw("AF");
+  exp1SGraph->Draw("F");
+  expGraph->SetLineColor(kBlue);
+  expGraph->SetLineStyle(7);
+  expGraph->SetLineWidth(3);
+  // expGraph->Smooth();
+  expGraph->Draw("CL");
 
-  // obsGraph->SetMarkerColor(1);
-  // obsGraph->SetMarkerStyle(20);
-  // obsGraph->SetMarkerSize(0.5);
-  // obsGraph->SetLineWidth(2);
-  // obsGraph->SetLineColor(kBlack);
-  // obsGraph->SetLineStyle(1);
-  // // obsGraph->Smooth();
-  // if (unblind) obsGraph->Draw("PL");
-  // // if (unblind) obsGraph->Draw("L");
-  // // obsGraph->Draw("LC");
+  obsGraph->SetMarkerColor(1);
+  obsGraph->SetMarkerStyle(20);
+  obsGraph->SetMarkerSize(0.5);
+  obsGraph->SetLineWidth(2);
+  obsGraph->SetLineColor(kBlack);
+  obsGraph->SetLineStyle(1);
+  // obsGraph->Smooth();
+  if (unblind) obsGraph->Draw("PL");
+  // if (unblind) obsGraph->Draw("L");
+  // obsGraph->Draw("LC");
 
-  // // graphmede->Draw("same");
+  // graphmede->Draw("same");
 
-  // // theoryGraph->SetLineWidth(3);
-  // // theoryGraph->SetLineColor(kRed);
-  // // theoryGraph->SetLineStyle(4);
-  // // theoryGraph->Draw("PL");
+  // theoryGraph->SetLineWidth(3);
+  // theoryGraph->SetLineColor(kRed);
+  // theoryGraph->SetLineStyle(4);
+  // theoryGraph->Draw("PL");
 
-  // // fm[coupling]->SetLineWidth(3);
-  // // fm[coupling]->SetLineColor(kRed);
-  // // fm[coupling]->SetLineStyle(4);
-  // // fm[coupling]->Draw("same");
+  // fm[coupling]->SetLineWidth(3);
+  // fm[coupling]->SetLineColor(kRed);
+  // fm[coupling]->SetLineStyle(4);
+  // fm[coupling]->Draw("same");
 
-  // // grxs_spline[coupling]->SetLineWidth(3);
-  // // grxs_spline[coupling]->SetLineColor(kRed);
-  // // grxs_spline[coupling]->SetLineStyle(4);
-  // // grxs_spline[coupling]->Draw("same");
+  // grxs_spline[coupling]->SetLineWidth(3);
+  // grxs_spline[coupling]->SetLineColor(kRed);
+  // grxs_spline[coupling]->SetLineStyle(4);
+  // grxs_spline[coupling]->Draw("same");
 
   // grxs[coupling]->SetLineWidth(3);
   // grxs[coupling]->SetLineColor(kRed);
   // grxs[coupling]->SetLineStyle(9);
   // grxs[coupling]->SetMarkerStyle(20);
   // grxs[coupling]->Draw("Lsame");
-  // // fm[coupling]->SetLineColor(kBlue);
-  // // fm[coupling]->SetLineStyle(9);
-  // // fm[coupling]->Draw("same");
+  // fm[coupling]->SetLineColor(kBlue);
+  // fm[coupling]->SetLineStyle(9);
+  // fm[coupling]->Draw("same");
 
-  // // obsCMSGraph->SetMarkerColor(kViolet);
-  // // obsCMSGraph->SetMarkerStyle(20);
-  // // obsCMSGraph->SetMarkerSize(1);
-  // // obsCMSGraph->SetLineWidth(2);
-  // // obsCMSGraph->SetLineColor(kViolet);
-  // // obsCMSGraph->SetLineStyle(1);
-  // //obsCMSGraph->Draw("PL");
+  // obsCMSGraph->SetMarkerColor(kViolet);
+  // obsCMSGraph->SetMarkerStyle(20);
+  // obsCMSGraph->SetMarkerSize(1);
+  // obsCMSGraph->SetLineWidth(2);
+  // obsCMSGraph->SetLineColor(kViolet);
+  // obsCMSGraph->SetLineStyle(1);
+  //obsCMSGraph->Draw("PL");
 
-  // auto gr_2016  = new TGraph();
-  // if (coupling=="kMpl001") gr_2016->SetPoint(0,2300, 0.125977);
-  // if (coupling=="kMpl01") gr_2016->SetPoint(0,4100, 0.0983398);
-  // if (coupling=="kMpl02") gr_2016->SetPoint(0,4700, 0.1014);
-  // gr_2016->SetMarkerStyle(30);
-  // gr_2016->SetMarkerSize(4);
-  // gr_2016->SetMarkerColor(9);
-  // gr_2016->Draw("Psame");
+  auto gr_2016  = new TGraph();
+  if (coupling=="kMpl001") gr_2016->SetPoint(0,2300, 0.125977);
+  if (coupling=="kMpl01") gr_2016->SetPoint(0,4100, 0.0983398);
+  if (coupling=="kMpl02") gr_2016->SetPoint(0,4700, 0.1014);
+  gr_2016->SetMarkerStyle(30);
+  gr_2016->SetMarkerSize(4);
+  gr_2016->SetMarkerColor(9);
+  gr_2016->Draw("Psame");
 
-  // TLegend *leg = new TLegend(0.55,0.6,0.75,0.85,NULL,"brNDC");
-  // leg->SetBorderSize(1);
-  // leg->SetTextFont(62);
-  // leg->SetLineColor(0);
-  // leg->SetLineStyle(1);
-  // leg->SetLineWidth(1);
-  // leg->SetFillColor(0);
-  // leg->SetFillStyle(1001);
-  // leg->SetTextSize(0.033);
-  // // leg->AddEntry(theoryGraph,"Theory NNLO","L");
+  TLegend *leg = new TLegend(0.55,0.6,0.75,0.85,NULL,"brNDC");
+  leg->SetBorderSize(1);
+  leg->SetTextFont(62);
+  leg->SetLineColor(0);
+  leg->SetLineStyle(1);
+  leg->SetLineWidth(1);
+  leg->SetFillColor(0);
+  leg->SetFillStyle(1001);
+  leg->SetTextSize(0.033);
+  // leg->AddEntry(theoryGraph,"Theory NNLO","L");
 
-  // std::string plabel;
-  // if ( coupling == "kMpl001" ){ plabel = "#tilde{k}=0.01,J=2"; }
-  // else if ( coupling == "kMpl01" ){ plabel = "#tilde{k}=0.1,J=2";}
-  // else if ( coupling == "kMpl02" ){ plabel = "#tilde{k}=0.2,J=2";}
-  // else if ( coupling == "0p014"){ plabel = "#frac{#Gamma}{m} = 1.4 #times 10^{-4},J=0"; }
-  // else if ( coupling == "1p4"){ plabel = "#frac{#Gamma}{m} = 1.4 #times 10^{-2},J=0"; }
-  // else if ( coupling == "5p6"){ plabel = "#frac{#Gamma}{m} = 5.6 #times 10^{-2},J=0"; }
-  // else {
-  //   std::cout << "Only 'kMpl001', 'kMpl01', 'kMpl02', '0p014', '1p4' and '5p6' are allowed. " << std::endl;
-  //   exit(1);
-  // }
+  std::string plabel;
+  if ( coupling == "kMpl001" ){ plabel = "#tilde{k}=0.01,J=2"; }
+  else if ( coupling == "kMpl01" ){ plabel = "#tilde{k}=0.1,J=2";}
+  else if ( coupling == "kMpl02" ){ plabel = "#tilde{k}=0.2,J=2";}
+  else if ( coupling == "0p014"){ plabel = "#frac{#Gamma}{m} = 1.4 #times 10^{-4},J=0"; }
+  else if ( coupling == "1p4"){ plabel = "#frac{#Gamma}{m} = 1.4 #times 10^{-2},J=0"; }
+  else if ( coupling == "5p6"){ plabel = "#frac{#Gamma}{m} = 5.6 #times 10^{-2},J=0"; }
+  else {
+    std::cout << "Only 'kMpl001', 'kMpl01', 'kMpl02', '0p014', '1p4' and '5p6' are allowed. " << std::endl;
+    exit(1);
+  }
 
-  // leg->SetHeader(plabel.c_str(),"C");
-  // if ( signame == "grav" ) {
-  //   leg->AddEntry(grxs[coupling],"G_{RS}#rightarrow#gamma#gamma (LO)","l");
-  //   leg->AddEntry(gr_2016,"Published 2016 Mass Limit","P");
-  // }
-  // leg->AddEntry(expGraph,"expected Limit","L"); //L_{int}=36.4/pb
-  // leg->AddEntry(exp1SGraph,"#pm1#sigma","F");
-  // leg->AddEntry(exp2SGraph,"#pm2#sigma","F");
-  // // leg->AddEntry(obsGraph,"observed Limit (Asymptotic)","L");
-  // leg->Draw();
+  leg->SetHeader(plabel.c_str(),"C");
+  if ( signame == "grav" ) {
+    leg->AddEntry(grxs[coupling],"G_{RS}#rightarrow#gamma#gamma (LO)","l");
+    leg->AddEntry(gr_2016,"Published 2016 Mass Limit","P");
+  }
+  leg->AddEntry(expGraph,"expected Limit","L"); //L_{int}=36.4/pb
+  leg->AddEntry(exp1SGraph,"#pm1#sigma","F");
+  leg->AddEntry(exp2SGraph,"#pm2#sigma","F");
+  // leg->AddEntry(obsGraph,"observed Limit (Asymptotic)","L");
+  leg->Draw();
 
-  // TLatex* cmsText=new TLatex(0.17,0.90, "CMS");
-  // cmsText->SetNDC(kTRUE);
-  // cmsText->SetTextFont(61);
-  // cmsText->SetLineColor(0);
-  // cmsText->SetLineStyle(1);
-  // cmsText->SetLineWidth(1);
-  // cmsText->SetTextSize(0.035);
-  // cmsText->Draw();
+  TLatex* cmsText=new TLatex(0.17,0.90, "CMS");
+  cmsText->SetNDC(kTRUE);
+  cmsText->SetTextFont(61);
+  cmsText->SetLineColor(0);
+  cmsText->SetLineStyle(1);
+  cmsText->SetLineWidth(1);
+  cmsText->SetTextSize(0.035);
+  cmsText->Draw();
 
-  // TLatex* extraText=new TLatex(0.23,0.90, "Preliminary");
-  // extraText->SetNDC(kTRUE);
-  // extraText->SetTextFont(52);
-  // extraText->SetLineColor(0);
-  // extraText->SetLineStyle(1);
-  // extraText->SetLineWidth(1);
-  // extraText->SetTextSize(0.035);
-  // extraText->Draw();
+  TLatex* extraText=new TLatex(0.23,0.90, "Preliminary");
+  extraText->SetNDC(kTRUE);
+  extraText->SetTextFont(52);
+  extraText->SetLineColor(0);
+  extraText->SetLineStyle(1);
+  extraText->SetLineWidth(1);
+  extraText->SetTextSize(0.035);
+  extraText->Draw();
 
-  // std::string thelumi = "";
-  // if (year == "fullRun2"){
-  //   double fullRun2lumi = luminosity["2016"] + luminosity["2017"] + luminosity["2018"];
+  std::string thelumi = "";
+  if (year == "fullRun2"){
+    double fullRun2lumi = luminosity["2016"] + luminosity["2017"] + luminosity["2018"];
 
-  //   std::stringstream stream;
-  //   stream << std::fixed << std::setprecision(1) << fullRun2lumi;
-  //   thelumi = stream.str();
-  // } else {
-  //   std::stringstream stream;
-  //   stream << std::fixed << std::setprecision(1) << luminosity[year];
-  //   thelumi = stream.str();
-  // }
-  // TLatex* lumiText=new TLatex(0.70,0.90, Form("%s fb^{-1} (13 TeV)", thelumi.c_str() ) );
-  // lumiText->SetNDC(kTRUE);
-  // lumiText->SetTextFont(42);
-  // lumiText->SetLineColor(0);
-  // lumiText->SetLineStyle(1);
-  // lumiText->SetLineWidth(1);
-  // lumiText->SetTextSize(0.035);
-  // lumiText->Draw();
+    std::stringstream stream;
+    stream << std::fixed << std::setprecision(1) << fullRun2lumi;
+    thelumi = stream.str();
+  } else {
+    std::stringstream stream;
+    stream << std::fixed << std::setprecision(1) << luminosity[year];
+    thelumi = stream.str();
+  }
+  TLatex* lumiText=new TLatex(0.70,0.90, Form("%s fb^{-1} (13 TeV)", thelumi.c_str() ) );
+  lumiText->SetNDC(kTRUE);
+  lumiText->SetTextFont(42);
+  lumiText->SetLineColor(0);
+  lumiText->SetLineStyle(1);
+  lumiText->SetLineWidth(1);
+  lumiText->SetTextSize(0.035);
+  lumiText->Draw();
 
-  // canv->SaveAs( Form("./limitplot_%s_%s_%s.png", signame.c_str(), coupling.c_str(), year.c_str()) );
+  canv->SaveAs( Form("./limitplot_%s_%s_%s.png", signame.c_str(), coupling.c_str(), year.c_str()) );
 
-  // TFile *outfile = new TFile( Form("./limitplot_%s_%s_%s.root", signame.c_str(), coupling.c_str(), year.c_str()) , "RECREATE");
-  // canv->Write();
-  // expGraph->SetName("expGraph");
-  // obsGraph->SetName("obsGraph");
-  // exp1SGraph->SetName("exp1SGraph");
-  // exp2SGraph->SetName("exp2SGraph");
-  // grxs[coupling]->SetName("theory");
-  // expGraph->Write();
-  // obsGraph->Write();
-  // exp1SGraph->Write();
-  // exp2SGraph->Write();
-  // grxs[coupling]->Write();
+  TFile *outfile = new TFile( Form("./limitplot_%s_%s_%s.root", signame.c_str(), coupling.c_str(), year.c_str()) , "RECREATE");
+  canv->Write();
+  expGraph->SetName("expGraph");
+  obsGraph->SetName("obsGraph");
+  exp1SGraph->SetName("exp1SGraph");
+  exp2SGraph->SetName("exp2SGraph");
+  grxs[coupling]->SetName("theory");
+  expGraph->Write();
+  obsGraph->Write();
+  exp1SGraph->Write();
+  exp2SGraph->Write();
+  grxs[coupling]->Write();
 
-  // outfile->Write();
-  // outfile->Close();
+  outfile->Write();
+  outfile->Close();
 
   // TGraph* exp1SGraph = new TGraph();
   // TGraph* exp2SGraph = new TGraph();
