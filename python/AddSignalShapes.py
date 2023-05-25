@@ -87,8 +87,8 @@ def EE_L1_prefiring(year, sigma):
             etaUp = corrHist.GetXaxis().GetBinUpEdge(ibin)
             ptLow = corrHist.GetYaxis().GetBinLowEdge(ibin)
             ptUp = corrHist.GetYaxis().GetBinUpEdge(ibin)
-        reweightString1 += "(ph1pt>=%f && ph1pt<%f && ph1scEta>=%f && ph1scEta<%f)*(%f + %f*%d)" % (ptLow, ptUp, etaLow, etaUp, weight, weightError, sigma)
-        if (ibin != Nbins-1): reweightString1 += "+"
+            reweightString1 += "(ph1pt>=%f && ph1pt<%f && ph1scEta>=%f && ph1scEta<%f)*(%f + %f*%d)" % (ptLow, ptUp, etaLow, etaUp, weight, weightError, sigma)
+            if (ibin != Nbins-1): reweightString1 += "+"
         reweightString2 = reweightString1.replace("ph1","ph2")
         reweight = "(" + reweightString1 + ")*(" + reweightString2 + ")"
         return reweight
