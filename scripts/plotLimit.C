@@ -322,9 +322,9 @@ void plotLimit(string year, string signalname, string coupling, bool unblind) {
   lumiText->SetTextSize(0.035);
   lumiText->Draw();
 
-  canv->SaveAs( Form("%s/limitplot_%s_%s_%s.png", outputdir.c_str(), signame.c_str(), coupling.c_str(), year.c_str()) );
+  canv->SaveAs( Form("./limitplot_%s_%s_%s.png", signame.c_str(), coupling.c_str(), year.c_str()) );
 
-  TFile *outfile = new TFile( Form("%s/limitplot_%s_%s_%s.root", outputdir.c_str(), signame.c_str(), coupling.c_str(), year.c_str()) , "RECREATE");
+  TFile *outfile = new TFile( Form("./limitplot_%s_%s_%s.root", signame.c_str(), coupling.c_str(), year.c_str()) , "RECREATE");
   canv->Write();
   c2->Write();
   expGraph->SetName("expGraph");
