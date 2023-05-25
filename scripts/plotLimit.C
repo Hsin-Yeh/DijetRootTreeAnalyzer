@@ -47,8 +47,8 @@ RooSpline1D* graphToSpline(std::string name, TGraphErrors *graph, RooRealVar* MH
 TGraphErrors* SplineTograph(std::string name, RooSpline1D* thespline, RooRealVar* MH, double xmin, double upperxmax);
 
 //-----------------------------------------------------------------------------------
-void plotLimit(string year, string signalname, string coupling, bool unblind) {
-  string inputfile = "finalResults_" + year + "_" + signalname + "_" + coupling;
+void plotLimit(string year, string signame, string coupling, bool unblind) {
+  string inputfile = "finalResults_" + year + "_" + signame + "_" + coupling;
 
   //========================================================================
   // include signal samples
@@ -326,7 +326,6 @@ void plotLimit(string year, string signalname, string coupling, bool unblind) {
 
   TFile *outfile = new TFile( Form("./limitplot_%s_%s_%s.root", signame.c_str(), coupling.c_str(), year.c_str()) , "RECREATE");
   canv->Write();
-  c2->Write();
   expGraph->SetName("expGraph");
   obsGraph->SetName("obsGraph");
   exp1SGraph->SetName("exp1SGraph");
