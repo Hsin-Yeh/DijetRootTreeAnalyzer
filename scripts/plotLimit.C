@@ -38,21 +38,21 @@ struct xsec{
 
 //-----------------------------------------------------------------------------------
 //Declarations here definition after main
-std::map<std::string, std::vector<xsec> > loadXsections(const std::string &year, bool basedonCoup, std::string signame, bool use_fb);
-TGraphErrors* getXsecGraph( std::vector<xsec> xsections, bool basedonCoup);
-std::string getSampleBase(const std::string & sampleName, const std::string & year);
-std::string getBase(const std::string & sampleName);
-std::string get_str_between_two_str(const std::string &s, const std::string &start_delim, const std::string &stop_delim);
-RooSpline1D* graphToSpline(std::string name, TGraphErrors *graph, RooRealVar* MH, double xmin, double upperxmax);
-TGraphErrors* SplineTograph(std::string name, RooSpline1D* thespline, RooRealVar* MH, double xmin, double upperxmax);
+// std::map<std::string, std::vector<xsec> > loadXsections(const std::string &year, bool basedonCoup, std::string signame, bool use_fb);
+// TGraphErrors* getXsecGraph( std::vector<xsec> xsections, bool basedonCoup);
+// std::string getSampleBase(const std::string & sampleName, const std::string & year);
+// std::string getBase(const std::string & sampleName);
+// std::string get_str_between_two_str(const std::string &s, const std::string &start_delim, const std::string &stop_delim);
+// RooSpline1D* graphToSpline(std::string name, TGraphErrors *graph, RooRealVar* MH, double xmin, double upperxmax);
+// TGraphErrors* SplineTograph(std::string name, RooSpline1D* thespline, RooRealVar* MH, double xmin, double upperxmax);
 
 //-----------------------------------------------------------------------------------
 void plotLimit(string year, string signame, string coupling, bool unblind) {
-  string inputfile = "finalResults_" + year + "_" + signame + "_" + coupling;
+  string inputfileName = "finalResults_" + year + "_" + signame + "_" + coupling;
 
   //========================================================================
   // include signal samples
-  init(false, true, true);
+  // init(false, true, true);
 
   // gROOT->Reset();
   //  gROOT->ProcessLine(".L CMSstyle.C");
@@ -63,7 +63,7 @@ void plotLimit(string year, string signame, string coupling, bool unblind) {
 
   TStyle* m_gStyle = new TStyle();
   m_gStyle->SetOptFit(0);
-  gSystem->Exec(Form("wc -l %s | awk '{print $1}' > pptt", inputfile.c_str() )); // wc -l Prints the number of lines in a file --> count how many mass points; awk simply cuts the unnecessary part of the wc -l outcome;
+  gSystem->Exec(Form("wc -l %s | awk '{print $1}' > pptt", inputfileName.c_str() )); // wc -l Prints the number of lines in a file --> count how many mass points; awk simply cuts the unnecessary part of the wc -l outcome;
   std::ifstream numPoin("pptt");
   int NumPunkte = 0;//221;
   numPoin >> NumPunkte;
@@ -79,10 +79,7 @@ void plotLimit(string year, string signame, string coupling, bool unblind) {
   expM2s.resize(NumPunkte);
   exp_diff.resize(NumPunkte);
 
-  std::ifstream file_full(inputfile);
-  std::ofstream diff_file;
-  std::string diff_fileName = "diff/" + signame + "_" + coupling + "_" + year + ".txt";
-  diff_file.open(diff_fileName,std::ios::out);
+  std::ifstream inputfile(inputfileName);
 
   TGraphErrors* expGraph_init = new TGraphErrors();
   TGraphErrors* expGraph_init_diff = new TGraphErrors();
@@ -97,25 +94,25 @@ void plotLimit(string year, string signame, string coupling, bool unblind) {
   TGraphAsymmErrors * graph95dn = new TGraphAsymmErrors();
 
   bool use_fb = true;
-  std::map<std::string, std::vector<xsec> > xsections = loadXsections(year, true, signame, use_fb);
-  std::map<std::string, TGraphErrors*> grxs;
-  std::map<std::string, TGraphErrors*> grxs_spline;
-  grxs[coupling] = getXsecGraph(xsections[coupling], true);
+  // std::map<std::string, std::vector<xsec> > xsections = loadXsections(year, true, signame, use_fb);
+  // std::map<std::string, TGraphErrors*> grxs;
+  // std::map<std::string, TGraphErrors*> grxs_spline;
+  // grxs[coupling] = getXsecGraph(xsections[coupling], true);
   // std::map<std::string, RooSpline1D *> xsSplines;
-  RooRealVar* MH = new RooRealVar("MH", "MH", 1000.);
-  MH->setConstant();
-  double upperxmax = 9000.;
-  double xmin = 750.;
-  RooSpline1D *xsSpline = graphToSpline(Form("fxs_%s",coupling.c_str()), grxs[coupling], MH , xmin, upperxmax);
-  std::map<std::string, TF1 *> fm;
-  fm[coupling] = new TF1(TString::Format("fm_%s",coupling.c_str()), "pol2", xmin, upperxmax);
-  // grxs[coupling]->Fit(TString::Format("fm_%s",coupling.c_str()), "R");
-  grxs_spline[coupling] = SplineTograph(Form("fxs_spline_%s",coupling.c_str()), xsSpline, MH , xmin, upperxmax);
+  // RooRealVar* MH = new RooRealVar("MH", "MH", 1000.);
+  // MH->setConstant();
+  // double upperxmax = 9000.;
+  // double xmin = 750.;
+  // RooSpline1D *xsSpline = graphToSpline(Form("fxs_%s",coupling.c_str()), grxs[coupling], MH , xmin, upperxmax);
+  // std::map<std::string, TF1 *> fm;
+  // fm[coupling] = new TF1(TString::Format("fm_%s",coupling.c_str()), "pol2", xmin, upperxmax);
+  // // grxs[coupling]->Fit(TString::Format("fm_%s",coupling.c_str()), "R");
+  // grxs_spline[coupling] = SplineTograph(Form("fxs_spline_%s",coupling.c_str()), xsSpline, MH , xmin, upperxmax);
 
   bool missmatchFlag = false;
   int point = 0;
   for( int i = 0 ; i < NumPunkte ; ++i ) {
-    file_full >> mass[i] >> obs[i] >> expM2s[i] >> expM1s[i] >> exp[i] >> expP1s[i] >> expP2s[i];
+    inputfile >> mass[i] >> obs[i] >> expM2s[i] >> expM1s[i] >> exp[i] >> expP1s[i] >> expP2s[i];
     std::cout << mass[i]<< " " << obs[i]<< " " << expM2s[i]<< " " << expM1s[i]<< " " << exp[i]<< " " << expP1s[i]<< " " << expP2s[i]<<std::endl;
 
     expGraph_init->SetPoint(i,mass[i],exp[i]);
@@ -131,214 +128,213 @@ void plotLimit(string year, string signame, string coupling, bool unblind) {
     graph95dn->SetPoint(i,mass[i],expM2s[i]);
     point++;
   }
-  diff_file.close();
 
-  TCanvas *c1 = new TCanvas();
-  expGraph_init->Draw("AP");
-  c1->Update();
-  c1->SaveAs("test.png");
-  // TGraph* expGraph = new TGraph(mass.size(), &mass[0], &exp);
-  // TGraph* obsGraph = new TGraph(mass.size(), &mass[0],&obs);
-  // TGraph* exp1SGraph = new TGraph(mass.size(), &mass[0],&expM1s);
-  // TGraph* exp2SGraph = new TGraph(mass.size(), &mass[0],&expM2s);
+  // TCanvas *c1 = new TCanvas();
+  // expGraph_init->Draw("AP");
+  // c1->Update();
+  // c1->SaveAs("test.png");
+  // // TGraph* expGraph = new TGraph(mass.size(), &mass[0], &exp);
+  // // TGraph* obsGraph = new TGraph(mass.size(), &mass[0],&obs);
+  // // TGraph* exp1SGraph = new TGraph(mass.size(), &mass[0],&expM1s);
+  // // TGraph* exp2SGraph = new TGraph(mass.size(), &mass[0],&expM2s);
 
-  for( int i = 0 ; i < point ; ++i ) {
-    exp1SGraph_init->SetPoint(point+i,mass[point-1-i],expP1s[point-1-i]);
-    exp2SGraph_init->SetPoint(point+i,mass[point-1-i],expP2s[point-1-i]);
-  }
+  // for( int i = 0 ; i < point ; ++i ) {
+  //   exp1SGraph_init->SetPoint(point+i,mass[point-1-i],expP1s[point-1-i]);
+  //   exp2SGraph_init->SetPoint(point+i,mass[point-1-i],expP2s[point-1-i]);
+  // }
 
-  TGraph* expGraph = (TGraph*) expGraph_init->Clone();
-  TGraph* expGraph_diff = (TGraph*) expGraph_init_diff->Clone();
-  TGraph* exp1SGraph = (TGraph*) exp1SGraph_init->Clone();
-  TGraph* exp2SGraph = (TGraph*) exp2SGraph_init->Clone();
-  TGraph* obsGraph = (TGraph*) obsGraph_init->Clone();
+  // TGraph* expGraph = (TGraph*) expGraph_init->Clone();
+  // TGraph* expGraph_diff = (TGraph*) expGraph_init_diff->Clone();
+  // TGraph* exp1SGraph = (TGraph*) exp1SGraph_init->Clone();
+  // TGraph* exp2SGraph = (TGraph*) exp2SGraph_init->Clone();
+  // TGraph* obsGraph = (TGraph*) obsGraph_init->Clone();
 
-  //smooth
-  TString fitstring = "[0] + [1]*x*x + [2]*x*x*x +[3]*x*x*x*x + [4]*x";
-  TF1 *medfunc  = new TF1("medfunc" , fitstring, 500., 8000.);
-  TF1 *up68func = new TF1("up68func", fitstring, 500., 8000.);
-  TF1 *dn68func = new TF1("dn68func", fitstring, 500., 8000.);
-  TF1 *up95func = new TF1("up95func", fitstring, 500., 8000.);
-  TF1 *dn95func = new TF1("dn95func", fitstring, 500., 8000.);
+  // //smooth
+  // TString fitstring = "[0] + [1]*x*x + [2]*x*x*x +[3]*x*x*x*x + [4]*x";
+  // TF1 *medfunc  = new TF1("medfunc" , fitstring, 500., 8000.);
+  // TF1 *up68func = new TF1("up68func", fitstring, 500., 8000.);
+  // TF1 *dn68func = new TF1("dn68func", fitstring, 500., 8000.);
+  // TF1 *up95func = new TF1("up95func", fitstring, 500., 8000.);
+  // TF1 *dn95func = new TF1("dn95func", fitstring, 500., 8000.);
 
-  // expGraph->Fit(medfunc,"R,M,EX0","Q");
+  // // expGraph->Fit(medfunc,"R,M,EX0","Q");
 
-  graphmede->Fit(medfunc,"R,M,EX0","Q");
-  graph68up->Fit(up68func,"R,M,EX0","Q");
-  graph68dn->Fit(dn68func,"R,M,EX0","Q");
-  graph95up->Fit(up95func,"R,M,EX0","Q");
-  graph95dn->Fit(dn95func,"R,M,EX0","Q");
+  // graphmede->Fit(medfunc,"R,M,EX0","Q");
+  // graph68up->Fit(up68func,"R,M,EX0","Q");
+  // graph68dn->Fit(dn68func,"R,M,EX0","Q");
+  // graph95up->Fit(up95func,"R,M,EX0","Q");
+  // graph95dn->Fit(dn95func,"R,M,EX0","Q");
 
-  TCanvas *canv = new TCanvas("canv","Title",800,600);
-  canv->SetLogy();
-  canv->SetLogx();
-  canv->SetRightMargin(0.08);
-  canv->SetLeftMargin(0.15);
+  // TCanvas *canv = new TCanvas("canv","Title",800,600);
+  // canv->SetLogy();
+  // canv->SetLogx();
+  // canv->SetRightMargin(0.08);
+  // canv->SetLeftMargin(0.15);
 
-  exp1SGraph->SetFillColor(kGreen);
-  exp2SGraph->SetFillColor(kYellow);
-  exp2SGraph->GetXaxis()->SetTitleSize(0.045);
-  exp2SGraph->GetYaxis()->SetTitleSize(0.045);
+  // exp1SGraph->SetFillColor(kGreen);
+  // exp2SGraph->SetFillColor(kYellow);
+  // exp2SGraph->GetXaxis()->SetTitleSize(0.045);
+  // exp2SGraph->GetYaxis()->SetTitleSize(0.045);
 
-  // exp2SGraph->GetYaxis()->SetRangeUser(0.0001,30);
-  exp2SGraph->GetYaxis()->SetRangeUser(0.005,20);
-  exp2SGraph->GetYaxis()->SetTitle(signame == "grav" ?  "95% CL limit #sigma(pp#rightarrowG#rightarrow#gamma#gamma) (fb)" : "95% CL limit #sigma(pp#rightarrowS#rightarrow#gamma#gamma) (fb)" );
-  exp2SGraph->GetXaxis()->SetTitle(signame == "grav" ? "m_{G} (GeV)" : "m_{S} (GeV)");
-  exp2SGraph->GetXaxis()->SetMoreLogLabels();
-  exp2SGraph->GetXaxis()->SetRangeUser(600,8000);
+  // // exp2SGraph->GetYaxis()->SetRangeUser(0.0001,30);
+  // exp2SGraph->GetYaxis()->SetRangeUser(0.005,20);
+  // exp2SGraph->GetYaxis()->SetTitle(signame == "grav" ?  "95% CL limit #sigma(pp#rightarrowG#rightarrow#gamma#gamma) (fb)" : "95% CL limit #sigma(pp#rightarrowS#rightarrow#gamma#gamma) (fb)" );
+  // exp2SGraph->GetXaxis()->SetTitle(signame == "grav" ? "m_{G} (GeV)" : "m_{S} (GeV)");
+  // exp2SGraph->GetXaxis()->SetMoreLogLabels();
+  // exp2SGraph->GetXaxis()->SetRangeUser(600,8000);
 
-  exp2SGraph->Draw("AF");
-  exp1SGraph->Draw("F");
-  expGraph->SetLineColor(kBlue);
-  expGraph->SetLineStyle(7);
-  expGraph->SetLineWidth(3);
-  // expGraph->Smooth();
-  expGraph->Draw("CL");
+  // exp2SGraph->Draw("AF");
+  // exp1SGraph->Draw("F");
+  // expGraph->SetLineColor(kBlue);
+  // expGraph->SetLineStyle(7);
+  // expGraph->SetLineWidth(3);
+  // // expGraph->Smooth();
+  // expGraph->Draw("CL");
 
-  obsGraph->SetMarkerColor(1);
-  obsGraph->SetMarkerStyle(20);
-  obsGraph->SetMarkerSize(0.5);
-  obsGraph->SetLineWidth(2);
-  obsGraph->SetLineColor(kBlack);
-  obsGraph->SetLineStyle(1);
-  // obsGraph->Smooth();
-  if (unblind) obsGraph->Draw("PL");
-  // if (unblind) obsGraph->Draw("L");
-  // obsGraph->Draw("LC");
+  // obsGraph->SetMarkerColor(1);
+  // obsGraph->SetMarkerStyle(20);
+  // obsGraph->SetMarkerSize(0.5);
+  // obsGraph->SetLineWidth(2);
+  // obsGraph->SetLineColor(kBlack);
+  // obsGraph->SetLineStyle(1);
+  // // obsGraph->Smooth();
+  // if (unblind) obsGraph->Draw("PL");
+  // // if (unblind) obsGraph->Draw("L");
+  // // obsGraph->Draw("LC");
 
-  // graphmede->Draw("same");
+  // // graphmede->Draw("same");
 
-  // theoryGraph->SetLineWidth(3);
-  // theoryGraph->SetLineColor(kRed);
-  // theoryGraph->SetLineStyle(4);
-  // theoryGraph->Draw("PL");
+  // // theoryGraph->SetLineWidth(3);
+  // // theoryGraph->SetLineColor(kRed);
+  // // theoryGraph->SetLineStyle(4);
+  // // theoryGraph->Draw("PL");
 
-  // fm[coupling]->SetLineWidth(3);
-  // fm[coupling]->SetLineColor(kRed);
-  // fm[coupling]->SetLineStyle(4);
-  // fm[coupling]->Draw("same");
+  // // fm[coupling]->SetLineWidth(3);
+  // // fm[coupling]->SetLineColor(kRed);
+  // // fm[coupling]->SetLineStyle(4);
+  // // fm[coupling]->Draw("same");
 
-  // grxs_spline[coupling]->SetLineWidth(3);
-  // grxs_spline[coupling]->SetLineColor(kRed);
-  // grxs_spline[coupling]->SetLineStyle(4);
-  // grxs_spline[coupling]->Draw("same");
+  // // grxs_spline[coupling]->SetLineWidth(3);
+  // // grxs_spline[coupling]->SetLineColor(kRed);
+  // // grxs_spline[coupling]->SetLineStyle(4);
+  // // grxs_spline[coupling]->Draw("same");
 
-  grxs[coupling]->SetLineWidth(3);
-  grxs[coupling]->SetLineColor(kRed);
-  grxs[coupling]->SetLineStyle(9);
-  grxs[coupling]->SetMarkerStyle(20);
-  grxs[coupling]->Draw("Lsame");
-  // fm[coupling]->SetLineColor(kBlue);
-  // fm[coupling]->SetLineStyle(9);
-  // fm[coupling]->Draw("same");
+  // grxs[coupling]->SetLineWidth(3);
+  // grxs[coupling]->SetLineColor(kRed);
+  // grxs[coupling]->SetLineStyle(9);
+  // grxs[coupling]->SetMarkerStyle(20);
+  // grxs[coupling]->Draw("Lsame");
+  // // fm[coupling]->SetLineColor(kBlue);
+  // // fm[coupling]->SetLineStyle(9);
+  // // fm[coupling]->Draw("same");
 
-  // obsCMSGraph->SetMarkerColor(kViolet);
-  // obsCMSGraph->SetMarkerStyle(20);
-  // obsCMSGraph->SetMarkerSize(1);
-  // obsCMSGraph->SetLineWidth(2);
-  // obsCMSGraph->SetLineColor(kViolet);
-  // obsCMSGraph->SetLineStyle(1);
-  //obsCMSGraph->Draw("PL");
+  // // obsCMSGraph->SetMarkerColor(kViolet);
+  // // obsCMSGraph->SetMarkerStyle(20);
+  // // obsCMSGraph->SetMarkerSize(1);
+  // // obsCMSGraph->SetLineWidth(2);
+  // // obsCMSGraph->SetLineColor(kViolet);
+  // // obsCMSGraph->SetLineStyle(1);
+  // //obsCMSGraph->Draw("PL");
 
-  auto gr_2016  = new TGraph();
-  if (coupling=="kMpl001") gr_2016->SetPoint(0,2300, 0.125977);
-  if (coupling=="kMpl01") gr_2016->SetPoint(0,4100, 0.0983398);
-  if (coupling=="kMpl02") gr_2016->SetPoint(0,4700, 0.1014);
-  gr_2016->SetMarkerStyle(30);
-  gr_2016->SetMarkerSize(4);
-  gr_2016->SetMarkerColor(9);
-  gr_2016->Draw("Psame");
+  // auto gr_2016  = new TGraph();
+  // if (coupling=="kMpl001") gr_2016->SetPoint(0,2300, 0.125977);
+  // if (coupling=="kMpl01") gr_2016->SetPoint(0,4100, 0.0983398);
+  // if (coupling=="kMpl02") gr_2016->SetPoint(0,4700, 0.1014);
+  // gr_2016->SetMarkerStyle(30);
+  // gr_2016->SetMarkerSize(4);
+  // gr_2016->SetMarkerColor(9);
+  // gr_2016->Draw("Psame");
 
-  TLegend *leg = new TLegend(0.55,0.6,0.75,0.85,NULL,"brNDC");
-  leg->SetBorderSize(1);
-  leg->SetTextFont(62);
-  leg->SetLineColor(0);
-  leg->SetLineStyle(1);
-  leg->SetLineWidth(1);
-  leg->SetFillColor(0);
-  leg->SetFillStyle(1001);
-  leg->SetTextSize(0.033);
-  // leg->AddEntry(theoryGraph,"Theory NNLO","L");
+  // TLegend *leg = new TLegend(0.55,0.6,0.75,0.85,NULL,"brNDC");
+  // leg->SetBorderSize(1);
+  // leg->SetTextFont(62);
+  // leg->SetLineColor(0);
+  // leg->SetLineStyle(1);
+  // leg->SetLineWidth(1);
+  // leg->SetFillColor(0);
+  // leg->SetFillStyle(1001);
+  // leg->SetTextSize(0.033);
+  // // leg->AddEntry(theoryGraph,"Theory NNLO","L");
 
-  std::string plabel;
-  if ( coupling == "kMpl001" ){ plabel = "#tilde{k}=0.01,J=2"; }
-  else if ( coupling == "kMpl01" ){ plabel = "#tilde{k}=0.1,J=2";}
-  else if ( coupling == "kMpl02" ){ plabel = "#tilde{k}=0.2,J=2";}
-  else if ( coupling == "0p014"){ plabel = "#frac{#Gamma}{m} = 1.4 #times 10^{-4},J=0"; }
-  else if ( coupling == "1p4"){ plabel = "#frac{#Gamma}{m} = 1.4 #times 10^{-2},J=0"; }
-  else if ( coupling == "5p6"){ plabel = "#frac{#Gamma}{m} = 5.6 #times 10^{-2},J=0"; }
-  else {
-    std::cout << "Only 'kMpl001', 'kMpl01', 'kMpl02', '0p014', '1p4' and '5p6' are allowed. " << std::endl;
-    exit(1);
-  }
+  // std::string plabel;
+  // if ( coupling == "kMpl001" ){ plabel = "#tilde{k}=0.01,J=2"; }
+  // else if ( coupling == "kMpl01" ){ plabel = "#tilde{k}=0.1,J=2";}
+  // else if ( coupling == "kMpl02" ){ plabel = "#tilde{k}=0.2,J=2";}
+  // else if ( coupling == "0p014"){ plabel = "#frac{#Gamma}{m} = 1.4 #times 10^{-4},J=0"; }
+  // else if ( coupling == "1p4"){ plabel = "#frac{#Gamma}{m} = 1.4 #times 10^{-2},J=0"; }
+  // else if ( coupling == "5p6"){ plabel = "#frac{#Gamma}{m} = 5.6 #times 10^{-2},J=0"; }
+  // else {
+  //   std::cout << "Only 'kMpl001', 'kMpl01', 'kMpl02', '0p014', '1p4' and '5p6' are allowed. " << std::endl;
+  //   exit(1);
+  // }
 
-  leg->SetHeader(plabel.c_str(),"C");
-  if ( signame == "grav" ) {
-    leg->AddEntry(grxs[coupling],"G_{RS}#rightarrow#gamma#gamma (LO)","l");
-    leg->AddEntry(gr_2016,"Published 2016 Mass Limit","P");
-  }
-  leg->AddEntry(expGraph,"expected Limit","L"); //L_{int}=36.4/pb
-  leg->AddEntry(exp1SGraph,"#pm1#sigma","F");
-  leg->AddEntry(exp2SGraph,"#pm2#sigma","F");
-  // leg->AddEntry(obsGraph,"observed Limit (Asymptotic)","L");
-  leg->Draw();
+  // leg->SetHeader(plabel.c_str(),"C");
+  // if ( signame == "grav" ) {
+  //   leg->AddEntry(grxs[coupling],"G_{RS}#rightarrow#gamma#gamma (LO)","l");
+  //   leg->AddEntry(gr_2016,"Published 2016 Mass Limit","P");
+  // }
+  // leg->AddEntry(expGraph,"expected Limit","L"); //L_{int}=36.4/pb
+  // leg->AddEntry(exp1SGraph,"#pm1#sigma","F");
+  // leg->AddEntry(exp2SGraph,"#pm2#sigma","F");
+  // // leg->AddEntry(obsGraph,"observed Limit (Asymptotic)","L");
+  // leg->Draw();
 
-  TLatex* cmsText=new TLatex(0.17,0.90, "CMS");
-  cmsText->SetNDC(kTRUE);
-  cmsText->SetTextFont(61);
-  cmsText->SetLineColor(0);
-  cmsText->SetLineStyle(1);
-  cmsText->SetLineWidth(1);
-  cmsText->SetTextSize(0.035);
-  cmsText->Draw();
+  // TLatex* cmsText=new TLatex(0.17,0.90, "CMS");
+  // cmsText->SetNDC(kTRUE);
+  // cmsText->SetTextFont(61);
+  // cmsText->SetLineColor(0);
+  // cmsText->SetLineStyle(1);
+  // cmsText->SetLineWidth(1);
+  // cmsText->SetTextSize(0.035);
+  // cmsText->Draw();
 
-  TLatex* extraText=new TLatex(0.23,0.90, "Preliminary");
-  extraText->SetNDC(kTRUE);
-  extraText->SetTextFont(52);
-  extraText->SetLineColor(0);
-  extraText->SetLineStyle(1);
-  extraText->SetLineWidth(1);
-  extraText->SetTextSize(0.035);
-  extraText->Draw();
+  // TLatex* extraText=new TLatex(0.23,0.90, "Preliminary");
+  // extraText->SetNDC(kTRUE);
+  // extraText->SetTextFont(52);
+  // extraText->SetLineColor(0);
+  // extraText->SetLineStyle(1);
+  // extraText->SetLineWidth(1);
+  // extraText->SetTextSize(0.035);
+  // extraText->Draw();
 
-  std::string thelumi = "";
-  if (year == "fullRun2"){
-    double fullRun2lumi = luminosity["2016"] + luminosity["2017"] + luminosity["2018"];
+  // std::string thelumi = "";
+  // if (year == "fullRun2"){
+  //   double fullRun2lumi = luminosity["2016"] + luminosity["2017"] + luminosity["2018"];
 
-    std::stringstream stream;
-    stream << std::fixed << std::setprecision(1) << fullRun2lumi;
-    thelumi = stream.str();
-  } else {
-    std::stringstream stream;
-    stream << std::fixed << std::setprecision(1) << luminosity[year];
-    thelumi = stream.str();
-  }
-  TLatex* lumiText=new TLatex(0.70,0.90, Form("%s fb^{-1} (13 TeV)", thelumi.c_str() ) );
-  lumiText->SetNDC(kTRUE);
-  lumiText->SetTextFont(42);
-  lumiText->SetLineColor(0);
-  lumiText->SetLineStyle(1);
-  lumiText->SetLineWidth(1);
-  lumiText->SetTextSize(0.035);
-  lumiText->Draw();
+  //   std::stringstream stream;
+  //   stream << std::fixed << std::setprecision(1) << fullRun2lumi;
+  //   thelumi = stream.str();
+  // } else {
+  //   std::stringstream stream;
+  //   stream << std::fixed << std::setprecision(1) << luminosity[year];
+  //   thelumi = stream.str();
+  // }
+  // TLatex* lumiText=new TLatex(0.70,0.90, Form("%s fb^{-1} (13 TeV)", thelumi.c_str() ) );
+  // lumiText->SetNDC(kTRUE);
+  // lumiText->SetTextFont(42);
+  // lumiText->SetLineColor(0);
+  // lumiText->SetLineStyle(1);
+  // lumiText->SetLineWidth(1);
+  // lumiText->SetTextSize(0.035);
+  // lumiText->Draw();
 
-  canv->SaveAs( Form("./limitplot_%s_%s_%s.png", signame.c_str(), coupling.c_str(), year.c_str()) );
+  // canv->SaveAs( Form("./limitplot_%s_%s_%s.png", signame.c_str(), coupling.c_str(), year.c_str()) );
 
-  TFile *outfile = new TFile( Form("./limitplot_%s_%s_%s.root", signame.c_str(), coupling.c_str(), year.c_str()) , "RECREATE");
-  canv->Write();
-  expGraph->SetName("expGraph");
-  obsGraph->SetName("obsGraph");
-  exp1SGraph->SetName("exp1SGraph");
-  exp2SGraph->SetName("exp2SGraph");
-  grxs[coupling]->SetName("theory");
-  expGraph->Write();
-  obsGraph->Write();
-  exp1SGraph->Write();
-  exp2SGraph->Write();
-  grxs[coupling]->Write();
+  // TFile *outfile = new TFile( Form("./limitplot_%s_%s_%s.root", signame.c_str(), coupling.c_str(), year.c_str()) , "RECREATE");
+  // canv->Write();
+  // expGraph->SetName("expGraph");
+  // obsGraph->SetName("obsGraph");
+  // exp1SGraph->SetName("exp1SGraph");
+  // exp2SGraph->SetName("exp2SGraph");
+  // grxs[coupling]->SetName("theory");
+  // expGraph->Write();
+  // obsGraph->Write();
+  // exp1SGraph->Write();
+  // exp2SGraph->Write();
+  // grxs[coupling]->Write();
 
-  outfile->Write();
-  outfile->Close();
+  // outfile->Write();
+  // outfile->Close();
 
   // TGraph* exp1SGraph = new TGraph();
   // TGraph* exp2SGraph = new TGraph();
@@ -347,185 +343,185 @@ void plotLimit(string year, string signame, string coupling, bool unblind) {
 }
 
 //-----------------------------------------------------------------------------------
-TGraphErrors* getXsecGraph( std::vector<xsec> xsections, bool basedonCoup)
-{
-  gStyle->SetOptStat(0);
-  gStyle->SetOptFit(0);
+// TGraphErrors* getXsecGraph( std::vector<xsec> xsections, bool basedonCoup)
+// {
+//   gStyle->SetOptStat(0);
+//   gStyle->SetOptFit(0);
 
-  TGraphErrors* graph;
+//   TGraphErrors* graph;
 
-  unsigned int nP = xsections.size();
+//   unsigned int nP = xsections.size();
 
-  double xval[nP];
-  double xvalErr[nP];
-  double xsecval[nP];
-  double xsecErr[nP];
+//   double xval[nP];
+//   double xvalErr[nP];
+//   double xsecval[nP];
+//   double xsecErr[nP];
 
-  for(unsigned int iE =0; iE < nP; iE++){
-    if (basedonCoup) { xval[iE] = std::stod(xsections[iE].M_bins); }
-    else {
-      xval[iE] = xsections[iE].coup ;
-      std::cout << "xsections[iE].coup  " << xsections[iE].coup << std::endl;
-    }
-    xvalErr[iE] = 0.;
-    xsecval[iE] = xsections[iE].val;
-    xsecErr[iE] = xsections[iE].error;
-  }
+//   for(unsigned int iE =0; iE < nP; iE++){
+//     if (basedonCoup) { xval[iE] = std::stod(xsections[iE].M_bins); }
+//     else {
+//       xval[iE] = xsections[iE].coup ;
+//       std::cout << "xsections[iE].coup  " << xsections[iE].coup << std::endl;
+//     }
+//     xvalErr[iE] = 0.;
+//     xsecval[iE] = xsections[iE].val;
+//     xsecErr[iE] = xsections[iE].error;
+//   }
 
-  std::sort(xval, xval+nP);
-  std::sort(xsecval, xsecval+nP, std::greater<float>());
-  for(unsigned int iE =0; iE < nP; iE++){
-    std::cout << xval[iE] << " " << xsecval[iE] << std::endl;
-  }
-  graph = new TGraphErrors(nP, xval, xsecval, xvalErr, xsecErr);
+//   std::sort(xval, xval+nP);
+//   std::sort(xsecval, xsecval+nP, std::greater<float>());
+//   for(unsigned int iE =0; iE < nP; iE++){
+//     std::cout << xval[iE] << " " << xsecval[iE] << std::endl;
+//   }
+//   graph = new TGraphErrors(nP, xval, xsecval, xvalErr, xsecErr);
 
-  return graph;
+//   return graph;
 
-}
-//-----------------------------------------------------------------------------------
-std::map<std::string , std::vector<xsec> > loadXsections(const std::string & year, bool basedonCoup, std::string signame, bool use_fb)
-{
-  std::map<std::string, std::vector<xsec> >thexsections;
+// }
+// //-----------------------------------------------------------------------------------
+// std::map<std::string , std::vector<xsec> > loadXsections(const std::string & year, bool basedonCoup, std::string signame, bool use_fb)
+// {
+//   std::map<std::string, std::vector<xsec> >thexsections;
 
-  std::vector<std::string> samples = getSampleList();
+//   std::vector<std::string> samples = getSampleList();
 
-  xsec tmpxsec;
-  std::string coup;
+//   xsec tmpxsec;
+//   std::string coup;
 
-  for(auto isample : samples) {
-    //Run a single year each time
-    //For the full Run 2, we will set the year to 2017
-    std::string xsec_year;
-    if ( year.find("fullRun2") != std::string::npos ) xsec_year = "2017";
-    else xsec_year = year;
-    if ( isample.find(xsec_year.c_str()) == std::string::npos ) continue;
+//   for(auto isample : samples) {
+//     //Run a single year each time
+//     //For the full Run 2, we will set the year to 2017
+//     std::string xsec_year;
+//     if ( year.find("fullRun2") != std::string::npos ) xsec_year = "2017";
+//     else xsec_year = year;
+//     if ( isample.find(xsec_year.c_str()) == std::string::npos ) continue;
 
-    if (isample.find("RSGraviton") != std::string::npos && signame == "grav") {
-      coup = get_str_between_two_str(getBase(isample), "kMpl", "_M_");
-    } else if ( isample.find("GluGluSpin0") != std::string::npos && signame == "heavyhiggs"){
-      coup = get_str_between_two_str(getBase(isample), "GluGluSpin0ToGammaGamma_W_", "_M_");
-    } else{
-      continue;
-    }
+//     if (isample.find("RSGraviton") != std::string::npos && signame == "grav") {
+//       coup = get_str_between_two_str(getBase(isample), "kMpl", "_M_");
+//     } else if ( isample.find("GluGluSpin0") != std::string::npos && signame == "heavyhiggs"){
+//       coup = get_str_between_two_str(getBase(isample), "GluGluSpin0ToGammaGamma_W_", "_M_");
+//     } else{
+//       continue;
+//     }
 
-    std::cout << coup << std::endl;
-    if ( coup == "001" ){ coup = "kMpl001";}
-    else if ( coup == "01" ){ coup = "kMpl01";}
-    else if ( coup == "02" ){coup = "kMpl02";}
-    else if ( coup == "0p014" ){}
-    else if ( coup == "1p4"){ }
-    else if ( coup == "5p6"){ }
-    else {
-      std::cout << "Only 'kMpl001', 'kMpl01', 'kMpl02', '0p014', '1p4' and '5p6' are allowed. " << std::endl;
-      exit(1);
-    }
+//     std::cout << coup << std::endl;
+//     if ( coup == "001" ){ coup = "kMpl001";}
+//     else if ( coup == "01" ){ coup = "kMpl01";}
+//     else if ( coup == "02" ){coup = "kMpl02";}
+//     else if ( coup == "0p014" ){}
+//     else if ( coup == "1p4"){ }
+//     else if ( coup == "5p6"){ }
+//     else {
+//       std::cout << "Only 'kMpl001', 'kMpl01', 'kMpl02', '0p014', '1p4' and '5p6' are allowed. " << std::endl;
+//       exit(1);
+//     }
 
-    std::cout << coup << " " << isample << std::endl;
-    double scl = use_fb ? 1000. : 1.;
-    tmpxsec.name = getSampleBase(isample,year);
-    tmpxsec.val = ExoDiPhotons::crossSection(getSampleBase(isample,year)) * scl;
-    tmpxsec.error = 0.;
-    if (year == "fullRun2"){ tmpxsec.val = 3. * tmpxsec.val;  }
+//     std::cout << coup << " " << isample << std::endl;
+//     double scl = use_fb ? 1000. : 1.;
+//     tmpxsec.name = getSampleBase(isample,year);
+//     tmpxsec.val = ExoDiPhotons::crossSection(getSampleBase(isample,year)) * scl;
+//     tmpxsec.error = 0.;
+//     if (year == "fullRun2"){ tmpxsec.val = 3. * tmpxsec.val;  }
 
-    std::cout << "xsec " << ExoDiPhotons::crossSection(getSampleBase(isample,year)) << std::endl;
-    std::cout << "xsec in fb " << tmpxsec.val << std::endl;
-    tmpxsec.M_bins = get_str_between_two_str(getBase(isample), "_M_", "_TuneCP2_13TeV_");
+//     std::cout << "xsec " << ExoDiPhotons::crossSection(getSampleBase(isample,year)) << std::endl;
+//     std::cout << "xsec in fb " << tmpxsec.val << std::endl;
+//     tmpxsec.M_bins = get_str_between_two_str(getBase(isample), "_M_", "_TuneCP2_13TeV_");
 
-    if (basedonCoup) { thexsections[coup].push_back(tmpxsec); }
-    else {
+//     if (basedonCoup) { thexsections[coup].push_back(tmpxsec); }
+//     else {
 
-      if ( coup == "kMpl001" ){ tmpxsec.coup =  1.4 * pow(10.,-4); }
-      else if ( coup == "kMpl01" ) { tmpxsec.coup =  1.4 * pow(10.,-2); }
-      else if ( coup == "kMpl02" ) { tmpxsec.coup =  5.6 * pow(10.,-2); }
-      else {
-        std::cout << "Only 'kMpl001', 'kMpl01' and 'kMpl02' are allowed. " << std::endl;
-        exit(1);
-      }
-      thexsections[tmpxsec.M_bins].push_back(tmpxsec);
+//       if ( coup == "kMpl001" ){ tmpxsec.coup =  1.4 * pow(10.,-4); }
+//       else if ( coup == "kMpl01" ) { tmpxsec.coup =  1.4 * pow(10.,-2); }
+//       else if ( coup == "kMpl02" ) { tmpxsec.coup =  5.6 * pow(10.,-2); }
+//       else {
+//         std::cout << "Only 'kMpl001', 'kMpl01' and 'kMpl02' are allowed. " << std::endl;
+//         exit(1);
+//       }
+//       thexsections[tmpxsec.M_bins].push_back(tmpxsec);
 
-    }
+//     }
 
-  }
+//   }
 
-  return thexsections;
+//   return thexsections;
 
-}
-//-----------------------------------------------------------------------------------
-// remove year
-std::string getSampleBase(const std::string & sampleName, const std::string & year)
-{
-  std::string newString(sampleName);
-  if( sampleName.find("_201") != std::string::npos) {
-    newString.replace(newString.find("_201"), 5, "");
-  }
-  if(sampleName.find("_R2F2") != std::string::npos) {
-    newString.replace(newString.find("_R2F2"), 5, "_diphotonkfactorScalesUp");
-  }
-  if(sampleName.find("_R0p5F0p5") != std::string::npos) {
-    newString.replace(newString.find("_R0p5F0p5"), 9, "_diphotonkfactorScalesDown");
-  }
-  // "data_obs" is always the name of the data observation histogram
-  std::string data("data_" + year);
-  if( sampleName.compare(data) == 0) newString = "data_obs";
-  return newString;
-}
+// }
+// //-----------------------------------------------------------------------------------
+// // remove year
+// std::string getSampleBase(const std::string & sampleName, const std::string & year)
+// {
+//   std::string newString(sampleName);
+//   if( sampleName.find("_201") != std::string::npos) {
+//     newString.replace(newString.find("_201"), 5, "");
+//   }
+//   if(sampleName.find("_R2F2") != std::string::npos) {
+//     newString.replace(newString.find("_R2F2"), 5, "_diphotonkfactorScalesUp");
+//   }
+//   if(sampleName.find("_R0p5F0p5") != std::string::npos) {
+//     newString.replace(newString.find("_R0p5F0p5"), 9, "_diphotonkfactorScalesDown");
+//   }
+//   // "data_obs" is always the name of the data observation histogram
+//   std::string data("data_" + year);
+//   if( sampleName.compare(data) == 0) newString = "data_obs";
+//   return newString;
+// }
 
-//-----------------------------------------------------------------------------------
-// ignore variations to get dataset name
-std::string getBase(const std::string & sampleName)
-{
-  if(sampleName.compare("gg_R2F2_2016") == 0 ) return "gg_2016";
-  if(sampleName.compare("gg_R0p5F0p5_2016") == 0 ) return "gg_2016";
-  if(sampleName.compare("gg_R2F2_2017") == 0 ) return "gg_2017";
-  if(sampleName.compare("gg_R0p5F0p5_2017") == 0 ) return "gg_2017";
-  if(sampleName.compare("gg_R2F2_2018") == 0 ) return "gg_2018";
-  if(sampleName.compare("gg_R0p5F0p5_2018") == 0 ) return "gg_2018";
-  return sampleName;
-}
-//-----------------------------------------------------------------------------------
-std::string get_str_between_two_str(const std::string &s, const std::string &start_delim, const std::string &stop_delim)
-{
-  unsigned first_delim_pos = s.find(start_delim);
-  unsigned end_pos_of_first_delim = first_delim_pos + start_delim.length();
-  unsigned last_delim_pos = s.find(stop_delim);
+// //-----------------------------------------------------------------------------------
+// // ignore variations to get dataset name
+// std::string getBase(const std::string & sampleName)
+// {
+//   if(sampleName.compare("gg_R2F2_2016") == 0 ) return "gg_2016";
+//   if(sampleName.compare("gg_R0p5F0p5_2016") == 0 ) return "gg_2016";
+//   if(sampleName.compare("gg_R2F2_2017") == 0 ) return "gg_2017";
+//   if(sampleName.compare("gg_R0p5F0p5_2017") == 0 ) return "gg_2017";
+//   if(sampleName.compare("gg_R2F2_2018") == 0 ) return "gg_2018";
+//   if(sampleName.compare("gg_R0p5F0p5_2018") == 0 ) return "gg_2018";
+//   return sampleName;
+// }
+// //-----------------------------------------------------------------------------------
+// std::string get_str_between_two_str(const std::string &s, const std::string &start_delim, const std::string &stop_delim)
+// {
+//   unsigned first_delim_pos = s.find(start_delim);
+//   unsigned end_pos_of_first_delim = first_delim_pos + start_delim.length();
+//   unsigned last_delim_pos = s.find(stop_delim);
 
-  return s.substr(end_pos_of_first_delim,
-                  last_delim_pos - end_pos_of_first_delim);
-}
-//-----------------------------------------------------------------------------------
-RooSpline1D* graphToSpline(std::string name, TGraphErrors *graph, RooRealVar* MH, double xmin, double upperxmax){
+//   return s.substr(end_pos_of_first_delim,
+//                   last_delim_pos - end_pos_of_first_delim);
+// }
+// //-----------------------------------------------------------------------------------
+// RooSpline1D* graphToSpline(std::string name, TGraphErrors *graph, RooRealVar* MH, double xmin, double upperxmax){
 
-  std::cout << "Graph to Spline: " << name << std::endl;
-  std::vector<double> xValues, yValues;
-  for (double mh=xmin; mh<(upperxmax+0.25); mh+=10.){
-    xValues.push_back(mh);
-    yValues.push_back(graph->Eval(mh));
-  }
-  RooSpline1D *res = new RooSpline1D(name.c_str(),name.c_str(),*MH,xValues.size(),&(xValues[0]),&(yValues[0]));
-  return res;
-}
+//   std::cout << "Graph to Spline: " << name << std::endl;
+//   std::vector<double> xValues, yValues;
+//   for (double mh=xmin; mh<(upperxmax+0.25); mh+=10.){
+//     xValues.push_back(mh);
+//     yValues.push_back(graph->Eval(mh));
+//   }
+//   RooSpline1D *res = new RooSpline1D(name.c_str(),name.c_str(),*MH,xValues.size(),&(xValues[0]),&(yValues[0]));
+//   return res;
+// }
 
-//-----------------------------------------------------------------------------------
-TGraphErrors* SplineTograph(std::string name, RooSpline1D* thespline, RooRealVar* MH, double xmin, double upperxmax){
+// //-----------------------------------------------------------------------------------
+// TGraphErrors* SplineTograph(std::string name, RooSpline1D* thespline, RooRealVar* MH, double xmin, double upperxmax){
 
-  std::cout << "Spline to Graph: " << name << std::endl;
-  TGraphErrors* graph;
+//   std::cout << "Spline to Graph: " << name << std::endl;
+//   TGraphErrors* graph;
 
-  std::vector<double> xValues, yValues, xValuesErr, yValuesErr;
+//   std::vector<double> xValues, yValues, xValuesErr, yValuesErr;
 
-  for (double mh=xmin; mh<(upperxmax+0.25); mh+=10.){
-    MH->setVal(mh);
-    xValues.push_back(mh);
-    yValues.push_back(thespline->getVal());
-    xValuesErr.push_back(0.);
-    yValuesErr.push_back(0.);
-  }
+//   for (double mh=xmin; mh<(upperxmax+0.25); mh+=10.){
+//     MH->setVal(mh);
+//     xValues.push_back(mh);
+//     yValues.push_back(thespline->getVal());
+//     xValuesErr.push_back(0.);
+//     yValuesErr.push_back(0.);
+//   }
 
-  graph = new TGraphErrors(yValues.size(), &xValues[0], &yValues[0], &xValuesErr[0], &yValuesErr[0]);
-  graph->SetName(name.c_str());
+//   graph = new TGraphErrors(yValues.size(), &xValues[0], &yValues[0], &xValuesErr[0], &yValuesErr[0]);
+//   graph->SetName(name.c_str());
 
-  return graph;
-}
+//   return graph;
+// }
 
 //-----------------------------------------------------------------------------------
 // TGraph * smoothen(TGraph *gr){
