@@ -76,7 +76,7 @@ def EE_L1_prefiring(year, sigma):
         corrFile = rt.TFile("/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/CMSDIJET/DijetRootTreeAnalyzer/data/EE_L1_prefiring/L1prefiring_photonpt_2017BtoF.root")
         corrHist = corrFile.Get("L1prefiring_photonpt_2017BtoF")
 
-    if (year.find("2018")!=-1:
+    if (year.find("2018")!=-1):
         return "1"
     else:
         Nbins = corrHist.GetNbinsX()*corrHist.GetNbinsY()
