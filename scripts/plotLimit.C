@@ -291,7 +291,7 @@ void plotLimit(string year, string signame, string coupling, bool unblind) {
 
   std::string thelumi = "";
   if (year == "fullRun2"){
-    double fullRun2lumi = luminosity["2016"] + luminosity["2017"] + luminosity["2018"];
+    double fullRun2lumi = 137.1;
 
     std::stringstream stream;
     stream << std::fixed << std::setprecision(1) << fullRun2lumi;
@@ -323,7 +323,7 @@ void plotLimit(string year, string signame, string coupling, bool unblind) {
   obsGraph->Write();
   exp1SGraph->Write();
   exp2SGraph->Write();
-  // grxs[coupling]->Write();
+  grxs[coupling]->Write();
 
   outfile->Write();
   outfile->Close();
