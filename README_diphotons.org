@@ -197,9 +197,10 @@ cd /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphot
 cmsenv
 mkdir -p output/plots
 
-method="full"
+# method="full"
 # method="truncate"
 # method="genFiducial"
+method="prefiring"
 mkdir -p output/${method}
 #RS
 for year in {2016,2017,2018}; do echo $year; for coup in {"kMpl001","kMpl01","kMpl02"}; do echo $coup; files_RS=`ls /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/input/trees/RSGravitonToGammaGamma_${coup}*${year}*.root`; python python/AddSignalShapes.py -e ${method} -t nom -d output/${method} -c EBEB ${files_RS}; python python/AddSignalShapes.py -e ${method} -t nom -d output/${method} -c EBEE ${files_RS}; done; done;
@@ -215,9 +216,10 @@ for year in {2016,2017,2018}; do echo $year; for coup in {"0p014","1p4","5p6"}; 
 
 #+begin_src bash
 
-method="full"
+# method="full"
 # method="truncate"
 # method="genFiducial"
+method="prefiring"
 #RS
 for year in {2016,2017,2018}; do echo $year; for coup in {"kMpl001","kMpl01","kMpl02"}; do echo $coup; files_RS=`ls /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/input/trees/RSGravitonToGammaGamma_${coup}*${year}*.root`; for syst in {"energyScaleStatUp","energyScaleSystUp","energyScaleGainUp","energySigmaUp","energyScaleStatDown","energyScaleSystDown","energyScaleGainDown","energySigmaDown","SFScaleUp","SFScaleDown","PUScaleUp","PUScaleDown"}; do echo ${syst}; python python/AddSignalShapes.py -e ${method} -t systematics -s ${syst} -d output/${method} -c EBEB ${files_RS}; python python/AddSignalShapes.py -e ${method} -t systematics -s ${syst} -d output/${method} -c EBEE ${files_RS}; done; done; done;
 
