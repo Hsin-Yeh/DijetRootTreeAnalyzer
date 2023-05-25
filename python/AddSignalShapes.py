@@ -81,6 +81,7 @@ def EE_L1_prefiring(year, sigma):
     for ibin in range(Nbins):
         weight = 1 - corrHist.GetBinContent(ibin) # The content is prefire rate. The weight is non-prefiring probability
         weightError = -corrHist.GetBinError(ibin) # minus sign to give the correct non-prefiring probability uncertainty
+        if( weight==1 && weightError ==0) continue
         etaLow = corrHist.GetXaxis().GetBinLowEdge(ibin)
         etaUp = corrHist.GetXaxis().GetBinUpEdge(ibin)
         ptLow = corrHist.GetYaxis().GetBinLowEdge(ibin)
@@ -180,7 +181,7 @@ if __name__ == '__main__':
             allCuts = '(' + catCut + ')*(' + EE_L1_prefiring(2016, 0) + ')'
 
         if options.type=='nom':
-            project(thetree,h_mgg_ratio, "mgg*%s/%f"%(float(mass)), allCuts )
+            project(thetree,h_mgg_ratio, "mgg/%f"%(float(mass)), allCuts )
         elif options.sys in energySyslist:
             project(thetree,h_mgg_ratio, "mgg*%s/%f"%(energySyslist[options.sys],float(mass)), allCuts )
         elif options.sys.find("SF")!=-1:
