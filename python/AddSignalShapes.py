@@ -175,11 +175,11 @@ if __name__ == '__main__':
             allCuts = catCut
         elif options.method=="genFiducial":
             allCuts = '(' + catCut + ')*(' + genMassCut + ')'
-
-        print EE_L1_prefiring
+        elif options.method=="prefiring":
+            allCuts = '(' + catCut ')*(' + EE_L1_prefiring("2016", 0) + ')'
 
         if options.type=='nom':
-            project(thetree,h_mgg_ratio, "mgg*%s/%f"%(float(mass), EE_L1_prefiring("2016", 0)), allCuts )
+            project(thetree,h_mgg_ratio, "mgg*%s/%f"%(float(mass)), allCuts )
         elif options.sys in energySyslist:
             project(thetree,h_mgg_ratio, "mgg*%s/%f"%(energySyslist[options.sys],float(mass)), allCuts )
         elif options.sys.find("SF")!=-1:
