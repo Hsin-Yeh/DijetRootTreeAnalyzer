@@ -177,7 +177,7 @@ if __name__ == '__main__':
         elif options.method=="genFiducial":
             allCuts = '(' + catCut + ')*(' + genMassCut + ')'
         elif options.method=="prefiring":
-            allCuts = '(' + catCut + ')*(' + EE_L1_prefiring("2016", 0) + ')'
+            allCuts = '(' + catCut + ')*(' + EE_L1_prefiring(2016, 0) + ')'
 
         if options.type=='nom':
             project(thetree,h_mgg_ratio, "mgg*%s/%f"%(float(mass)), allCuts )
