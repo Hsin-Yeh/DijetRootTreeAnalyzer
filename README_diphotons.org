@@ -271,7 +271,8 @@ for method in {"full", "genFiducial"};
 do
     export mainpath="/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/"
     cd $mainpath
-    export method="full"
+    # export method="full"
+    export method="pre_firing_check"
     # export method="truncate"
     # export method="genFiducial"
     #With the createJson option the insigname argument is dull and the code will run through all signals.
