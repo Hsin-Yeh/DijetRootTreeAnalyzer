@@ -7,8 +7,8 @@ import os
 import sys
 
 def project(tree, h, var, cut):
-    print 'projecting var: %s, cut: %s from tree: %s into hist: %s'%(var, cut, tree.GetName(), h.GetName())
-    tree.Project(h.GetName(),var,cut)
+    # print 'projecting var: %s, cut: %s from tree: %s into hist: %s'%(var, cut, tree.GetName(), h.GetName())
+    # tree.Project(h.GetName(),var,cut)
 
 def scale_factor_cut(year, sigma_from_mean):
 
@@ -211,11 +211,11 @@ if __name__ == '__main__':
         histos.append(h_mgg_ratio)
 
 
-    if options.type=='nom':
-        tfileOut = rt.TFile.Open('%s/InputShapes_%s_%s_%s.root'%(options.outDir,title,options.cat,year),'recreate')
-    else:
-        tfileOut = rt.TFile.Open('%s/InputShapes_%s_%s_%s_%s.root'%(options.outDir,title,options.cat,year,options.sys),'recreate')
-    tfileOut.cd()
-    for h in histos:
-        h.Write()
-    tfileOut.Close()
+    # if options.type=='nom':
+    #     tfileOut = rt.TFile.Open('%s/InputShapes_%s_%s_%s.root'%(options.outDir,title,options.cat,year),'recreate')
+    # else:
+    #     tfileOut = rt.TFile.Open('%s/InputShapes_%s_%s_%s_%s.root'%(options.outDir,title,options.cat,year,options.sys),'recreate')
+    # tfileOut.cd()
+    # for h in histos:
+    #     h.Write()
+    # tfileOut.Close()
