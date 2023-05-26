@@ -12,6 +12,7 @@ void EE_L1_prefiring(){
     for(int ibin=0; ibin<Nbins+1; ibin++){
         double weight = 1 - corrHist2016->GetBinContent(ibin); // The content is prefire rate. The weight is non-prefiring probability
         double weightError = -corrHist2016->GetBinError(ibin); // minus sign to give the correct non-prefiring probability uncertainty
+        if (weight == 1) continue;
         int xbin,ybin,zbin;
         corrHist2016->GetBinXYZ(ibin,xbin,ybin,zbin);
         double etaLow = corrHist2016->GetXaxis()->GetBinLowEdge(xbin);
