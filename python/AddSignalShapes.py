@@ -7,8 +7,8 @@ import os
 import sys
 
 def project(tree, h, var, cut):
-    # print 'projecting var: %s, cut: %s from tree: %s into hist: %s'%(var, cut, tree.GetName(), h.GetName())
-    # tree.Project(h.GetName(),var,cut)
+    print 'projecting var: %s, cut: %s from tree: %s into hist: %s'%(var, cut, tree.GetName(), h.GetName())
+    tree.Project(h.GetName(),var,cut)
 
 def scale_factor_cut(year, sigma_from_mean):
 
