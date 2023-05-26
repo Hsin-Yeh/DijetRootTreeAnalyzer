@@ -88,8 +88,8 @@ def EE_L1_prefiring(year, sigma):
             count +=1
             xbins = corrHist.GetNbinsX()
             ybins = corrHist.GetNbinsY()
-            xbin = (int)ibin%xbins
-            ybin = (int)(ibin-1)/xbins
+            xbin = ibin%xbins
+            ybin = (ibin-1)/xbins
             etaLow = corrHist.GetXaxis().GetBinLowEdge(xbin)
             etaUp = corrHist.GetXaxis().GetBinUpEdge(xbin)
             ptLow = corrHist.GetYaxis().GetBinLowEdge(ybin)
