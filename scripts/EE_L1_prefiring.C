@@ -32,8 +32,6 @@ void EE_L1_prefiring(){
             reweightString2 += "+";
         }
     }
-    reweightString1 -= "+";
-    reweightString2 -= "+";
     reweight = "(" + reweightString1 + ")*(" + reweightString2 + ")";
     std::cout << reweight << std::endl;
     std::cout <<count <<std::endl;
