@@ -14,10 +14,10 @@ void EE_L1_prefiring(){
         double weightError = -corrHist2016->GetBinError(ibin); // minus sign to give the correct non-prefiring probability uncertainty
         int xbin,ybin,zbin;
         corrHist2016->GetBinXYZ(ibin,xbin,ybin,zbin);
-        int etaLow = corrHist2016->GetXaxis()->GetBinLowEdge(xbin);
-        int etaUp = corrHist2016->GetXaxis()->GetBinUpEdge(xbin);
-        int ptLow = corrHist2016->GetYaxis()->GetBinLowEdge(ybin);
-        int ptUp = corrHist2016->GetYaxis()->GetBinUpEdge(ybin);
+        double etaLow = corrHist2016->GetXaxis()->GetBinLowEdge(xbin);
+        double etaUp = corrHist2016->GetXaxis()->GetBinUpEdge(xbin);
+        double ptLow = corrHist2016->GetYaxis()->GetBinLowEdge(ybin);
+        double ptUp = corrHist2016->GetYaxis()->GetBinUpEdge(ybin);
         std::cout << ibin << " " << xbin << " " << ybin << std::endl;
         std::cout << Form("(ph1pt>=%f && ph1pt<%f && ph1scEta>=%f && ph1scEta<%f)*(%f + %f*%d)",ptLow, ptUp, etaLow, etaUp, weight, weightError, 0) << std::endl;
             // reweightString1 += "(ph1pt>=%f && ph1pt<%f && ph1scEta>=%f && ph1scEta<%f)*(%f + %f*%d)" % (ptLow, ptUp, etaLow, etaUp, weight, weightError, sigma)
