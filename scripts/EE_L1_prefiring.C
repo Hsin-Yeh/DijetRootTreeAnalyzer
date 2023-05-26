@@ -8,11 +8,13 @@ void EE_L1_prefiring(){
     TFile *corrFile2017 = new TFile("/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/CMSDIJET/DijetRootTreeAnalyzer/data/EE_L1_prefiring/L1prefiring_photonpt_2017BtoF.root");
     TH2D *corrHist2017 = (TH2D*)corrFile2017->Get("L1prefiring_photonpt_2017BtoF");
 
+    int count = 0;
     int Nbins = (corrHist2016->GetNbinsX()+1)*(corrHist2016->GetNbinsY()+1);
     for(int ibin=0; ibin<Nbins+1; ibin++){
         double weight = 1 - corrHist2016->GetBinContent(ibin); // The content is prefire rate. The weight is non-prefiring probability
         double weightError = -corrHist2016->GetBinError(ibin); // minus sign to give the correct non-prefiring probability uncertainty
         if (weight == 1) continue;
+        count++;
         int xbin,ybin,zbin;
         corrHist2016->GetBinXYZ(ibin,xbin,ybin,zbin);
         double etaLow = corrHist2016->GetXaxis()->GetBinLowEdge(xbin);
@@ -28,4 +30,5 @@ void EE_L1_prefiring(){
         // print count
         // print Nbins
     }
+    std::cout <<count <<std::endl;
 }
