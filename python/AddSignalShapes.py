@@ -86,6 +86,7 @@ def EE_L1_prefiring(year, sigma):
             weightError = -corrHist.GetBinError(ibin) # minus sign to give the correct non-prefiring probability uncertainty
             # if (weight == 1 ): continue
             count +=1
+            xbin,ybin,zbin=0,0,0
             corrHist.GetBinXYZ(ibin,xbin,ybin,zbin)
             etaLow = corrHist.GetXaxis().GetBinLowEdge(xbin)
             etaUp = corrHist.GetXaxis().GetBinUpEdge(xbin)
