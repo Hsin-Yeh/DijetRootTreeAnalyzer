@@ -81,7 +81,7 @@ def EE_L1_prefiring(year, sigma):
         return "1"
     else:
         Nbins = corrHist.GetNbinsX()*corrHist.GetNbinsY()
-        for ibin+1 in range(Nbins+1):
+        for ibin in range(1, Nbins+1):
             weight = 1 - corrHist.GetBinContent(ibin) # The content is prefire rate. The weight is non-prefiring probability
             weightError = -corrHist.GetBinError(ibin) # minus sign to give the correct non-prefiring probability uncertainty
             # if (weight == 1 ): continue
