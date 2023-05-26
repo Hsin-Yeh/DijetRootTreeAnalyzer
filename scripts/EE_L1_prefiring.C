@@ -1,4 +1,4 @@
-void EE_L1_prefiring(){
+void EE_L1_prefiring(int numSigma){
 
     std::string reweight;
     std::string reweightString1="";
@@ -24,9 +24,9 @@ void EE_L1_prefiring(){
         double ptLow = corrHist2016->GetYaxis()->GetBinLowEdge(ybin);
         double ptUp = corrHist2016->GetYaxis()->GetBinUpEdge(ybin);
         std::cout << ibin << " " << xbin << " " << ybin << std::endl;
-        std::cout << Form("(ph1pt>=%f && ph1pt<%f && ph1scEta>=%f && ph1scEta<%f)*(%f + %f*%d)",ptLow, ptUp, etaLow, etaUp, weight, weightError, 0) << std::endl;
-        reweightString1 += Form("(ph1pt>=%f && ph1pt<%f && ph1scEta>=%f && ph1scEta<%f)*(%f + %f*%d)",ptLow, ptUp, etaLow, etaUp, weight, weightError, 0);
-        reweightString2 += Form("(ph2pt>=%f && ph2pt<%f && ph2scEta>=%f && ph2scEta<%f)*(%f + %f*%d)",ptLow, ptUp, etaLow, etaUp, weight, weightError, 0);
+        std::cout << Form("(ph1pt>=%f && ph1pt<%f && ph1scEta>=%f && ph1scEta<%f)*(%f + %f*%d)",ptLow, ptUp, etaLow, etaUp, weight, weightError, numSigma) << std::endl;
+        reweightString1 += Form("(ph1pt>=%f && ph1pt<%f && ph1scEta>=%f && ph1scEta<%f)*(%f + %f*%d)",ptLow, ptUp, etaLow, etaUp, weight, weightError, numSigma);
+        reweightString2 += Form("(ph2pt>=%f && ph2pt<%f && ph2scEta>=%f && ph2scEta<%f)*(%f + %f*%d)",ptLow, ptUp, etaLow, etaUp, weight, weightError, numSigma);
         if (ibin != Nbins-1){
             reweightString1 += "+";
             reweightString2 += "+";
@@ -55,9 +55,9 @@ void EE_L1_prefiring(){
         double ptLow = corrHist2017->GetYaxis()->GetBinLowEdge(ybin);
         double ptUp = corrHist2017->GetYaxis()->GetBinUpEdge(ybin);
         std::cout << ibin << " " << xbin << " " << ybin << std::endl;
-        std::cout << Form("(ph1pt>=%f && ph1pt<%f && ph1scEta>=%f && ph1scEta<%f)*(%f + %f*%d)",ptLow, ptUp, etaLow, etaUp, weight, weightError, 0) << std::endl;
-        reweightString1 += Form("(ph1pt>=%f && ph1pt<%f && ph1scEta>=%f && ph1scEta<%f)*(%f + %f*%d)",ptLow, ptUp, etaLow, etaUp, weight, weightError, 0);
-        reweightString2 += Form("(ph2pt>=%f && ph2pt<%f && ph2scEta>=%f && ph2scEta<%f)*(%f + %f*%d)",ptLow, ptUp, etaLow, etaUp, weight, weightError, 0);
+        std::cout << Form("(ph1pt>=%f && ph1pt<%f && ph1scEta>=%f && ph1scEta<%f)*(%f + %f*%d)",ptLow, ptUp, etaLow, etaUp, weight, weightError, numSigma) << std::endl;
+        reweightString1 += Form("(ph1pt>=%f && ph1pt<%f && ph1scEta>=%f && ph1scEta<%f)*(%f + %f*%d)",ptLow, ptUp, etaLow, etaUp, weight, weightError, numSigma);
+        reweightString2 += Form("(ph2pt>=%f && ph2pt<%f && ph2scEta>=%f && ph2scEta<%f)*(%f + %f*%d)",ptLow, ptUp, etaLow, etaUp, weight, weightError, numSigma);
         if (ibin != Nbins-1){
             reweightString1 += "+";
             reweightString2 += "+";
