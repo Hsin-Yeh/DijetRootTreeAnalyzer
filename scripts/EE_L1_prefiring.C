@@ -9,7 +9,7 @@ void EE_L1_prefiring(){
     TH2D *corrHist2017 = (TH2D*)corrFile2017->Get("L1prefiring_photonpt_2017BtoF");
 
     int count = 0;
-    int Nbins = (corrHist2016->GetNbinsX()+1)*(corrHist2016->GetNbinsY()+1);
+    int Nbins = (corrHist2016->GetNbinsX()+2)*(corrHist2016->GetNbinsY()+2);
     for(int ibin=0; ibin<Nbins+1; ibin++){
         double weight = 1 - corrHist2016->GetBinContent(ibin); // The content is prefire rate. The weight is non-prefiring probability
         double weightError = -corrHist2016->GetBinError(ibin); // minus sign to give the correct non-prefiring probability uncertainty
