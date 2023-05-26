@@ -81,20 +81,17 @@ def EE_L1_prefiring(year, sigma):
         return "1"
     else:
         Nbins = corrHist.GetNbinsX()*corrHist.GetNbinsY()
-        for ibin in range(1, Nbins+1):
+        for ibin in range(Nbins+1):
             weight = 1 - corrHist.GetBinContent(ibin) # The content is prefire rate. The weight is non-prefiring probability
             weightError = -corrHist.GetBinError(ibin) # minus sign to give the correct non-prefiring probability uncertainty
             # if (weight == 1 ): continue
             count +=1
-            xbins = corrHist.GetNbinsX()
-            ybins = corrHist.GetNbinsY()
-            xbin = ibin%xbins
-            ybin = (ibin-1)/xbins
+            corrHist.GetBinXYZ(ibin,xbin,ybin,zbin)
             etaLow = corrHist.GetXaxis().GetBinLowEdge(xbin)
             etaUp = corrHist.GetXaxis().GetBinUpEdge(xbin)
             ptLow = corrHist.GetYaxis().GetBinLowEdge(ybin)
             ptUp = corrHist.GetYaxis().GetBinUpEdge(ybin)
-            print ibin
+            print (ibin, xbin, ybin)
             print "(ph1pt>=%f && ph1pt<%f && ph1scEta>=%f && ph1scEta<%f)*(%f + %f*%d)" % (ptLow, ptUp, etaLow, etaUp, weight, weightError, sigma)
             reweightString1 += "(ph1pt>=%f && ph1pt<%f && ph1scEta>=%f && ph1scEta<%f)*(%f + %f*%d)" % (ptLow, ptUp, etaLow, etaUp, weight, weightError, sigma)
             if (ibin != Nbins-1): reweightString1 += "+"
