@@ -19,7 +19,7 @@ void EE_L1_prefiring(){
         int ptLow = corrHist2016->GetYaxis()->GetBinLowEdge(ybin);
         int ptUp = corrHist2016->GetYaxis()->GetBinUpEdge(ybin);
         std::cout << ibin << " " << xbin << " " << ybin << std::endl;
-        std::cout << Form("(ph1pt>=%f && ph1pt<%f && ph1scEta>=%f && ph1scEta<%f)*(%f + %f*%d)",ptLow, ptUp, etaLow, etaUp, weight, weightError, sigma) << std::endl;
+        std::cout << Form("(ph1pt>=%f && ph1pt<%f && ph1scEta>=%f && ph1scEta<%f)*(%f + %f*%d)",ptLow, ptUp, etaLow, etaUp, weight, weightError, 0) << std::endl;
             // reweightString1 += "(ph1pt>=%f && ph1pt<%f && ph1scEta>=%f && ph1scEta<%f)*(%f + %f*%d)" % (ptLow, ptUp, etaLow, etaUp, weight, weightError, sigma)
             // if (ibin != Nbins-1): reweightString1 += "+"
         // reweightString2 = reweightString1.replace("ph1","ph2")
