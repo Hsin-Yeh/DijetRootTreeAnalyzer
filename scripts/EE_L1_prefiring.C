@@ -11,7 +11,7 @@ void EE_L1_prefiring(){
 
     int count = 0;
     // int Nbins = (corrHist2016->GetNbinsX()+2)*(corrHist2016->GetNbinsY()+2);
-    int Nbins = 350;
+    int Nbins = 340;
     for(int ibin=0; ibin<Nbins; ibin++){
         double weight = 1 - corrHist2016->GetBinContent(ibin); // The content is prefire rate. The weight is non-prefiring probability
         double weightError = -corrHist2016->GetBinError(ibin); // minus sign to give the correct non-prefiring probability uncertainty
@@ -23,8 +23,8 @@ void EE_L1_prefiring(){
         double etaUp = corrHist2016->GetXaxis()->GetBinUpEdge(xbin);
         double ptLow = corrHist2016->GetYaxis()->GetBinLowEdge(ybin);
         double ptUp = corrHist2016->GetYaxis()->GetBinUpEdge(ybin);
-        // std::cout << ibin << " " << xbin << " " << ybin << std::endl;
-        // std::cout << Form("(ph1pt>=%f && ph1pt<%f && ph1scEta>=%f && ph1scEta<%f)*(%f + %f*%d)",ptLow, ptUp, etaLow, etaUp, weight, weightError, 0) << std::endl;
+        std::cout << ibin << " " << xbin << " " << ybin << std::endl;
+        std::cout << Form("(ph1pt>=%f && ph1pt<%f && ph1scEta>=%f && ph1scEta<%f)*(%f + %f*%d)",ptLow, ptUp, etaLow, etaUp, weight, weightError, 0) << std::endl;
         reweightString1 += Form("(ph1pt>=%f && ph1pt<%f && ph1scEta>=%f && ph1scEta<%f)*(%f + %f*%d)",ptLow, ptUp, etaLow, etaUp, weight, weightError, 0);
         reweightString2 += Form("(ph2pt>=%f && ph2pt<%f && ph2scEta>=%f && ph2scEta<%f)*(%f + %f*%d)",ptLow, ptUp, etaLow, etaUp, weight, weightError, 0);
         if (ibin != Nbins-1){
