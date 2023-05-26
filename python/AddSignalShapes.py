@@ -76,6 +76,7 @@ def EE_L1_prefiring(year, sigma):
         corrFile = rt.TFile("/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/CMSDIJET/DijetRootTreeAnalyzer/data/EE_L1_prefiring/L1prefiring_photonpt_2017BtoF.root")
         corrHist = corrFile.Get("L1prefiring_photonpt_2017BtoF")
 
+    count=0
     if (year.find("2018")!=-1):
         return "1"
     else:
@@ -83,15 +84,20 @@ def EE_L1_prefiring(year, sigma):
         for ibin in range(Nbins):
             weight = 1 - corrHist.GetBinContent(ibin) # The content is prefire rate. The weight is non-prefiring probability
             weightError = -corrHist.GetBinError(ibin) # minus sign to give the correct non-prefiring probability uncertainty
-            if (weight == 1 ): continue;
+            if (weight == 1 ): continue
+            count++
             etaLow = corrHist.GetXaxis().GetBinLowEdge(ibin)
             etaUp = corrHist.GetXaxis().GetBinUpEdge(ibin)
             ptLow = corrHist.GetYaxis().GetBinLowEdge(ibin)
             ptUp = corrHist.GetYaxis().GetBinUpEdge(ibin)
+            print ibin
+            print "(ph1pt>=%f && ph1pt<%f && ph1scEta>=%f && ph1scEta<%f)*(%f + %f*%d)" % (ptLow, ptUp, etaLow, etaUp, weight, weightError, sigma)
             reweightString1 += "(ph1pt>=%f && ph1pt<%f && ph1scEta>=%f && ph1scEta<%f)*(%f + %f*%d)" % (ptLow, ptUp, etaLow, etaUp, weight, weightError, sigma)
             if (ibin != Nbins-1): reweightString1 += "+"
         reweightString2 = reweightString1.replace("ph1","ph2")
         reweight = "(" + reweightString1 + ")*(" + reweightString2 + ")"
+        print count
+        print Nbins
         return reweight
 
 
