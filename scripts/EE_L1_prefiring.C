@@ -8,7 +8,7 @@ void EE_L1_prefiring(){
     TFile *corrFile2017 = new TFile("/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/CMSDIJET/DijetRootTreeAnalyzer/data/EE_L1_prefiring/L1prefiring_photonpt_2017BtoF.root");
     TH2D *corrHist2017 = (TH2D*)corrFile2017->Get("L1prefiring_photonpt_2017BtoF");
 
-    int Nbins = corrHist2016->GetNbinsX()*corrHist2016->GetNbinsY();
+    int Nbins = (corrHist2016->GetNbinsX()+1)*(corrHist2016->GetNbinsY()+1);
     for(int ibin=0; ibin<Nbins+1; ibin++){
         double weight = 1 - corrHist2016->GetBinContent(ibin); // The content is prefire rate. The weight is non-prefiring probability
         double weightError = -corrHist2016->GetBinError(ibin); // minus sign to give the correct non-prefiring probability uncertainty
@@ -20,8 +20,8 @@ void EE_L1_prefiring(){
         double ptUp = corrHist2016->GetYaxis()->GetBinUpEdge(ybin);
         std::cout << ibin << " " << xbin << " " << ybin << std::endl;
         std::cout << Form("(ph1pt>=%f && ph1pt<%f && ph1scEta>=%f && ph1scEta<%f)*(%f + %f*%d)",ptLow, ptUp, etaLow, etaUp, weight, weightError, 0) << std::endl;
-            // reweightString1 += "(ph1pt>=%f && ph1pt<%f && ph1scEta>=%f && ph1scEta<%f)*(%f + %f*%d)" % (ptLow, ptUp, etaLow, etaUp, weight, weightError, sigma)
-            // if (ibin != Nbins-1): reweightString1 += "+"
+        // reweightString1 += Form("(ph1pt>=%f && ph1pt<%f && ph1scEta>=%f && ph1scEta<%f)*(%f + %f*%d)" % (ptLow, ptUp, etaLow, etaUp, weight, weightError, sigma))
+        //     if (ibin != Nbins-1): reweightString1 += "+"
         // reweightString2 = reweightString1.replace("ph1","ph2")
         // reweight = "(" + reweightString1 + ")*(" + reweightString2 + ")"
         // print count
