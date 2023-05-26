@@ -25,8 +25,8 @@ void EE_L1_prefiring(){
         double ptUp = corrHist2016->GetYaxis()->GetBinUpEdge(ybin);
         std::cout << ibin << " " << xbin << " " << ybin << std::endl;
         std::cout << Form("(ph1pt>=%f && ph1pt<%f && ph1scEta>=%f && ph1scEta<%f)*(%f + %f*%d)",ptLow, ptUp, etaLow, etaUp, weight, weightError, 0) << std::endl;
-        reweightString1 += Form("(ph1pt>=%f && ph1pt<%f && ph1scEta>=%f && ph1scEta<%f)*(%f + %f*%d)" % (ptLow, ptUp, etaLow, etaUp, weight, weightError, 0));
-        reweightString2 += Form("(ph2pt>=%f && ph2pt<%f && ph2scEta>=%f && ph2scEta<%f)*(%f + %f*%d)" % (ptLow, ptUp, etaLow, etaUp, weight, weightError, 0));
+        reweightString1 += Form("(ph1pt>=%f && ph1pt<%f && ph1scEta>=%f && ph1scEta<%f)*(%f + %f*%d)",ptLow, ptUp, etaLow, etaUp, weight, weightError, 0);
+        reweightString2 += Form("(ph2pt>=%f && ph2pt<%f && ph2scEta>=%f && ph2scEta<%f)*(%f + %f*%d)" ptLow, ptUp, etaLow, etaUp, weight, weightError, 0);
         if (ibin != Nbins-1){
             reweightString1 += "+";
             reweightString2 += "+";
