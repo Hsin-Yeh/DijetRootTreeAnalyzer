@@ -102,7 +102,7 @@ if __name__ == '__main__':
         elif options.sys.find("Down")!=-1: numSigma = -1
         else: numSigma = 0
 
-        nomCut = '(' + acc[options.cat] + ')*(' + eff[year] + ')*(' + SFSyslist["nom"] + ')*(' + EEPFSyslist["nom"] + ")*(" PuSyslist["nom"] + ")*(weightAll)"
+        nomCut = '(' + acc[options.cat] + ')*(' + eff[year] + ')*(' + SFSyslist["nom"] + ')*(' + EEPFSyslist["nom"] + ')*(' + PuSyslist["nom"] + ')*(weightAll)'
         fwhmCut = 'mgg>%f && mgg<%f'%(massMin,massMax)
         genMassCut = 'mggGen>%f && mggGen<%f'%(mass*0.8, mass*1.2)
 
@@ -118,15 +118,15 @@ if __name__ == '__main__':
             project(thetree,h_mgg_ratio, "mgg*%s/%f"%(energySyslist[options.sys],float(mass)), allCuts )
 
         elif options.sys in SFSyslist:
-            allCuts = '(' + acc[options.cat] + ')*(' + eff[year] + ')*(' + SFSyslist[options.sys] + ')*(' + EEPFSyslist["nom"] + ")*(" PuSyslist["nom"] + ")*(weightAll)"
+            allCuts = '(' + acc[options.cat] + ')*(' + eff[year] + ')*(' + SFSyslist[options.sys] + ')*(' + EEPFSyslist["nom"] + ")*(" + PuSyslist["nom"] + ")*(weightAll)"
             project(thetree,h_mgg_ratio, "mgg/%f"%(float(mass)), allCuts )
 
         elif options.sys in PuSyslist:
-            allCuts = '(' + acc[options.cat] + ')*(' + eff[year] + ')*(' + SFSyslist["nom"] + ')*(' + EEPFSyslist["nom"] + ")*(" PuSyslist[options.sys] + ")*(weightAll)"
+            allCuts = '(' + acc[options.cat] + ')*(' + eff[year] + ')*(' + SFSyslist["nom"] + ')*(' + EEPFSyslist["nom"] + ")*(" + PuSyslist[options.sys] + ")*(weightAll)"
             project(thetree,h_mgg_ratio, "mgg/%f"%(float(mass)), allCuts )
 
         elif options.sys in EEPFSyslist:
-            allCuts = '(' + acc[options.cat] + ')*(' + eff[year] + ')*(' + SFSyslist["nom"] + ')*(' + EEPFSyslist[options.sys] + ")*(" PuSyslist["nom"] + ")*(weightAll)"
+            allCuts = '(' + acc[options.cat] + ')*(' + eff[year] + ')*(' + SFSyslist["nom"] + ')*(' + EEPFSyslist[options.sys] + ")*(" + PuSyslist["nom"] + ")*(weightAll)"
             project(thetree,h_mgg_ratio, "mgg/%f"%(float(mass)), allCuts )
 
         #h = tfileIn.Get('h_mjj_ratio_%s'%options.type)
