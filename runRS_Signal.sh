@@ -5,10 +5,24 @@ export method="full"
 # export method="prefiring"
 export InterpolateShapePath="/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/${method}"
 
+cmsenv
+
+########## Prepare trees ##########
+
+cd /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis
+prepareTrees.exe grav BB 2016 "/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/input"
+prepareTrees.exe grav BB 2017 "/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/input"
+prepareTrees.exe grav BE 2017 "/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/input"
+prepareTrees.exe heavyhiggs BB 2016 "/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/input"
+prepareTrees.exe heavyhiggs BB 2017 "/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/input"
+prepareTrees.exe heavyhiggs BB 2018 "/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/input"
+
+mv input/RS*.root input/trees
+mv input/Glu*.root input/trees
+
 ########## Add Samples ##########
 
 cd /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/CMSDIJET/DijetRootTreeAnalyzer/
-cmsenv
 mkdir -p output/plots
 
 mkdir -p output/${method}
