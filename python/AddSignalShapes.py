@@ -35,10 +35,6 @@ if __name__ == '__main__':
     histos = []
     year = ''
 
-    cat = -1
-    if options.cat == "EBEB" : cat = 0
-    elif options.cat == "EBEE" : cat = 1
-
     energySyslist = {"energyScaleStatUp"   : "ph1energyScaleStatUp*ph2energyScaleStatUp",
                      "energyScaleSystUp"   : "ph1energyScaleSystUp*ph2energyScaleSystUp",
                      "energyScaleGainUp"   : "ph1energyScaleGainUp*ph2energyScaleGainUp",
@@ -61,7 +57,8 @@ if __name__ == '__main__':
                    "PuUp" : "weightPuManualUp",
                    "PuDown" : "weightPuManualDown"}
 
-
+    acc={}
+    eff={}
     acc["EBEB"] = "(Diphoton.Minv > 500 && Diphoton.deltaR > 0.45 && Photon1.pt>125 && Photon2.pt>125 && Photon1.isEB && Photon2.isEB)"
     acc["EBEE"] = "(Diphoton.Minv > 500 && Diphoton.deltaR > 0.45 && Photon1.pt>125 && Photon2.pt>125 && ( (Photon1.isEB && Photon2.isEE) || (Photon2.isEB &&  Photon1.isEE )))"
     eff["2018"] = "*isGood*(HLT_DoublePhoton60>0 || HLT_ECALHT800>0)"
