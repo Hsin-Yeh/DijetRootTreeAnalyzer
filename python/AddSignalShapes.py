@@ -61,9 +61,9 @@ if __name__ == '__main__':
     eff={}
     acc["EBEB"] = "(Diphoton.Minv > 500 && Diphoton.deltaR > 0.45 && Photon1.pt>125 && Photon2.pt>125 && Photon1.isEB && Photon2.isEB)"
     acc["EBEE"] = "(Diphoton.Minv > 500 && Diphoton.deltaR > 0.45 && Photon1.pt>125 && Photon2.pt>125 && ( (Photon1.isEB && Photon2.isEE) || (Photon2.isEB &&  Photon1.isEE )))"
-    eff["2018"] = "*isGood*(HLT_DoublePhoton60>0 || HLT_ECALHT800>0)"
+    eff["2016"] = "*isGood*(HLT_DoublePhoton60>0 || HLT_ECALHT800>0)"
     eff["2017"] = "*isGood*(HLT_DoublePhoton70>0 || HLT_ECALHT800>0)"
-    eff["2017"] = "*isGood*(HLT_DoublePhoton70>0 || HLT_ECALHT800>0)"
+    eff["2018"] = "*isGood*(HLT_DoublePhoton70>0 || HLT_ECALHT800>0)"
 
     for f in args:
         year = f.split('.root')[0].split('_')[-1]
