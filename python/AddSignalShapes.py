@@ -49,15 +49,15 @@ if __name__ == '__main__':
                      "energyScaleGainDown"   : "ph1energyScaleGainDown*ph2energyScaleGainDown",
                      "energySigmaDown"       : "ph1energySigmaDown*ph2energySigmaDown" }
 
-    SFSyslist     = {"nom" : "ph1SF*ph2SF"
+    SFSyslist     = {"nom" : "ph1SF*ph2SF",
                      "SFUp" : "ph1SFUp*ph2SFUp",
                      "SFDown" : "ph1SFDown*ph2SFDown"}
 
-    EEPFSyslist   = {"nom" : "ph1EEPF*ph2EEPF"
+    EEPFSyslist   = {"nom" : "ph1EEPF*ph2EEPF",
                      "EEPFUp" : "ph1EEPFUp*ph2EEPFUp",
                      "EEPFDown" : "ph1EEPFDown*ph2EEPFDown"}
 
-    PuSyslist   = {"nom" : "weightPuManual"
+    PuSyslist   = {"nom" : "weightPuManual",
                    "PuUp" : "weightPuManualUp",
                    "PuDown" : "weightPuManualDown"}
 
