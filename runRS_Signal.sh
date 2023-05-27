@@ -9,19 +9,19 @@ cmsenv
 
 ########## Prepare trees ##########
 
-cd /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis
-for coup in {"kMpl001","kMpl01","kMpl02"}; do
-   for year in {"2016","2017","2018"}; do
-       prepareTrees.exe grav BB ${year} ${coup} "/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/input"
-   done
-done
-for coup in {"0p014","1p4","5p6"}; do
-   for year in {"2016","2017","2018"}; do
-       prepareTrees.exe heavyhiggs BB ${year} ${coup} "/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/input"
-   done
-done
-mv input/RS*.root input/trees
-mv input/Glu*.root input/trees
+# cd /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis
+# for coup in {"kMpl001","kMpl01","kMpl02"}; do
+#    for year in {"2016","2017","2018"}; do
+#        prepareTrees.exe grav BB ${year} ${coup} "/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/input"
+#    done
+# done
+# for coup in {"0p014","1p4","5p6"}; do
+#    for year in {"2016","2017","2018"}; do
+#        prepareTrees.exe heavyhiggs BB ${year} ${coup} "/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/input"
+#    done
+# done
+# mv input/RS*.root input/trees
+# mv input/Glu*.root input/trees
 
 ########## Add Samples ##########
 
