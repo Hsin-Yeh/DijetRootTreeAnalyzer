@@ -9,12 +9,20 @@ Starting from dijet analysis
 - Run RS, HeavyHiggs, data one by one ( Comment out the others in "Tools/interface/sampleList.hh" )
 
 #+begin_src bash
-prepareTrees.exe BB 2016 "/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/input"
-prepareTrees.exe BE 2016 "/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/input"
-prepareTrees.exe BB 2017 "/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/input"
-prepareTrees.exe BE 2017 "/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/input"
-prepareTrees.exe BB 2018 "/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/input"
-prepareTrees.exe BE 2018 "/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/input"
+prepareTrees.exe grav BB 2016 "/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/input"
+prepareTrees.exe grav BE 2016 "/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/input"
+prepareTrees.exe grav BB 2017 "/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/input"
+prepareTrees.exe grav BE 2017 "/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/input"
+prepareTrees.exe grav BB 2018 "/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/input"
+prepareTrees.exe grav BE 2018 "/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/input"
+
+prepareTrees.exe heavyhiggs BB 2016 "/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/input"
+prepareTrees.exe heavyhiggs BE 2016 "/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/input"
+prepareTrees.exe heavyhiggs BB 2017 "/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/input"
+prepareTrees.exe heavyhiggs BE 2017 "/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/input"
+prepareTrees.exe heavyhiggs BB 2018 "/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/input"
+prepareTrees.exe heavyhiggs BE 2018 "/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/input"
+
 #+end_src
 
 ** Merge files
