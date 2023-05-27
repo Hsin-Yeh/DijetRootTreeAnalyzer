@@ -61,9 +61,9 @@ if __name__ == '__main__':
     eff={}
     acc["EBEB"] = "(mgg > 500 && deltaR > 0.45 && ph1pt>125 && ph2pt>125 && isEBEB)"
     acc["EBEE"] = "(mgg > 500 && deltaR > 0.45 && ph1pt>125 && ph2pt>125 && (isEBEE || isEEEB))"
-    eff["2016"] = "*isGood*(HLT_DoublePhoton60 || HLT_ECALHT800)"
-    eff["2017"] = "*isGood*(HLT_DoublePhoton70 || HLT_ECALHT800)"
-    eff["2018"] = "*isGood*(HLT_DoublePhoton70 || HLT_ECALHT800)"
+    eff["2016"] = "isGood*(HLT_DoublePhoton60 || HLT_ECALHT800)"
+    eff["2017"] = "isGood*(HLT_DoublePhoton70 || HLT_ECALHT800)"
+    eff["2018"] = "isGood*(HLT_DoublePhoton70 || HLT_ECALHT800)"
 
     for f in args:
         year = f.split('.root')[0].split('_')[-1]
