@@ -84,9 +84,9 @@ if __name__ == "__main__":
 
     pad2.cd()
     EBEBnorm_diff, EBEEnorm_diff, All_diff= array('d'), array('d'), array('d')
-    EBEBnorm_diff=divide(EBEBnorm_1,EBEBnorm_2)
-    EBEEnorm_diff=divide(EBEEnorm_1,EBEEnorm_2)
-    Allnorm_diff=divide(Allnorm_1,Allnorm_2)
+    EBEBnorm_diff=np.divide(EBEBnorm_1,EBEBnorm_2)
+    EBEEnorm_diff=np.divide(EBEEnorm_1,EBEEnorm_2)
+    Allnorm_diff=np.divide(Allnorm_1,Allnorm_2)
     g_diff_EBEB = ROOT.TGraph(len(masses_1), masses_1, EBEBnorm_diff)
     g_diff_EBEE = ROOT.TGraph(len(masses_1), masses_1, EBEEnorm_diff)
     g_diff_All = ROOT.TGraph(len(masses_1), masses_1, Allnorm_diff)
