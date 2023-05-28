@@ -23,7 +23,7 @@ if __name__ == "__main__":
     pad1.SetGridx();
     pad1.Draw()
     pad1.cd()
-    l = ROOT.TLegend(0.15, 0.65, 0.85, 0.85)
+    l = ROOT.TLegend(0.2, 0.65, 0.85, 0.85)
     l.SetNColumns(2);
     l.SetHeader("%s %s"%(args.year, args.coupling),"C")
     l.SetFillStyle(0);
@@ -65,7 +65,7 @@ if __name__ == "__main__":
     g_All_1.SetLineColor(3)
     g_All_1.SetLineWidth(1)
     g_All_1.Draw("AL")
-    g_All_1.GetYaxis().SetRangeUser(0,1)
+    g_All_1.GetYaxis().SetRangeUser(0,1.15)
     g_EBEB_1.SetLineColor(6)
     g_EBEB_1.SetLineWidth(1)
     g_EBEB_1.Draw("LSame")
