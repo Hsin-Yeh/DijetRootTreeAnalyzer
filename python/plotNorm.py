@@ -23,7 +23,7 @@ if __name__ == "__main__":
     pad1.SetGridx();
     pad1.Draw()
     pad1.cd()
-    l = ROOT.TLegend(0.15, 0.6, 0.85, 0.85)
+    l = ROOT.TLegend(0.15, 0.7, 0.85, 0.85)
     l.SetNColumns(2);
     luminosity = {"2016":35.9, "2017":41.5, "2018":59.7}
     color=[[1,2,4], [5,6,8]]
@@ -81,10 +81,10 @@ if __name__ == "__main__":
     g_EBEE_2.Draw("LSame");
 
     l.AddEntry(g_All_1, "Total w/o Prefire reweight", "l")
-    l.AddEntry(g_EBEB_1, "EBEB w/o Prefire reweight", "l")
-    l.AddEntry(g_EBEE_1, "EBEE w/o Prefire reweight", "l")
     l.AddEntry(g_All_2, "Total with Prefire reweight", "l")
+    l.AddEntry(g_EBEB_1, "EBEB w/o Prefire reweight", "l")
     l.AddEntry(g_EBEB_2, "EBEB with Prefire reweight", "l")
+    l.AddEntry(g_EBEE_1, "EBEE w/o Prefire reweight", "l")
     l.AddEntry(g_EBEE_2, "EBEE with Prefire reweight", "l")
     l.Draw("same")
 
@@ -114,7 +114,7 @@ if __name__ == "__main__":
     g_diff_All.GetYaxis().SetLabelSize(15);
     g_diff_All.GetXaxis().SetTitleSize(20);
     g_diff_All.GetXaxis().SetTitleFont(43);
-    g_diff_All.GetXaxis().SetTitleOffset(1.55);
+    g_diff_All.GetXaxis().SetTitleOffset(2.5);
     g_diff_All.GetXaxis().SetLabelFont(43);
     g_diff_All.GetXaxis().SetLabelSize(15);
     g_diff_All.Draw("AL")
@@ -125,6 +125,7 @@ if __name__ == "__main__":
     g_diff_EBEE.Draw("LSame")
 
     l_diff = ROOT.TLegend(0.5,0.7,0.85,0.85)
+    l_diff.SetNColumns(3)
     l_diff.AddEntry(g_diff_All,"All","l")
     l_diff.AddEntry(g_diff_EBEB,"EBEB","l")
     l_diff.AddEntry(g_diff_EBEE,"EBEE","l")
