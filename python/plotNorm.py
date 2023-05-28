@@ -46,4 +46,4 @@ if __name__ == "__main__":
         # l.AddEntry(g_ZFC, "ZFC", "P")
         # l.Draw("same")
 
-    c1->SaveAs("test.png")
+    c1.SaveAs("test.png")
