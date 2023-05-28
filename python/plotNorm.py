@@ -109,6 +109,7 @@ if __name__ == "__main__":
     g_diff_All.GetXaxis().SetTitle("Mass_{X} [GeV]")
     g_diff_All.GetYaxis().SetTitle("new/old")
     g_diff_All.SetLineColor(1)
+    g_diff_All.SetLineWidth(2)
     g_diff_All.GetYaxis().SetTitleSize(20);
     g_diff_All.GetYaxis().SetTitleFont(43);
     g_diff_All.GetYaxis().SetTitleOffset(1.55);
@@ -121,8 +122,10 @@ if __name__ == "__main__":
     g_diff_All.GetXaxis().SetLabelSize(15);
     g_diff_All.Draw("AL")
     g_diff_All.GetYaxis().SetRangeUser(0.97,1.15)
+    g_diff_EBEB.SetLineWidth(2)
     g_diff_EBEB.SetLineColor(2)
     g_diff_EBEB.Draw("LSame")
+    g_diff_EBEE.SetLineWidth(2)
     g_diff_EBEE.SetLineColor(4)
     g_diff_EBEE.Draw("LSame")
 
