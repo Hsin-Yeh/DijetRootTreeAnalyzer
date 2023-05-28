@@ -67,15 +67,15 @@ if __name__ == "__main__":
     g_EBEE_1.SetLineColor(4)
     g_EBEE_1.SetLineWidth(1)
     g_EBEE_1.Draw("LSame");
-    # g_All_2.SetLineColor(5)
-    # g_All_2.SetLineWidth(1)
-    # g_All_2.Draw("LSame")
-    # g_EBEB_2.SetLineColor(6)
-    # g_EBEB_2.SetLineWidth(1)
-    # g_EBEB_2.Draw("LSame")
-    # g_EBEE_2.SetLineColor(8)
-    # g_EBEE_2.SetLineWidth(1)
-    # g_EBEE_2.Draw("LSame");
+    g_All_2.SetLineColor(5)
+    g_All_2.SetLineWidth(1)
+    g_All_2.Draw("LSame")
+    g_EBEB_2.SetLineColor(6)
+    g_EBEB_2.SetLineWidth(1)
+    g_EBEB_2.Draw("LSame")
+    g_EBEE_2.SetLineColor(8)
+    g_EBEE_2.SetLineWidth(1)
+    g_EBEE_2.Draw("LSame");
 
     # l.AddEntry(g_FC, "FC", "P")
     # l.AddEntry(g_ZFC, "ZFC", "P")
