@@ -30,6 +30,9 @@ if __name__ == "__main__":
                 elif (line.find("All")!=-1):
                     Allnorm.append(float(line.split(" ")[4])/luminosity[args.year])
                     mass.append(float(line.split(" ")[2]))
+        print(EBEBnorm)
+        print(EBEEnorm)
+        print(Allnorm)
         c1 = ROOT.TCanvas()
         l = ROOT.TLegend(0.6, 0.55, 0.8, 0.7)
         g_EBEB = ROOT.TGraph(len(mass), mass, EBEBnorm)
@@ -59,8 +62,6 @@ if __name__ == "__main__":
         g_EBEE.SetLineWidth(2)
         g_EBEE.SetLineStyle(linestyle[ifile])
         g_EBEE.Draw("LSame");
-
-        # g_FC.SetMarkerStyle(24)
 
         # l.AddEntry(g_FC, "FC", "P")
         # l.AddEntry(g_ZFC, "ZFC", "P")
