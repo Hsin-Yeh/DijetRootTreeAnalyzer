@@ -29,29 +29,8 @@ struct xsec{
 };
 
 //-----------------------------------------------------------------------------------
-//Declarations here definition after main
-// std::map<std::string, std::vector<xsec> > loadXsections(const std::string &year, bool basedonCoup, std::string signame, bool use_fb);
-// TGraphErrors* getXsecGraph( std::vector<xsec> xsections, bool basedonCoup);
-// std::string getSampleBase(const std::string & sampleName, const std::string & year);
-// std::string getBase(const std::string & sampleName);
-// std::string get_str_between_two_str(const std::string &s, const std::string &start_delim, const std::string &stop_delim);
-// RooSpline1D* graphToSpline(std::string name, TGraphErrors *graph, RooRealVar* MH, double xmin, double upperxmax);
-// TGraphErrors* SplineTograph(std::string name, RooSpline1D* thespline, RooRealVar* MH, double xmin, double upperxmax);
-
-//-----------------------------------------------------------------------------------
 void plotLimit(string year, string signame, string coupling, bool unblind) {
   string inputfileName = "finalResults_" + year + "_" + signame + "_" + coupling;
-
-  //========================================================================
-  // include signal samples
-  // init(false, true, true);
-
-  // gROOT->Reset();
-  //  gROOT->ProcessLine(".L CMSstyle.C");
-  //  CMSstyle();
-
-  //  gROOT->ProcessLine(".L CMS1bACStyle.C");
-  //  CMS1bACStyle();
 
   TStyle* m_gStyle = new TStyle();
   m_gStyle->SetOptFit(0);
@@ -86,20 +65,6 @@ void plotLimit(string year, string signame, string coupling, bool unblind) {
   TGraphAsymmErrors * graph95dn = new TGraphAsymmErrors();
 
   bool use_fb = true;
-  // std::map<std::string, std::vector<xsec> > xsections = loadXsections(year, true, signame, use_fb);
-  // std::map<std::string, TGraphErrors*> grxs;
-  // std::map<std::string, TGraphErrors*> grxs_spline;
-  // grxs[coupling] = getXsecGraph(xsections[coupling], true);
-  // std::map<std::string, RooSpline1D *> xsSplines;
-  // RooRealVar* MH = new RooRealVar("MH", "MH", 1000.);
-  // MH->setConstant();
-  // double upperxmax = 9000.;
-  // double xmin = 750.;
-  // RooSpline1D *xsSpline = graphToSpline(Form("fxs_%s",coupling.c_str()), grxs[coupling], MH , xmin, upperxmax);
-  // std::map<std::string, TF1 *> fm;
-  // fm[coupling] = new TF1(TString::Format("fm_%s",coupling.c_str()), "pol2", xmin, upperxmax);
-  // // grxs[coupling]->Fit(TString::Format("fm_%s",coupling.c_str()), "R");
-  // grxs_spline[coupling] = SplineTograph(Form("fxs_spline_%s",coupling.c_str()), xsSpline, MH , xmin, upperxmax);
 
   bool missmatchFlag = false;
   int point = 0;
@@ -289,19 +254,12 @@ void plotLimit(string year, string signame, string coupling, bool unblind) {
   extraText->SetTextSize(0.035);
   extraText->Draw();
 
-  std::string thelumi = "";
-  if (year == "fullRun2"){
-    double fullRun2lumi = 137.1;
-
-    std::stringstream stream;
-    stream << std::fixed << std::setprecision(1) << fullRun2lumi;
-    thelumi = stream.str();
-  } else {
-    std::stringstream stream;
-    stream << std::fixed << std::setprecision(1) << 35.9;
-    thelumi = stream.str();
-  }
-  TLatex* lumiText=new TLatex(0.70,0.90, Form("%s fb^{-1} (13 TeV)", thelumi.c_str() ) );
+  std::map<std::string, int> thelumi;
+  thelumi["2016"]=35.9;
+  thelumi["2017"]=41.5;
+  thelumi["2018"]=59.7;
+  thelumi["fullRun2"]=137.1;
+  TLatex* lumiText=new TLatex(0.70,0.90, Form("%d fb^{-1} (13 TeV)", thelumi[year] ) );
   lumiText->SetNDC(kTRUE);
   lumiText->SetTextFont(42);
   lumiText->SetLineColor(0);
@@ -328,276 +286,226 @@ void plotLimit(string year, string signame, string coupling, bool unblind) {
   outfile->Write();
   outfile->Close();
 
-  // TGraph* exp1SGraph = new TGraph();
-  // TGraph* exp2SGraph = new TGraph();
-  // TGraph* obsGraph = new TGraph();
-
 }
 
-//-----------------------------------------------------------------------------------
-// TGraphErrors* getXsecGraph( std::vector<xsec> xsections, bool basedonCoup)
-// {
-//   gStyle->SetOptStat(0);
-//   gStyle->SetOptFit(0);
+/* float cross_sections(){ */
+/*     if(sample.Contains("RSGravToGG_kMpl-001_M-1000_TuneCUEP8M1_13TeV-pythia8")) xsec = 0.01208; */
+/*     if(sample.Contains("RSGravToGG_kMpl-001_M-1250_TuneCUEP8M1_13TeV-pythia8")) xsec = 0.003731; */
+/*     if(sample.Contains("RSGravToGG_kMpl-001_M-1750_TuneCUEP8M1_13TeV-pythia8")) xsec = 0.0005499; */
+/*     if(sample.Contains("RSGravToGG_kMpl-001_M-2000_TuneCUEP8M1_13TeV-pythia8")) xsec = 0.0002422; */
+/*     if(sample.Contains("RSGravToGG_kMpl-001_M-2250_TuneCUEP8M1_13TeV-pythia8")) xsec = 0.0001135; */
+/*     if(sample.Contains("RSGravToGG_kMpl-001_M-2500_TuneCUEP8M1_13TeV-pythia8")) xsec = 5.604e-05; */
+/*     if(sample.Contains("RSGravToGG_kMpl-001_M-2750_TuneCUEP8M1_13TeV-pythia8")) xsec = 2.859e-05; */
+/*     if(sample.Contains("RSGravToGG_kMpl-001_M-3000_TuneCUEP8M1_13TeV-pythia8")) xsec = 1.501e-05; */
+/*     if(sample.Contains("RSGravToGG_kMpl-001_M-3250_TuneCUEP8M1_13TeV-pythia8")) xsec = 8.03e-06; */
+/*     if(sample.Contains("RSGravToGG_kMpl-001_M-3500_TuneCUEP8M1_13TeV-pythia8")) xsec = 4.384e-06; */
+/*     if(sample.Contains("RSGravToGG_kMpl-001_M-3750_TuneCUEP8M1_13TeV-pythia8")) xsec = 2.443e-06; */
+/*     if(sample.Contains("RSGravToGG_kMpl-001_M-4000_TuneCUEP8M1_13TeV-pythia8")) xsec = 1.365e-06; */
+/*     if(sample.Contains("RSGravToGG_kMpl-001_M-4500_TuneCUEP8M1_13TeV-pythia8")) xsec = 4.371e-07; */
+/*     if(sample.Contains("RSGravToGG_kMpl-001_M-5000_TuneCUEP8M1_13TeV-pythia8")) xsec = 1.425e-07; */
+/*     if(sample.Contains("RSGravToGG_kMpl-001_M-500_TuneCUEP8M1_13TeV-pythia8")) xsec = 0.3405; */
+/*     if(sample.Contains("RSGravToGG_kMpl-001_M-5500_TuneCUEP8M1_13TeV-pythia8")) xsec = 4.675e-08; */
+/*     if(sample.Contains("RSGravToGG_kMpl-001_M-6000_TuneCUEP8M1_13TeV-pythia8")) xsec = 1.556e-08; */
+/*     if(sample.Contains("RSGravToGG_kMpl-001_M-6500_TuneCUEP8M1_13TeV-pythia8")) xsec = 5.193e-09; */
+/*     if(sample.Contains("RSGravToGG_kMpl-001_M-7000_TuneCUEP8M1_13TeV-pythia8")) xsec = 1.784e-09; */
+/*     if(sample.Contains("RSGravToGG_kMpl-001_M-740_TuneCUEP8M1_13TeV-pythia8")) xsec = 0.05437; */
+/*     if(sample.Contains("RSGravToGG_kMpl-001_M-750_TuneCUEP8M1_13TeV-pythia8")) xsec = 0.05088; */
+/*     if(sample.Contains("RSGravToGG_kMpl-001_M-755_TuneCUEP8M1_13TeV-pythia8")) xsec = 0.04915; */
+/*     if(sample.Contains("RSGravToGG_kMpl-001_M-760_TuneCUEP8M1_13TeV-pythia8")) xsec = 0.04782; */
+/*     if(sample.Contains("RSGravToGG_kMpl-001_M-765_TuneCUEP8M1_13TeV-pythia8")) xsec = 0.04589; */
+/*     if(sample.Contains("RSGravToGG_kMpl-001_M-770_TuneCUEP8M1_13TeV-pythia8")) xsec = 0.04465; */
+/*     if(sample.Contains("RSGravToGG_kMpl-01_M-1000_TuneCUEP8M1_13TeV-pythia8")) xsec = 1.206; */
+/*     if(sample.Contains("RSGravToGG_kMpl-01_M-1250_TuneCUEP8M1_13TeV-pythia8")) xsec = 0.3716; */
+/*     if(sample.Contains("RSGravToGG_kMpl-01_M-1500_TuneCUEP8M1_13TeV-pythia8")) xsec = 0.1348; */
+/*     if(sample.Contains("RSGravToGG_kMpl-01_M-1750_TuneCUEP8M1_13TeV-pythia8")) xsec = 0.0548; */
+/*     if(sample.Contains("RSGravToGG_kMpl-01_M-2000_TuneCUEP8M1_13TeV-pythia8")) xsec = 0.02407; */
+/*     if(sample.Contains("RSGravToGG_kMpl-01_M-2250_TuneCUEP8M1_13TeV-pythia8")) xsec = 0.01129; */
+/*     if(sample.Contains("RSGravToGG_kMpl-01_M-2500_TuneCUEP8M1_13TeV-pythia8")) xsec = 0.005536; */
+/*     if(sample.Contains("RSGravToGG_kMpl-01_M-2750_TuneCUEP8M1_13TeV-pythia8")) xsec = 0.002836; */
+/*     if(sample.Contains("RSGravToGG_kMpl-01_M-3000_TuneCUEP8M1_13TeV-pythia8")) xsec = 0.001492; */
+/*     if(sample.Contains("RSGravToGG_kMpl-01_M-3500_TuneCUEP8M1_13TeV-pythia8")) xsec = 0.0004361; */
+/*     if(sample.Contains("RSGravToGG_kMpl-01_M-4000_TuneCUEP8M1_13TeV-pythia8")) xsec = 0.0001361; */
+/*     if(sample.Contains("RSGravToGG_kMpl-01_M-4500_TuneCUEP8M1_13TeV-pythia8")) xsec = 4.354e-05; */
+/*     if(sample.Contains("RSGravToGG_kMpl-01_M-5000_TuneCUEP8M1_13TeV-pythia8")) xsec = 1.439e-05; */
+/*     if(sample.Contains("RSGravToGG_kMpl-01_M-500_TuneCUEP8M1_13TeV-pythia8")) xsec = 34.43; */
+/*     if(sample.Contains("RSGravToGG_kMpl-01_M-5500_TuneCUEP8M1_13TeV-pythia8")) xsec = 4.807e-06; */
+/*     if(sample.Contains("RSGravToGG_kMpl-01_M-6000_TuneCUEP8M1_13TeV-pythia8")) xsec = 1.617e-06; */
+/*     if(sample.Contains("RSGravToGG_kMpl-01_M-6500_TuneCUEP8M1_13TeV-pythia8")) xsec = 5.545e-07; */
+/*     if(sample.Contains("RSGravToGG_kMpl-01_M-7000_TuneCUEP8M1_13TeV-pythia8")) xsec = 1.991e-07; */
+/*     if(sample.Contains("RSGravToGG_kMpl-01_M-740_TuneCUEP8M1_13TeV-pythia8")) xsec = 5.392; */
+/*     if(sample.Contains("RSGravToGG_kMpl-01_M-745_TuneCUEP8M1_13TeV-pythia8")) xsec = 5.192; */
+/*     if(sample.Contains("RSGravToGG_kMpl-01_M-750_TuneCUEP8M1_13TeV-pythia8")) xsec = 5.092; */
+/*     if(sample.Contains("RSGravToGG_kMpl-01_M-755_TuneCUEP8M1_13TeV-pythia8")) xsec = 4.886; */
+/*     if(sample.Contains("RSGravToGG_kMpl-01_M-760_TuneCUEP8M1_13TeV-pythia8")) xsec = 4.741; */
+/*     if(sample.Contains("RSGravToGG_kMpl-01_M-765_TuneCUEP8M1_13TeV-pythia8")) xsec = 4.585; */
+/*     if(sample.Contains("RSGravToGG_kMpl-01_M-770_TuneCUEP8M1_13TeV-pythia8")) xsec = 4.428; */
+/*     if(sample.Contains("RSGravToGG_kMpl-02_M-1000_TuneCUEP8M1_13TeV-pythia8")) xsec = 4.829; */
+/*     if(sample.Contains("RSGravToGG_kMpl-02_M-1500_TuneCUEP8M1_13TeV-pythia8")) xsec = 0.5326; */
+/*     if(sample.Contains("RSGravToGG_kMpl-02_M-2000_TuneCUEP8M1_13TeV-pythia8")) xsec = 0.09455; */
+/*     if(sample.Contains("RSGravToGG_kMpl-02_M-3000_TuneCUEP8M1_13TeV-pythia8")) xsec = 0.005803; */
+/*     if(sample.Contains("RSGravToGG_kMpl-02_M-4000_TuneCUEP8M1_13TeV-pythia8")) xsec = 0.000536; */
+/*     if(sample.Contains("RSGravToGG_kMpl-02_M-5000_TuneCUEP8M1_13TeV-pythia8")) xsec = 5.879e-05; */
+/*     if(sample.Contains("RSGravToGG_kMpl-02_M-500_TuneCUEP8M1_13TeV-pythia8")) xsec = 142.6; */
+/*     if(sample.Contains("RSGravToGG_kMpl-02_M-6000_TuneCUEP8M1_13TeV-pythia8")) xsec = 7.185e-06; */
+/*     if(sample.Contains("RSGravToGG_kMpl-02_M-7000_TuneCUEP8M1_13TeV-pythia8")) xsec = 1.03e-06; */
+/*     if(sample.Contains("RSGravToGG_kMpl-02_M-740_TuneCUEP8M1_13TeV-pythia8")) xsec = 21.32; */
+/*     if(sample.Contains("RSGravToGG_kMpl-02_M-745_TuneCUEP8M1_13TeV-pythia8")) xsec = 20.55; */
+/*     if(sample.Contains("RSGravToGG_kMpl-02_M-750_TuneCUEP8M1_13TeV-pythia8")) xsec = 20.62; */
+/*     if(sample.Contains("RSGravToGG_kMpl-02_M-755_TuneCUEP8M1_13TeV-pythia8")) xsec = 19.33; */
+/*     if(sample.Contains("RSGravToGG_kMpl-02_M-760_TuneCUEP8M1_13TeV-pythia8")) xsec = 18.74; */
+/*     if(sample.Contains("RSGravToGG_kMpl-02_M-765_TuneCUEP8M1_13TeV-pythia8")) xsec = 18.18; */
+/*     if(sample.Contains("RSGravToGG_kMpl-02_M-770_TuneCUEP8M1_13TeV-pythia8")) xsec = 17.58; */
+/*     if(sample.Contains("RSGravToGG_kMpl-001_M-1500_TuneCUEP8M1_13TeV-pythia8")) xsec = 0.001357; */
+/*     if(sample.Contains("RSGravToGG_kMpl-001_M-745_TuneCUEP8M1_13TeV-pythia8")) xsec = 0.05274; */
+/*     // from XSDB (2016) */
+/*     if(sample.Contains("GluGluSpin0ToGG_W-0p014_M-1000_TuneCUEP8M1_13TeV-pythia8")) xsec = 6.917e-12; */
+/*     if(sample.Contains("GluGluSpin0ToGG_W-0p014_M-1250_TuneCUEP8M1_13TeV-pythia8")) xsec = 1.389e-12; */
+/*     if(sample.Contains("GluGluSpin0ToGG_W-0p014_M-1500_TuneCUEP8M1_13TeV-pythia8")) xsec = 3.157e-13; */
+/*     if(sample.Contains("GluGluSpin0ToGG_W-0p014_M-1750_TuneCUEP8M1_13TeV-pythia8")) xsec = 8.162e-14; */
+/*     if(sample.Contains("GluGluSpin0ToGG_W-0p014_M-2000_TuneCUEP8M1_13TeV-pythia8")) xsec = 2.358e-14; */
+/*     if(sample.Contains("GluGluSpin0ToGG_W-0p014_M-2250_TuneCUEP8M1_13TeV-pythia8")) xsec = 7.401e-15; */
+/*     if(sample.Contains("GluGluSpin0ToGG_W-0p014_M-2500_TuneCUEP8M1_13TeV-pythia8")) xsec = 2.514e-15; */
+/*     if(sample.Contains("GluGluSpin0ToGG_W-0p014_M-2750_TuneCUEP8M1_13TeV-pythia8")) xsec = 9.032e-16; */
+/*     if(sample.Contains("GluGluSpin0ToGG_W-0p014_M-3000_TuneCUEP8M1_13TeV-pythia8")) xsec = 3.401e-16; */
+/*     if(sample.Contains("GluGluSpin0ToGG_W-0p014_M-3250_TuneCUEP8M1_13TeV-pythia8")) xsec = 1.324e-16; */
+/*     if(sample.Contains("GluGluSpin0ToGG_W-0p014_M-3500_TuneCUEP8M1_13TeV-pythia8")) xsec = 5.448e-17; */
+/*     if(sample.Contains("GluGluSpin0ToGG_W-0p014_M-4000_TuneCUEP8M1_13TeV-pythia8")) xsec = 9.839e-18; */
+/*     if(sample.Contains("GluGluSpin0ToGG_W-0p014_M-4500_TuneCUEP8M1_13TeV-pythia8")) xsec = 2.027e-18; */
+/*     if(sample.Contains("GluGluSpin0ToGG_W-0p014_M-5000_TuneCUEP8M1_13TeV-pythia8")) xsec = 5.081e-19; */
+/*     if(sample.Contains("GluGluSpin0ToGG_W-0p014_M-750_TuneCUEP8M1_13TeV-pythia8")) xsec = 3.301e-11; */
+/*     if(sample.Contains("GluGluSpin0ToGG_W-1p4_M-1000_TuneCUEP8M1_13TeV-pythia8")) xsec = 7.08e-10; */
+/*     if(sample.Contains("GluGluSpin0ToGG_W-1p4_M-1500_TuneCUEP8M1_13TeV-pythia8")) xsec = 3.435e-11; */
+/*     if(sample.Contains("GluGluSpin0ToGG_W-1p4_M-2000_TuneCUEP8M1_13TeV-pythia8")) xsec = 2.88e-12; */
+/*     if(sample.Contains("GluGluSpin0ToGG_W-1p4_M-3000_TuneCUEP8M1_13TeV-pythia8")) xsec = 7.852e-14; */
+/*     if(sample.Contains("GluGluSpin0ToGG_W-1p4_M-4000_TuneCUEP8M1_13TeV-pythia8")) xsec = 8.495e-15; */
+/*     if(sample.Contains("GluGluSpin0ToGG_W-1p4_M-5000_TuneCUEP8M1_13TeV-pythia8")) xsec = 1.959e-15; */
+/*     if(sample.Contains("GluGluSpin0ToGG_W-1p4_M-750_TuneCUEP8M1_13TeV-pythia8")) xsec = 3.318e-09; */
+/*     if(sample.Contains("GluGluSpin0ToGG_W-5p6_M-1000_TuneCUEP8M1_13TeV-pythia8")) xsec = 3.045e-09; */
+/*     if(sample.Contains("GluGluSpin0ToGG_W-5p6_M-1500_TuneCUEP8M1_13TeV-pythia8")) xsec = 1.713e-10; */
+/*     if(sample.Contains("GluGluSpin0ToGG_W-5p6_M-2000_TuneCUEP8M1_13TeV-pythia8")) xsec = 1.79e-11; */
+/*     if(sample.Contains("GluGluSpin0ToGG_W-5p6_M-3000_TuneCUEP8M1_13TeV-pythia8")) xsec = 8.497e-13; */
+/*     if(sample.Contains("GluGluSpin0ToGG_W-5p6_M-4000_TuneCUEP8M1_13TeV-pythia8")) xsec = 1.252e-13; */
+/*     if(sample.Contains("GluGluSpin0ToGG_W-5p6_M-5000_TuneCUEP8M1_13TeV-pythia8")) xsec = 3.107e-14; */
+/*     if(sample.Contains("GluGluSpin0ToGG_W-5p6_M-750_TuneCUEP8M1_13TeV-pythia8")) xsec = 1.353e-08; */
+/*     // From running GenXsecAnalyzer on full sample (2017) */
+/*     // We will use 2017 cross section for all three years */
+/*     // The ntuples are generated with 2017 xsection weights */
+/*     // In the resonant samplelist.hh, prepare all three years with the same naming scheme as below */
+/*     // except adding "_{year}" at the bottom */
 
-//   TGraphErrors* graph;
-
-//   unsigned int nP = xsections.size();
-
-//   double xval[nP];
-//   double xvalErr[nP];
-//   double xsecval[nP];
-//   double xsecErr[nP];
-
-//   for(unsigned int iE =0; iE < nP; iE++){
-//     if (basedonCoup) { xval[iE] = std::stod(xsections[iE].M_bins); }
-//     else {
-//       xval[iE] = xsections[iE].coup ;
-//       std::cout << "xsections[iE].coup  " << xsections[iE].coup << std::endl;
-//     }
-//     xvalErr[iE] = 0.;
-//     xsecval[iE] = xsections[iE].val;
-//     xsecErr[iE] = xsections[iE].error;
-//   }
-
-//   std::sort(xval, xval+nP);
-//   std::sort(xsecval, xsecval+nP, std::greater<float>());
-//   for(unsigned int iE =0; iE < nP; iE++){
-//     std::cout << xval[iE] << " " << xsecval[iE] << std::endl;
-//   }
-//   graph = new TGraphErrors(nP, xval, xsecval, xvalErr, xsecErr);
-
-//   return graph;
-
-// }
-// //-----------------------------------------------------------------------------------
-// std::map<std::string , std::vector<xsec> > loadXsections(const std::string & year, bool basedonCoup, std::string signame, bool use_fb)
-// {
-//   std::map<std::string, std::vector<xsec> >thexsections;
-
-//   std::vector<std::string> samples = getSampleList();
-
-//   xsec tmpxsec;
-//   std::string coup;
-
-//   for(auto isample : samples) {
-//     //Run a single year each time
-//     //For the full Run 2, we will set the year to 2017
-//     std::string xsec_year;
-//     if ( year.find("fullRun2") != std::string::npos ) xsec_year = "2017";
-//     else xsec_year = year;
-//     if ( isample.find(xsec_year.c_str()) == std::string::npos ) continue;
-
-//     if (isample.find("RSGraviton") != std::string::npos && signame == "grav") {
-//       coup = get_str_between_two_str(getBase(isample), "kMpl", "_M_");
-//     } else if ( isample.find("GluGluSpin0") != std::string::npos && signame == "heavyhiggs"){
-//       coup = get_str_between_two_str(getBase(isample), "GluGluSpin0ToGammaGamma_W_", "_M_");
-//     } else{
-//       continue;
-//     }
-
-//     std::cout << coup << std::endl;
-//     if ( coup == "001" ){ coup = "kMpl001";}
-//     else if ( coup == "01" ){ coup = "kMpl01";}
-//     else if ( coup == "02" ){coup = "kMpl02";}
-//     else if ( coup == "0p014" ){}
-//     else if ( coup == "1p4"){ }
-//     else if ( coup == "5p6"){ }
-//     else {
-//       std::cout << "Only 'kMpl001', 'kMpl01', 'kMpl02', '0p014', '1p4' and '5p6' are allowed. " << std::endl;
-//       exit(1);
-//     }
-
-//     std::cout << coup << " " << isample << std::endl;
-//     double scl = use_fb ? 1000. : 1.;
-//     tmpxsec.name = getSampleBase(isample,year);
-//     tmpxsec.val = ExoDiPhotons::crossSection(getSampleBase(isample,year)) * scl;
-//     tmpxsec.error = 0.;
-//     if (year == "fullRun2"){ tmpxsec.val = 3. * tmpxsec.val;  }
-
-//     std::cout << "xsec " << ExoDiPhotons::crossSection(getSampleBase(isample,year)) << std::endl;
-//     std::cout << "xsec in fb " << tmpxsec.val << std::endl;
-//     tmpxsec.M_bins = get_str_between_two_str(getBase(isample), "_M_", "_TuneCP2_13TeV_");
-
-//     if (basedonCoup) { thexsections[coup].push_back(tmpxsec); }
-//     else {
-
-//       if ( coup == "kMpl001" ){ tmpxsec.coup =  1.4 * pow(10.,-4); }
-//       else if ( coup == "kMpl01" ) { tmpxsec.coup =  1.4 * pow(10.,-2); }
-//       else if ( coup == "kMpl02" ) { tmpxsec.coup =  5.6 * pow(10.,-2); }
-//       else {
-//         std::cout << "Only 'kMpl001', 'kMpl01' and 'kMpl02' are allowed. " << std::endl;
-//         exit(1);
-//       }
-//       thexsections[tmpxsec.M_bins].push_back(tmpxsec);
-
-//     }
-
-//   }
-
-//   return thexsections;
-
-// }
-// //-----------------------------------------------------------------------------------
-// // remove year
-// std::string getSampleBase(const std::string & sampleName, const std::string & year)
-// {
-//   std::string newString(sampleName);
-//   if( sampleName.find("_201") != std::string::npos) {
-//     newString.replace(newString.find("_201"), 5, "");
-//   }
-//   if(sampleName.find("_R2F2") != std::string::npos) {
-//     newString.replace(newString.find("_R2F2"), 5, "_diphotonkfactorScalesUp");
-//   }
-//   if(sampleName.find("_R0p5F0p5") != std::string::npos) {
-//     newString.replace(newString.find("_R0p5F0p5"), 9, "_diphotonkfactorScalesDown");
-//   }
-//   // "data_obs" is always the name of the data observation histogram
-//   std::string data("data_" + year);
-//   if( sampleName.compare(data) == 0) newString = "data_obs";
-//   return newString;
-// }
-
-// //-----------------------------------------------------------------------------------
-// // ignore variations to get dataset name
-// std::string getBase(const std::string & sampleName)
-// {
-//   if(sampleName.compare("gg_R2F2_2016") == 0 ) return "gg_2016";
-//   if(sampleName.compare("gg_R0p5F0p5_2016") == 0 ) return "gg_2016";
-//   if(sampleName.compare("gg_R2F2_2017") == 0 ) return "gg_2017";
-//   if(sampleName.compare("gg_R0p5F0p5_2017") == 0 ) return "gg_2017";
-//   if(sampleName.compare("gg_R2F2_2018") == 0 ) return "gg_2018";
-//   if(sampleName.compare("gg_R0p5F0p5_2018") == 0 ) return "gg_2018";
-//   return sampleName;
-// }
-// //-----------------------------------------------------------------------------------
-// std::string get_str_between_two_str(const std::string &s, const std::string &start_delim, const std::string &stop_delim)
-// {
-//   unsigned first_delim_pos = s.find(start_delim);
-//   unsigned end_pos_of_first_delim = first_delim_pos + start_delim.length();
-//   unsigned last_delim_pos = s.find(stop_delim);
-
-//   return s.substr(end_pos_of_first_delim,
-//                   last_delim_pos - end_pos_of_first_delim);
-// }
-// //-----------------------------------------------------------------------------------
-// RooSpline1D* graphToSpline(std::string name, TGraphErrors *graph, RooRealVar* MH, double xmin, double upperxmax){
-
-//   std::cout << "Graph to Spline: " << name << std::endl;
-//   std::vector<double> xValues, yValues;
-//   for (double mh=xmin; mh<(upperxmax+0.25); mh+=10.){
-//     xValues.push_back(mh);
-//     yValues.push_back(graph->Eval(mh));
-//   }
-//   RooSpline1D *res = new RooSpline1D(name.c_str(),name.c_str(),*MH,xValues.size(),&(xValues[0]),&(yValues[0]));
-//   return res;
-// }
-
-// //-----------------------------------------------------------------------------------
-// TGraphErrors* SplineTograph(std::string name, RooSpline1D* thespline, RooRealVar* MH, double xmin, double upperxmax){
-
-//   std::cout << "Spline to Graph: " << name << std::endl;
-//   TGraphErrors* graph;
-
-//   std::vector<double> xValues, yValues, xValuesErr, yValuesErr;
-
-//   for (double mh=xmin; mh<(upperxmax+0.25); mh+=10.){
-//     MH->setVal(mh);
-//     xValues.push_back(mh);
-//     yValues.push_back(thespline->getVal());
-//     xValuesErr.push_back(0.);
-//     yValuesErr.push_back(0.);
-//   }
-
-//   graph = new TGraphErrors(yValues.size(), &xValues[0], &yValues[0], &xValuesErr[0], &yValuesErr[0]);
-//   graph->SetName(name.c_str());
-
-//   return graph;
-// }
-
-//-----------------------------------------------------------------------------------
-// TGraph * smoothen(TGraph *gr){
-//   //hardBound=self.options.smoothen_boundary
-//   double relwindow = 5.e-2;
-//   Double_t ix, iy, jx, jy;
-
-//   for(unsigned int ip =0; ip < gr->GetN(); ip++){
-
-//     gr->GetPoint(ip,ix,iy);
-//     double window = relwindow * ix;
-//     std::vector<double> ipoints;
-//     for(unsigned int jp =0; jp < gr->GetN(); jp++){
-//       gr->GetPoint(jp,jx,jy);
-
-//       if (fabs(ix-jx)<window){ ipoints.push_back(jp); }
-//     }
-//     if (ipoints.size() < 3) { continue; }
-//     double minw = gr->GetX()[std::min(ipoints)];
-//     double maxw = gr->GetX()[std::max(ipoints)];
-//     double left = ix-window/2.;
-//     double right = ix+window/2.;
-//     if (minw>left) { left = minw; }
-//     if (maxw<right) { right = maxw; }
-//     TGraph *gr2 = new TGraph();
-
-//         map(lambda y: gr2.SetPoint(y[0],gr.GetX()[y[1]],gr.GetY()[y[1]]), enumerate(filter(lambda x:  gr.GetX()[x]>=minw and gr.GetX()[x]<=maxw, ipoints )))
-//         ## print "Smoothing ", ix, left, right
-//         func = ROOT.TF1("f","[0]*pow(x,[1])")
-//         ## gr2.Print()
-//         slope = ( log(gr2.GetY()[gr2.GetN()-1])-log(gr2.GetY()[0]) ) / ( log(gr2.GetX()[gr2.GetN()-1])-log(gr2.GetX()[0]) )
-//         intercept = pow(gr2.GetY()[0],-slope)
-//         gr2.Fit(func,"Q")
-//         points.append( (ip, ix, func.Eval(ix)) )
-
-//       }
-
-//   for (auto point : points){
-//     ip, ix, iy = point
-//       scl = iy / gr.GetY()[ip]
-//       gr.SetPoint(ip,ix,iy)
-//       gr.SetPointEYlow( ip, gr.GetEYlow()[ip]*scl )
-//       gr.SetPointEYhigh( ip, gr.GetEYhigh()[ip]*scl )
-
-//       }
-
-// }
-
-  //Search for heavy, top-like quark pair production in the dilepton final state in pp collisions at sqrt(s) = 7 TeV CMS Collaboration
-  // Submitted on 24 Mar 2012
-  // CMS-EXO-11-050, CERN-PH-EP-2012-081
-  // arXiv:1203.5410v1 [hep-ex]
-
-  // theoryGraph->SetPoint(0,350,5.297);
-  // theoryGraph->SetPoint(1,400,2.386);
-  // theoryGraph->SetPoint(2,450,1.153);
-  // theoryGraph->SetPoint(3,500,0.590);
-  // theoryGraph->SetPoint(4,550,0.315);
-  // theoryGraph->SetPoint(5,600,0.174);
-  // theoryGraph->SetPoint(6,650,0.0999);
-  // theoryGraph->SetPoint(7,700,0.0585);
-  // theoryGraph->SetPoint(8,750,0.0350);
-  // theoryGraph->SetPoint(9,800,0.0213);
-  // theoryGraph->SetPoint(10,850,0.0132);
-  // theoryGraph->SetPoint(11,900,0.00828);
-  // theoryGraph->SetPoint(12,950,0.00525);
-  // theoryGraph->SetPoint(13,1000,0.00336);
-  // theoryGraph->SetPoint(14,1400,0.000114);
-  // theoryGraph->SetPoint(15,1500,0.0000499);
+/*     if(sample.Contains("GluGluSpin0ToGammaGamma_W_0p014_M_750_TuneCP2_13TeV_pythia8")) xsec =  3.035e-11; */
+/*     if(sample.Contains("GluGluSpin0ToGammaGamma_W_0p014_M_1000_TuneCP2_13TeV_pythia8")) xsec =  5.945e-12; */
+/*     if(sample.Contains("GluGluSpin0ToGammaGamma_W_0p014_M_1250_TuneCP2_13TeV_pythia8")) xsec =  1.132e-12; */
+/*     if(sample.Contains("GluGluSpin0ToGammaGamma_W_0p014_M_1500_TuneCP2_13TeV_pythia8")) xsec =  2.432e-13; */
+/*     if(sample.Contains("GluGluSpin0ToGammaGamma_W_0p014_M_1750_TuneCP2_13TeV_pythia8")) xsec = 5.951e-14; */
+/*     if(sample.Contains("GluGluSpin0ToGammaGamma_W_0p014_M_2000_TuneCP2_13TeV_pythia8")) xsec = 1.624e-14; */
+/*     if(sample.Contains("GluGluSpin0ToGammaGamma_W_0p014_M_2250_TuneCP2_13TeV_pythia8")) xsec =  4.882e-15; */
+/*     if(sample.Contains("GluGluSpin0ToGammaGamma_W_0p014_M_2500_TuneCP2_13TeV_pythia8")) xsec =  1.574e-15; */
+/*     if(sample.Contains("GluGluSpin0ToGammaGamma_W_0p014_M_2750_TuneCP2_13TeV_pythia8")) xsec = 5.413e-16; */
+/*     if(sample.Contains("GluGluSpin0ToGammaGamma_W_0p014_M_3000_TuneCP2_13TeV_pythia8")) xsec =  1.962e-16; */
+/*     if(sample.Contains("GluGluSpin0ToGammaGamma_W_0p014_M_3250_TuneCP2_13TeV_pythia8")) xsec = 7.432e-17; */
+/*     if(sample.Contains("GluGluSpin0ToGammaGamma_W_0p014_M_3500_TuneCP2_13TeV_pythia8")) xsec =  2.933e-17; */
+/*     if(sample.Contains("GluGluSpin0ToGammaGamma_W_0p014_M_4000_TuneCP2_13TeV_pythia8")) xsec =  5.239e-18; */
+/*     if(sample.Contains("GluGluSpin0ToGammaGamma_W_0p014_M_4500_TuneCP2_13TeV_pythia8")) xsec = 1.143e-18; */
+/*     if(sample.Contains("GluGluSpin0ToGammaGamma_W_0p014_M_5000_TuneCP2_13TeV_pythia8")) xsec =  3.283e-19; */
+/*     if(sample.Contains("GluGluSpin0ToGammaGamma_W_1p4_M_750_TuneCP2_13TeV_pythia8")) xsec =  3.042e-09; */
+/*     if(sample.Contains("GluGluSpin0ToGammaGamma_W_1p4_M_1000_TuneCP2_13TeV_pythia8")) xsec =  6.140e-10; */
+/*     if(sample.Contains("GluGluSpin0ToGammaGamma_W_1p4_M_1250_TuneCP2_13TeV_pythia8")) xsec = 1.202e-10; */
+/*     if(sample.Contains("GluGluSpin0ToGammaGamma_W_1p4_M_1500_TuneCP2_13TeV_pythia8")) xsec =  2.704e-11; */
+/*     if(sample.Contains("GluGluSpin0ToGammaGamma_W_1p4_M_1750_TuneCP2_13TeV_pythia8")) xsec =  7.066e-12; */
+/*     if(sample.Contains("GluGluSpin0ToGammaGamma_W_1p4_M_2000_TuneCP2_13TeV_pythia8")) xsec =  2.120e-12; */
+/*     if(sample.Contains("GluGluSpin0ToGammaGamma_W_1p4_M_2250_TuneCP2_13TeV_pythia8")) xsec =  7.305e-13; */
+/*     if(sample.Contains("GluGluSpin0ToGammaGamma_W_1p4_M_2500_TuneCP2_13TeV_pythia8")) xsec =  2.835e-13; */
+/*     if(sample.Contains("GluGluSpin0ToGammaGamma_W_1p4_M_3000_TuneCP2_13TeV_pythia8")) xsec =  6.077e-14; */
+/*     if(sample.Contains("GluGluSpin0ToGammaGamma_W_1p4_M_3500_TuneCP2_13TeV_pythia8")) xsec = 1.874e-14; */
+/*     if(sample.Contains("GluGluSpin0ToGammaGamma_W_1p4_M_4000_TuneCP2_13TeV_pythia8")) xsec =  7.510e-15; */
+/*     if(sample.Contains("GluGluSpin0ToGammaGamma_W_1p4_M_4250_TuneCP2_13TeV_pythia8")) xsec = 5.052e-15; */
+/*     if(sample.Contains("GluGluSpin0ToGammaGamma_W_1p4_M_4500_TuneCP2_13TeV_pythia8")) xsec = 3.501e-15; */
+/*     if(sample.Contains("GluGluSpin0ToGammaGamma_W_1p4_M_4750_TuneCP2_13TeV_pythia8")) xsec =  2.501e-15; */
+/*     if(sample.Contains("GluGluSpin0ToGammaGamma_W_1p4_M_5000_TuneCP2_13TeV_pythia8")) xsec = 1.816e-15; */
+/*     if(sample.Contains("GluGluSpin0ToGammaGamma_W_5p6_M_750_TuneCP2_13TeV_pythia8")) xsec =  1.247e-08; */
+/*     if(sample.Contains("GluGluSpin0ToGammaGamma_W_5p6_M_1000_TuneCP2_13TeV_pythia8")) xsec =  2.681e-09; */
+/*     if(sample.Contains("GluGluSpin0ToGammaGamma_W_5p6_M_1250_TuneCP2_13TeV_pythia8")) xsec =  5.652e-10; */
+/*     if(sample.Contains("GluGluSpin0ToGammaGamma_W_5p6_M_1500_TuneCP2_13TeV_pythia8")) xsec =  1.406e-10; */
+/*     if(sample.Contains("GluGluSpin0ToGammaGamma_W_5p6_M_1750_TuneCP2_13TeV_pythia8")) xsec =  4.166e-11; */
+/*     if(sample.Contains("GluGluSpin0ToGammaGamma_W_5p6_M_2000_TuneCP2_13TeV_pythia8")) xsec =  1.451e-11; */
+/*     if(sample.Contains("GluGluSpin0ToGammaGamma_W_5p6_M_2250_TuneCP2_13TeV_pythia8")) xsec =  5.826e-12; */
+/*     if(sample.Contains("GluGluSpin0ToGammaGamma_W_5p6_M_2500_TuneCP2_13TeV_pythia8")) xsec =  2.652e-12; */
+/*     if(sample.Contains("GluGluSpin0ToGammaGamma_W_5p6_M_3000_TuneCP2_13TeV_pythia8")) xsec =  7.361e-13; */
+/*     if(sample.Contains("GluGluSpin0ToGammaGamma_W_5p6_M_3500_TuneCP2_13TeV_pythia8")) xsec =  2.657e-13; */
+/*     if(sample.Contains("GluGluSpin0ToGammaGamma_W_5p6_M_4000_TuneCP2_13TeV_pythia8")) xsec =  1.144e-13; */
+/*     if(sample.Contains("GluGluSpin0ToGammaGamma_W_5p6_M_4500_TuneCP2_13TeV_pythia8")) xsec =  5.519e-14; */
+/*     if(sample.Contains("GluGluSpin0ToGammaGamma_W_5p6_M_4750_TuneCP2_13TeV_pythia8")) xsec =  3.954e-14; */
+/*     if(sample.Contains("GluGluSpin0ToGammaGamma_W_5p6_M_5000_TuneCP2_13TeV_pythia8")) xsec =  2.890e-14; */
 
 
-  // obsCMSGraph->SetPoint(0,350,0.47);
-  // obsCMSGraph->SetPoint(1,400,0.26);
-  // obsCMSGraph->SetPoint(2,450,0.22);
-  // obsCMSGraph->SetPoint(3,500,0.18);
-  // obsCMSGraph->SetPoint(4,550,0.16);
-  // obsCMSGraph->SetPoint(5,600,0.14);
+/*     int masslist[] = (750, 1000, 1250, 1500, 1750, 2000, 2250, 2500, 2750, 3000, 3250, 3500, 4000, 5000); */
+/*     int masslist[] = (4.850e-02, 1.133e-02, 3.428e-03, 1.234e-03, 4.981e-04, 2.201e-04, 1.036e-04, 5.074e-05, 2.613e-05, 1.384e-05, 7.548e-06, 4.226e-06, 1.439e-06, 2.150e-07); */
+/*  [750, 1000, 1250, 1500, 1750, 2000, 2250, 2500, 3000, 3500, 4000, 4250, 4500, 4750, 5000, 5250, 5500, 5750, 6000, 6500, 7000, 8000]; */
+/*  [4.870e+00, 1.120e+00, 3.413e-01, 1.224e-01, 4.940e-02, 2.180e-02, 1.025e-02, 5.051e-03, 1.373e-03, 4.229e-04, 1.435e-04, 8.663e-05, 5.367e-05, 3.368e-05, 2.163e-05, 1.398e-05, 9.145e-06, 6.022e-06, 3.967e-06, 1.742e-06, 7.583e-07, 1.269e-07]; */
+/*  [750, 1000, 1250, 1500, 1750, 2000, 2250, 2500, 3000, 3500, 4000, 4500, 4750, 5000, 5250, 5500, 5750, 6000, 6500, 7000, 8000]; */
+/*  [1.905e+01, 4.403e+00, 1.328e+00, 4.750e-01, 1.919e-01, 8.481e-02, 3.981e-02, 1.967e-02, 5.410e-03, 1.669e-03, 5.707e-04, 2.157e-04, 1.364e-04, 8.732e-05, 5.709e-05, 3.748e-05, 2.479e-05, 1.652e-05, 7.426e-06, 3.360e-06, 6.570e-07]; */
 
-  //To splines and back: This is to get a better interpolation which we do not need for the moment.
-  // RooSpline1D *expGraphSpline = graphToSpline(Form("fexpgr_%s",coupling.c_str()), expGraph_init, MH , xmin, upperxmax);
-  // TGraphErrors* expGraph = SplineTograph(Form("fexpgr_spline_%s",coupling.c_str()), expGraphSpline, MH , xmin, upperxmax);
-  // RooSpline1D *exp1SGraphSpline = graphToSpline(Form("fexpgr_%s",coupling.c_str()), exp1SGraph_init, MH , xmin, upperxmax);
-  // TGraphErrors* exp1SGraph = SplineTograph(Form("fexpgr_spline_%s",coupling.c_str()), exp1SGraphSpline, MH , xmin, upperxmax);
-  // RooSpline1D *exp2SGraphSpline = graphToSpline(Form("fexpgr_%s",coupling.c_str()), exp2SGraph_init, MH , xmin, upperxmax);
-  // TGraphErrors* exp2SGraph = SplineTograph(Form("fexpgr_spline_%s",coupling.c_str()), exp2SGraphSpline, MH , xmin, upperxmax);
-  // RooSpline1D *obsGraphSpline = graphToSpline(Form("fexpgr_%s",coupling.c_str()), obsGraph_init, MH , xmin, upperxmax);
-  // TGraphErrors* obsGraph = SplineTograph(Form("fexpgr_spline_%s",coupling.c_str()), obsGraphSpline, MH , xmin, upperxmax);
+
+
+
+/*     if(sample.Contains("RSGravitonToGammaGamma_kMpl001_M_750 _TuneCP2_13TeV_pythia8")) xsec =  4.850e-02; */
+/*     if(sample.Contains("RSGravitonToGammaGamma_kMpl001_M_1000_TuneCP2_13TeV_pythia8")) xsec =  1.133e-02; */
+/*     if(sample.Contains("RSGravitonToGammaGamma_kMpl001_M_1250_TuneCP2_13TeV_pythia8")) xsec =  3.428e-03; */
+/*     if(sample.Contains("RSGravitonToGammaGamma_kMpl001_M_1500_TuneCP2_13TeV_pythia8")) xsec =  1.234e-03; */
+/*     if(sample.Contains("RSGravitonToGammaGamma_kMpl001_M_1750_TuneCP2_13TeV_pythia8")) xsec =  4.981e-04; */
+/*     if(sample.Contains("RSGravitonToGammaGamma_kMpl001_M_2000_TuneCP2_13TeV_pythia8")) xsec =  2.201e-04; */
+/*     if(sample.Contains("RSGravitonToGammaGamma_kMpl001_M_2250_TuneCP2_13TeV_pythia8")) xsec =  1.036e-04; */
+/*     if(sample.Contains("RSGravitonToGammaGamma_kMpl001_M_2500_TuneCP2_13TeV_pythia8")) xsec =  5.074e-05; */
+/*     if(sample.Contains("RSGravitonToGammaGamma_kMpl001_M_2750_TuneCP2_13TeV_pythia8")) xsec =  2.613e-05; */
+/*     if(sample.Contains("RSGravitonToGammaGamma_kMpl001_M_3000_TuneCP2_13TeV_pythia8")) xsec =  1.384e-05; */
+/*     if(sample.Contains("RSGravitonToGammaGamma_kMpl001_M_3250_TuneCP2_13TeV_pythia8")) xsec =  7.548e-06; */
+/*     if(sample.Contains("RSGravitonToGammaGamma_kMpl001_M_3500_TuneCP2_13TeV_pythia8")) xsec =  4.226e-06; */
+/*     if(sample.Contains("RSGravitonToGammaGamma_kMpl001_M_4000_TuneCP2_13TeV_pythia8")) xsec =  1.439e-06; */
+/*     if(sample.Contains("RSGravitonToGammaGamma_kMpl001_M_5000_TuneCP2_13TeV_pythia8")) xsec =  2.150e-07; */
+
+/*     if(sample.Contains("RSGravitonToGammaGamma_kMpl01_M_750 _TuneCP2_13TeV_pythia8")) xsec =  4.870e+00; */
+/*     if(sample.Contains("RSGravitonToGammaGamma_kMpl01_M_1000_TuneCP2_13TeV_pythia8")) xsec =  1.120e+00; */
+/*     if(sample.Contains("RSGravitonToGammaGamma_kMpl01_M_1250_TuneCP2_13TeV_pythia8")) xsec =  3.413e-01; */
+/*     if(sample.Contains("RSGravitonToGammaGamma_kMpl01_M_1500_TuneCP2_13TeV_pythia8")) xsec =  1.224e-01; */
+/*     if(sample.Contains("RSGravitonToGammaGamma_kMpl01_M_1750_TuneCP2_13TeV_pythia8")) xsec =  4.940e-02; */
+/*     if(sample.Contains("RSGravitonToGammaGamma_kMpl01_M_2000_TuneCP2_13TeV_pythia8")) xsec =  2.180e-02; */
+/*     if(sample.Contains("RSGravitonToGammaGamma_kMpl01_M_2250_TuneCP2_13TeV_pythia8")) xsec =  1.025e-02; */
+/*     if(sample.Contains("RSGravitonToGammaGamma_kMpl01_M_2500_TuneCP2_13TeV_pythia8")) xsec =  5.051e-03; */
+/*     if(sample.Contains("RSGravitonToGammaGamma_kMpl01_M_3000_TuneCP2_13TeV_pythia8")) xsec =  1.373e-03; */
+/*     if(sample.Contains("RSGravitonToGammaGamma_kMpl01_M_3500_TuneCP2_13TeV_pythia8")) xsec =  4.229e-04; */
+/*     if(sample.Contains("RSGravitonToGammaGamma_kMpl01_M_4000_TuneCP2_13TeV_pythia8")) xsec =  1.435e-04; */
+/*     if(sample.Contains("RSGravitonToGammaGamma_kMpl01_M_4250_TuneCP2_13TeV_pythia8")) xsec =  8.663e-05; */
+/*     if(sample.Contains("RSGravitonToGammaGamma_kMpl01_M_4500_TuneCP2_13TeV_pythia8")) xsec =  5.367e-05; */
+/*     if(sample.Contains("RSGravitonToGammaGamma_kMpl01_M_4750_TuneCP2_13TeV_pythia8")) xsec =  3.368e-05; */
+/*     if(sample.Contains("RSGravitonToGammaGamma_kMpl01_M_5000_TuneCP2_13TeV_pythia8")) xsec =  2.163e-05; */
+/*     if(sample.Contains("RSGravitonToGammaGamma_kMpl01_M_5250_TuneCP2_13TeV_pythia8")) xsec =  1.398e-05; */
+/*     if(sample.Contains("RSGravitonToGammaGamma_kMpl01_M_5500_TuneCP2_13TeV_pythia8")) xsec =  9.145e-06; */
+/*     if(sample.Contains("RSGravitonToGammaGamma_kMpl01_M_5750_TuneCP2_13TeV_pythia8")) xsec =  6.022e-06; */
+/*     if(sample.Contains("RSGravitonToGammaGamma_kMpl01_M_6000_TuneCP2_13TeV_pythia8")) xsec =  3.967e-06; */
+/*     if(sample.Contains("RSGravitonToGammaGamma_kMpl01_M_6500_TuneCP2_13TeV_pythia8")) xsec =  1.742e-06; */
+/*     if(sample.Contains("RSGravitonToGammaGamma_kMpl01_M_7000_TuneCP2_13TeV_pythia8")) xsec =  7.583e-07; */
+/*     if(sample.Contains("RSGravitonToGammaGamma_kMpl01_M_8000_TuneCP2_13TeV_pythia8")) xsec =  1.269e-07; */
+
+/*     if(sample.Contains("RSGravitonToGammaGamma_kMpl02_M_750 _TuneCP2_13TeV_pythia8")) xsec =  1.905e+01; */
+/*     if(sample.Contains("RSGravitonToGammaGamma_kMpl02_M_1000_TuneCP2_13TeV_pythia8")) xsec =  4.403e+00; */
+/*     if(sample.Contains("RSGravitonToGammaGamma_kMpl02_M_1250_TuneCP2_13TeV_pythia8")) xsec =  1.328e+00; */
+/*     if(sample.Contains("RSGravitonToGammaGamma_kMpl02_M_1500_TuneCP2_13TeV_pythia8")) xsec =  4.750e-01; */
+/*     if(sample.Contains("RSGravitonToGammaGamma_kMpl02_M_1750_TuneCP2_13TeV_pythia8")) xsec =  1.919e-01; */
+/*     if(sample.Contains("RSGravitonToGammaGamma_kMpl02_M_2000_TuneCP2_13TeV_pythia8")) xsec =  8.481e-02; */
+/*     if(sample.Contains("RSGravitonToGammaGamma_kMpl02_M_2250_TuneCP2_13TeV_pythia8")) xsec =  3.981e-02; */
+/*     if(sample.Contains("RSGravitonToGammaGamma_kMpl02_M_2500_TuneCP2_13TeV_pythia8")) xsec =  1.967e-02; */
+/*     if(sample.Contains("RSGravitonToGammaGamma_kMpl02_M_3000_TuneCP2_13TeV_pythia8")) xsec =  5.410e-03; */
+/*     if(sample.Contains("RSGravitonToGammaGamma_kMpl02_M_3500_TuneCP2_13TeV_pythia8")) xsec =  1.669e-03; */
+/*     if(sample.Contains("RSGravitonToGammaGamma_kMpl02_M_4000_TuneCP2_13TeV_pythia8")) xsec =  5.707e-04; */
+/*     if(sample.Contains("RSGravitonToGammaGamma_kMpl02_M_4500_TuneCP2_13TeV_pythia8")) xsec =  2.157e-04; */
+/*     if(sample.Contains("RSGravitonToGammaGamma_kMpl02_M_4750_TuneCP2_13TeV_pythia8")) xsec =  1.364e-04; */
+/*     if(sample.Contains("RSGravitonToGammaGamma_kMpl02_M_5000_TuneCP2_13TeV_pythia8")) xsec =  8.732e-05; */
+/*     if(sample.Contains("RSGravitonToGammaGamma_kMpl02_M_5250_TuneCP2_13TeV_pythia8")) xsec =  5.709e-05; */
+/*     if(sample.Contains("RSGravitonToGammaGamma_kMpl02_M_5500_TuneCP2_13TeV_pythia8")) xsec =  3.748e-05; */
+/*     if(sample.Contains("RSGravitonToGammaGamma_kMpl02_M_5750_TuneCP2_13TeV_pythia8")) xsec =  2.479e-05; */
+/*     if(sample.Contains("RSGravitonToGammaGamma_kMpl02_M_6000_TuneCP2_13TeV_pythia8")) xsec =  1.652e-05; */
+/*     if(sample.Contains("RSGravitonToGammaGamma_kMpl02_M_6500_TuneCP2_13TeV_pythia8")) xsec =  7.426e-06; */
+/*     if(sample.Contains("RSGravitonToGammaGamma_kMpl02_M_7000_TuneCP2_13TeV_pythia8")) xsec =  3.360e-06; */
+/*     if(sample.Contains("RSGravitonToGammaGamma_kMpl02_M_8000_TuneCP2_13TeV_pythia8")) xsec =  6.570e-07; */
+/* } */

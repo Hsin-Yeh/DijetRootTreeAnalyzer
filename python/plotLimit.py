@@ -21,6 +21,9 @@ if __name__ == "__main__":
     # mass = [750, 1000, 1250, 1500, 1750, 2000, 2250, 2500, 3000, 3500, 4000, 4500, 4750, 5000, 5250, 5500, 5750, 6000, 6500, 7000, 8000]
     # crossSection = [1.905e+01, 4.403e+00, 1.328e+00, 4.750e-01, 1.919e-01, 8.481e-02, 3.981e-02, 1.967e-02, 5.410e-03, 1.669e-03, 5.707e-04, 2.157e-04, 1.364e-04, 8.732e-05, 5.709e-05, 3.748e-05, 2.479e-05, 1.652e-05, 7.426e-06, 3.360e-06, 6.570e-07]
 
+    m_gStyle = ROOT.TStyle();
+    m_gStyle.SetOptFit(0);
+
     in_filename = "finalResults_" + args.year + "_" + args.signame + "_" + args.coupling;
     mass_array, obs_array, exp_array, expP1s_array, expP2s_array, expM1s_array, expM2s_array, exp1s_array, exp2s_array, mass_long_array = array('d'), array('d'), array('d'), array('d'), array('d'), array('d'), array('d'), array('d'), array('d'), array('d');
     with open (in_filename,'r') as infile:
