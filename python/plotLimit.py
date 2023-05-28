@@ -41,8 +41,8 @@ if __name__ == "__main__":
     exp2s_array = expM2s_array + expP2s_array_reversed
 
     expGraph_init      = ROOT.TGraphErrors(len(mass_array),mass_array,exp_array);
-    exp1SGraph_init    = ROOT.TGraphErrors(len(mass_array),mass_long_array,exp1s_array);
-    exp2SGraph_init    = ROOT.TGraphErrors(len(mass_array),mass_long_array,exp2s_array);
+    exp1SGraph_init    = ROOT.TGraphErrors(len(mass_long_array),mass_long_array,exp1s_array);
+    exp2SGraph_init    = ROOT.TGraphErrors(len(mass_long_array),mass_long_array,exp2s_array);
     obsGraph_init      = ROOT.TGraphErrors(len(mass_array),mass_array,obs_array);
 
     # Add P1s to M1s graph
