@@ -26,7 +26,7 @@ if __name__ == "__main__":
     MC_crossSections["kMpl01"] = array('d',[4.870e+00, 1.120e+00, 3.413e-01, 1.224e-01, 4.940e-02, 2.180e-02, 1.025e-02, 5.051e-03, 1.373e-03, 4.229e-04, 1.435e-04, 8.663e-05, 5.367e-05, 3.368e-05, 2.163e-05, 1.398e-05, 9.145e-06, 6.022e-06, 3.967e-06, 1.742e-06, 7.583e-07, 1.269e-07])
     MC_crossSections["kMpl02"] = array('d',[1.905e+01, 4.403e+00, 1.328e+00, 4.750e-01, 1.919e-01, 8.481e-02, 3.981e-02, 1.967e-02, 5.410e-03, 1.669e-03, 5.707e-04, 2.157e-04, 1.364e-04, 8.732e-05, 5.709e-05, 3.748e-05, 2.479e-05, 1.652e-05, 7.426e-06, 3.360e-06, 6.570e-07])
 
-    MC_crossSection_fb = array('d',np.multiply(MC_crossSection[args.coup],1000))
+    MC_crossSection_fb = array('d',np.multiply(MC_crossSections[args.coup],1000))
     g_xs = ROOT.TGraph(len(MC_mass),MC_mass,MC_crossSection_fb)
 
     m_gStyle = ROOT.TStyle();
