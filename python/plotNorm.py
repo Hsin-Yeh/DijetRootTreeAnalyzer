@@ -6,7 +6,7 @@ import argparse
 
 parser = argparse.ArgumentParser(description='')
 parser.add_argument('in_filenames',nargs="+",help='input filenames')
-parser.add_argument('--outputDir','-o',default="./output",type=str,help='output directory')
+parser.add_argument('--outputDir','-o',default="./",type=str,help='output directory')
 parser.add_argument('--report','-r',default=10000,type=int,help='report every x events')
 parser.add_argument('--debug','-d',action="store_true",help='debug mode')
 parser.add_argument('--year','-y',default="2016",type=str,help='year')
