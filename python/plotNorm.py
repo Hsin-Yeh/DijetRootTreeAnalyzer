@@ -39,9 +39,9 @@ if __name__ == "__main__":
                 elif (line.find("All")!=-1):
                     Allnorm.append(float(line.split(" ")[4])/luminosity[args.year])
                     mass.append(float(line.split(" ")[2]))
-        EBEBnorms.append(EBEBnorm)
-        EBEEnorms.append(EBEEnorm)
-        Allnorms.append(Allnorm)
+        EBEBnorms[ifile] = EBEBnorm
+        EBEEnorms[ifile] = EBEEnorm
+        Allnorms[ifile] = Allnorm
         g_EBEB[ifile] = ROOT.TGraph(len(mass), mass, EBEBnorm)
         g_EBEE[ifile] = ROOT.TGraph(len(mass), mass, EBEEnorm)
         g_All[ifile] = ROOT.TGraph(len(mass), mass, Allnorm)
