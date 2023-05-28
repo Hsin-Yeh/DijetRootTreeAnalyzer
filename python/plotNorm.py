@@ -114,7 +114,7 @@ if __name__ == "__main__":
     g_diff_All.GetYaxis().SetLabelSize(15);
     g_diff_All.GetXaxis().SetTitleSize(20);
     g_diff_All.GetXaxis().SetTitleFont(43);
-    g_diff_All.GetXaxis().SetTitleOffset(1);
+    g_diff_All.GetXaxis().SetTitleOffset(1.55);
     g_diff_All.GetXaxis().SetLabelFont(43);
     g_diff_All.GetXaxis().SetLabelSize(15);
     g_diff_All.Draw("AL")
@@ -125,9 +125,9 @@ if __name__ == "__main__":
     g_diff_EBEE.Draw("LSame")
 
     l_diff = ROOT.TLegend(0.5,0.7,0.85,0.85)
-    l_diff.Add(g_diff_All,"All","l")
-    l_diff.Add(g_EBEB_All,"EBEB","l")
-    l_diff.Add(g_EBEE_All,"EBEE","l")
+    l_diff.AddEntry(g_diff_All,"All","l")
+    l_diff.AddEntry(g_EBEB_All,"EBEB","l")
+    l_diff.AddEntry(g_EBEE_All,"EBEE","l")
     l_diff.Draw()
 
-    c1.SaveAs("test.png")
+    c1.SaveAs("%s/SignalNorm_prefiring_%s_%s.png"%(args.outputDir,args.coupling,args.year))
