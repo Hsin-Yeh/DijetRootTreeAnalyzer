@@ -45,6 +45,7 @@ if __name__ == "__main__":
     exp2SGraph_init    = ROOT.TGraphErrors(len(mass_array),mass_array,expM2s_array);
     obsGraph_init      = ROOT.TGraphErrors(len(mass_array),mass_array,obs_array);
 
+    # Add P1s to M1s graph
     for ipoint in range(1, len(mass_array)+1):
         exp1SGraph_init.SetPoint(len(mass_array)+ipoint,mass_array[-ipoint],expP1s_array[-ipoint]);
         exp2SGraph_init.SetPoint(len(mass_array)+ipoint,mass_array[-ipoint],expP2s_array[-ipoint]);
@@ -60,8 +61,8 @@ if __name__ == "__main__":
     canv.SetRightMargin(0.08);
     canv.SetLeftMargin(0.15);
 
-    exp1SGraph.SetFillColor(kGreen);
-    exp2SGraph.SetFillColor(kYellow);
+    exp1SGraph.SetFillColor(3);
+    exp2SGraph.SetFillColor(5);
     exp2SGraph.GetXaxis().SetTitleSize(0.045);
     exp2SGraph.GetYaxis().SetTitleSize(0.045);
 
