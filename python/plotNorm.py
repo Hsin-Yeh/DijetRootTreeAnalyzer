@@ -20,7 +20,7 @@ if __name__ == "__main__":
     l = ROOT.TLegend(0.6, 0.55, 0.8, 0.7)
     luminosity = {"2016":35.9, "2017":41.5, "2018":59.7}
     color={"All":1,"EBEB":2,"EBEE":4}
-    linestyle=[1,9,10]
+    linestyle=[1,1,10]
     markerstyle=[24,26,28]
 
     g_EBEB, g_EBEE, g_All = {},{},{}
@@ -44,27 +44,27 @@ if __name__ == "__main__":
         g_All[ifile].GetXaxis().SetTitle("Mass_{X} [GeV]")
         g_All[ifile].GetYaxis().SetTitle("Normalization")
         g_All[ifile].SetMarkerColor(color["All"])
-        g_All[ifile].SetMarkerSize(0.2)
+        g_All[ifile].SetMarkerSize(1)
         g_All[ifile].SetLineColor(color["All"])
         g_All[ifile].SetLineWidth(1)
         g_All[ifile].SetLineStyle(linestyle[ifile])
         g_All[ifile].SetMarkerStyle(markerstyle[ifile])
-        if (ifile==0): g_All[ifile].Draw("AP")
-        else: g_All[ifile].Draw("PSame")
+        if (ifile==0): g_All[ifile].Draw("AL")
+        else: g_All[ifile].Draw("LSame")
         g_All[ifile].GetYaxis().SetRangeUser(0,1)
         g_EBEB[ifile].SetMarkerColor(color["EBEB"])
-        g_EBEB[ifile].SetMarkerSize(0.2)
+        g_EBEB[ifile].SetMarkerSize(1)
         g_EBEB[ifile].SetLineColor(color["EBEB"])
         g_EBEB[ifile].SetLineWidth(1)
         g_EBEB[ifile].SetLineStyle(linestyle[ifile])
         g_All[ifile].SetMarkerStyle(markerstyle[ifile])
-        g_EBEB[ifile].Draw("PSame")
+        g_EBEB[ifile].Draw("LSame")
         g_EBEE[ifile].SetMarkerColor(color["EBEE"])
-        g_EBEE[ifile].SetMarkerSize(0.2)
+        g_EBEE[ifile].SetMarkerSize(1)
         g_EBEE[ifile].SetLineColor(color["EBEE"])
         g_EBEE[ifile].SetLineWidth(1)
         g_EBEE[ifile].SetLineStyle(linestyle[ifile])
-        g_EBEE[ifile].Draw("PSame");
+        g_EBEE[ifile].Draw("LSame");
         g_All[ifile].SetMarkerStyle(markerstyle[ifile])
 
         # l.AddEntry(g_FC, "FC", "P")
