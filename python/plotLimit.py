@@ -30,7 +30,6 @@ if __name__ == "__main__":
         Lines = infile.readlines()
     for line in Lines:
         mass, obs, exp, expP1s, expP2s, expM1s, expM2s = line.split()
-        # print (mass, obs, exp, expP1s, expP2s, expM1s, expM2s )
         mass_array.append(float(mass))
         obs_array.append(float(obs))
         exp_array.append(float(exp))
@@ -45,7 +44,7 @@ if __name__ == "__main__":
     # exp1s_array = array('d',expM1s_array + expP1s_array_reversed)
     # exp2s_array = array('d',expM2s_array + expP2s_array_reversed)
 
-    # print (mass_long_array,exp1s_array,exp2s_array)
+    print (exp_array)
     expGraph_init      = ROOT.TGraphErrors(len(mass_array),mass_array,exp_array);
     exp1SGraph_init    = ROOT.TGraphErrors(len(mass_array),mass_array,expM1s_array);
     exp2SGraph_init    = ROOT.TGraphErrors(len(mass_array),mass_array,expM2s_array);
