@@ -28,13 +28,13 @@ if __name__ == "__main__":
     for line in Lines:
         mass, obs, exp, expP1s, expP2s, expM1s, expM2s = line.split()
         print (mass, obs, exp, expP1s, expP2s, expM1s, expM2s)
-        mass_array.append(mass)
-        obs_array.append(obs)
-        exp_array.append(exp)
-        expP1s_array.append(expP1s)
-        expP2s_array.append(expP2s)
-        expM1s_array.append(expM1s)
-        expM2s_array.append(expM2s)
+        mass_array.append(float(mass))
+        obs_array.append(float(obs))
+        exp_array.append(float(exp))
+        expP1s_array.append(float(expP1s))
+        expP2s_array.append(float(expP2s))
+        expM1s_array.append(float(expM1s))
+        expM2s_array.append(float(expM2s))
 
 
     m_gStyle = ROOT.TStyle();
