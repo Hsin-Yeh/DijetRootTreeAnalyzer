@@ -17,7 +17,7 @@ args = parser.parse_args()
 if __name__ == "__main__":
 
     for ifile, in_filename in enumerate(args.in_filenames):
-        EBEBnorm, EBEEnorm, Allnorm =  array('d'), array('d') , array('d')
+        EBEBnorm, EBEEnorm, Allnorm, mass =  array('d'), array('d') , array('d'), array('d')
         with open (in_filename,'r') as infile:
             Lines = infile.readlines()
         for line in Lines:
@@ -25,8 +25,8 @@ if __name__ == "__main__":
                 if (line.find("EBEB")!=-1): EBEBnorm.append(float(line.split(" ")[4]))
                 elif (line.find("EBEE")!=-1): EBEEnorm.append(float(line.split(" ")[4]))
                 elif (line.find("All")!=-1):
-                    Allnorm.append(line.split(" ")[4])
-                    mass.append(line.split(" ")[3])
+                    Allnorm.append(float(line.split(" ")[4]))
+                    mass.append(float(line.split(" ")[3]))
         c1 = ROOT.TCanvas()
         l = ROOT.TLegend(0.6, 0.55, 0.8, 0.7)
         g_EBEB = ROOT.TGraph(len(mass), mass, EBEBnorm)
