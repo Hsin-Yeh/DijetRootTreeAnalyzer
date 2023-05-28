@@ -79,9 +79,14 @@ if __name__ == "__main__":
     g_EBEE_2.SetLineWidth(1)
     g_EBEE_2.Draw("LSame");
 
-    # l.AddEntry(g_FC, "FC", "P")
-    # l.AddEntry(g_ZFC, "ZFC", "P")
-    # l.Draw("same")
+    l.AddEntry(g_All_1, "Total w/o Prefire reweight", "l")
+    l.AddEntry(g_EBEB_1, "EBEB w/o Prefire reweight", "l")
+    l.AddEntry(g_EBEE_1, "EBEE w/o Prefire reweight", "l")
+    l.AddEntry(g_All_2, "Total with Prefire reweight", "l")
+    l.AddEntry(g_EBEB_2, "EBEB with Prefire reweight", "l")
+    l.AddEntry(g_EBEE_2, "EBEE with Prefire reweight", "l")
+    l.Draw("same")
+
     c1.cd()
     pad2 = ROOT.TPad("pad2","",0,0.05,1,0.3)
     pad2.SetTopMargin(0);
@@ -112,7 +117,7 @@ if __name__ == "__main__":
     g_diff_All.GetXaxis().SetLabelFont(43);
     g_diff_All.GetXaxis().SetLabelSize(15);
     g_diff_All.Draw("AL")
-    g_diff_All.GetYaxis().SetRangeUser(0.98,1.08)
+    g_diff_All.GetYaxis().SetRangeUser(0.97,1.07)
     g_diff_EBEB.SetLineColor(2)
     g_diff_EBEB.Draw("LSame")
     g_diff_EBEE.SetLineColor(4)
