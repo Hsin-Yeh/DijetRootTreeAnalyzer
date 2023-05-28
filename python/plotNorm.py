@@ -17,7 +17,7 @@ args = parser.parse_args()
 if __name__ == "__main__":
 
     c1 = ROOT.TCanvas()
-    pad1 = ROOT.TPad("pad1","",0.05,0.40,0.95,0.95)
+    # pad1 = ROOT.TPad("pad1","",0.05,0.40,0.95,0.95)
     # pad2 = ROOT.TPad("pad2","",0.05,0.05,0.95,0.35)
     # pad1.cd()
     l = ROOT.TLegend(0.6, 0.55, 0.8, 0.7)
