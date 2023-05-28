@@ -20,7 +20,7 @@ if __name__ == "__main__":
     # mass = [750, 1000, 1250, 1500, 1750, 2000, 2250, 2500, 3000, 3500, 4000, 4500, 4750, 5000, 5250, 5500, 5750, 6000, 6500, 7000, 8000]
     # crossSection = [1.905e+01, 4.403e+00, 1.328e+00, 4.750e-01, 1.919e-01, 8.481e-02, 3.981e-02, 1.967e-02, 5.410e-03, 1.669e-03, 5.707e-04, 2.157e-04, 1.364e-04, 8.732e-05, 5.709e-05, 3.748e-05, 2.479e-05, 1.652e-05, 7.426e-06, 3.360e-06, 6.570e-07]
 
-    in_filename = "finalResults_" + year + "_" + signame + "_" + coupling;
+    in_filename = "finalResults_" + args.year + "_" + args.signame + "_" + args.coupling;
     mass_array, obs_array, exp_array, expP1s_array, expP2s_array, expM1s_array, expM2s_array = array('d'), array('d'), array('d'), array('d'), array('d'), array('d'), array('d');
     with open (in_filename,'r') as infile:
         Lines = infile.readlines()
@@ -65,8 +65,8 @@ if __name__ == "__main__":
     exp2SGraph.GetYaxis().SetTitleSize(0.045);
 
     exp2SGraph.GetYaxis().SetRangeUser(0.005,20);
-    exp2SGraph.GetYaxis().SetTitle("95% CL limit #sigma(pp#rightarrowG#rightarrow#gamma#gamma) (fb)" if signame == "grav" else "95% CL limit #sigma(pp#rightarrowS#rightarrow#gamma#gamma) (fb)" );
-    exp2SGraph.GetXaxis().SetTitle("m_{G} (GeV)" if signame == "grav" else "m_{S} (GeV)");
+    exp2SGraph.GetYaxis().SetTitle("95% CL limit #sigma(pp#rightarrowG#rightarrow#gamma#gamma) (fb)" if args.signame == "grav" else "95% CL limit #sigma(pp#rightarrowS#rightarrow#gamma#gamma) (fb)" );
+    exp2SGraph.GetXaxis().SetTitle("m_{G} (GeV)" if args.signame == "grav" else "m_{S} (GeV)");
     exp2SGraph.GetXaxis().SetMoreLogLabels();
     exp2SGraph.GetXaxis().SetRangeUser(600,8000);
 
@@ -95,9 +95,9 @@ if __name__ == "__main__":
     # grxs[coupling].Draw("Lsame");
 
     gr_2016  = ROOT.TGraph();
-    if (coupling=="kMpl001"): gr_2016.SetPoint(0,2300, 0.125977);
-    if (coupling=="kMpl01"): gr_2016.SetPoint(0,4100, 0.0983398);
-    if (coupling=="kMpl02"): gr_2016.SetPoint(0,4700, 0.1014);
+    if (args.coupling=="kMpl001"): gr_2016.SetPoint(0,2300, 0.125977);
+    if (args.coupling=="kMpl01"): gr_2016.SetPoint(0,4100, 0.0983398);
+    if (args.coupling=="kMpl02"): gr_2016.SetPoint(0,4700, 0.1014);
     gr_2016.SetMarkerStyle(30);
     gr_2016.SetMarkerSize(4);
     gr_2016.SetMarkerColor(9);
@@ -113,15 +113,15 @@ if __name__ == "__main__":
     leg.SetFillStyle(1001);
     leg.SetTextSize(0.033);
 
-    if ( coupling == "kMpl001" ): plabel = "#tilde{k}=0.01,J=2"
-    elif ( coupling == "kMpl01" ): plabel = "#tilde{k}=0.1,J=2"
-    elif ( coupling == "kMpl02" ): plabel = "#tilde{k}=0.2,J=2"
-    elif ( coupling == "0p014"): plabel = "#frac{#Gamma}{m} = 1.4 #times 10^{-4},J=0"
-    elif ( coupling == "1p4"): plabel = "#frac{#Gamma}{m} = 1.4 #times 10^{-2},J=0"
-    elif ( coupling == "5p6"): plabel = "#frac{#Gamma}{m} = 5.6 #times 10^{-2},J=0"
+    if ( args.coupling == "kMpl001" ): plabel = "#tilde{k}=0.01,J=2"
+    elif ( args.coupling == "kMpl01" ): plabel = "#tilde{k}=0.1,J=2"
+    elif ( args.coupling == "kMpl02" ): plabel = "#tilde{k}=0.2,J=2"
+    elif ( args.coupling == "0p014"): plabel = "#frac{#Gamma}{m} = 1.4 #times 10^{-4},J=0"
+    elif ( args.coupling == "1p4"): plabel = "#frac{#Gamma}{m} = 1.4 #times 10^{-2},J=0"
+    elif ( args.coupling == "5p6"): plabel = "#frac{#Gamma}{m} = 5.6 #times 10^{-2},J=0"
 
     leg.SetHeader(plabel,"C");
-    if ( signame == "grav" ):
+    if ( args.signame == "grav" ):
         # leg.AddEntry(grxs[coupling],"G_{RS}#rightarrow#gamma#gamma (LO)","l");
         leg.AddEntry(gr_2016,"Published 2016 Mass Limit","P");
         leg.AddEntry(expGraph,"expected Limit","L"); #L_{int}=36.4/pb
@@ -153,7 +153,7 @@ if __name__ == "__main__":
     thelumi["2017"]=41.5;
     thelumi["2018"]=59.7;
     thelumi["fullRun2"]=137.1;
-    lumiText=ROOT.TLatex(0.70,0.90, Form("%d fb^{-1} (13 TeV)", thelumi[year] ) );
+    lumiText=ROOT.TLatex(0.70,0.90, Form("%d fb^{-1} (13 TeV)", thelumi[args.year] ) );
     lumiText.SetNDC(kTRUE);
     lumiText.SetTextFont(42);
     lumiText.SetLineColor(0);
@@ -162,9 +162,9 @@ if __name__ == "__main__":
     lumiText.SetTextSize(0.035);
     lumiText.Draw();
 
-    canv.SaveAs( Form("./limitplot_%s_%s_%s.png", signame.c_str(), coupling.c_str(), year.c_str()) );
+    canv.SaveAs( Form("./limitplot_%s_%s_%s.png", args.signame, args.coupling, args.year) );
 
-    outfile = ROOT.TFile( Form("./limitplot_%s_%s_%s.root", signame.c_str(), coupling.c_str(), year.c_str()) , "RECREATE");
+    outfile = ROOT.TFile( Form("./limitplot_%s_%s_%s.root", args.signame.c_str(), args.coupling, args.year) , "RECREATE");
     canv.Write();
     expGraph.SetName("expGraph");
     obsGraph.SetName("obsGraph");
