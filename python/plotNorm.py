@@ -27,67 +27,69 @@ if __name__ == "__main__":
     markerstyle=[24,26,28]
 
     g_EBEB, g_EBEE, g_All = {},{},{}
-    EBEBnorms, EBEEnorms, Allnorms, masses = {}, {}, {}, {}
-    for ifile, in_filename in enumerate(args.in_filenames):
-        EBEBnorm, EBEEnorm, Allnorm, mass =  array('d'), array('d') , array('d'), array('d')
-        with open (in_filename,'r') as infile:
-            Lines = infile.readlines()
-        for line in Lines:
-            if (line.split()[0]==args.year and line.split()[1]==args.coupling and float(line.split()[2])%100!=0 ):
-                if (line.find("EBEB")!=-1): EBEBnorm.append(float(line.split(" ")[4])/luminosity[args.year])
-                elif (line.find("EBEE")!=-1): EBEEnorm.append(float(line.split(" ")[4])/luminosity[args.year])
-                elif (line.find("All")!=-1):
-                    Allnorm.append(float(line.split(" ")[4])/luminosity[args.year])
-                    mass.append(float(line.split(" ")[2]))
-        EBEBnorms[ifile] = EBEBnorm
-        EBEEnorms[ifile] = EBEEnorm
-        Allnorms[ifile] = Allnorm
-        masses[ifile] = mass
-        g_EBEB[ifile] = ROOT.TGraph(len(mass), mass, EBEBnorm)
-        g_EBEE[ifile] = ROOT.TGraph(len(mass), mass, EBEEnorm)
-        g_All[ifile] = ROOT.TGraph(len(mass), mass, Allnorm)
 
-        g_All[ifile].SetTitle("")
-        g_All[ifile].GetXaxis().SetTitle("Mass_{X} [GeV]")
-        g_All[ifile].GetYaxis().SetTitle("Normalization")
-        g_All[ifile].SetMarkerColor(color[ifile][0])
-        g_All[ifile].SetMarkerSize(1)
-        g_All[ifile].SetLineColor(color[ifile][0])
-        g_All[ifile].SetLineWidth(1)
-        g_All[ifile].SetLineStyle(linestyle[ifile])
-        g_All[ifile].SetMarkerStyle(markerstyle[ifile])
-        if (ifile==0): g_All[ifile].Draw("AL")
-        else: g_All[ifile].Draw("LSame")
-        g_All[ifile].GetYaxis().SetRangeUser(0,1)
-        g_EBEB[ifile].SetMarkerColor(color[ifile][1])
-        g_EBEB[ifile].SetMarkerSize(1)
-        g_EBEB[ifile].SetLineColor(color[ifile][1])
-        g_EBEB[ifile].SetLineWidth(1)
-        g_EBEB[ifile].SetLineStyle(linestyle[ifile])
-        g_All[ifile].SetMarkerStyle(markerstyle[ifile])
-        g_EBEB[ifile].Draw("LSame")
-        g_EBEE[ifile].SetMarkerColor(color[ifile][2])
-        g_EBEE[ifile].SetMarkerSize(1)
-        g_EBEE[ifile].SetLineColor(color[ifile][2])
-        g_EBEE[ifile].SetLineWidth(1)
-        g_EBEE[ifile].SetLineStyle(linestyle[ifile])
-        g_EBEE[ifile].Draw("LSame");
-        g_All[ifile].SetMarkerStyle(markerstyle[ifile])
+    EBEBnorm_1, EBEEnorm_1, Allnorm_1, mass_1 =  array('d'), array('d') , array('d'), array('d')
+    EBEBnorm_2, EBEEnorm_2, Allnorm_2, mass_2 =  array('d'), array('d') , array('d'), array('d')
+    with open (in_filename[0],'r') as infile:
+        Lines = infile.readlines()
+    for line in Lines:
+        if (line.split()[0]==args.year and line.split()[1]==args.coupling):
+            if (line.find("EBEB")!=-1): EBEBnorm_1.append(float(line.split(" ")[4])/luminosity[args.year])
+            elif (line.find("EBEE")!=-1): EBEEnorm_1.append(float(line.split(" ")[4])/luminosity[args.year])
+            elif (line.find("All")!=-1):
+                Allnorm_1.append(float(line.split(" ")[4])/luminosity[args.year])
+                mass_1.append(float(line.split(" ")[2]))
+    with open (in_filename[1],'r') as infile:
+        Lines = infile.readlines()
+    for line in Lines:
+        if (line.split()[0]==args.year and line.split()[1]==args.coupling):
+            if (line.find("EBEB")!=-1): EBEBnorm_2.append(float(line.split(" ")[4])/luminosity[args.year])
+            elif (line.find("EBEE")!=-1): EBEEnorm_2.append(float(line.split(" ")[4])/luminosity[args.year])
+            elif (line.find("All")!=-1):
+                Allnorm_2.append(float(line.split(" ")[4])/luminosity[args.year])
+                mass_2.append(float(line.split(" ")[2]))
 
-        # l.AddEntry(g_FC, "FC", "P")
-        # l.AddEntry(g_ZFC, "ZFC", "P")
-        # l.Draw("same")
+    g_EBEB_1 = ROOT.TGraph(len(mass), mass, EBEBnorm)
+    g_EBEE_1 = ROOT.TGraph(len(mass), mass, EBEEnorm)
+    g_All_1 = ROOT.TGraph(len(mass), mass, Allnorm)
 
-    pad2.cd()
-    EBEBnorm_diff, EBEEnorm_diff, All_diff= array('d'), array('d'), array('d')
-    EBEBnorm_diff=EBEBnorm[0]/EBEBnorm[1]
-    EBEEnorm_diff=EBEEnorm[0]/EBEEnorm[1]
-    Allnorm_diff=Allnorm[0]/Allnorm[1]
-    g_diff_EBEB = ROOT.TGraph(len(masses[0]), masses[0], EBEBnorm_diff)
-    g_diff_EBEE = ROOT.TGraph(len(masses[0]), masses[0], EBEEnorm_diff)
-    g_diff_All = ROOT.TGraph(len(masses[0]), masses[0], Allnorm_diff)
-    g_diff_EBEB.Draw("AL")
-    g_diff_EBEE.Draw("LSame")
-    g_diff_All.Draw("LSame")
+    g_All_1.SetTitle("")
+    g_All_1.GetXaxis().SetTitle("Mass_{X} [GeV]")
+    g_All_1.GetYaxis().SetTitle("Normalization")
+    g_All_1.SetLineColor(1)
+    g_All_1.SetLineWidth(1)
+    g_All_1.Draw("AL")
+    g_All_1.GetYaxis().SetRangeUser(0,1)
+    g_EBEB_1.SetLineColor(2)
+    g_EBEB_1.SetLineWidth(1)
+    g_EBEB_1.Draw("LSame")
+    g_EBEE_1.SetLineColor(4)
+    g_EBEE_1.SetLineWidth(1)
+    g_EBEE_1.Draw("LSame");
+    g_All_2.SetLineColor(5)
+    g_All_2.SetLineWidth(1)
+    g_All_2.Draw("LSame")
+    g_EBEB_2.SetLineColor(6)
+    g_EBEB_2.SetLineWidth(1)
+    g_EBEB_2.Draw("LSame")
+    g_EBEE_2.SetLineColor(8)
+    g_EBEE_2.SetLineWidth(1)
+    g_EBEE_2.Draw("LSame");
+
+    # l.AddEntry(g_FC, "FC", "P")
+    # l.AddEntry(g_ZFC, "ZFC", "P")
+    # l.Draw("same")
+
+# pad2.cd()
+# EBEBnorm_diff, EBEEnorm_diff, All_diff= array('d'), array('d'), array('d')
+# EBEBnorm_diff=EBEBnorm[0]/EBEBnorm[1]
+# EBEEnorm_diff=EBEEnorm[0]/EBEEnorm[1]
+# Allnorm_diff=Allnorm[0]/Allnorm[1]
+# g_diff_EBEB = ROOT.TGraph(len(masses[0]), masses[0], EBEBnorm_diff)
+# g_diff_EBEE = ROOT.TGraph(len(masses[0]), masses[0], EBEEnorm_diff)
+# g_diff_All = ROOT.TGraph(len(masses[0]), masses[0], Allnorm_diff)
+# g_diff_EBEB.Draw("AL")
+# g_diff_EBEE.Draw("LSame")
+# g_diff_All.Draw("LSame")
 
     c1.SaveAs("test.png")
