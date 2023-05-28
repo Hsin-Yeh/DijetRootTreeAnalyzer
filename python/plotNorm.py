@@ -17,6 +17,8 @@ args = parser.parse_args()
 if __name__ == "__main__":
 
     luminosity = {"2016":35.9, "2017":41.5, "2018":59.7}
+    color={"All":1,"EBEB":2,"EBEE":4}
+    linestyle=[1,9,10]
     for ifile, in_filename in enumerate(args.in_filenames):
         EBEBnorm, EBEEnorm, Allnorm, mass =  array('d'), array('d') , array('d'), array('d')
         with open (in_filename,'r') as infile:
@@ -34,26 +36,29 @@ if __name__ == "__main__":
         g_EBEE = ROOT.TGraph(len(mass), mass, EBEEnorm)
         g_All = ROOT.TGraph(len(mass), mass, Allnorm)
 
-        g_EBEB.SetTitle("")
-        g_EBEB.GetXaxis().SetTitle("Mass_{X} [GeV]")
-        g_EBEB.GetYaxis().SetTitle("Normalization")
-        g_EBEB.SetMarkerColor(2)
-        g_EBEB.SetMarkerSize(1)
-        g_EBEB.SetLineColor(2)
-        g_EBEB.SetLineWidth(1)
-        # g_EBEB.SetLineStyle(10)
-        g_EBEB.Draw("AL");
-        g_EBEB.GetYaxis().SetRangeUser(0,1)
-        g_EBEE.SetMarkerColor(4)
-        g_EBEE.SetMarkerSize(1)
-        g_EBEE.SetLineColor(4)
-        g_EBEE.SetLineWidth(1)
-        g_EBEE.Draw("LSame");
-        g_All.SetMarkerColor(1)
+        g_All.SetTitle("")
+        g_All.GetXaxis().SetTitle("Mass_{X} [GeV]")
+        g_All.GetYaxis().SetTitle("Normalization")
+        g_All.SetMarkerColor(color["All"])
         g_All.SetMarkerSize(1)
-        g_All.SetLineColor(1)
-        g_All.SetLineWidth(1)
-        g_All.Draw("LSame");
+        g_All.SetLineColor(color["All"])
+        g_All.SetLineWidth(2)
+        g_All.SetLineStyle(linestyle[ifile])
+        if (ifile==0): g_All.Draw("AL")
+        else: g_All.Draw("LSame")
+        g_All.GetYaxis().SetRangeUser(0,1)
+        g_EBEB.SetMarkerColor(color["EBEB"])
+        g_EBEB.SetMarkerSize(1)
+        g_EBEB.SetLineColor(color["EBEB"])
+        g_EBEB.SetLineWidth(2)
+        g_EBEB.SetLineStyle(linestyle[ifile])
+        g_EBEB.Draw("LSame")
+        g_EBEE.SetMarkerColor(color["EBEE"])
+        g_EBEE.SetMarkerSize(1)
+        g_EBEE.SetLineColor(color["EBEE"])
+        g_EBEE.SetLineWidth(2)
+        g_EBEE.SetLineStyle(linestyle[ifile])
+        g_EBEE.Draw("LSame");
 
         # g_FC.SetMarkerStyle(24)
 
