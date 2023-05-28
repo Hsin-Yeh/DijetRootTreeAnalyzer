@@ -166,7 +166,7 @@ if __name__ == "__main__":
 
     canv.SaveAs( "./limitplot_%s_%s_%s.png"% (args.signame, args.coupling, args.year) );
 
-    outfile = ROOT.TFile( "./limitplot_%s_%s_%s.root"% (args.signame.c_str(), args.coupling, args.year) , "RECREATE");
+    outfile = ROOT.TFile( "./limitplot_%s_%s_%s.root"% (args.signame, args.coupling, args.year) , "RECREATE");
     canv.Write();
     expGraph.SetName("expGraph");
     obsGraph.SetName("obsGraph");
