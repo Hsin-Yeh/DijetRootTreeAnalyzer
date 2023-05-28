@@ -29,7 +29,7 @@ if __name__ == "__main__":
     with open (in_filename,'r') as infile:
         Lines = infile.readlines()
     for line in Lines:
-        mass, obs, exp, expP1s, expP2s, expM1s, expM2s = line.split()
+        mass, obs, expP1s, expP2s, exp, expM1s, expM2s = line.split()
         mass_array.append(float(mass))
         obs_array.append(float(obs))
         exp_array.append(float(exp))
@@ -37,14 +37,7 @@ if __name__ == "__main__":
         expP2s_array.append(float(expP2s))
         expM1s_array.append(float(expM1s))
         expM2s_array.append(float(expM2s))
-    # mass_array_reversed = array('d',reversed(mass_array))
-    # expP1s_array_reversed = array('d',reversed(expP1s_array))
-    # expP2s_array_reversed = array('d',reversed(expP2s_array))
-    # mass_long_array = array('d',mass_array + mass_array_reversed)
-    # exp1s_array = array('d',expM1s_array + expP1s_array_reversed)
-    # exp2s_array = array('d',expM2s_array + expP2s_array_reversed)
 
-    print (exp_array)
     expGraph_init      = ROOT.TGraphErrors(len(mass_array),mass_array,exp_array);
     exp1SGraph_init    = ROOT.TGraphErrors(len(mass_array),mass_array,expM1s_array);
     exp2SGraph_init    = ROOT.TGraphErrors(len(mass_array),mass_array,expM2s_array);
@@ -76,15 +69,13 @@ if __name__ == "__main__":
     exp2SGraph.GetXaxis().SetTitle("m_{G} (GeV)" if args.signame == "grav" else "m_{S} (GeV)");
     exp2SGraph.GetXaxis().SetMoreLogLabels();
     exp2SGraph.GetXaxis().SetRangeUser(600,8000);
-    expGraph.GetYaxis().SetRangeUser(0.005,20);
-    expGraph.GetXaxis().SetRangeUser(600,8000);
 
-    # exp2SGraph.Draw("AF");
-    # exp1SGraph.Draw("F");
-    # expGraph.SetLineColor(4);
-    # expGraph.SetLineStyle(7);
-    # expGraph.SetLineWidth(3);
-    expGraph.Draw("ACL");
+    exp2SGraph.Draw("AF");
+    exp1SGraph.Draw("F");
+    expGraph.SetLineColor(4);
+    expGraph.SetLineStyle(7);
+    expGraph.SetLineWidth(3);
+    expGraph.Draw("CL");
 
     obsGraph.SetMarkerColor(1);
     obsGraph.SetMarkerStyle(20);
