@@ -28,7 +28,7 @@ if __name__ == "__main__":
         with open (in_filename,'r') as infile:
             Lines = infile.readlines()
         for line in Lines:
-            if (line.find(args.year)!=-1 and line.find(args.coupling)!=-1):
+            if (line.split()[0]==args.year and line.split()[1]==args.coupling):
                 if (line.find("EBEB")!=-1): EBEBnorm.append(float(line.split(" ")[4])/luminosity[args.year])
                 elif (line.find("EBEE")!=-1): EBEEnorm.append(float(line.split(" ")[4])/luminosity[args.year])
                 elif (line.find("All")!=-1):
