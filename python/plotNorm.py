@@ -22,6 +22,7 @@ if __name__ == "__main__":
     color={"All":1,"EBEB":2,"EBEE":4}
     linestyle=[1,9,10]
     g_EBEB, g_EBEE, g_All = {},{},{}
+
     for ifile, in_filename in enumerate(args.in_filenames):
         EBEBnorm, EBEEnorm, Allnorm, mass =  array('d'), array('d') , array('d'), array('d')
         with open (in_filename,'r') as infile:
@@ -33,9 +34,8 @@ if __name__ == "__main__":
                 elif (line.find("All")!=-1):
                     Allnorm.append(float(line.split(" ")[4])/luminosity[args.year])
                     mass.append(float(line.split(" ")[2]))
-        print(EBEBnorm)
-        print(EBEEnorm)
-        print(Allnorm)
+        print(mass)
+        print(len(mass), len(EBEBnorm), len(EBEEnorm), len(Allnorm))
         g_EBEB[ifile] = ROOT.TGraph(len(mass), mass, EBEBnorm)
         g_EBEE[ifile] = ROOT.TGraph(len(mass), mass, EBEEnorm)
         g_All[ifile] = ROOT.TGraph(len(mass), mass, Allnorm)
