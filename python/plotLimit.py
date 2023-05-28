@@ -46,8 +46,8 @@ if __name__ == "__main__":
     obsGraph_init      = ROOT.TGraphErrors(len(mass_array),mass_array,obs_array);
 
     for ipoint in range(1, len(mass_array)+1):
-        exp1SGraph_init.SetPoint(len(mass_array)+ipoint,mass_array[-ipoint],expP1s[-ipoint]);
-        exp2SGraph_init.SetPoint(len(mass_array)+ipoint,mass_array[-ipoint],expP2s[-ipoint]);
+        exp1SGraph_init.SetPoint(len(mass_array)+ipoint,mass_array[-ipoint],expP1s_array[-ipoint]);
+        exp2SGraph_init.SetPoint(len(mass_array)+ipoint,mass_array[-ipoint],expP2s_array[-ipoint]);
 
     expGraph = expGraph_init.Clone();
     exp1SGraph = exp1SGraph_init.Clone();
