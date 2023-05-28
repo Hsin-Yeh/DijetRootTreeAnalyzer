@@ -72,12 +72,12 @@ if __name__ == "__main__":
     exp2SGraph.GetXaxis().SetMoreLogLabels();
     exp2SGraph.GetXaxis().SetRangeUser(600,8000);
 
-    exp2SGraph.Draw("AF");
-    exp1SGraph.Draw("F");
-    expGraph.SetLineColor(4);
-    expGraph.SetLineStyle(7);
-    expGraph.SetLineWidth(3);
-    expGraph.Draw("CL");
+    # exp2SGraph.Draw("AF");
+    # exp1SGraph.Draw("F");
+    # expGraph.SetLineColor(4);
+    # expGraph.SetLineStyle(7);
+    # expGraph.SetLineWidth(3);
+    # expGraph.Draw("CL");
 
     obsGraph.SetMarkerColor(1);
     obsGraph.SetMarkerStyle(20);
@@ -93,7 +93,8 @@ if __name__ == "__main__":
     g_xs.SetLineColor(2);
     g_xs.SetLineStyle(9);
     g_xs.SetMarkerStyle(20);
-    g_xs.Draw("Lsame");
+    # g_xs.Draw("Lsame");
+    g_xs.Draw("AL")
 
     gr_2016  = ROOT.TGraph();
     if (args.coupling=="kMpl001"): gr_2016.SetPoint(0,2300, 0.125977);
