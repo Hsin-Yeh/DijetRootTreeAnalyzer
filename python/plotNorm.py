@@ -20,7 +20,7 @@ if __name__ == "__main__":
     l = ROOT.TLegend(0.6, 0.55, 0.8, 0.7)
     luminosity = {"2016":35.9, "2017":41.5, "2018":59.7}
     color={"All":1,"EBEB":2,"EBEE":4}
-    linestyle=[1,1,10]
+    linestyle=[1,9,10]
     markerstyle=[24,26,28]
 
     g_EBEB, g_EBEE, g_All = {},{},{}
@@ -30,7 +30,7 @@ if __name__ == "__main__":
         with open (in_filename,'r') as infile:
             Lines = infile.readlines()
         for line in Lines:
-            if (line.split()[0]==args.year and line.split()[1]==args.coupling and float(line.split()[2])%10!=0 ):
+            if (line.split()[0]==args.year and line.split()[1]==args.coupling and float(line.split()[2])%100!=0 ):
                 if (line.find("EBEB")!=-1): EBEBnorm.append(float(line.split(" ")[4])/luminosity[args.year])
                 elif (line.find("EBEE")!=-1): EBEEnorm.append(float(line.split(" ")[4])/luminosity[args.year])
                 elif (line.find("All")!=-1):
