@@ -112,7 +112,7 @@ if __name__ == "__main__":
     g_diff_All.GetXaxis().SetLabelFont(43);
     g_diff_All.GetXaxis().SetLabelSize(15);
     g_diff_All.Draw("AL")
-    g_diff_All.GetYaxis().SetRangeUser(0.9,1.1)
+    g_diff_All.GetYaxis().SetRangeUser(0.94,1.06)
     g_diff_EBEB.SetLineColor(2)
     g_diff_EBEB.Draw("LSame")
     g_diff_EBEE.SetLineColor(4)
