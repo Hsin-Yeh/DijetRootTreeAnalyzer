@@ -23,9 +23,9 @@ if __name__ == "__main__":
     pad1.SetGridx();
     pad1.Draw()
     pad1.cd()
-    l = ROOT.TLegend(0.15, 0.7, 0.85, 0.85)
+    l = ROOT.TLegend(0.15, 0.65, 0.85, 0.85)
     l.SetNColumns(2);
-    l.SetHeader("%s %s"%(args.year, args.coupling))
+    l.SetHeader("%s %s"%(args.year, args.coupling),"C")
     luminosity = {"2016":35.9, "2017":41.5, "2018":59.7}
     color=[[1,2,4], [5,6,8]]
     linestyle=[1,1,10]
