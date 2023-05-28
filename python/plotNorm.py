@@ -18,7 +18,9 @@ args = parser.parse_args()
 if __name__ == "__main__":
 
     c1 = ROOT.TCanvas()
-    pad1 = ROOT.TPad("pad1","",0.05,0.40,0.95,0.95)
+    pad1 = ROOT.TPad("pad1","",0,0.30,1,1)
+    pad1.SetBottomMargin(0);
+    pad1.SetGridx();
     pad1.Draw()
     pad1.cd()
     l = ROOT.TLegend(0.6, 0.55, 0.8, 0.7)
@@ -56,7 +58,6 @@ if __name__ == "__main__":
     g_All_2 = ROOT.TGraph(len(mass_2), mass_2, Allnorm_2)
 
     g_All_1.SetTitle("")
-    g_All_1.GetXaxis().SetTitle("Mass_{X} [GeV]")
     g_All_1.GetYaxis().SetTitle("Normalization")
     g_All_1.SetLineColor(5)
     g_All_1.SetLineWidth(1)
@@ -82,7 +83,10 @@ if __name__ == "__main__":
     # l.AddEntry(g_ZFC, "ZFC", "P")
     # l.Draw("same")
     c1.cd()
-    pad2 = ROOT.TPad("pad2","",0.05,0.05,0.95,0.35)
+    pad2 = ROOT.TPad("pad2","",0,0.05,1,0.3)
+    pad2.SetTopMargin(0);
+    pad2.SetBottomMargin(0.2);
+    pad2.SetGridx();
     pad2.Draw()
     pad2.cd()
     EBEBnorm_diff, EBEEnorm_diff, All_diff= array('d'), array('d'), array('d')
@@ -92,8 +96,14 @@ if __name__ == "__main__":
     g_diff_EBEB = ROOT.TGraph(len(mass_1), mass_1, EBEBnorm_diff)
     g_diff_EBEE = ROOT.TGraph(len(mass_1), mass_1, EBEEnorm_diff)
     g_diff_All = ROOT.TGraph(len(mass_1), mass_1, Allnorm_diff)
-    g_diff_EBEB.Draw("AL")
+
+    g_diff_All.SetTitle("")
+    g_diff_All.GetXaxis().SetTitle("Mass_{X} [GeV]")
+    g_diff_All.GetYaxis().SetTitle("new/old")
+    g_diff_All.SetLineColor(1)
+    g_diff_All.Draw("AL")
+    g_diff_All.GetYaxis().SetRangeUser(0.9,1.1)
+    g_diff_EBEB.Draw("LSame")
     g_diff_EBEE.Draw("LSame")
-    g_diff_All.Draw("LSame")
 
     c1.SaveAs("test.png")
