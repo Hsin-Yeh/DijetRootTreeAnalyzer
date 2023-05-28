@@ -22,8 +22,8 @@ if __name__ == "__main__":
             Lines = infile.readlines()
         for line in Lines:
             if (line.find(args.year)!=-1 and line.find(args.coupling)!=-1):
-                if (line.find("EBEB")!=-1): EBEBnorm.append(line.split(" ")[4])
-                elif (line.find("EBEE")!=-1): EBEEnorm.append(line.split(" ")[4])
+                if (line.find("EBEB")!=-1): EBEBnorm.append(float(line.split(" ")[4]))
+                elif (line.find("EBEE")!=-1): EBEEnorm.append(float(line.split(" ")[4]))
                 elif (line.find("All")!=-1):
                     Allnorm.append(line.split(" ")[4])
                     mass.append(line.split(" ")[3])
