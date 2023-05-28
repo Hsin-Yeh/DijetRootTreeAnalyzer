@@ -22,12 +22,11 @@ if __name__ == "__main__":
     # crossSection = [1.905e+01, 4.403e+00, 1.328e+00, 4.750e-01, 1.919e-01, 8.481e-02, 3.981e-02, 1.967e-02, 5.410e-03, 1.669e-03, 5.707e-04, 2.157e-04, 1.364e-04, 8.732e-05, 5.709e-05, 3.748e-05, 2.479e-05, 1.652e-05, 7.426e-06, 3.360e-06, 6.570e-07]
 
     in_filename = "finalResults_" + args.year + "_" + args.signame + "_" + args.coupling;
-    mass_array, obs_array, exp_array, expP1s_array, expP2s_array, expM1s_array, expM2s_array = array('d'), array('d'), array('d'), array('d'), array('d'), array('d'), array('d');
+    mass_array, obs_array, exp_array, expP1s_array, expP2s_array, expM1s_array, expM2s_array, exp1s_array, exp2s_array, mass_long_array = array('d'), array('d'), array('d'), array('d'), array('d'), array('d'), array('d'), array('d'), array('d'), array('d');
     with open (in_filename,'r') as infile:
         Lines = infile.readlines()
     for line in Lines:
         mass, obs, exp, expP1s, expP2s, expM1s, expM2s = line.split()
-        print (mass, obs, exp, expP1s, expP2s, expM1s, expM2s)
         mass_array.append(float(mass))
         obs_array.append(float(obs))
         exp_array.append(float(exp))
@@ -35,20 +34,19 @@ if __name__ == "__main__":
         expP2s_array.append(float(expP2s))
         expM1s_array.append(float(expM1s))
         expM2s_array.append(float(expM2s))
-
-
-    m_gStyle = ROOT.TStyle();
-    m_gStyle.SetOptFit(0);
+    mass_long_array = mass_array + mass_array.reverse()
+    exp1s_array = expM1s_array + expP1s_array.reverse()
+    exp2s_array = expM2s_array + expP2s_array.reverse()
 
     expGraph_init      = ROOT.TGraphErrors(len(mass_array),mass_array,exp_array);
-    exp1SGraph_init    = ROOT.TGraphErrors(len(mass_array),mass_array,expM1s_array);
-    exp2SGraph_init    = ROOT.TGraphErrors(len(mass_array),mass_array,expM2s_array);
+    exp1SGraph_init    = ROOT.TGraphErrors(len(mass_array),mass_long_array,exp1s_array);
+    exp2SGraph_init    = ROOT.TGraphErrors(len(mass_array),mass_long_array,exp2s_array);
     obsGraph_init      = ROOT.TGraphErrors(len(mass_array),mass_array,obs_array);
 
     # Add P1s to M1s graph
-    for ipoint in range(1, len(mass_array)+1):
-        exp1SGraph_init.SetPoint(len(mass_array)+ipoint-1,mass_array[-ipoint],expP1s_array[-ipoint]);
-        exp2SGraph_init.SetPoint(len(mass_array)+ipoint-1,mass_array[-ipoint],expP2s_array[-ipoint]);
+    # for ipoint in range(1, len(mass_array)+1):
+    #     exp1SGraph_init.SetPoint(len(mass_array)+ipoint-1,mass_array[-ipoint],expP1s_array[-ipoint]);
+    #     exp2SGraph_init.SetPoint(len(mass_array)+ipoint-1,mass_array[-ipoint],expP2s_array[-ipoint]);
 
     expGraph = expGraph_init.Clone();
     exp1SGraph = exp1SGraph_init.Clone();
