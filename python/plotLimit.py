@@ -47,8 +47,8 @@ if __name__ == "__main__":
 
     # Add P1s to M1s graph
     for ipoint in range(1, len(mass_array)+1):
-        exp1SGraph_init.SetPoint(len(mass_array)+ipoint,mass_array[-ipoint],expP1s_array[-ipoint]);
-        exp2SGraph_init.SetPoint(len(mass_array)+ipoint,mass_array[-ipoint],expP2s_array[-ipoint]);
+        exp1SGraph_init.SetPoint(len(mass_array)+ipoint-1,mass_array[-ipoint],expP1s_array[-ipoint]);
+        exp2SGraph_init.SetPoint(len(mass_array)+ipoint-1,mass_array[-ipoint],expP2s_array[-ipoint]);
 
     expGraph = expGraph_init.Clone();
     exp1SGraph = exp1SGraph_init.Clone();
