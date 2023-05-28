@@ -155,7 +155,7 @@ if __name__ == "__main__":
     thelumi["2017"]=41.5;
     thelumi["2018"]=59.7;
     thelumi["fullRun2"]=137.1;
-    lumiText=ROOT.TLatex(0.70,0.90, ROOT.Form("%d fb^{-1} (13 TeV)", thelumi[args.year] ) );
+    lumiText=ROOT.TLatex(0.70,0.90, "%d fb^{-1} (13 TeV)"%(thelumi[args.year]) );
     lumiText.SetNDC(1);
     lumiText.SetTextFont(42);
     lumiText.SetLineColor(0);
@@ -164,9 +164,9 @@ if __name__ == "__main__":
     lumiText.SetTextSize(0.035);
     lumiText.Draw();
 
-    canv.SaveAs( ROOT.Form("./limitplot_%s_%s_%s.png", args.signame, args.coupling, args.year) );
+    canv.SaveAs( "./limitplot_%s_%s_%s.png"% (args.signame, args.coupling, args.year) );
 
-    outfile = ROOT.TFile( ROOT.Form("./limitplot_%s_%s_%s.root", args.signame.c_str(), args.coupling, args.year) , "RECREATE");
+    outfile = ROOT.TFile( "./limitplot_%s_%s_%s.root"% (args.signame.c_str(), args.coupling, args.year) , "RECREATE");
     canv.Write();
     expGraph.SetName("expGraph");
     obsGraph.SetName("obsGraph");
