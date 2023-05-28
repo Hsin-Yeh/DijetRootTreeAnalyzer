@@ -30,7 +30,7 @@ if __name__ == "__main__":
 
     EBEBnorm_1, EBEEnorm_1, Allnorm_1, mass_1 =  array('d'), array('d') , array('d'), array('d')
     EBEBnorm_2, EBEEnorm_2, Allnorm_2, mass_2 =  array('d'), array('d') , array('d'), array('d')
-    with open (in_filename[0],'r') as infile:
+    with open (args.in_filenames[0],'r') as infile:
         Lines = infile.readlines()
     for line in Lines:
         if (line.split()[0]==args.year and line.split()[1]==args.coupling):
@@ -39,7 +39,7 @@ if __name__ == "__main__":
             elif (line.find("All")!=-1):
                 Allnorm_1.append(float(line.split(" ")[4])/luminosity[args.year])
                 mass_1.append(float(line.split(" ")[2]))
-    with open (in_filename[1],'r') as infile:
+    with open (args.in_filenames[1],'r') as infile:
         Lines = infile.readlines()
     for line in Lines:
         if (line.split()[0]==args.year and line.split()[1]==args.coupling):
