@@ -19,8 +19,6 @@ if __name__ == "__main__":
 
     c1 = ROOT.TCanvas()
     pad1 = ROOT.TPad("pad1","",0.05,0.40,0.95,0.95)
-    pad2 = ROOT.TPad("pad2","",0.05,0.05,0.95,0.35)
-    pad1.cd()
     l = ROOT.TLegend(0.6, 0.55, 0.8, 0.7)
     luminosity = {"2016":35.9, "2017":41.5, "2018":59.7}
     color=[[1,2,4], [5,6,8]]
@@ -81,7 +79,8 @@ if __name__ == "__main__":
     # l.AddEntry(g_FC, "FC", "P")
     # l.AddEntry(g_ZFC, "ZFC", "P")
     # l.Draw("same")
-
+    c1.cd()
+    pad2 = ROOT.TPad("pad2","",0.05,0.05,0.95,0.35)
     pad2.cd()
     EBEBnorm_diff, EBEEnorm_diff, All_diff= array('d'), array('d'), array('d')
     EBEBnorm_diff=np.divide(EBEBnorm_1,EBEBnorm_2)
@@ -90,7 +89,7 @@ if __name__ == "__main__":
     g_diff_EBEB = ROOT.TGraph(len(mass_1), mass_1, EBEBnorm_diff)
     g_diff_EBEE = ROOT.TGraph(len(mass_1), mass_1, EBEEnorm_diff)
     g_diff_All = ROOT.TGraph(len(mass_1), mass_1, Allnorm_diff)
-    g_diff_EBEB.Draw("AL")
+    g_diff_EBEB.Draw("L")
     g_diff_EBEE.Draw("LSame")
     g_diff_All.Draw("LSame")
 
