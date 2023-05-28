@@ -16,16 +16,17 @@ args = parser.parse_args()
 
 if __name__ == "__main__":
 
+    luminosity = {"2016":35.9, "2017":41.5, "2018":59.7}
     for ifile, in_filename in enumerate(args.in_filenames):
         EBEBnorm, EBEEnorm, Allnorm, mass =  array('d'), array('d') , array('d'), array('d')
         with open (in_filename,'r') as infile:
             Lines = infile.readlines()
         for line in Lines:
             if (line.find(args.year)!=-1 and line.find(args.coupling)!=-1):
-                if (line.find("EBEB")!=-1): EBEBnorm.append(float(line.split(" ")[4]))
-                elif (line.find("EBEE")!=-1): EBEEnorm.append(float(line.split(" ")[4]))
+                if (line.find("EBEB")!=-1): EBEBnorm.append(float(line.split(" ")[4])/luminosity[args.year])
+                elif (line.find("EBEE")!=-1): EBEEnorm.append(float(line.split(" ")[4])/luminosity[args.year])
                 elif (line.find("All")!=-1):
-                    Allnorm.append(float(line.split(" ")[4]))
+                    Allnorm.append(float(line.split(" ")[4])/luminosity[args.year])
                     mass.append(float(line.split(" ")[2]))
         c1 = ROOT.TCanvas()
         l = ROOT.TLegend(0.6, 0.55, 0.8, 0.7)
