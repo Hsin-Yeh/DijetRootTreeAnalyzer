@@ -91,7 +91,7 @@ if __name__ == "__main__":
     c1.cd()
     pad2 = ROOT.TPad("pad2","",0,0.05,1,0.3)
     pad2.SetTopMargin(0);
-    pad2.SetBottomMargin(0.2);
+    pad2.SetBottomMargin(0.1);
     pad2.SetGridx();
     pad2.Draw()
     pad2.cd()
@@ -126,6 +126,8 @@ if __name__ == "__main__":
 
     l_diff = ROOT.TLegend(0.5,0.7,0.85,0.85)
     l_diff.SetNColumns(3)
+    l_diff.SetTextSize(0.05)
+    l_diff.SetBorderSize(0)
     l_diff.AddEntry(g_diff_All,"All","l")
     l_diff.AddEntry(g_diff_EBEB,"EBEB","l")
     l_diff.AddEntry(g_diff_EBEE,"EBEE","l")
