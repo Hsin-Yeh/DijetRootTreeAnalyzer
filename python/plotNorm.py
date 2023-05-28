@@ -26,6 +26,7 @@ if __name__ == "__main__":
     l = ROOT.TLegend(0.15, 0.65, 0.85, 0.85)
     l.SetNColumns(2);
     l.SetHeader("%s %s"%(args.year, args.coupling),"C")
+    l.SetFillStyle(0);
     luminosity = {"2016":35.9, "2017":41.5, "2018":59.7}
     color=[[1,2,4], [5,6,8]]
     linestyle=[1,1,10]
@@ -119,7 +120,7 @@ if __name__ == "__main__":
     g_diff_All.GetXaxis().SetLabelFont(43);
     g_diff_All.GetXaxis().SetLabelSize(15);
     g_diff_All.Draw("AL")
-    g_diff_All.GetYaxis().SetRangeUser(0.97,1.07)
+    g_diff_All.GetYaxis().SetRangeUser(0.97,1.15)
     g_diff_EBEB.SetLineColor(2)
     g_diff_EBEB.Draw("LSame")
     g_diff_EBEE.SetLineColor(4)
@@ -128,6 +129,7 @@ if __name__ == "__main__":
     l_diff = ROOT.TLegend(0.5,0.7,0.85,0.85)
     l_diff.SetNColumns(3)
     l_diff.SetTextSize(0.1)
+    l_diff.SetFillStyle(0);
     l_diff.SetBorderSize(0)
     l_diff.AddEntry(g_diff_All,"All","l")
     l_diff.AddEntry(g_diff_EBEB,"EBEB","l")
