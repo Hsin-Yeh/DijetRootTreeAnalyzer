@@ -74,7 +74,7 @@ if __name__ == "__main__":
 
     exp2SGraph.Draw("AF");
     exp1SGraph.Draw("F");
-    expGraph.SetLineColor(kBlue);
+    expGraph.SetLineColor(4);
     expGraph.SetLineStyle(7);
     expGraph.SetLineWidth(3);
     expGraph.Draw("CL");
@@ -83,7 +83,7 @@ if __name__ == "__main__":
     obsGraph.SetMarkerStyle(20);
     obsGraph.SetMarkerSize(0.5);
     obsGraph.SetLineWidth(2);
-    obsGraph.SetLineColor(kBlack);
+    obsGraph.SetLineColor(1);
     obsGraph.SetLineStyle(1);
     if (args.unblind): obsGraph.Draw("PL");
     # if (unblind) obsGraph.Draw("L");
