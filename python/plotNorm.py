@@ -49,9 +49,12 @@ if __name__ == "__main__":
                 Allnorm_2.append(float(line.split(" ")[4])/luminosity[args.year])
                 mass_2.append(float(line.split(" ")[2]))
 
-    g_EBEB_1 = ROOT.TGraph(len(mass), mass, EBEBnorm)
-    g_EBEE_1 = ROOT.TGraph(len(mass), mass, EBEEnorm)
-    g_All_1 = ROOT.TGraph(len(mass), mass, Allnorm)
+    g_EBEB_1 = ROOT.TGraph(len(mass_1), mass_1, EBEBnorm_1)
+    g_EBEE_1 = ROOT.TGraph(len(mass_1), mass_1, EBEEnorm_1)
+    g_All_1 = ROOT.TGraph(len(mass_1), mass_1, Allnorm_1)
+    g_EBEB_2 = ROOT.TGraph(len(mass_2), mass_2, EBEBnorm_2)
+    g_EBEE_2 = ROOT.TGraph(len(mass_2), mass_2, EBEEnorm_2)
+    g_All_2 = ROOT.TGraph(len(mass_2), mass_2, Allnorm_2)
 
     g_All_1.SetTitle("")
     g_All_1.GetXaxis().SetTitle("Mass_{X} [GeV]")
