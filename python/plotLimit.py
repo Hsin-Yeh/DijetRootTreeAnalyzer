@@ -27,7 +27,7 @@ if __name__ == "__main__":
     MC_crossSections["kMpl02"] = array('d',[1.905e+01, 4.403e+00, 1.328e+00, 4.750e-01, 1.919e-01, 8.481e-02, 3.981e-02, 1.967e-02, 5.410e-03, 1.669e-03, 5.707e-04, 2.157e-04, 1.364e-04, 8.732e-05, 5.709e-05, 3.748e-05, 2.479e-05, 1.652e-05, 7.426e-06, 3.360e-06, 6.570e-07])
 
     MC_crossSection_fb = array('d',np.multiply(MC_crossSections[args.coupling],1000))
-    g_xs = ROOT.TGraph(len(MC_mass),MC_mass,MC_crossSection_fb)
+    g_xs = ROOT.TGraph(len(MC_masses[args.coupling]),MC_masses[args.coupling],MC_crossSection_fb)
 
     m_gStyle = ROOT.TStyle();
     m_gStyle.SetOptFit(0);
