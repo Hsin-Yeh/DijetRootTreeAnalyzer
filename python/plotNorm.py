@@ -19,6 +19,8 @@ if __name__ == "__main__":
 
     c1 = ROOT.TCanvas()
     pad1 = ROOT.TPad("pad1","",0.05,0.40,0.95,0.95)
+    pad1.Draw()
+    pad1.cd()
     l = ROOT.TLegend(0.6, 0.55, 0.8, 0.7)
     luminosity = {"2016":35.9, "2017":41.5, "2018":59.7}
     color=[[1,2,4], [5,6,8]]
@@ -82,6 +84,7 @@ if __name__ == "__main__":
     c1.cd()
     pad2 = ROOT.TPad("pad2","",0.05,0.05,0.95,0.35)
     pad2.cd()
+    pad2.Draw()
     EBEBnorm_diff, EBEEnorm_diff, All_diff= array('d'), array('d'), array('d')
     EBEBnorm_diff=np.divide(EBEBnorm_1,EBEBnorm_2)
     EBEEnorm_diff=np.divide(EBEEnorm_1,EBEEnorm_2)
