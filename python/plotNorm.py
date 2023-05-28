@@ -25,6 +25,7 @@ if __name__ == "__main__":
     pad1.cd()
     l = ROOT.TLegend(0.15, 0.7, 0.85, 0.85)
     l.SetNColumns(2);
+    l.SetHeader("%s %s"%(args.year, args.coupling))
     luminosity = {"2016":35.9, "2017":41.5, "2018":59.7}
     color=[[1,2,4], [5,6,8]]
     linestyle=[1,1,10]
@@ -60,7 +61,7 @@ if __name__ == "__main__":
 
     g_All_1.SetTitle("")
     g_All_1.GetYaxis().SetTitle("Normalization")
-    g_All_1.SetLineColor(5)
+    g_All_1.SetLineColor(3)
     g_All_1.SetLineWidth(1)
     g_All_1.Draw("AL")
     g_All_1.GetYaxis().SetRangeUser(0,1)
