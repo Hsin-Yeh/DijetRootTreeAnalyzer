@@ -49,7 +49,7 @@ if __name__ == "__main__":
         g_All[ifile].SetTitle("")
         g_All[ifile].GetXaxis().SetTitle("Mass_{X} [GeV]")
         g_All[ifile].GetYaxis().SetTitle("Normalization")
-        g_All[ifile].SetMarkerColor(color["All"])
+        g_All[ifile].SetMarkerColor(color[0][ifile])
         g_All[ifile].SetMarkerSize(1)
         g_All[ifile].SetLineColor(color[0][ifile])
         g_All[ifile].SetLineWidth(1)
