@@ -23,7 +23,7 @@ if __name__ == "__main__":
     pad1.SetGridx();
     pad1.Draw()
     pad1.cd()
-    l = ROOT.TLegend(0.2, 0.65, 0.85, 0.85)
+    l = ROOT.TLegend(0.17, 0.65, 0.88, 0.85)
     l.SetNColumns(2);
     l.SetHeader("%s %s"%(args.year, args.coupling),"C")
     l.SetFillStyle(0);
