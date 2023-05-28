@@ -41,12 +41,13 @@ if __name__ == "__main__":
         g_EBEB.SetMarkerSize(1)
         # g_EBEB.SetLineStyle(10)
         g_EBEB.Draw("AP");
+        g_EBEB.GetYaxis().SetRangeUser(0,1)
         g_EBEE.SetMarkerColor(4)
         g_EBEE.SetMarkerSize(1)
-        g_EBEE.Draw("P");
+        g_EBEE.Draw("PSame");
         g_All.SetMarkerColor(4)
         g_All.SetMarkerSize(1)
-        g_All.Draw("P");
+        g_All.Draw("PSame");
 
         # g_FC.SetMarkerStyle(24)
 
