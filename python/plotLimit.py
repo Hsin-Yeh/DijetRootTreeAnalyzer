@@ -35,8 +35,8 @@ if __name__ == "__main__":
         expM1s_array.append(float(expM1s))
         expM2s_array.append(float(expM2s))
     mass_long_array = mass_array + reversed(mass_array)
-    exp1s_array = expM1s_array + reversed(expP1s_array.reverse)
-    exp2s_array = expM2s_array + reversed(expP2s_array.reverse)
+    exp1s_array = expM1s_array + reversed(expP1s_array)
+    exp2s_array = expM2s_array + reversed(expP2s_array)
 
     expGraph_init      = ROOT.TGraphErrors(len(mass_array),mass_array,exp_array);
     exp1SGraph_init    = ROOT.TGraphErrors(len(mass_array),mass_long_array,exp1s_array);
