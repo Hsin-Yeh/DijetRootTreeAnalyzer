@@ -16,6 +16,8 @@ args = parser.parse_args()
 
 if __name__ == "__main__":
 
+    c1 = ROOT.TCanvas()
+    l = ROOT.TLegend(0.6, 0.55, 0.8, 0.7)
     luminosity = {"2016":35.9, "2017":41.5, "2018":59.7}
     color={"All":1,"EBEB":2,"EBEE":4}
     linestyle=[1,9,10]
@@ -34,8 +36,6 @@ if __name__ == "__main__":
         print(EBEBnorm)
         print(EBEEnorm)
         print(Allnorm)
-        c1 = ROOT.TCanvas()
-        l = ROOT.TLegend(0.6, 0.55, 0.8, 0.7)
         g_EBEB[ifile] = ROOT.TGraph(len(mass), mass, EBEBnorm)
         g_EBEE[ifile] = ROOT.TGraph(len(mass), mass, EBEEnorm)
         g_All[ifile] = ROOT.TGraph(len(mass), mass, Allnorm)
