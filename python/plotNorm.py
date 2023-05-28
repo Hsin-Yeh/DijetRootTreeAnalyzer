@@ -17,9 +17,9 @@ args = parser.parse_args()
 if __name__ == "__main__":
 
     c1 = ROOT.TCanvas()
-    # pad1 = ROOT.TPad("pad1","",0.05,0.40,0.95,0.95)
-    # pad2 = ROOT.TPad("pad2","",0.05,0.05,0.95,0.35)
-    # pad1.cd()
+    pad1 = ROOT.TPad("pad1","",0.05,0.40,0.95,0.95)
+    pad2 = ROOT.TPad("pad2","",0.05,0.05,0.95,0.35)
+    pad1.cd()
     l = ROOT.TLegend(0.6, 0.55, 0.8, 0.7)
     luminosity = {"2016":35.9, "2017":41.5, "2018":59.7}
     color=[[1,2,4], [5,6,8]]
@@ -57,23 +57,23 @@ if __name__ == "__main__":
     g_All_1.SetTitle("")
     g_All_1.GetXaxis().SetTitle("Mass_{X} [GeV]")
     g_All_1.GetYaxis().SetTitle("Normalization")
-    g_All_1.SetLineColor(1)
+    g_All_1.SetLineColor(5)
     g_All_1.SetLineWidth(1)
     g_All_1.Draw("AL")
     g_All_1.GetYaxis().SetRangeUser(0,1)
-    g_EBEB_1.SetLineColor(2)
+    g_EBEB_1.SetLineColor(6)
     g_EBEB_1.SetLineWidth(1)
     g_EBEB_1.Draw("LSame")
-    g_EBEE_1.SetLineColor(4)
+    g_EBEE_1.SetLineColor(8)
     g_EBEE_1.SetLineWidth(1)
     g_EBEE_1.Draw("LSame");
-    g_All_2.SetLineColor(5)
+    g_All_2.SetLineColor(1)
     g_All_2.SetLineWidth(1)
     g_All_2.Draw("LSame")
-    g_EBEB_2.SetLineColor(6)
+    g_EBEB_2.SetLineColor(2)
     g_EBEB_2.SetLineWidth(1)
     g_EBEB_2.Draw("LSame")
-    g_EBEE_2.SetLineColor(8)
+    g_EBEE_2.SetLineColor(4)
     g_EBEE_2.SetLineWidth(1)
     g_EBEE_2.Draw("LSame");
 
@@ -81,16 +81,16 @@ if __name__ == "__main__":
     # l.AddEntry(g_ZFC, "ZFC", "P")
     # l.Draw("same")
 
-# pad2.cd()
-# EBEBnorm_diff, EBEEnorm_diff, All_diff= array('d'), array('d'), array('d')
-# EBEBnorm_diff=EBEBnorm[0]/EBEBnorm[1]
-# EBEEnorm_diff=EBEEnorm[0]/EBEEnorm[1]
-# Allnorm_diff=Allnorm[0]/Allnorm[1]
-# g_diff_EBEB = ROOT.TGraph(len(masses[0]), masses[0], EBEBnorm_diff)
-# g_diff_EBEE = ROOT.TGraph(len(masses[0]), masses[0], EBEEnorm_diff)
-# g_diff_All = ROOT.TGraph(len(masses[0]), masses[0], Allnorm_diff)
-# g_diff_EBEB.Draw("AL")
-# g_diff_EBEE.Draw("LSame")
-# g_diff_All.Draw("LSame")
+    pad2.cd()
+    EBEBnorm_diff, EBEEnorm_diff, All_diff= array('d'), array('d'), array('d')
+    EBEBnorm_diff=EBEBnorm_1/EBEBnorm_2
+    EBEEnorm_diff=EBEEnorm_1/EBEEnorm_2
+    Allnorm_diff=Allnorm_1/Allnorm_2
+    g_diff_EBEB = ROOT.TGraph(len(masses_1), masses_1, EBEBnorm_diff)
+    g_diff_EBEE = ROOT.TGraph(len(masses_1), masses_1, EBEEnorm_diff)
+    g_diff_All = ROOT.TGraph(len(masses_1), masses_1, Allnorm_diff)
+    g_diff_EBEB.Draw("AL")
+    g_diff_EBEE.Draw("LSame")
+    g_diff_All.Draw("LSame")
 
     c1.SaveAs("test.png")
