@@ -49,8 +49,8 @@ if __name__ == "__main__":
         g_All[ifile].SetLineWidth(1)
         g_All[ifile].SetLineStyle(linestyle[ifile])
         g_All[ifile].SetMarkerStyle(markerstyle[ifile])
-        if (ifile==0): g_All[ifile].Draw("AL")
-        else: g_All[ifile].Draw("LSame")
+        if (ifile==0): g_All[ifile].Draw("AP")
+        else: g_All[ifile].Draw("PSame")
         g_All[ifile].GetYaxis().SetRangeUser(0,1)
         g_EBEB[ifile].SetMarkerColor(color["EBEB"])
         g_EBEB[ifile].SetMarkerSize(1)
@@ -58,13 +58,13 @@ if __name__ == "__main__":
         g_EBEB[ifile].SetLineWidth(1)
         g_EBEB[ifile].SetLineStyle(linestyle[ifile])
         g_All[ifile].SetMarkerStyle(markerstyle[ifile])
-        g_EBEB[ifile].Draw("LSame")
+        g_EBEB[ifile].Draw("PSame")
         g_EBEE[ifile].SetMarkerColor(color["EBEE"])
         g_EBEE[ifile].SetMarkerSize(1)
         g_EBEE[ifile].SetLineColor(color["EBEE"])
         g_EBEE[ifile].SetLineWidth(1)
         g_EBEE[ifile].SetLineStyle(linestyle[ifile])
-        g_EBEE[ifile].Draw("LSame");
+        g_EBEE[ifile].Draw("PSame");
         g_All[ifile].SetMarkerStyle(markerstyle[ifile])
 
         # l.AddEntry(g_FC, "FC", "P")
