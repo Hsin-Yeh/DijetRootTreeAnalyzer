@@ -30,6 +30,7 @@ if __name__ == "__main__":
         Lines = infile.readlines()
     for line in Lines:
         mass, obs, exp, expP1s, expP2s, expM1s, expM2s = line.split()
+        print (mass, obs, exp, expP1s, expP2s, expM1s, expM2s )
         mass_array.append(float(mass))
         obs_array.append(float(obs))
         exp_array.append(float(exp))
