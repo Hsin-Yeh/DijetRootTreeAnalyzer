@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import ROOT
+from array import array
 import argparse
 
 parser = argparse.ArgumentParser(description='')
