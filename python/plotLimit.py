@@ -60,6 +60,8 @@ if __name__ == "__main__":
     canv.SetLogx();
     canv.SetRightMargin(0.08);
     canv.SetLeftMargin(0.15);
+    g_xs.Draw("AP")
+    canv.SaveAs("test.png")
 
     exp1SGraph.SetFillColor(3);
     exp2SGraph.SetFillColor(5);
