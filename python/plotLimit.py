@@ -41,6 +41,7 @@ if __name__ == "__main__":
     exp1s_array = array('d',expM1s_array + expP1s_array_reversed)
     exp2s_array = array('d',expM2s_array + expP2s_array_reversed)
 
+    print (mass_long,array,exp1s_array,exp2s_array)
     expGraph_init      = ROOT.TGraphErrors(len(mass_array),mass_array,exp_array);
     exp1SGraph_init    = ROOT.TGraphErrors(len(mass_long_array),mass_long_array,exp1s_array);
     exp2SGraph_init    = ROOT.TGraphErrors(len(mass_long_array),mass_long_array,exp2s_array);
