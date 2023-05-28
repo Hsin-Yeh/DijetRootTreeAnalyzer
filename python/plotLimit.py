@@ -133,7 +133,7 @@ if __name__ == "__main__":
     leg.Draw();
 
     cmsText=ROOT.TLatex(0.17,0.90, "CMS");
-    cmsText.SetNDC(kTRUE);
+    cmsText.SetNDC(1);
     cmsText.SetTextFont(61);
     cmsText.SetLineColor(0);
     cmsText.SetLineStyle(1);
@@ -142,7 +142,7 @@ if __name__ == "__main__":
     cmsText.Draw();
 
     extraText=ROOT.TLatex(0.23,0.90, "Preliminary");
-    extraText.SetNDC(kTRUE);
+    extraText.SetNDC(1);
     extraText.SetTextFont(52);
     extraText.SetLineColor(0);
     extraText.SetLineStyle(1);
@@ -156,7 +156,7 @@ if __name__ == "__main__":
     thelumi["2018"]=59.7;
     thelumi["fullRun2"]=137.1;
     lumiText=ROOT.TLatex(0.70,0.90, Form("%d fb^{-1} (13 TeV)", thelumi[args.year] ) );
-    lumiText.SetNDC(kTRUE);
+    lumiText.SetNDC(1);
     lumiText.SetTextFont(42);
     lumiText.SetLineColor(0);
     lumiText.SetLineStyle(1);
