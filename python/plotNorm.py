@@ -23,7 +23,8 @@ if __name__ == "__main__":
     pad1.SetGridx();
     pad1.Draw()
     pad1.cd()
-    l = ROOT.TLegend(0.6, 0.55, 0.8, 0.7)
+    l = ROOT.TLegend(0.15, 0.6, 0.85, 0.85)
+    l.SetNColumns(2);
     luminosity = {"2016":35.9, "2017":41.5, "2018":59.7}
     color=[[1,2,4], [5,6,8]]
     linestyle=[1,1,10]
@@ -122,5 +123,11 @@ if __name__ == "__main__":
     g_diff_EBEB.Draw("LSame")
     g_diff_EBEE.SetLineColor(4)
     g_diff_EBEE.Draw("LSame")
+
+    l_diff = ROOT.TLegend(0.5,0.7,0.85,0.85)
+    l_diff.Add(g_diff_All,"All","l")
+    l_diff.Add(g_EBEB_All,"EBEB","l")
+    l_diff.Add(g_EBEE_All,"EBEE","l")
+    l_diff.Draw()
 
     c1.SaveAs("test.png")
