@@ -18,7 +18,6 @@ if __name__ == "__main__":
 
     for ifile, in_filename in enumerate(args.in_filenames):
         EBEBnorm, EBEEnorm, Allnorm =  array('d'), array('d') , array('d')
-        if (ifile%args.report==0): print (f"Processed {ifile}/{len(args.in_filenames)} file")
         with open (in_filename,'r') as infile:
             Lines = infile.readlines()
         for line in Lines:
