@@ -17,7 +17,8 @@ args = parser.parse_args()
 if __name__ == "__main__":
     MC_mass = array('d',[750, 1000, 1250, 1500, 1750, 2000, 2250, 2500, 2750, 3000, 3250, 3500, 4000, 5000])
     MC_crossSection = array('d',[4.850e-02, 1.133e-02, 3.428e-03, 1.234e-03, 4.981e-04, 2.201e-04, 1.036e-04, 5.074e-05, 2.613e-05, 1.384e-05, 7.548e-06, 4.226e-06, 1.439e-06, 2.150e-07])
-    g_xs = ROOT.TGraph(len(MC_mass),MC_mass,MC_crossSection)
+    MC_crossSection_fb = array('d',MC_crossSection*1000)
+    g_xs = ROOT.TGraph(len(MC_mass),MC_mass,MC_crossSection_fb)
     # mass = [750, 1000, 1250, 1500, 1750, 2000, 2250, 2500, 3000, 3500, 4000, 4250, 4500, 4750, 5000, 5250, 5500, 5750, 6000, 6500, 7000, 8000]
     # crossSection = [4.870e+00, 1.120e+00, 3.413e-01, 1.224e-01, 4.940e-02, 2.180e-02, 1.025e-02, 5.051e-03, 1.373e-03, 4.229e-04, 1.435e-04, 8.663e-05, 5.367e-05, 3.368e-05, 2.163e-05, 1.398e-05, 9.145e-06, 6.022e-06, 3.967e-06, 1.742e-06, 7.583e-07, 1.269e-07]
     # mass = [750, 1000, 1250, 1500, 1750, 2000, 2250, 2500, 3000, 3500, 4000, 4500, 4750, 5000, 5250, 5500, 5750, 6000, 6500, 7000, 8000]
@@ -60,8 +61,6 @@ if __name__ == "__main__":
     canv.SetLogx();
     canv.SetRightMargin(0.08);
     canv.SetLeftMargin(0.15);
-    g_xs.Draw("AP")
-    canv.SaveAs("test.png")
 
     exp1SGraph.SetFillColor(3);
     exp2SGraph.SetFillColor(5);
@@ -74,12 +73,12 @@ if __name__ == "__main__":
     exp2SGraph.GetXaxis().SetMoreLogLabels();
     exp2SGraph.GetXaxis().SetRangeUser(600,8000);
 
-    # exp2SGraph.Draw("AF");
-    # exp1SGraph.Draw("F");
-    # expGraph.SetLineColor(4);
-    # expGraph.SetLineStyle(7);
-    # expGraph.SetLineWidth(3);
-    # expGraph.Draw("CL");
+    exp2SGraph.Draw("AF");
+    exp1SGraph.Draw("F");
+    expGraph.SetLineColor(4);
+    expGraph.SetLineStyle(7);
+    expGraph.SetLineWidth(3);
+    expGraph.Draw("CL");
 
     obsGraph.SetMarkerColor(1);
     obsGraph.SetMarkerStyle(20);
@@ -95,8 +94,7 @@ if __name__ == "__main__":
     g_xs.SetLineColor(2);
     g_xs.SetLineStyle(9);
     g_xs.SetMarkerStyle(20);
-    # g_xs.Draw("Lsame");
-    g_xs.Draw("AL")
+    g_xs.Draw("Lsame");
 
     gr_2016  = ROOT.TGraph();
     if (args.coupling=="kMpl001"): gr_2016.SetPoint(0,2300, 0.125977);
