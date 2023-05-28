@@ -92,7 +92,7 @@ if __name__ == "__main__":
     g_diff_EBEB = ROOT.TGraph(len(mass_1), mass_1, EBEBnorm_diff)
     g_diff_EBEE = ROOT.TGraph(len(mass_1), mass_1, EBEEnorm_diff)
     g_diff_All = ROOT.TGraph(len(mass_1), mass_1, Allnorm_diff)
-    g_diff_EBEB.Draw("L")
+    g_diff_EBEB.Draw("AL")
     g_diff_EBEE.Draw("LSame")
     g_diff_All.Draw("LSame")
 
