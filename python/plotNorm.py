@@ -39,15 +39,21 @@ if __name__ == "__main__":
         g_EBEB.GetYaxis().SetTitle("Normalization")
         g_EBEB.SetMarkerColor(2)
         g_EBEB.SetMarkerSize(1)
+        g_EBEB.SetLineColor(2)
+        g_EBEB.SetLineWidth(1)
         # g_EBEB.SetLineStyle(10)
-        g_EBEB.Draw("AP");
+        g_EBEB.Draw("AL");
         g_EBEB.GetYaxis().SetRangeUser(0,1)
         g_EBEE.SetMarkerColor(4)
         g_EBEE.SetMarkerSize(1)
-        g_EBEE.Draw("PSame");
-        g_All.SetMarkerColor(4)
+        g_EBEE.SetLineColor(4)
+        g_EBEE.SetLineWidth(1)
+        g_EBEE.Draw("LSame");
+        g_All.SetMarkerColor(1)
         g_All.SetMarkerSize(1)
-        g_All.Draw("PSame");
+        g_All.SetLineColor(1)
+        g_All.SetLineWidth(1)
+        g_All.Draw("LSame");
 
         # g_FC.SetMarkerStyle(24)
 
