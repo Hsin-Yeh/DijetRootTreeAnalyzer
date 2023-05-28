@@ -9,6 +9,7 @@ parser.add_argument('--coupling','-c',default="kMpl001",type=str,help='coupling'
 parser.add_argument('--signame','-s',default="grav",type=str,help='grav or heavyhiggs')
 parser.add_argument('--outputDir','-o',default="./",type=str,help='output directory')
 parser.add_argument('--debug','-d',action="store_true",help='debug mode')
+parser.add_argument('--unblind',action="store_true",help='debug mode')
 args = parser.parse_args()
 
 if __name__ == "__main__":
@@ -64,8 +65,8 @@ if __name__ == "__main__":
     exp2SGraph.GetYaxis().SetTitleSize(0.045);
 
     exp2SGraph.GetYaxis().SetRangeUser(0.005,20);
-    exp2SGraph.GetYaxis().SetTitle(signame == "grav" ?  "95% CL limit #sigma(pp#rightarrowG#rightarrow#gamma#gamma) (fb)" : "95% CL limit #sigma(pp#rightarrowS#rightarrow#gamma#gamma) (fb)" );
-    exp2SGraph.GetXaxis().SetTitle(signame == "grav" ? "m_{G} (GeV)" : "m_{S} (GeV)");
+    exp2SGraph.GetYaxis().SetTitle("95% CL limit #sigma(pp#rightarrowG#rightarrow#gamma#gamma) (fb)" if signame == "grav" else "95% CL limit #sigma(pp#rightarrowS#rightarrow#gamma#gamma) (fb)" );
+    exp2SGraph.GetXaxis().SetTitle("m_{G} (GeV)" if signame == "grav" else "m_{S} (GeV)");
     exp2SGraph.GetXaxis().SetMoreLogLabels();
     exp2SGraph.GetXaxis().SetRangeUser(600,8000);
 
@@ -82,7 +83,7 @@ if __name__ == "__main__":
     obsGraph.SetLineWidth(2);
     obsGraph.SetLineColor(kBlack);
     obsGraph.SetLineStyle(1);
-    if (unblind) obsGraph.Draw("PL");
+    if (args.unblind): obsGraph.Draw("PL");
     # if (unblind) obsGraph.Draw("L");
     # obsGraph.Draw("LC");
 
@@ -93,16 +94,16 @@ if __name__ == "__main__":
     # grxs[coupling].SetMarkerStyle(20);
     # grxs[coupling].Draw("Lsame");
 
-    auto gr_2016  = new TGraph();
-    if (coupling=="kMpl001") gr_2016.SetPoint(0,2300, 0.125977);
-    if (coupling=="kMpl01") gr_2016.SetPoint(0,4100, 0.0983398);
-    if (coupling=="kMpl02") gr_2016.SetPoint(0,4700, 0.1014);
+    gr_2016  = ROOT.TGraph();
+    if (coupling=="kMpl001"): gr_2016.SetPoint(0,2300, 0.125977);
+    if (coupling=="kMpl01"): gr_2016.SetPoint(0,4100, 0.0983398);
+    if (coupling=="kMpl02"): gr_2016.SetPoint(0,4700, 0.1014);
     gr_2016.SetMarkerStyle(30);
     gr_2016.SetMarkerSize(4);
     gr_2016.SetMarkerColor(9);
     gr_2016.Draw("Psame");
 
-    TLegend *leg = new TLegend(0.55,0.6,0.75,0.85,NULL,"brNDC");
+    leg = ROOT.TLegend(0.55,0.6,0.75,0.85,NULL,"brNDC");
     leg.SetBorderSize(1);
     leg.SetTextFont(62);
     leg.SetLineColor(0);
@@ -113,11 +114,11 @@ if __name__ == "__main__":
     leg.SetTextSize(0.033);
 
     if ( coupling == "kMpl001" ): plabel = "#tilde{k}=0.01,J=2"
-    elif ( coupling == "kMpl01" ) plabel = "#tilde{k}=0.1,J=2"
-    elif ( coupling == "kMpl02" ) plabel = "#tilde{k}=0.2,J=2"
-    elif ( coupling == "0p014") plabel = "#frac{#Gamma}{m} = 1.4 #times 10^{-4},J=0"
-    elif ( coupling == "1p4") plabel = "#frac{#Gamma}{m} = 1.4 #times 10^{-2},J=0"
-    elif ( coupling == "5p6") plabel = "#frac{#Gamma}{m} = 5.6 #times 10^{-2},J=0"
+    elif ( coupling == "kMpl01" ): plabel = "#tilde{k}=0.1,J=2"
+    elif ( coupling == "kMpl02" ): plabel = "#tilde{k}=0.2,J=2"
+    elif ( coupling == "0p014"): plabel = "#frac{#Gamma}{m} = 1.4 #times 10^{-4},J=0"
+    elif ( coupling == "1p4"): plabel = "#frac{#Gamma}{m} = 1.4 #times 10^{-2},J=0"
+    elif ( coupling == "5p6"): plabel = "#frac{#Gamma}{m} = 5.6 #times 10^{-2},J=0"
 
     leg.SetHeader(plabel,"C");
     if ( signame == "grav" ):
@@ -129,7 +130,7 @@ if __name__ == "__main__":
         # leg.AddEntry(obsGraph,"observed Limit (Asymptotic)","L");
     leg.Draw();
 
-    cmsText=new ROOT.TLatex(0.17,0.90, "CMS");
+    cmsText=ROOT.TLatex(0.17,0.90, "CMS");
     cmsText.SetNDC(kTRUE);
     cmsText.SetTextFont(61);
     cmsText.SetLineColor(0);
