@@ -105,7 +105,7 @@ if __name__ == "__main__":
     gr_2016.SetMarkerColor(9);
     gr_2016.Draw("Psame");
 
-    leg = ROOT.TLegend(0.55,0.6,0.75,0.85,NULL,"brNDC");
+    leg = ROOT.TLegend(0.55,0.6,0.75,0.85,"brNDC");
     leg.SetBorderSize(1);
     leg.SetTextFont(62);
     leg.SetLineColor(0);
