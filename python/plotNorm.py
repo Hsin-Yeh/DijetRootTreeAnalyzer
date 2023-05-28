@@ -42,6 +42,7 @@ if __name__ == "__main__":
         EBEBnorms[ifile] = EBEBnorm
         EBEEnorms[ifile] = EBEEnorm
         Allnorms[ifile] = Allnorm
+        masses[ifile] = mass
         g_EBEB[ifile] = ROOT.TGraph(len(mass), mass, EBEBnorm)
         g_EBEE[ifile] = ROOT.TGraph(len(mass), mass, EBEEnorm)
         g_All[ifile] = ROOT.TGraph(len(mass), mass, Allnorm)
