@@ -114,7 +114,7 @@ if __name__ == "__main__":
     g_xs_TuneCP2.Draw("Lsame");
 
     g_xs_TuneCUEP8M1.SetLineWidth(3);
-    g_xs_TuneCUEP8M1.SetLineColor(2);
+    g_xs_TuneCUEP8M1.SetLineColor(8);
     g_xs_TuneCUEP8M1.SetLineStyle(9);
     g_xs_TuneCUEP8M1.SetMarkerStyle(20);
     g_xs_TuneCUEP8M1.Draw("Lsame");
