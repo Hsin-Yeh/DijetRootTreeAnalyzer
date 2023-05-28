@@ -18,15 +18,13 @@ if __name__ == "__main__":
 
     c1 = ROOT.TCanvas()
     pad1 = ROOT.TPad("pad1","",0.05,0.40,0.95,0.95)
-    pad2 = ROOT.TPad("pad2","",0.05,0.05,0.95,0.35)
-    pad1.cd()
+    # pad2 = ROOT.TPad("pad2","",0.05,0.05,0.95,0.35)
+    # pad1.cd()
     l = ROOT.TLegend(0.6, 0.55, 0.8, 0.7)
     luminosity = {"2016":35.9, "2017":41.5, "2018":59.7}
     color=[[1,2,4], [5,6,8]]
     linestyle=[1,1,10]
     markerstyle=[24,26,28]
-
-    g_EBEB, g_EBEE, g_All = {},{},{}
 
     EBEBnorm_1, EBEEnorm_1, Allnorm_1, mass_1 =  array('d'), array('d') , array('d'), array('d')
     EBEBnorm_2, EBEEnorm_2, Allnorm_2, mass_2 =  array('d'), array('d') , array('d'), array('d')
@@ -69,15 +67,15 @@ if __name__ == "__main__":
     g_EBEE_1.SetLineColor(4)
     g_EBEE_1.SetLineWidth(1)
     g_EBEE_1.Draw("LSame");
-    g_All_2.SetLineColor(5)
-    g_All_2.SetLineWidth(1)
-    g_All_2.Draw("LSame")
-    g_EBEB_2.SetLineColor(6)
-    g_EBEB_2.SetLineWidth(1)
-    g_EBEB_2.Draw("LSame")
-    g_EBEE_2.SetLineColor(8)
-    g_EBEE_2.SetLineWidth(1)
-    g_EBEE_2.Draw("LSame");
+    # g_All_2.SetLineColor(5)
+    # g_All_2.SetLineWidth(1)
+    # g_All_2.Draw("LSame")
+    # g_EBEB_2.SetLineColor(6)
+    # g_EBEB_2.SetLineWidth(1)
+    # g_EBEB_2.Draw("LSame")
+    # g_EBEE_2.SetLineColor(8)
+    # g_EBEE_2.SetLineWidth(1)
+    # g_EBEE_2.Draw("LSame");
 
     # l.AddEntry(g_FC, "FC", "P")
     # l.AddEntry(g_ZFC, "ZFC", "P")
