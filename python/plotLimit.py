@@ -29,7 +29,7 @@ if __name__ == "__main__":
     with open (in_filename,'r') as infile:
         Lines = infile.readlines()
     for line in Lines:
-        mass, obs, expP1s, expP2s, exp, expM1s, expM2s = line.split()
+        mass, obs, expP2s, expP1s, exp, expM1s, expM2s = line.split()
         mass_array.append(float(mass))
         obs_array.append(float(obs))
         exp_array.append(float(exp))
