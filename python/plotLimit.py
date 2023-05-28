@@ -30,7 +30,7 @@ if __name__ == "__main__":
         Lines = infile.readlines()
     for line in Lines:
         mass, obs, exp, expP1s, expP2s, expM1s, expM2s = line.split()
-        print (mass, obs, exp, expP1s, expP2s, expM1s, expM2s )
+        # print (mass, obs, exp, expP1s, expP2s, expM1s, expM2s )
         mass_array.append(float(mass))
         obs_array.append(float(obs))
         exp_array.append(float(exp))
@@ -78,12 +78,12 @@ if __name__ == "__main__":
     exp2SGraph.GetXaxis().SetMoreLogLabels();
     exp2SGraph.GetXaxis().SetRangeUser(600,8000);
 
-    exp2SGraph.Draw("AF");
-    exp1SGraph.Draw("F");
-    expGraph.SetLineColor(4);
-    expGraph.SetLineStyle(7);
-    expGraph.SetLineWidth(3);
-    expGraph.Draw("CL");
+    # exp2SGraph.Draw("AF");
+    # exp1SGraph.Draw("F");
+    # expGraph.SetLineColor(4);
+    # expGraph.SetLineStyle(7);
+    # expGraph.SetLineWidth(3);
+    expGraph.Draw("ACL");
 
     obsGraph.SetMarkerColor(1);
     obsGraph.SetMarkerStyle(20);
