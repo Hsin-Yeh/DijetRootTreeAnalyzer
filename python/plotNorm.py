@@ -126,8 +126,8 @@ if __name__ == "__main__":
 
     l_diff = ROOT.TLegend(0.5,0.7,0.85,0.85)
     l_diff.AddEntry(g_diff_All,"All","l")
-    l_diff.AddEntry(g_EBEB_All,"EBEB","l")
-    l_diff.AddEntry(g_EBEE_All,"EBEE","l")
+    l_diff.AddEntry(g_diff_EBEB,"EBEB","l")
+    l_diff.AddEntry(g_diff_EBEE,"EBEE","l")
     l_diff.Draw()
 
     c1.SaveAs("%s/SignalNorm_prefiring_%s_%s.png"%(args.outputDir,args.coupling,args.year))
