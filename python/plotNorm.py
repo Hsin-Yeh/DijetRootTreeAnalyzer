@@ -26,7 +26,7 @@ if __name__ == "__main__":
                 elif (line.find("EBEE")!=-1): EBEEnorm.append(float(line.split(" ")[4]))
                 elif (line.find("All")!=-1):
                     Allnorm.append(float(line.split(" ")[4]))
-                    mass.append(float(line.split(" ")[3]))
+                    mass.append(float(line.split(" ")[2]))
         c1 = ROOT.TCanvas()
         l = ROOT.TLegend(0.6, 0.55, 0.8, 0.7)
         g_EBEB = ROOT.TGraph(len(mass), mass, EBEBnorm)
