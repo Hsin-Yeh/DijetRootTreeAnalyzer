@@ -35,7 +35,7 @@ cp -r ${mainpath}/bkgAltModels .
 cp ${mainpath}/datacards/multi/FitResults*.root .
 cp /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/SignalNorm_Splines_full.txt ./SignalNorm.txt
 
-time python python/RunBias.py -c config/diphotons_bias_${THEYEAR}_pdf_index.config -i FitResults_DiPhotons_${THECOUP}_${THECAT}_${THEYEAR}.root -b DiPhotons_${THECOUP}_${THECAT}_${THEYEAR} --mass ${THEMASS} -m gg -d signal_bias -r${THEMUIN} -l ${THELUMI} --year ${THEYEAR} -t ${THENTOYS} --gen-pdf ${THEMODEL} --fit-pdf ${THENOMINALMODEL} --SigNorm SignalNorm.txt
+time python python/RunBias.py -c config/diphotons_bias_${THEYEAR}_pdf_index.config -i FitResults_DiPhotons_${THECOUP}_${THECAT}_${THEYEAR}.root -b DiPhotons_${THECOUP}_${THECAT}_${THEYEAR} --mass ${THEMASS} -m gg -d signal_bias -r ${THEMUIN} -l ${THELUMI} --year ${THEYEAR} -t ${THENTOYS} --gen-pdf ${THEMODEL} --fit-pdf ${THENOMINALMODEL} --SigNorm SignalNorm.txt
 
 outfile=`ls fitDiagnostics*|grep ${THECOUP}|grep ${THEMODEL}|grep ${THENOMINALMODEL}|grep .root`
 
