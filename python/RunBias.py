@@ -75,9 +75,9 @@ if __name__ == '__main__':
     signalDsName = ''
     if 'DiPhotons' in box:
         if 'kMpl' in box: 
-            signalDsName = '/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/%s/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_%s_%s_%s.root'% (options.method, box.split("_")[-2], box.split("_")[-1], options.year)
+            signalDsName = '/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/%s/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_%s_%s_%s.root'% (options.method, box.split("_")[-3], box.split("_")[-2], options.year)
         else: 
-            signalDsName = '/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/%s/ResonanceShapes_InputShapes_GluGluSpin0ToGammaGamma_W_%s_%s_%s.root'% (options.method, box.split("_")[-2], box.split("_")[-1], options.year)
+            signalDsName = '/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/%s/ResonanceShapes_InputShapes_GluGluSpin0ToGammaGamma_W_%s_%s_%s.root'% (options.method, box.split("_")[-3], box.split("_")[-2], options.year)
 
             
     signalSys = ''    
