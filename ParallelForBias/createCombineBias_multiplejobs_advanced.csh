@@ -7,7 +7,7 @@ setenv nominalmodel "dijet"
 
 setenv models "dijet expow1 invpow1 invpowlin1"
 
-setenv insignames "grav heavyhiggs"
+setenv insignames "grav"
 
 setenv cats "EBEB EBEE"
 
@@ -21,7 +21,7 @@ setenv years "2017"
 #setenv musinjected `seq 1 3`
 #setenv musinjected `seq 1 1`
 setenv musinjected "0"
-setenv ntoys 1000
+setenv ntoys 10000
 setenv theseed 397
 
 #This is for the number of jobs per clusterid
@@ -48,7 +48,7 @@ echo "insigname ${insigname}"
 setenv couplings "0p014 1p4 5p6"
 if (${insigname} == "grav") then
 # setenv couplings "kMpl001 kMpl01 kMpl02"
-setenv couplings "kMpl001"
+setenv couplings "kMpl01"
 endif
 
 # This is for the output files
