@@ -15,13 +15,13 @@ cmsenv
 #        prepareTrees.exe grav BB ${year} ${coup} "/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/input"
 #    done
 # done
-for coup in {"0p014","1p4","5p6"}; do
-   for year in {"2016","2017","2018"}; do
-       prepareTrees.exe heavyhiggs BB ${year} ${coup} "/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/input"
-   done
-done
-# mv input/RS*.root input/trees
-mv input/Glu*.root input/trees
+# for coup in {"0p014","1p4","5p6"}; do
+#    for year in {"2016","2017","2018"}; do
+#        prepareTrees.exe heavyhiggs BB ${year} ${coup} "/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/input"
+#    done
+# done
+# # mv input/RS*.root input/trees
+# mv input/Glu*.root input/trees
 
 ########## Add Samples ##########
 
@@ -40,30 +40,30 @@ mv input/Glu*.root input/trees
 # for year in { 2017 }; do echo $year; for coup in {"kMpl001","kMpl01","kMpl02"}; do echo $coup; files_RS=`ls /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/input/trees/RSGravitonToGammaGamma_${coup}*${year}*.root`; for syst in {"energyScaleStatUp","energyScaleSystUp","energyScaleGainUp","energySigmaUp","energyScaleStatDown","energyScaleSystDown","energyScaleGainDown","energySigmaDown","SFScaleUp","SFScaleDown","PUScaleUp","PUScaleDown"}; do echo ${syst}; python python/AddSignalShapes.py -e ${method} -t systematics -s ${syst} -d output/${method} -c EBEB ${files_RS}; python python/AddSignalShapes.py -e ${method} -t systematics -s ${syst} -d output/${method} -c EBEE ${files_RS}; done; done; done;
 
 
-export mainpath="/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/"
-cd $mainpath
-#With the createJson option the insigname argument is dull and the code will run through all signals.
-#2016 (Both RS and heavy higgs)
-signalNorm.exe 2016 createJson "${mainpath}/output/2016/FinalParametricShape/workspaces" "${mainpath}/datacards" "${mainpath}/output/2016/signalNorm" "grav" ${method}
-#2017 (Both RS and heavy higgs)
-signalNorm.exe 2017 createJson "${mainpath}/output/2017/FinalParametricShape/workspaces" "${mainpath}/datacards" "${mainpath}/output/2017/signalNorm" "grav" ${method}
-#2018 (Both RS and heavy higgs)
-signalNorm.exe 2018 createJson "${mainpath}/output/2018/FinalParametricShape/workspaces" "${mainpath}/datacards" "${mainpath}/output/2018/signalNorm" "grav" ${method}
-#2016 (Both RS and heavy higgs)
-rm SignalNorm_${method}.txt
-rm SignalNorm_Splines_${method}.txt
-#2016 RS
-signalNorm.exe 2016 readJson "${mainpath}/output/2016/FinalParametricShape/workspaces" "${mainpath}/datacards" "${mainpath}/output/2016/signalNorm" "grav" "${method}"
-#2017 RS
-signalNorm.exe 2017 readJson "${mainpath}/output/2017/FinalParametricShape/workspaces" "${mainpath}/datacards" "${mainpath}/output/2017/signalNorm" "grav" "${method}"
-#2018 RS
-signalNorm.exe 2018 readJson "${mainpath}/output/2018/FinalParametricShape/workspaces" "${mainpath}/datacards" "${mainpath}/output/2018/signalNorm" "grav" "${method}"
-#2016 Heavy Higgs
-signalNorm.exe 2016 readJson "${mainpath}/output/2016/FinalParametricShape/workspaces" "${mainpath}/datacards" "${mainpath}/output/2016/signalNorm" "heavyhiggs" "${method}"
-#2017 Heavy Higgs
-signalNorm.exe 2017 readJson "${mainpath}/output/2017/FinalParametricShape/workspaces" "${mainpath}/datacards" "${mainpath}/output/2017/signalNorm" "heavyhiggs" "${method}"
-#2018 Heavy Higgs
-signalNorm.exe 2018 readJson "${mainpath}/output/2018/FinalParametricShape/workspaces" "${mainpath}/datacards" "${mainpath}/output/2018/signalNorm" "heavyhiggs" "${method}"
+# export mainpath="/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/"
+# cd $mainpath
+# #With the createJson option the insigname argument is dull and the code will run through all signals.
+# #2016 (Both RS and heavy higgs)
+# signalNorm.exe 2016 createJson "${mainpath}/output/2016/FinalParametricShape/workspaces" "${mainpath}/datacards" "${mainpath}/output/2016/signalNorm" "grav" ${method}
+# #2017 (Both RS and heavy higgs)
+# signalNorm.exe 2017 createJson "${mainpath}/output/2017/FinalParametricShape/workspaces" "${mainpath}/datacards" "${mainpath}/output/2017/signalNorm" "grav" ${method}
+# #2018 (Both RS and heavy higgs)
+# signalNorm.exe 2018 createJson "${mainpath}/output/2018/FinalParametricShape/workspaces" "${mainpath}/datacards" "${mainpath}/output/2018/signalNorm" "grav" ${method}
+# #2016 (Both RS and heavy higgs)
+# rm SignalNorm_${method}.txt
+# rm SignalNorm_Splines_${method}.txt
+# #2016 RS
+# signalNorm.exe 2016 readJson "${mainpath}/output/2016/FinalParametricShape/workspaces" "${mainpath}/datacards" "${mainpath}/output/2016/signalNorm" "grav" "${method}"
+# #2017 RS
+# signalNorm.exe 2017 readJson "${mainpath}/output/2017/FinalParametricShape/workspaces" "${mainpath}/datacards" "${mainpath}/output/2017/signalNorm" "grav" "${method}"
+# #2018 RS
+# signalNorm.exe 2018 readJson "${mainpath}/output/2018/FinalParametricShape/workspaces" "${mainpath}/datacards" "${mainpath}/output/2018/signalNorm" "grav" "${method}"
+# #2016 Heavy Higgs
+# signalNorm.exe 2016 readJson "${mainpath}/output/2016/FinalParametricShape/workspaces" "${mainpath}/datacards" "${mainpath}/output/2016/signalNorm" "heavyhiggs" "${method}"
+# #2017 Heavy Higgs
+# signalNorm.exe 2017 readJson "${mainpath}/output/2017/FinalParametricShape/workspaces" "${mainpath}/datacards" "${mainpath}/output/2017/signalNorm" "heavyhiggs" "${method}"
+# #2018 Heavy Higgs
+# signalNorm.exe 2018 readJson "${mainpath}/output/2018/FinalParametricShape/workspaces" "${mainpath}/datacards" "${mainpath}/output/2018/signalNorm" "heavyhiggs" "${method}"
 
 # cp SignalNorm.txt SignalNorm_${method}.txt
 # cp SignalNorm_Splines.txt SignalNorm_Splines_${method}.txt
@@ -92,15 +92,15 @@ signalNorm.exe 2018 readJson "${mainpath}/output/2018/FinalParametricShape/works
 # # Get Resonance shapes
 # ############################################################
 
-# cd /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/${method}
+cd /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/${method}
 
-# filesToExtractRS=`ls /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/CMSDIJET/DijetRootTreeAnalyzer/output/${method} |grep .root | grep RSG `
+filesToExtractRS=`ls /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/CMSDIJET/DijetRootTreeAnalyzer/output/${method} |grep .root | grep RSG `
 
-# rm ResonanceShapes*.root
+rm ResonanceShapes*.root
 
-# for file in ${filesToExtractRS};
-# # do echo ${file}; coup=`echo ${file} | cut -d'_' -f 3`; echo $coup; filename=`echo ${file} | cut -d'.' -f 1`; ../getResonanceShapes.py -i inputs/${filename}.py -c ${coup} -f gg --massrange 600 7000 10 -o ResonanceShapes_${filename}.root; done;
-# do echo ${file}; coup=`echo ${file} | cut -d'_' -f 3`; echo $coup; filename=`echo ${file} | cut -d'.' -f 1`; ../getResonanceShapes.py -i inputs/${filename}.py -c ${coup} -f gg -o ResonanceShapes_${filename}.root; done;
+for file in ${filesToExtractRS};
+# do echo ${file}; coup=`echo ${file} | cut -d'_' -f 3`; echo $coup; filename=`echo ${file} | cut -d'.' -f 1`; ../getResonanceShapes.py -i inputs/${filename}.py -c ${coup} -f gg --massrange 600 7000 1 -o ResonanceShapes_${filename}.root; done;
+do echo ${file}; coup=`echo ${file} | cut -d'_' -f 3`; echo $coup; filename=`echo ${file} | cut -d'.' -f 1`; ../getResonanceShapes.py -i inputs/${filename}.py -c ${coup} -f gg -o ResonanceShapes_${filename}.root; done;
 
 # ############################################################
 # # Compare shapes - Closure Test - single plot comparison
