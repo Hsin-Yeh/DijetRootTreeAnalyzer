@@ -78,15 +78,15 @@ cmsenv
 # Extract shapes
 ############################################################
 
-# mkdir /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/${method}
-# cd /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/${method}
+mkdir /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/${method}
+cd /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/${method}
 
-# rm -rf inputs InputShapes.root
-# mkdir inputs
+rm -rf inputs InputShapes.root
+mkdir inputs
 
-# filesToExtractRS=`ls /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/CMSDIJET/DijetRootTreeAnalyzer/output/${method} |grep .root | grep RSG `
+filesToExtractRS=`ls /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/CMSDIJET/DijetRootTreeAnalyzer/output/${method} |grep .root | grep RSG `
 
-# for file in ${filesToExtractRS}; do echo ${file}; cp /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/CMSDIJET/DijetRootTreeAnalyzer/output/${method}/${file} .; filename=`echo ${file} | cut -d'.' -f 1`; rm -rf inputs/${filename}.py; ../extractShapes.py -i ${file} > inputs/${filename}.py; done;
+for file in ${filesToExtractRS}; do echo ${file}; cp /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/CMSDIJET/DijetRootTreeAnalyzer/output/${method}/${file} .; filename=`echo ${file} | cut -d'.' -f 1`; rm -rf inputs/${filename}.py; ../extractShapes.py -i ${file} > inputs/${filename}.py; done;
 
 # ############################################################
 # # Get Resonance shapes
