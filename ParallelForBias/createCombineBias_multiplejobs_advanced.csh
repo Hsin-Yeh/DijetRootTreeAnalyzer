@@ -18,7 +18,7 @@ setenv years "2016 2017 2018"
 #setenv musinjected "5 10 15"
 #setenv musinjected `seq 1 3`
 #setenv musinjected `seq 1 1`
-setenv musinjected "0.1"
+setenv musinjected "0"
 setenv ntoys 1000
 setenv theseed 397
 
@@ -45,7 +45,8 @@ echo "insigname ${insigname}"
 
 setenv couplings "0p014 1p4 5p6"
 if (${insigname} == "grav") then
-setenv couplings "kMpl001 kMpl01 kMpl02"
+# setenv couplings "kMpl001 kMpl01 kMpl02"
+setenv couplings "kMpl001"
 endif
 
 # This is for the output files
@@ -58,7 +59,8 @@ echo "Coupling ${coup}"
 
 setenv masses "800 900 1000 1100 1200 1500 1800 2100 2400 2700 3000 3500 4000 4500 5000 5500 6000 6500 7000"
 if ($coup == "kMpl001" || $coup == "0p014" || $coup == "1p4" || $coup == "5p6") then
-setenv masses "800 900 1000 1100 1200 1500 1800 2100 2400 2700 3000 3500 4000 4500 5000"
+# setenv masses "800 900 1000 1100 1200 1500 1800 2100 2400 2700 3000 3500 4000 4500 5000"
+setenv masses "1001 2014 3006 4016"
 endif
 
 
