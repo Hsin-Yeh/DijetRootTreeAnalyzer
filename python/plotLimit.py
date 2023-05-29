@@ -14,6 +14,13 @@ parser.add_argument('--debug','-d',action="store_true",help='debug mode')
 parser.add_argument('--unblind',action="store_true",help='debug mode')
 args = parser.parse_args()
 
+def redrawBorder():
+    ROOT.gPad.Update();
+    ROOT.gPad.RedrawAxis();
+    l = ROOT.TLine();
+    l.DrawLine(ROOT.gPad.GetUxmin(), ROOT.gPad.GetUymax(), ROOT.gPad.GetUxmax(), ROOT.gPad.GetUymax());
+    l.DrawLine(ROOT.gPad.GetUxmax(), ROOT.gPad.GetUymin(), ROOT.gPad.GetUxmax(), ROOT.gPad.GetUymax());
+
 if __name__ == "__main__":
 
     MC_masses, MC_crossSections = {}, {}
@@ -186,6 +193,8 @@ if __name__ == "__main__":
     lumiText.SetLineWidth(1);
     lumiText.SetTextSize(0.035);
     lumiText.Draw();
+
+    redrawBorder()
 
     canv.SaveAs( "./limitplot_%s_%s_%s.png"% (args.signame, args.coupling, args.year) );
 
