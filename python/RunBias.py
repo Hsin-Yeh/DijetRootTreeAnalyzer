@@ -68,8 +68,8 @@ if __name__ == '__main__':
     lumi = float(options.lumi)
     model = options.model
     
-    if (options.box.find('EBEB'!=-1)): backgroundDsName = 'output/InputShapes_data_EBEB_%s.root' % options.year
-    elif (options.box.find('EBEE'!=-1)): backgroundDsName = 'output/InputShapes_data_EBEE_%s.root' % options.year
+    if (options.box.find('EBEB')!=-1): backgroundDsName = 'output/InputShapes_data_EBEB_%s.root' % options.year
+    elif (options.box.find('EBEE')!=-1): backgroundDsName = 'output/InputShapes_data_EBEE_%s.root' % options.year
 
     
     signalDsName = ''
