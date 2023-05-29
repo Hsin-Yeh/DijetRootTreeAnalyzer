@@ -125,8 +125,8 @@ if __name__ == '__main__':
     #xsecString = '--xsec %f'%options.xsec
     rRangeString =  '--setParameterRanges r=%.3f,%.3f'%(options.rMin,options.rMax)
 
-    fixStringGen = '--setParameters pdf_index=%i'%(pdfIndexMap[options.genPdf])
-    freezeStringGen = '--freezeParameters pdf_index'
+    fixStringGen = '--setParameters pdf_index_%s_%s=%i'%(cat,options.year,pdfIndexMap[options.genPdf])
+    freezeStringGen = '--freezeParameters pdf_index_%s_%s'%(cat,options.year)
     
     #if options.genPdf != 'dijet':
     #    freezeStringGen += ',p1_%s,p2_%s' % (box,box)
