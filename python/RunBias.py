@@ -165,7 +165,7 @@ if __name__ == '__main__':
     
     for massPoint in massIterable(options.mass):        
         exec_me('python python/WriteDataCard.py -m %s --year %s --mass %s %s -i %s -l %f -c %s -b %s -d %s %s %s --multi --SigNorm %s'%(model, options.year, massPoint,backgroundDsName, options.inputFitFile,1000*lumi,options.config,box,options.outDir, signalDsName,signalSys, options.SignalNormFile),options.dryRun)
-        exec_me('combine -M GenerateOnly %s/diphoton_combine_%i_%s.txt -n %s_r-%.3f_%s_%s_%s_%s %s %s %s --bypassFrequentistFit --seed -1 --saveToys --expectSignal %.3f -t %i'%(options.outDir,int(massPoint),box,int(massPoint),rDict[int(massPoint)],box,options.genPdf,options.fitPdf,options.year,rRangeString,fixStringGen,freezeStringGen,rDict[int(massPoint)],options.toys),options.dryRun)
+        exec_me('combine -M GenerateOnly %s/diphoton_combine_%i_%s.txt -n %s_r-%.3f_%s_%s_%s_%s %s %s %s --toysFrequentist --seed -1 --saveToys --expectSignal %.3f -t %i'%(options.outDir,int(massPoint),box,int(massPoint),rDict[int(massPoint)],box,options.genPdf,options.fitPdf,options.year,rRangeString,fixStringGen,freezeStringGen,rDict[int(massPoint)],options.toys),options.dryRun)
 
         toysfile = glob.glob('./higgsCombine%s_r-%.3f_%s_%s_%s_%s.GenerateOnly.mH*.root' %(int(massPoint),rDict[int(massPoint)],box,options.genPdf,options.fitPdf,options.year))
 
