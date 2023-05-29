@@ -68,19 +68,9 @@ if __name__ == '__main__':
     lumi = float(options.lumi)
     model = options.model
     
-    backgroundDsName = {'DiPhotons_kMpl001_EBEB': 'output/InputShapes_data_EBEB_%s.root' % options.year,
-                        'DiPhotons_kMpl001_EBEE': 'output/InputShapes_data_EBEE_%s.root' % options.year,
-                        'DiPhotons_kMpl01_EBEB': 'output/InputShapes_data_EBEB_%s.root' % options.year,
-                        'DiPhotons_kMpl01_EBEE': 'output/InputShapes_data_EBEE_%s.root' % options.year,
-                        'DiPhotons_kMpl02_EBEB': 'output/InputShapes_data_EBEB_%s.root' % options.year,
-                        'DiPhotons_kMpl02_EBEE': 'output/InputShapes_data_EBEE_%s.root' % options.year,                       
-                        'DiPhotons_0p014_EBEB': 'output/InputShapes_data_EBEB_%s.root' % options.year,
-                        'DiPhotons_0p014_EBEE': 'output/InputShapes_data_EBEE_%s.root' % options.year,
-                        'DiPhotons_1p4_EBEB': 'output/InputShapes_data_EBEB_%s.root' % options.year,
-                        'DiPhotons_1p4_EBEE': 'output/InputShapes_data_EBEE_%s.root' % options.year,
-                        'DiPhotons_5p6_EBEB': 'output/InputShapes_data_EBEB_%s.root' % options.year,
-                        'DiPhotons_5p6_EBEE': 'output/InputShapes_data_EBEE_%s.root' % options.year
-                        }
+    if options.box.find('EBEB'!=-1): backgroundDsName = 'output/InputShapes_data_EBEB_%s.root' % options.year
+    elif options.box.find('EBEE'!=-1): backgroundDsName = 'output/InputShapes_data_EBEE_%s.root' % options.year
+
     
     signalDsName = ''
     if 'DiPhotons' in box:
@@ -172,7 +162,7 @@ if __name__ == '__main__':
     #    freezeStringFit += ',pmd1_1_%s,pmd1_2_%s,pmd1_3_%s,pmd1_4_%s' % (box,box,box,box)
     
     for massPoint in massIterable(options.mass):        
-        exec_me('python python/WriteDataCard.py -m %s --year %s --mass %s %s -i %s -l %f -c %s -b %s -d %s %s %s --multi --SigNorm %s'%(model, options.year, massPoint,backgroundDsName[box], options.inputFitFile,1000*lumi,options.config,box,options.outDir, signalDsName,signalSys, options.SignalNormFile),options.dryRun)
+        exec_me('python python/WriteDataCard.py -m %s --year %s --mass %s %s -i %s -l %f -c %s -b %s -d %s %s %s --multi --SigNorm %s'%(model, options.year, massPoint,backgroundDsName, options.inputFitFile,1000*lumi,options.config,box,options.outDir, signalDsName,signalSys, options.SignalNormFile),options.dryRun)
         exec_me('combine -M GenerateOnly %s/diphoton_combine_%i_%s_%s.txt -n %s_r-%.3f_%s_%s_%s_%s %s %s %s --bypassFrequentistFit --seed -1 --saveToys --expectSignal %.3f -t %i'%(options.outDir,int(massPoint),box,options.year,int(massPoint),rDict[int(massPoint)],box,options.genPdf,options.fitPdf,options.year,rRangeString,fixStringGen,freezeStringGen,rDict[int(massPoint)],options.toys),options.dryRun)
 
         toysfile = glob.glob('./higgsCombine%s_r-%.3f_%s_%s_%s_%s.GenerateOnly.mH*.root' %(int(massPoint),rDict[int(massPoint)],box,options.genPdf,options.fitPdf,options.year))
