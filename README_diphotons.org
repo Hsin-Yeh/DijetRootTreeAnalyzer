@@ -781,8 +781,8 @@ Run combine-based bias studies with 1000 toys for r = 1 and XX pb cross section 
 mkdir signal_bias/
 
 # example test
-time python python/RunBias.py -c config/diphotons_bias_2017.config -i bkgAltModels/expow1/blind/FitResults_DiPhotons_kMpl001_EBEB_2017.root -b DiPhotons_kMpl001_EBEB --mass 1000 -m gg -d signal_bias -r 1 -l 41.527 --year 2017 -t 10 --gen-pdf expow1 --fit-pdf dijet
-
+# time python python/RunBias.py -c config/diphotons_bias_2017.config -i bkgAltModels/expow1/blind/FitResults_DiPhotons_kMpl001_EBEB_2017.root -b DiPhotons_kMpl001_EBEB --mass 1000 -m gg -d signal_bias -r 0 -l 41.527 --year 2017 -t 10 --gen-pdf expow1 --fit-pdf dijet
+time python python/RunBias.py -c config/diphotons_bias_2017_pdf_index.config -i datacards/multi/FitResults_DiPhotons_kMpl001_EBEB_2017.root -b DiPhotons_kMpl001_EBEB_2017 --mass 1000 -m gg -d signal_bias -r 1 -l 41.527 --year 2017 -t 1000 --gen-pdf expow1 --fit-pdf dijet
 
 #+end_src
 ** plot
