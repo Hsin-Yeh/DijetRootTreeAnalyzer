@@ -18,7 +18,7 @@ setenv years "2016 2017 2018"
 #setenv musinjected "5 10 15"
 #setenv musinjected `seq 1 3`
 #setenv musinjected `seq 1 1`
-setenv musinjected "0.1 1 2"
+setenv musinjected "0.1"
 setenv ntoys 1000
 setenv theseed 397
 
