@@ -29,9 +29,6 @@ for mass in "${masslist[@]}"; do
 
     datacardfile="${datacardsDir}/${method}/${year}/diphoton_combine_${mass}_DiPhotons_${coupling}_${year}.txt"
 
-    if [[ ${year} == "fullRun2" ]]; then
-        datacardfile="${datacardsDir}/${method}/fullRun2/diphoton_combine_${mass}_DiPhotons_${coupling}.txt"
-    fi
     echo $datacardfile
 
     # a priori
