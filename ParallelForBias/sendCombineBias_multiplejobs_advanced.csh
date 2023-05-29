@@ -7,7 +7,7 @@ setenv nominalmodel "dijet"
 
 setenv models "dijet expow1 invpow1 invpowlin1"
 
-setenv insignames "grav heavyhiggs"
+setenv insignames "grav"
 
 setenv cats "EBEB EBEE"
 
