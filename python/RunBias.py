@@ -51,7 +51,7 @@ if __name__ == '__main__':
                   help="year")
     parser.add_option('--method',dest="method",default="full",type="string",
                   help="method")
-    parser.add_option('--SigNorm',dest="SignalNormFile",default="/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/SignalNorm.txt",type="string",
+    parser.add_option('--SigNorm',dest="SignalNormFile",default="/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/SignalNorm_Splines_full.txt",type="string",
                   help="SignalNormFile")
 
     
