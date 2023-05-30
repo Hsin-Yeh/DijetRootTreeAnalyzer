@@ -173,7 +173,7 @@ if __name__ == '__main__':
 
         toysfile = glob.glob('./higgsCombine%s_r-%.3f_%s_%s_%s_%s.GenerateOnly.mH*.root' %(int(massPoint),rDict[int(massPoint)],box,options.genPdf,options.fitPdf,options.year))
 
-        exec_me('combine -M FitDiagnostics --robustFit=1 %s/diphoton_combine_%i_%s.txt -n %s_r-%.3f_%s_%s_%s_%s --toysFile %s -t %i %s %s %s --cminDefaultMinimizerStrategy=0 --saveWorkspace -v -1'%(
+        exec_me('combine -M FitDiagnostics %s/diphoton_combine_%i_%s.txt -n %s_r-%.3f_%s_%s_%s_%s --toysFile %s -t %i %s %s %s --cminDefaultMinimizerStrategy=0 --saveWorkspace -v -1'%(
             options.outDir,int(massPoint),box,
             int(massPoint),rDict[int(massPoint)],box,options.genPdf,options.fitPdf,options.year,
             toysfile[0],
