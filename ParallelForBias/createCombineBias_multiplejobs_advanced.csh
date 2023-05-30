@@ -1,6 +1,6 @@
 #!/bin/tcsh
 
-setenv version "2023-05-30-2"
+setenv Version "2023-05-30-2"
 
 #setenv combmode "samefunfit" 
 setenv combmode "diffunfit"
@@ -44,7 +44,7 @@ setenv lumi "59.670"
 endif
 
 # This is for the output files
-setenv inoutpath "/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/output/${year}/combine_bias/${version}"
+setenv inoutpath "/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/output/${year}/combine_bias/${Version}"
 echo ${inoutpath}
 #Output of the job will be here
 mkdir -p ${inoutpath}
