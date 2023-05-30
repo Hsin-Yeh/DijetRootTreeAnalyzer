@@ -23,7 +23,7 @@ setenv years "2017"
 #setenv musinjected `seq 1 3`
 #setenv musinjected `seq 1 1`
 setenv musinjected "0.1"
-setenv ntoys 10000
+setenv ntoys 1000
 setenv theseed 397
 
 #This is for the number of jobs per clusterid
@@ -43,6 +43,13 @@ else if (${year} == "2018") then
 setenv lumi "59.670"
 endif
 
+# This is for the output files
+setenv inoutpath "/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/output/${year}/combine_bias/${version}"
+#Output of the job will be here
+rm -rf ${inoutpath}
+mkdir -p ${inoutpath}
+
+
 foreach insigname ($insignames)
 echo "------------------------"
 echo "insigname ${insigname}"
@@ -52,9 +59,6 @@ if (${insigname} == "grav") then
 # setenv couplings "kMpl001 kMpl01 kMpl02"
 setenv couplings "kMpl01"
 endif
-
-# This is for the output files
-setenv inoutpath "/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/output/${year}/combine_bias/${version}"
 
 # Coupling now
 foreach coup ($couplings)
@@ -92,10 +96,6 @@ echo "Mass ${mass}"
 rm -rf ${year}/${insigname}/${combmode}/${coup}/${cat}/mu${muin}/${model}/mass${mass}/output ${year}/${insigname}/${combmode}/${coup}/${cat}/mu${muin}/${model}/mass${mass}/jobs ${year}/${insigname}/${combmode}/${coup}/${cat}/mu${muin}/${model}/mass${mass}/logs
 mkdir -p ${year}/${insigname}/${combmode}/${coup}/${cat}/mu${muin}/${model}/mass${mass}/output ${year}/${insigname}/${combmode}/${coup}/${cat}/mu${muin}/${model}/mass${mass}/jobs ${year}/${insigname}/${combmode}/${coup}/${cat}/mu${muin}/${model}/mass${mass}/logs
 chmod 755 -R ${year}/${insigname}/${combmode}/${coup}/${cat}/mu${muin}/${model}/mass${mass}/output ${year}/${insigname}/${combmode}/${coup}/${cat}/mu${muin}/${model}/mass${mass}/jobs ${year}/${insigname}/${combmode}/${coup}/${cat}/mu${muin}/${model}/mass${mass}/logs
-
-#Output of the job will be here
-rm -rf ${inoutpath}
-mkdir -p ${inoutpath}
 
 #foreach batch (`seq 0 100`)
 foreach batch (`seq 0 0`)
