@@ -17,7 +17,7 @@ setenv years "2017"
 
 # setenv musinjected `seq 1 1`
 #setenv musinjected `seq 1 5`
-setenv musinjected "0.1"
+setenv musinjected "0"
 
 # Year first
 foreach year ($years)
@@ -37,8 +37,8 @@ echo "insigname ${insigname}"
 
 setenv couplings "0p014 1p4 5p6"
 if (${insigname} == "grav") then
-# setenv couplings "kMpl001 kMpl01 kMpl02"
-setenv couplings "kMpl01"
+setenv couplings "kMpl001 kMpl01 kMpl02"
+# setenv couplings "kMpl01"
 endif
 
 # Coupling now

@@ -1,6 +1,6 @@
 #!/bin/tcsh
 
-setenv Version "2023-05-30-2"
+setenv Version "2023-05-30-3"
 
 #setenv combmode "samefunfit" 
 setenv combmode "diffunfit"
@@ -22,7 +22,7 @@ setenv years "2017"
 #setenv musinjected "5 10 15"
 #setenv musinjected `seq 1 3`
 #setenv musinjected `seq 1 1`
-setenv musinjected "0.1"
+setenv musinjected "0"
 setenv ntoys 1000
 setenv theseed 397
 
@@ -56,8 +56,8 @@ echo "insigname ${insigname}"
 
 setenv couplings "0p014 1p4 5p6"
 if (${insigname} == "grav") then
-# setenv couplings "kMpl001 kMpl01 kMpl02"
-setenv couplings "kMpl01"
+setenv couplings "kMpl001 kMpl01 kMpl02"
+# setenv couplings "kMpl01"
 endif
 
 # Coupling now
