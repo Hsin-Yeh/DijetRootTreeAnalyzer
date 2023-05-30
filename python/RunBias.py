@@ -149,20 +149,24 @@ if __name__ == '__main__':
     #if options.genPdf == 'moddijet1':
     #    freezeStringGen += ',pmd1_1_%s,pmd1_2_%s,pmd1_3_%s,pmd1_4_%s' % (box,box,box,box)
     
-        
-    fixStringFit = '--setParameters pdf_index_%s_%s=%i'%(cat,options.year,pdfIndexMap[options.fitPdf])
-    freezeStringFit = '--freezeParameters pdf_index_%s_%s'%(cat,options.year)
-    if options.fitPdf != 'dijet':
-        freezeStringFit += ',p1_%s,p2_%s' % (box,box)
-    if options.fitPdf != 'expow1':
-        freezeStringFit += ',pex1_1_%s,pex1_2_%s' % (box,box)
-    if options.fitPdf != 'invpow1':
-        freezeStringFit += ',pip1_1_%s,pip1_2_%s' % (box,box)
-    if options.fitPdf != 'invpowlin1':
-        freezeStringFit += ',pil1_1_%s,pil1_2_%s,pil1_3_%s' % (box,box,box)
-    #if options.fitPdf != 'moddijet1':
-    #    freezeStringFit += ',pmd1_1_%s,pmd1_2_%s,pmd1_3_%s,pmd1_4_%s' % (box,box,box,box)
-    
+
+    if (options.fitPdf == "envelope"):
+        fixStringFit = '--setParameters myIndex=-1'
+        freezeStringFit = ''
+    else:
+        fixStringFit = '--setParameters pdf_index_%s_%s=%i'%(cat,options.year,pdfIndexMap[options.fitPdf])
+        freezeStringFit = '--freezeParameters pdf_index_%s_%s'%(cat,options.year)
+        if options.fitPdf != 'dijet':
+            freezeStringFit += ',p1_%s,p2_%s' % (box,box)
+        if options.fitPdf != 'expow1':
+            freezeStringFit += ',pex1_1_%s,pex1_2_%s' % (box,box)
+        if options.fitPdf != 'invpow1':
+            freezeStringFit += ',pip1_1_%s,pip1_2_%s' % (box,box)
+        if options.fitPdf != 'invpowlin1':
+            freezeStringFit += ',pil1_1_%s,pil1_2_%s,pil1_3_%s' % (box,box,box)
+        #if options.fitPdf != 'moddijet1':
+        #    freezeStringFit += ',pmd1_1_%s,pmd1_2_%s,pmd1_3_%s,pmd1_4_%s' % (box,box,box,box)
+
     for massPoint in massIterable(options.mass):        
         exec_me('python python/WriteDataCard.py -m %s --year %s --mass %s %s -i %s -l %f -c %s -b %s -d %s %s %s --multi --SigNorm %s'%(model, options.year, massPoint,backgroundDsName, options.inputFitFile,1000*lumi,options.config,box,options.outDir, signalDsName,signalSys, options.SignalNormFile),options.dryRun)
         exec_me('combine -M GenerateOnly %s/diphoton_combine_%i_%s.txt -n %s_r-%.3f_%s_%s_%s_%s %s %s %s --toysFrequentist --seed -1 --saveToys --expectSignal %.3f -t %i'%(options.outDir,int(massPoint),box,int(massPoint),rDict[int(massPoint)],box,options.genPdf,options.fitPdf,options.year,rRangeString,fixStringGen,freezeStringGen,rDict[int(massPoint)],options.toys),options.dryRun)
