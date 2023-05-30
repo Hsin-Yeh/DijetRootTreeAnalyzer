@@ -1,5 +1,6 @@
 #!/bin/tcsh
 
+setenv Version "2023-05-30-3"
 #setenv combmode "samefunfit"
 setenv combmode "diffunfit"
 
@@ -73,7 +74,7 @@ echo "------------------------"
 echo "Mass ${mass}"
 
 #setenv workpath "/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/ParallelForCombine/${year}/${insigname}/${combmode}/${coup}/${cat}/mu${muin}/${model}/mass${mass}/jobs"
-setenv workpath "/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/CMSDIJET/DijetRootTreeAnalyzer/ParallelForBias/${year}/${insigname}/${combmode}/${coup}/${cat}/mu${muin}/${model}/mass${mass}/jobs"
+setenv workpath "/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/CMSDIJET/DijetRootTreeAnalyzer/ParallelForBias/${Version}/${year}/${insigname}/${combmode}/${coup}/${cat}/mu${muin}/${model}/mass${mass}/jobs"
 
 setenv runumberslist ` ls ${workpath} | grep .sub `
 

@@ -128,8 +128,8 @@ end
 setenv batchfilelist `cat voodoo`
 echo "queue infile in (${batchfilelist}) " >> bias_$batch.sub
 
-mv bias_$batch.sub ${year}/${insigname}/${combmode}/${coup}/${cat}/mu${muin}/${model}/mass${mass}/jobs/bias_$batch.sub
-chmod 755 ${year}/${insigname}/${combmode}/${coup}/${cat}/mu${muin}/${model}/mass${mass}/jobs/bias_$batch.sub
+mv bias_$batch.sub ${Version}/${year}/${insigname}/${combmode}/${coup}/${cat}/mu${muin}/${model}/mass${mass}/jobs/bias_$batch.sub
+chmod 755 ${Version}/${year}/${insigname}/${combmode}/${coup}/${cat}/mu${muin}/${model}/mass${mass}/jobs/bias_$batch.sub
 
 echo bias_$batch.sub
 
