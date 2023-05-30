@@ -43,7 +43,7 @@ if __name__ == '__main__':
                   help="number of toys")    
     parser.add_option('--gen-pdf',dest="genPdf", default="expow1", choices=['dijet','expow1','invpow1','invpowlin1','moddijet1'],
                   help="pdf for generating")
-    parser.add_option('--fit-pdf',dest="fitPdf", default="dijet", choices=['dijet','expow1','invpow1','invpowlin1','moddijet1'],
+    parser.add_option('--fit-pdf',dest="fitPdf", default="dijet", choices=['dijet','expow1','invpow1','invpowlin1','moddijet1','envelope'],
                   help="pdf for fitting")
     parser.add_option('--asymptotic-file',dest="asymptoticFile",default=None,type="string",
                   help="load asymptotic cross section results file")
