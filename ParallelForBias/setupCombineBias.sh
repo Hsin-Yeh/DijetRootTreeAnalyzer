@@ -43,7 +43,7 @@ echo ${outfile}
 
 mv ${outfile} fitDiagnostics_${THEINSIGNAME}_mu${THEMUIN}_${THECOUP}_${THECAT}_${THEMODEL}_${THEMASS}_${CURRENTTOY}.root
 
-cp fitDiagnostics_${THEINSIGNAME}_mu${THEMUIN}_${THECOUP}_${THECAT}_${THEMODEL}_${THEMASS}_${CURRENTTOY}.root ${THEINOUTPATH}/${THECOUP}/${THECAT}/mu${THEMUIN}/${THEMODEL}/mass${THEMASS}/.
+cp fitDiagnostics_${THEINSIGNAME}_mu${THEMUIN}_${THECOUP}_${THECAT}_${THEMODEL}_${THEMASS}_${CURRENTTOY}.root ${THEINOUTPATH}/.
 
 rm -rf *.root
 

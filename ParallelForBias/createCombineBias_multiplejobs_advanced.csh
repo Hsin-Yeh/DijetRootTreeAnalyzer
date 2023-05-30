@@ -1,5 +1,7 @@
 #!/bin/tcsh
 
+setenv version "2023-05-30-2"
+
 #setenv combmode "samefunfit" 
 setenv combmode "diffunfit"
 
@@ -52,7 +54,7 @@ setenv couplings "kMpl01"
 endif
 
 # This is for the output files
-setenv inoutpath "/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/output/${year}/combine_bias/${insigname}/${combmode}"
+setenv inoutpath "/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/output/${year}/combine_bias/${version}"
 
 # Coupling now
 foreach coup ($couplings)
@@ -92,8 +94,8 @@ mkdir -p ${year}/${insigname}/${combmode}/${coup}/${cat}/mu${muin}/${model}/mass
 chmod 755 -R ${year}/${insigname}/${combmode}/${coup}/${cat}/mu${muin}/${model}/mass${mass}/output ${year}/${insigname}/${combmode}/${coup}/${cat}/mu${muin}/${model}/mass${mass}/jobs ${year}/${insigname}/${combmode}/${coup}/${cat}/mu${muin}/${model}/mass${mass}/logs
 
 #Output of the job will be here
-rm -rf ${inoutpath}/${coup}/${cat}/mu${muin}/${model}/mass${mass}
-mkdir -p ${inoutpath}/${coup}/${cat}/mu${muin}/${model}/mass${mass}
+rm -rf ${inoutpath}
+mkdir -p ${inoutpath}
 
 #foreach batch (`seq 0 100`)
 foreach batch (`seq 0 0`)

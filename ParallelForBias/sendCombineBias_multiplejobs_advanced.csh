@@ -17,7 +17,7 @@ setenv years "2017"
 
 # setenv musinjected `seq 1 1`
 #setenv musinjected `seq 1 5`
-setenv musinjected "0"
+setenv musinjected "0.1"
 
 # Year first
 foreach year ($years)
