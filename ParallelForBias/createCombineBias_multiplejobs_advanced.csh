@@ -45,8 +45,8 @@ endif
 
 # This is for the output files
 setenv inoutpath "/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/output/${year}/combine_bias/${version}"
+echo ${inoutpath}
 #Output of the job will be here
-rm -rf ${inoutpath}
 mkdir -p ${inoutpath}
 
 
