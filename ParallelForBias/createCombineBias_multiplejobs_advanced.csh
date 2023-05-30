@@ -93,9 +93,9 @@ echo "------------------------"
 echo "Mass ${mass}"
 
 #Create local structure for the bias.sub files, they will be moved here
-rm -rf ${year}/${insigname}/${combmode}/${coup}/${cat}/mu${muin}/${model}/mass${mass}/output ${year}/${insigname}/${combmode}/${coup}/${cat}/mu${muin}/${model}/mass${mass}/jobs ${year}/${insigname}/${combmode}/${coup}/${cat}/mu${muin}/${model}/mass${mass}/logs
-mkdir -p ${year}/${insigname}/${combmode}/${coup}/${cat}/mu${muin}/${model}/mass${mass}/output ${year}/${insigname}/${combmode}/${coup}/${cat}/mu${muin}/${model}/mass${mass}/jobs ${year}/${insigname}/${combmode}/${coup}/${cat}/mu${muin}/${model}/mass${mass}/logs
-chmod 755 -R ${year}/${insigname}/${combmode}/${coup}/${cat}/mu${muin}/${model}/mass${mass}/output ${year}/${insigname}/${combmode}/${coup}/${cat}/mu${muin}/${model}/mass${mass}/jobs ${year}/${insigname}/${combmode}/${coup}/${cat}/mu${muin}/${model}/mass${mass}/logs
+rm -rf ${Version}/${year}/${insigname}/${combmode}/${coup}/${cat}/mu${muin}/${model}/mass${mass}/output ${Version}/${year}/${insigname}/${combmode}/${coup}/${cat}/mu${muin}/${model}/mass${mass}/jobs ${Version}/${year}/${insigname}/${combmode}/${coup}/${cat}/mu${muin}/${model}/mass${mass}/logs
+mkdir -p ${Version}/${year}/${insigname}/${combmode}/${coup}/${cat}/mu${muin}/${model}/mass${mass}/output ${Version}/${year}/${insigname}/${combmode}/${coup}/${cat}/mu${muin}/${model}/mass${mass}/jobs ${Version}/${year}/${insigname}/${combmode}/${coup}/${cat}/mu${muin}/${model}/mass${mass}/logs
+chmod 755 -R ${Version}/${year}/${insigname}/${combmode}/${coup}/${cat}/mu${muin}/${model}/mass${mass}/output ${Version}/${year}/${insigname}/${combmode}/${coup}/${cat}/mu${muin}/${model}/mass${mass}/jobs ${Version}/${year}/${insigname}/${combmode}/${coup}/${cat}/mu${muin}/${model}/mass${mass}/logs
 
 #foreach batch (`seq 0 100`)
 foreach batch (`seq 0 0`)
