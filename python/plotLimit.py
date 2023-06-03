@@ -34,6 +34,7 @@ def Acceptance(year, coupling, mass):
     with open('/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/SignalNorm_Splines_full.txt') as infile:
         Lines = infile.readlines()
     for line in Lines:
+        print (line)
         if (line.find(year)!=0 and line.find(coupling)!=0 and line.find('%d'%mass)!=0 and line.find('All')!=0):
             year, coupling, mass, cat, norm = line.split()
             print (year, norm, lumi(year))
