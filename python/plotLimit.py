@@ -52,7 +52,7 @@ def Acceptance(year, coupling, mass):
 if __name__ == "__main__":
 
     df = pd.read_csv('/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/SignalNorm_Splines_full.txt', sep=" ")
-    print(df.loc[df['year'] == args.year, 'A'].iloc[0])
+    df.query('year==%s',args.year)['norm']
     # i=df.loc[df['year'] == args.year]
 
 
