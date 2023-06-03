@@ -35,8 +35,8 @@ def Acceptance(year, coupling, mass):
     totalNorm=0
     if (year=="fullRun2"):
         for line in Lines:
-            if (line.find(coupling)!=-1 and line.find(mass)!=-1 and line.find('All')!=-1):
-                year, coupling, mass, cat, norm = line.split()
+            y, c, m, cat, norm = line.split()
+            if (y==year and c==coupling and m==mass):
                 print (year, coupling, mass, cat, norm)
                 totalNorm += float(norm)
         totalNorm = float(totalNorm)/float(lumi(year))
