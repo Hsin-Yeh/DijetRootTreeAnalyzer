@@ -35,7 +35,7 @@ def Acceptance(year, coupling, mass):
         Lines = infile.readlines()
     for line in Lines:
         print (line)
-        if (line.find(year)!=0 and line.find(coupling)!=0 and line.find('%d'%mass)!=0 and line.find('All')!=0):
+        if (line.find(year)!=-1 and line.find(coupling)!=-1 and line.find('%d'%mass)!=-1 and line.find('All')!=-1):
             year, coupling, mass, cat, norm = line.split()
             print (year, norm, lumi(year))
             norm = float(norm)/float(lumi(year))
