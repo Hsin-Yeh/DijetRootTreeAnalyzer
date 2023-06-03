@@ -30,6 +30,7 @@ def redrawBorder():
     l.DrawLine(ROOT.gPad.GetUxmax(), ROOT.gPad.GetUymin(), ROOT.gPad.GetUxmax(), ROOT.gPad.GetUymax());
 
 def Acceptance(year, coupling, mass):
+    print(year, coupling)
     with open('/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/SignalNorm_Splines_full.txt') as infile:
         Lines = infile.readlines()
     for line in Lines:
