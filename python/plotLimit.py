@@ -45,6 +45,7 @@ def Acceptance(year, coupling, mass):
             if (line.find(year)!=-1 and line.find(coupling)!=-1 and line.find(mass)!=-1 and line.find('All')!=-1):
                 year, coupling, mass, cat, norm = line.split()
                 totalNorm = float(norm)/float(lumi(year))
+                print(year, coupling, mass, cat, norm, totalNorm)
                 break
     return totalNorm
 
@@ -85,7 +86,6 @@ if __name__ == "__main__":
     for line in Lines:
         mass, obs, expP2s, expP1s, exp, expM1s, expM2s = line.split()
         norm = Acceptance(args.year, args.coupling, mass)
-        print (norm)
         mass_array.append(float(mass))
         obs_array.append(float(obs)/norm)
         exp_array.append(float(exp)/norm)
