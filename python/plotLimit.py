@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+#for year in {"2016","2017","2018","fullRun2"}; do for coupling in {"kMPl001","kMpl01","kMpl02"}; do python ../../python/plotLimit.py -y ${year} -c ${coupling} -s grav; done; done
 
 import ROOT
 from array import array
@@ -41,7 +42,7 @@ def Acceptance(year, coupling, mass):
         totalNorm = float(totalNorm)/float(lumi(year))
     else:
         for line in Lines:
-            if (line.find(year)!=-1 and line.find(coupling)!=-1 and line.find('%d'%mass)!=-1 and line.find('All')!=-1):
+            if (line.find(year)!=-1 and line.find(coupling)!=-1 and line.find(mass)!=-1 and line.find('All')!=-1):
                 year, coupling, mass, cat, norm = line.split()
                 norm = float(norm)/float(lumi(year))
                 break
