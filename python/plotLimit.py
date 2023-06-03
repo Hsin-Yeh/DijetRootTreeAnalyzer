@@ -42,6 +42,7 @@ def Acceptance(year, coupling, mass):
 
 if __name__ == "__main__":
 
+    print(args.year, args.coupling)
     norm = Acceptance(args.year, args.coupling, 1000)
     print ("====================%f===================="%(norm))
     MC_masses, MC_crossSections = {}, {}
