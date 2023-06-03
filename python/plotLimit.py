@@ -120,6 +120,7 @@ if __name__ == "__main__":
     exp2SGraph.GetXaxis().SetTitle("m_{G} (GeV)" if args.signame == "grav" else "m_{S} (GeV)");
     exp2SGraph.GetXaxis().SetMoreLogLabels();
     exp2SGraph.GetXaxis().SetRangeUser(600,8000);
+    exp2SGraph.SetTitle("")
 
     exp2SGraph.Draw("AF");
     exp1SGraph.Draw("F");
@@ -192,7 +193,7 @@ if __name__ == "__main__":
     cmsText.SetLineColor(0);
     cmsText.SetLineStyle(1);
     cmsText.SetLineWidth(1);
-    cmsText.SetTextSize(0.035);
+    cmsText.SetTextSize(0.04);
     cmsText.Draw();
 
     extraText=ROOT.TLatex(0.23,0.90, "Preliminary");
@@ -201,7 +202,7 @@ if __name__ == "__main__":
     extraText.SetLineColor(0);
     extraText.SetLineStyle(1);
     extraText.SetLineWidth(1);
-    extraText.SetTextSize(0.035);
+    extraText.SetTextSize(0.04);
     extraText.Draw();
 
     lumiText=ROOT.TLatex(0.70,0.90, "%d fb^{-1} (13 TeV)"%(lumi(args.year)) );
@@ -210,7 +211,7 @@ if __name__ == "__main__":
     lumiText.SetLineColor(0);
     lumiText.SetLineStyle(1);
     lumiText.SetLineWidth(1);
-    lumiText.SetTextSize(0.035);
+    lumiText.SetTextSize(0.04);
     lumiText.Draw();
 
     redrawBorder()
