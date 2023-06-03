@@ -15,12 +15,11 @@ parser.add_argument('--unblind',action="store_true",help='debug mode')
 args = parser.parse_args()
 
 def lumi(year):
-    thelumi = {};
-    thelumi["2016"]=35.9;
-    thelumi["2017"]=41.5;
-    thelumi["2018"]=59.7;
-    thelumi["fullRun2"]=137.1;
-    return thelumi[year]
+    if (year=="2016"): return 35.9
+    elif (year=="2017"): return 41.5
+    elif (year=="2018"): return 59.7
+    elif (year=="fullRun2"): return 137.1
+    else: return 0
 
 def redrawBorder():
     # code from -> https://root-forum.cern.ch/t/how-to-redraw-axis-and-plot-borders/28252
