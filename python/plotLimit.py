@@ -5,6 +5,7 @@ import ROOT
 from array import array
 import numpy as np
 import argparse
+import pandas as pd
 
 parser = argparse.ArgumentParser(description='')
 parser.add_argument('--year','-y',default="2016",type=str,help='year')
@@ -50,6 +51,9 @@ def Acceptance(year, coupling, mass):
 
 if __name__ == "__main__":
 
+    df = pd.read_csv('/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/SignalNorm_Splines_full.txt', sep=" ")
+    print(df)
+
     MC_masses, MC_crossSections = {}, {}
 
     MC_masses["kMpl001_TuneCP2"] = array('d',[750, 1000, 1250, 1500, 1750, 2000, 2250, 2500, 2750, 3000, 3250, 3500, 4000, 5000])
@@ -85,7 +89,6 @@ if __name__ == "__main__":
     for line in Lines:
         mass, obs, expP2s, expP1s, exp, expM1s, expM2s = line.split()
         norm = Acceptance(args.year, args.coupling, mass)
-        print (norm)
         mass_array.append(float(mass))
         obs_array.append(float(obs)/norm)
         exp_array.append(float(exp)/norm)
