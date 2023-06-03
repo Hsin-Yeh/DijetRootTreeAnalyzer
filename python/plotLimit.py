@@ -35,7 +35,7 @@ def Acceptance(year, coupling, mass):
     totalNorm=0
     if (year=="fullRun2"):
         for line in Lines:
-            if (line.find(coupling)!=-1 and line.find('%d'%mass)!=-1 and line.find('All')!=-1):
+            if (line.find(coupling)!=-1 and line.find(mass)!=-1 and line.find('All')!=-1):
                 year, coupling, mass, cat, norm = line.split()
                 totalNorm += float(norm)
         totalNorm = float(totalNorm)/float(lumi(year))
@@ -83,6 +83,7 @@ if __name__ == "__main__":
         Lines = infile.readlines()
     for line in Lines:
         mass, obs, expP2s, expP1s, exp, expM1s, expM2s = line.split()
+        Acceptance(args.year, args.coupling, mass)
         mass_array.append(float(mass))
         obs_array.append(float(obs)/norm)
         exp_array.append(float(exp)/norm)
