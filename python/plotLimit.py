@@ -30,23 +30,25 @@ def redrawBorder():
     l.DrawLine(ROOT.gPad.GetUxmax(), ROOT.gPad.GetUymin(), ROOT.gPad.GetUxmax(), ROOT.gPad.GetUymax());
 
 def Acceptance(year, coupling, mass):
-    print(year, coupling)
     with open('/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/SignalNorm_Splines_full.txt') as infile:
         Lines = infile.readlines()
-    for line in Lines:
-        print (line)
-        if (line.find(year)!=-1 and line.find(coupling)!=-1 and line.find('%d'%mass)!=-1 and line.find('All')!=-1):
-            year, coupling, mass, cat, norm = line.split()
-            print (year, norm, lumi(year))
-            norm = float(norm)/float(lumi(year))
-            break
-    return norm
+    totalNorm=0
+    if (year=="fullRun2"):
+        for line in Lines:
+            if (line.find(coupling)!=-1 and line.find('%d'%mass)!=-1 and line.find('All')!=-1):
+                year, coupling, mass, cat, norm = line.split()
+                totalNorm += float(norm)
+        totalNorm = float(totalNorm)/float(lumi(year))
+    else:
+        for line in Lines:
+            if (line.find(year)!=-1 and line.find(coupling)!=-1 and line.find('%d'%mass)!=-1 and line.find('All')!=-1):
+                year, coupling, mass, cat, norm = line.split()
+                norm = float(norm)/float(lumi(year))
+                break
+    return totalNorm
 
 if __name__ == "__main__":
 
-    print(args.year, args.coupling)
-    norm = Acceptance(args.year, args.coupling, 1000)
-    print ("====================%f===================="%(norm))
     MC_masses, MC_crossSections = {}, {}
 
     MC_masses["kMpl001_TuneCP2"] = array('d',[750, 1000, 1250, 1500, 1750, 2000, 2250, 2500, 2750, 3000, 3250, 3500, 4000, 5000])
@@ -82,12 +84,12 @@ if __name__ == "__main__":
     for line in Lines:
         mass, obs, expP2s, expP1s, exp, expM1s, expM2s = line.split()
         mass_array.append(float(mass))
-        obs_array.append(float(obs))
-        exp_array.append(float(exp))
-        expP1s_array.append(float(expP1s))
-        expP2s_array.append(float(expP2s))
-        expM1s_array.append(float(expM1s))
-        expM2s_array.append(float(expM2s))
+        obs_array.append(float(obs)/norm)
+        exp_array.append(float(exp)/norm)
+        expP1s_array.append(float(expP1s)/norm)
+        expP2s_array.append(float(expP2s)/norm)
+        expM1s_array.append(float(expM1s)/norm)
+        expM2s_array.append(float(expM2s)/norm)
 
     expGraph_init      = ROOT.TGraphErrors(len(mass_array),mass_array,exp_array);
     exp1SGraph_init    = ROOT.TGraphErrors(len(mass_array),mass_array,expM1s_array);
