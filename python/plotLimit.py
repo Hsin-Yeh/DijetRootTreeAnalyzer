@@ -5,7 +5,6 @@ import ROOT
 from array import array
 import numpy as np
 import argparse
-import pandas as pd
 
 parser = argparse.ArgumentParser(description='')
 parser.add_argument('--year','-y',default="2016",type=str,help='year')
@@ -86,6 +85,7 @@ if __name__ == "__main__":
     for line in Lines:
         mass, obs, expP2s, expP1s, exp, expM1s, expM2s = line.split()
         norm = Acceptance(args.year, args.coupling, mass)
+        print (norm)
         mass_array.append(float(mass))
         obs_array.append(float(obs)/norm)
         exp_array.append(float(exp)/norm)
