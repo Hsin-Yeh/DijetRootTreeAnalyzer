@@ -14,6 +14,14 @@ parser.add_argument('--debug','-d',action="store_true",help='debug mode')
 parser.add_argument('--unblind',action="store_true",help='debug mode')
 args = parser.parse_args()
 
+def lumi(year):
+    thelumi = {};
+    thelumi["2016"]=35.9;
+    thelumi["2017"]=41.5;
+    thelumi["2018"]=59.7;
+    thelumi["fullRun2"]=137.1;
+    return thelumi[year]
+
 def redrawBorder():
     # code from -> https://root-forum.cern.ch/t/how-to-redraw-axis-and-plot-borders/28252
     ROOT.gPad.Update();
@@ -22,8 +30,20 @@ def redrawBorder():
     l.DrawLine(ROOT.gPad.GetUxmin(), ROOT.gPad.GetUymax(), ROOT.gPad.GetUxmax(), ROOT.gPad.GetUymax());
     l.DrawLine(ROOT.gPad.GetUxmax(), ROOT.gPad.GetUymin(), ROOT.gPad.GetUxmax(), ROOT.gPad.GetUymax());
 
+def Acceptance(year, coupling, mass):
+    with open('/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/SignalNorm_Splines_full.txt') as infile:
+        Lines = infile.readlines()
+    for line in Lines:
+        if (line.find(year)!=0 and line.find(coupling)!=0 and line.find(mass)!=0 and line.find('All')!=0):
+            year, coupling, mass, cat, norm = line.split()
+            norm = float(norm)/lumi[year]
+            break
+    return norm
+
 if __name__ == "__main__":
 
+    norm = Acceptance(args.year, args.coup, 1000)
+    print ("====================%f===================="%(norm))
     MC_masses, MC_crossSections = {}, {}
 
     MC_masses["kMpl001_TuneCP2"] = array('d',[750, 1000, 1250, 1500, 1750, 2000, 2250, 2500, 2750, 3000, 3250, 3500, 4000, 5000])
@@ -181,12 +201,7 @@ if __name__ == "__main__":
     extraText.SetTextSize(0.035);
     extraText.Draw();
 
-    thelumi = {};
-    thelumi["2016"]=35.9;
-    thelumi["2017"]=41.5;
-    thelumi["2018"]=59.7;
-    thelumi["fullRun2"]=137.1;
-    lumiText=ROOT.TLatex(0.70,0.90, "%d fb^{-1} (13 TeV)"%(thelumi[args.year]) );
+    lumiText=ROOT.TLatex(0.70,0.90, "%d fb^{-1} (13 TeV)"%(lumi[args.year]) );
     lumiText.SetNDC(1);
     lumiText.SetTextFont(42);
     lumiText.SetLineColor(0);
