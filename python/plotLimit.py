@@ -52,7 +52,9 @@ def Acceptance(year, coupling, mass):
 if __name__ == "__main__":
 
     df = pd.read_csv('/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/SignalNorm_Splines_full.txt', sep=" ")
-    print(df)
+    i=df[df['year']==args.year and df['coupling']==args.coup and df['mass']==1000]
+    print(i)
+
 
     MC_masses, MC_crossSections = {}, {}
 
