@@ -42,7 +42,6 @@ def Acceptance(year, coupling, mass):
             totalNorm = float(norm)
             break
     totalNorm = float(totalNorm)/float(lumi(year))
-    print(year, coupling, mass, cat, norm, totalNorm)
     return totalNorm
 
 if __name__ == "__main__":
