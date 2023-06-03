@@ -83,7 +83,7 @@ if __name__ == "__main__":
         Lines = infile.readlines()
     for line in Lines:
         mass, obs, expP2s, expP1s, exp, expM1s, expM2s = line.split()
-        Acceptance(args.year, args.coupling, mass)
+        norm = Acceptance(args.year, args.coupling, mass)
         mass_array.append(float(mass))
         obs_array.append(float(obs)/norm)
         exp_array.append(float(exp)/norm)
