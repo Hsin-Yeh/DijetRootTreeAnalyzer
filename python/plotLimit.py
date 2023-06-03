@@ -34,19 +34,15 @@ def Acceptance(year, coupling, mass):
     with open('/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/SignalNorm_Splines_full.txt') as infile:
         Lines = infile.readlines()
     totalNorm=0
-    if (year=="fullRun2"):
-        for line in Lines:
-            y, c, m, cat, norm = line.split()
-            if (c==coupling and m==mass and cat=='All'):
+    for line in Lines:
+        y, c, m, cat, norm = line.split()
+        if (year=="fullRun2" and c==coupling and m==mass and cat=='All'):
                 totalNorm += float(norm)
-        totalNorm = float(totalNorm)/float(lumi(year))
-    else:
-        for line in Lines:
-            if (line.find(year)!=-1 and line.find(coupling)!=-1 and line.find(mass)!=-1 and line.find('All')!=-1):
-                year, coupling, mass, cat, norm = line.split()
-                totalNorm = float(norm)/float(lumi(year))
-                print(year, coupling, mass, cat, norm, totalNorm)
-                break
+        elif (y==year and c==coupling and m==mass and cat=='All'):
+            totalNorm = float(norm)
+            break
+    totalNorm = float(totalNorm)/float(lumi(year))
+    print(year, coupling, mass, cat, norm, totalNorm)
     return totalNorm
 
 if __name__ == "__main__":
@@ -85,7 +81,6 @@ if __name__ == "__main__":
         Lines = infile.readlines()
     for line in Lines:
         mass, obs, expP2s, expP1s, exp, expM1s, expM2s = line.split()
-        print('--------------------%s--------------------'%mass)
         norm = Acceptance(args.year, args.coupling, mass)
         mass_array.append(float(mass))
         obs_array.append(float(obs)/norm)
