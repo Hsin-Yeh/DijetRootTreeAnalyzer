@@ -791,7 +791,13 @@ export mainpath="/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2
 
 for year in 2016; do echo "combine_bias_study.exe ${year} "${mainpath}/output/${year}/combine_bias/finaloutput" "${mainpath}/output/${year}/combine_bias/plots" "; combine_bias_study.exe ${year} "${mainpath}/output/${year}/combine_bias/finaloutput" "${mainpath}/output/${year}/combine_bias/plots"; done;
 
-for year in 2017; do echo "combine_bias_study.exe ${year} "${mainpath}/output/${year}/combine_bias/finaloutput" "${mainpath}/output/${year}/combine_bias/plots" "; combine_bias_study.exe ${year} "${mainpath}/output/${year}/combine_bias/finaloutput" "${mainpath}/output/${year}/combine_bias/plots"; done;
+for year in 2017; do
+    Dir=${mainpath}/output/${year}/combine_bias/${version}
+    mkdir ${Dir}/plots
+
+    echo "combine_bias_study.exe ${year} ${Dir} ${Dir}/plots"
+    combine_bias_study.exe ${year} "${Dir}" "${Dir}/plots"
+done
 
 for year in 2018; do echo "combine_bias_study.exe ${year} "${mainpath}/output/${year}/combine_bias/finaloutput" "${mainpath}/output/${year}/combine_bias/plots" "; combine_bias_study.exe ${year} "${mainpath}/output/${year}/combine_bias/finaloutput" "${mainpath}/output/${year}/combine_bias/plots"; done;
 #+end_src
