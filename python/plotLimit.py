@@ -26,9 +26,9 @@ def redrawBorder():
     # code from -> https://root-forum.cern.ch/t/how-to-redraw-axis-and-plot-borders/28252
     ROOT.gPad.Update();
     ROOT.gPad.RedrawAxis();
-    l = ROOT.TLine();
-    l.DrawLine(ROOT.gPad.GetUxmin(), ROOT.gPad.GetUymax(), ROOT.gPad.GetUxmax(), ROOT.gPad.GetUymax());
-    l.DrawLine(ROOT.gPad.GetUxmax(), ROOT.gPad.GetUymin(), ROOT.gPad.GetUxmax(), ROOT.gPad.GetUymax());
+    # l = ROOT.TLine();
+    # l.DrawLine(ROOT.gPad.GetUxmin(), ROOT.gPad.GetUymax(), ROOT.gPad.GetUxmax(), ROOT.gPad.GetUymax());
+    # l.DrawLine(ROOT.gPad.GetUxmax(), ROOT.gPad.GetUymin(), ROOT.gPad.GetUxmax(), ROOT.gPad.GetUymax());
 
 def Acceptance(year, coupling, mass):
     with open('/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/SignalNorm_Splines_full.txt') as infile:
@@ -119,7 +119,7 @@ if __name__ == "__main__":
     exp2SGraph.GetYaxis().SetTitle("95% CL limit #sigma(pp#rightarrowG#rightarrow#gamma#gamma) (fb)" if args.signame == "grav" else "95% CL limit #sigma(pp#rightarrowS#rightarrow#gamma#gamma) (fb)" );
     exp2SGraph.GetXaxis().SetTitle("m_{G} (GeV)" if args.signame == "grav" else "m_{S} (GeV)");
     exp2SGraph.GetXaxis().SetMoreLogLabels();
-    exp2SGraph.GetXaxis().SetRangeUser(600,8000);
+    exp2SGraph.GetXaxis().SetRangeUser(600,5000);
     exp2SGraph.SetTitle("")
 
     exp2SGraph.Draw("AF");
