@@ -179,7 +179,7 @@ if __name__ == "__main__":
 
     leg.SetHeader(plabel,"C");
     if ( args.signame == "grav" ):
-        leg.AddEntry(g_xs_TuneCP2,"G_{RS}#rightarrow#gamma#gamma (LO) CP2","l");
+        leg.AddEntry(g_xs_TuneCP2,"G_{RS}#rightarrow#gamma#gamma (LO)","l");
         # leg.AddEntry(g_xs_TuneCUEP8M1,"G_{RS}#rightarrow#gamma#gamma (LO) CUEP8M1","l");
         leg.AddEntry(gr_2016,"Published 2016 Mass Limit","P");
         leg.AddEntry(expGraph,"expected Limit","L"); #L_{int}=36.4/pb
