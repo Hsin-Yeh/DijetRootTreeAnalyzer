@@ -145,11 +145,11 @@ if __name__ == "__main__":
     g_xs_TuneCP2.SetMarkerStyle(20);
     g_xs_TuneCP2.Draw("Lsame");
 
-    g_xs_TuneCUEP8M1.SetLineWidth(3);
-    g_xs_TuneCUEP8M1.SetLineColor(8);
-    g_xs_TuneCUEP8M1.SetLineStyle(9);
-    g_xs_TuneCUEP8M1.SetMarkerStyle(20);
-    g_xs_TuneCUEP8M1.Draw("Lsame");
+    # g_xs_TuneCUEP8M1.SetLineWidth(3);
+    # g_xs_TuneCUEP8M1.SetLineColor(8);
+    # g_xs_TuneCUEP8M1.SetLineStyle(9);
+    # g_xs_TuneCUEP8M1.SetMarkerStyle(20);
+    # g_xs_TuneCUEP8M1.Draw("Lsame");
 
     gr_2016  = ROOT.TGraph();
     if (args.coupling=="kMpl001"): gr_2016.SetPoint(0,2300, 0.125977);
@@ -180,7 +180,7 @@ if __name__ == "__main__":
     leg.SetHeader(plabel,"C");
     if ( args.signame == "grav" ):
         leg.AddEntry(g_xs_TuneCP2,"G_{RS}#rightarrow#gamma#gamma (LO) CP2","l");
-        leg.AddEntry(g_xs_TuneCUEP8M1,"G_{RS}#rightarrow#gamma#gamma (LO) CUEP8M1","l");
+        # leg.AddEntry(g_xs_TuneCUEP8M1,"G_{RS}#rightarrow#gamma#gamma (LO) CUEP8M1","l");
         leg.AddEntry(gr_2016,"Published 2016 Mass Limit","P");
         leg.AddEntry(expGraph,"expected Limit","L"); #L_{int}=36.4/pb
         leg.AddEntry(exp1SGraph,"#pm1#sigma","F");
