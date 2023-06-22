@@ -109,7 +109,7 @@ if __name__ == "__main__":
 
     g_diff_All.SetTitle("")
     g_diff_All.GetXaxis().SetTitle("Mass_{X} [GeV]")
-    g_diff_All.GetYaxis().SetTitle("new/old")
+    g_diff_All.GetYaxis().SetTitle("old/new")
     g_diff_All.SetLineColor(1)
     g_diff_All.SetLineWidth(2)
     g_diff_All.GetYaxis().SetTitleSize(20);
