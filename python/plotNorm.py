@@ -102,7 +102,7 @@ if __name__ == "__main__":
     EBEBnorm_diff, EBEEnorm_diff, All_diff= array('d'), array('d'), array('d')
     EBEBnorm_diff=np.divide(EBEBnorm_2,EBEBnorm_1)
     EBEEnorm_diff=np.divide(EBEEnorm_2,EBEEnorm_1)
-    Allnorm_diff=np.divide(Allnorm_1,Allnorm_2)
+    Allnorm_diff=np.divide(Allnorm_2,Allnorm_1)
     g_diff_EBEB = ROOT.TGraph(len(mass_1), mass_1, EBEBnorm_diff)
     g_diff_EBEE = ROOT.TGraph(len(mass_1), mass_1, EBEEnorm_diff)
     g_diff_All = ROOT.TGraph(len(mass_1), mass_1, Allnorm_diff)
@@ -123,7 +123,7 @@ if __name__ == "__main__":
     g_diff_All.GetXaxis().SetLabelFont(43);
     g_diff_All.GetXaxis().SetLabelSize(15);
     g_diff_All.Draw("AL")
-    g_diff_All.GetYaxis().SetRangeUser(0.97,1.15)
+    g_diff_All.GetYaxis().SetRangeUser(0.85,1.03)
     g_diff_EBEB.SetLineWidth(2)
     g_diff_EBEB.SetLineColor(2)
     g_diff_EBEB.Draw("LSame")
