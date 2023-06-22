@@ -131,7 +131,7 @@ if __name__ == "__main__":
     g_diff_EBEE.SetLineColor(4)
     g_diff_EBEE.Draw("LSame")
 
-    l_diff = ROOT.TLegend(0.5,0.7,0.85,0.85)
+    l_diff = ROOT.TLegend(0.5,0.3,0.5,0.85)
     l_diff.SetNColumns(3)
     l_diff.SetTextSize(0.1)
     l_diff.SetFillStyle(0);
