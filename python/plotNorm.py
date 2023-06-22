@@ -100,8 +100,8 @@ if __name__ == "__main__":
     pad2.Draw()
     pad2.cd()
     EBEBnorm_diff, EBEEnorm_diff, All_diff= array('d'), array('d'), array('d')
-    EBEBnorm_diff=np.divide(EBEBnorm_1,EBEBnorm_2)
-    EBEEnorm_diff=np.divide(EBEEnorm_1,EBEEnorm_2)
+    EBEBnorm_diff=np.divide(EBEBnorm_2,EBEBnorm_1)
+    EBEEnorm_diff=np.divide(EBEEnorm_2,EBEEnorm_1)
     Allnorm_diff=np.divide(Allnorm_1,Allnorm_2)
     g_diff_EBEB = ROOT.TGraph(len(mass_1), mass_1, EBEBnorm_diff)
     g_diff_EBEE = ROOT.TGraph(len(mass_1), mass_1, EBEEnorm_diff)
@@ -109,7 +109,7 @@ if __name__ == "__main__":
 
     g_diff_All.SetTitle("")
     g_diff_All.GetXaxis().SetTitle("Mass_{X} [GeV]")
-    g_diff_All.GetYaxis().SetTitle("old/new")
+    g_diff_All.GetYaxis().SetTitle("new/old")
     g_diff_All.SetLineColor(1)
     g_diff_All.SetLineWidth(2)
     g_diff_All.GetYaxis().SetTitleSize(20);
