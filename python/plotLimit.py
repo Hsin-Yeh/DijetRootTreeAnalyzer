@@ -47,14 +47,12 @@ def Acceptance(year, coupling, mass):
 if __name__ == "__main__":
 
     MC_masses, MC_crossSections = {}, {}
-
     MC_masses["kMpl001_TuneCP2"] = array('d',[750, 1000, 1250, 1500, 1750, 2000, 2250, 2500, 2750, 3000, 3250, 3500, 4000, 5000])
     MC_masses["kMpl01_TuneCP2"] = array('d',[750, 1000, 1250, 1500, 1750, 2000, 2250, 2500, 3000, 3500, 4000, 4250, 4500, 4750, 5000, 5250, 5500, 5750, 6000, 6500, 7000, 8000])
     MC_masses["kMpl02_TuneCP2"] = array('d',[750, 1000, 1250, 1500, 1750, 2000, 2250, 2500, 3000, 3500, 4000, 4500, 4750, 5000, 5250, 5500, 5750, 6000, 6500, 7000, 8000])
     MC_masses["kMpl001_TuneCUEP8M1"] = array('d',[500, 740, 745, 750, 755, 760, 765, 770, 1000, 1250, 1500, 1750, 2000, 2250, 2500, 2750, 3000, 3250, 3500, 3750, 4000, 4500, 5000, 5500, 6000, 6500, 7000])
     MC_masses["kMpl01_TuneCUEP8M1"] = array('d',[500, 740, 745, 750, 755, 760, 765, 770, 1000, 1250, 1500, 1750, 2000, 2250, 2500, 2750, 3000, 3500, 4000, 4500, 5000, 5500, 6000, 6500, 7000])
     MC_masses["kMpl02_TuneCUEP8M1"] = array('d',[500, 740, 745, 750, 755, 760, 765, 770, 1000, 1500, 2000, 3000, 4000, 5000, 6000, 7000])
-
     MC_crossSections["kMpl001_TuneCP2"] = array('d',[4.850e-02, 1.133e-02, 3.428e-03, 1.234e-03, 4.981e-04, 2.201e-04, 1.036e-04, 5.074e-05, 2.613e-05, 1.384e-05, 7.548e-06, 4.226e-06, 1.439e-06, 2.150e-07])
     MC_crossSections["kMpl01_TuneCP2"] = array('d',[4.870e+00, 1.120e+00, 3.413e-01, 1.224e-01, 4.940e-02, 2.180e-02, 1.025e-02, 5.051e-03, 1.373e-03, 4.229e-04, 1.435e-04, 8.663e-05, 5.367e-05, 3.368e-05, 2.163e-05, 1.398e-05, 9.145e-06, 6.022e-06, 3.967e-06, 1.742e-06, 7.583e-07, 1.269e-07])
     MC_crossSections["kMpl02_TuneCP2"] = array('d',[1.905e+01, 4.403e+00, 1.328e+00, 4.750e-01, 1.919e-01, 8.481e-02, 3.981e-02, 1.967e-02, 5.410e-03, 1.669e-03, 5.707e-04, 2.157e-04, 1.364e-04, 8.732e-05, 5.709e-05, 3.748e-05, 2.479e-05, 1.652e-05, 7.426e-06, 3.360e-06, 6.570e-07])
@@ -62,14 +60,13 @@ if __name__ == "__main__":
     MC_crossSections["kMpl01_TuneCUEP8M1"] = array('d',[34.43, 5.392, 5.192, 5.092, 4.886, 4.741, 4.585, 4.428, 1.206, 0.3716, 0.1348, 0.0548, 0.02407, 0.01129, 0.005536, 0.002836, 0.001492, 0.0004361, 0.0001361, 4.354e-05, 1.439e-05, 4.807e-06, 1.617e-06, 5.545e-07, 1.991e-07])
     MC_crossSections["kMpl02_TuneCUEP8M1"] = array('d',[142.6, 21.32, 20.55, 20.62, 19.33, 18.74, 18.18, 17.58, 4.829, 0.5326, 0.09455, 0.005803, 0.000536, 5.879e-05, 7.185e-06, 1.03e-06])
 
-    CP2 = args.coupling + "_TuneCP2"
-    CUEP8M1 = args.coupling + "_TuneCUEP8M1"
-
-    MC_crossSection_TuneCP2_fb = array('d',np.multiply(MC_crossSections[CP2],1000))
-    g_xs_TuneCP2 = ROOT.TGraph(len(MC_masses[CP2]),MC_masses[CP2],MC_crossSection_TuneCP2_fb)
-
-    MC_crossSection_TuneCUEP8M1_fb = array('d',np.multiply(MC_crossSections[CUEP8M1],1000))
-    g_xs_TuneCUEP8M1 = ROOT.TGraph(len(MC_masses[CUEP8M1]),MC_masses[CUEP8M1],MC_crossSection_TuneCUEP8M1_fb)
+    if (args.signame == "grav"):
+        CP2 = args.coupling + "_TuneCP2"
+        CUEP8M1 = args.coupling + "_TuneCUEP8M1"
+        MC_crossSection_TuneCP2_fb = array('d',np.multiply(MC_crossSections[CP2],1000))
+        g_xs_TuneCP2 = ROOT.TGraph(len(MC_masses[CP2]),MC_masses[CP2],MC_crossSection_TuneCP2_fb)
+        MC_crossSection_TuneCUEP8M1_fb = array('d',np.multiply(MC_crossSections[CUEP8M1],1000))
+        g_xs_TuneCUEP8M1 = ROOT.TGraph(len(MC_masses[CUEP8M1]),MC_masses[CUEP8M1],MC_crossSection_TuneCUEP8M1_fb)
 
     m_gStyle = ROOT.TStyle();
     m_gStyle.SetOptFit(0);
@@ -140,17 +137,18 @@ if __name__ == "__main__":
     # if (unblind) obsGraph.Draw("L");
     # obsGraph.Draw("LC");
 
-    g_xs_TuneCP2.SetLineWidth(3);
-    g_xs_TuneCP2.SetLineColor(2);
-    g_xs_TuneCP2.SetLineStyle(9);
-    g_xs_TuneCP2.SetMarkerStyle(20);
-    g_xs_TuneCP2.Draw("Lsame");
+    if (args.signame == "grav"):
+        g_xs_TuneCP2.SetLineWidth(3);
+        g_xs_TuneCP2.SetLineColor(2);
+        g_xs_TuneCP2.SetLineStyle(9);
+        g_xs_TuneCP2.SetMarkerStyle(20);
+        g_xs_TuneCP2.Draw("Lsame");
 
-    # g_xs_TuneCUEP8M1.SetLineWidth(3);
-    # g_xs_TuneCUEP8M1.SetLineColor(8);
-    # g_xs_TuneCUEP8M1.SetLineStyle(9);
-    # g_xs_TuneCUEP8M1.SetMarkerStyle(20);
-    # g_xs_TuneCUEP8M1.Draw("Lsame");
+        # g_xs_TuneCUEP8M1.SetLineWidth(3);
+        # g_xs_TuneCUEP8M1.SetLineColor(8);
+        # g_xs_TuneCUEP8M1.SetLineStyle(9);
+        # g_xs_TuneCUEP8M1.SetMarkerStyle(20);
+        # g_xs_TuneCUEP8M1.Draw("Lsame");
 
     gr_2016  = ROOT.TGraph();
     if (args.coupling=="kMpl001"): gr_2016.SetPoint(0,2300, 0.125977);
