@@ -207,7 +207,8 @@ if __name__ == "__main__":
     extraText.SetTextSize(0.04);
     extraText.Draw();
 
-    lumiText=ROOT.TLatex(0.70,0.90, "%d fb^{-1} (13 TeV)"%(lumi(args.year)) );
+    # lumiText=ROOT.TLatex(0.70,0.90, "%d fb^{-1} (13 TeV)"%(lumi(args.year)) );
+    lumiText=ROOT.TLatex(0.70,0.90, "%d fb^{-1} (13 TeV)"%(138));
     lumiText.SetNDC(1);
     lumiText.SetTextFont(42);
     lumiText.SetLineColor(0);
