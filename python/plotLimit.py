@@ -115,6 +115,7 @@ if __name__ == "__main__":
     exp2SGraph.GetYaxis().SetRangeUser(0.005,20);
     exp2SGraph.GetYaxis().SetTitle("95% CL limit #sigma(pp#rightarrowG#rightarrow#gamma#gamma) (fb)" if args.signame == "grav" else "95% CL limit #sigma(pp#rightarrowS#rightarrow#gamma#gamma) (fb)" );
     exp2SGraph.GetXaxis().SetTitle("m_{G} (GeV)" if args.signame == "grav" else "m_{S} (GeV)");
+    exp2SGraph.GetXaxis().SetTitleOffset(1.5);
     exp2SGraph.GetXaxis().SetMoreLogLabels();
     if (args.coupling=="kMpl01" or args.coupling=="kMpl02"): exp2SGraph.GetXaxis().SetRangeUser(600,7000)
     else: exp2SGraph.GetXaxis().SetRangeUser(800,5000)
@@ -181,10 +182,10 @@ if __name__ == "__main__":
         leg.AddEntry(g_xs_TuneCP2,"G_{RS}#rightarrow#gamma#gamma (LO)","l");
         # leg.AddEntry(g_xs_TuneCUEP8M1,"G_{RS}#rightarrow#gamma#gamma (LO) CUEP8M1","l");
         leg.AddEntry(gr_2016,"Published 2016 Mass Limit","P");
-        leg.AddEntry(expGraph,"expected Limit","L"); #L_{int}=36.4/pb
-        leg.AddEntry(exp1SGraph,"#pm1#sigma","F");
-        leg.AddEntry(exp2SGraph,"#pm2#sigma","F");
-        # leg.AddEntry(obsGraph,"observed Limit (Asymptotic)","L");
+    leg.AddEntry(expGraph,"expected Limit","L"); #L_{int}=36.4/pb
+    leg.AddEntry(exp1SGraph,"#pm1#sigma","F");
+    leg.AddEntry(exp2SGraph,"#pm2#sigma","F");
+    # leg.AddEntry(obsGraph,"observed Limit (Asymptotic)","L");
     leg.Draw();
 
     cmsText=ROOT.TLatex(0.17,0.90, "CMS");
