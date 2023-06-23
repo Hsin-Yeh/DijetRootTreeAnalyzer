@@ -31,7 +31,9 @@ def redrawBorder():
     # l.DrawLine(ROOT.gPad.GetUxmax(), ROOT.gPad.GetUymin(), ROOT.gPad.GetUxmax(), ROOT.gPad.GetUymax());
 
 def Acceptance(year, coupling, mass):
-    with open('/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/SignalNorm_Splines_full.txt') as infile:
+    if (args.signame == "grav"): Acceptance_file = "/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/SignalNorm_Splines_full.txt"
+    elif (args.signame == "heavyhigss"): Acceptance_file = "/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/SignalNorm_Splines_genFiducial.txt"
+    with open(Acceptance_file) as infile:
         Lines = infile.readlines()
     totalNorm=0
     for line in Lines:
