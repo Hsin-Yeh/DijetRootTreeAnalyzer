@@ -46,39 +46,39 @@ cmsenv
 
 ########## Add Samples ##########
 
-cd /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/CMSDIJET/DijetRootTreeAnalyzer/
-mkdir -p output/plots
-mkdir -p output/${method_grav}
-mkdir -p output/${method_hh}
+# cd /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/CMSDIJET/DijetRootTreeAnalyzer/
+# mkdir -p output/plots
+# mkdir -p output/${method_grav}
+# mkdir -p output/${method_hh}
 
-#RS
-for year in "${yearlist[@]}"; do
-    echo ${year}
-    for cat in "${catlist[@]}"; do
-        echo ${cat}
-        ## Grav ##
-        for coup in "${couplist_grav[@]}"; do
-            echo ${coup}
-            files_RS=`ls ${trees}/RSGravitonToGammaGamma_${coup}*${year}*.root`
-            python python/AddSignalShapes.py -e ${method_grav} -t nom -d output/${method_grav} -c ${cat} ${files_RS};
-            for syst in "${syslist[@]}" ; do
-                echo ${syst};
-                python python/AddSignalShapes.py -e ${method_grav} -t systematics -s ${syst} -d output/${method_grav} -c ${cat} ${files_RS};
-            done
-        done
-        ## Heavyhiggs ##
-        for coup in "${couplist_hh[@]}"; do
-            echo ${coup}
-            files_GluGlu=`ls ${trees}/GluGluSpin0ToGammaGamma_W_${coup}*${year}*.root`
-            python python/AddSignalShapes.py -e ${method_hh} -t nom -d output/${method_hh} -c ${cat} ${files_GluGlu};
-            for syst in "${syslist[@]}" ; do
-                echo ${syst};
-                python python/AddSignalShapes.py -e ${method_hh} -t systematics -s ${syst} -d output/${method_hh} -c ${cat} ${files_GluGlu};
-            done
-        done
+# #RS
+# for year in "${yearlist[@]}"; do
+#     echo ${year}
+#     for cat in "${catlist[@]}"; do
+#         echo ${cat}
+#         ## Grav ##
+#         for coup in "${couplist_grav[@]}"; do
+#             echo ${coup}
+#             files_RS=`ls ${trees}/RSGravitonToGammaGamma_${coup}*${year}*.root`
+#             python python/AddSignalShapes.py -e ${method_grav} -t nom -d output/${method_grav} -c ${cat} ${files_RS};
+#             for syst in "${syslist[@]}" ; do
+#                 echo ${syst};
+#                 python python/AddSignalShapes.py -e ${method_grav} -t systematics -s ${syst} -d output/${method_grav} -c ${cat} ${files_RS};
+#             done
+#         done
+#         ## Heavyhiggs ##
+#         for coup in "${couplist_hh[@]}"; do
+#             echo ${coup}
+#             files_GluGlu=`ls ${trees}/GluGluSpin0ToGammaGamma_W_${coup}*${year}*.root`
+#             python python/AddSignalShapes.py -e ${method_hh} -t nom -d output/${method_hh} -c ${cat} ${files_GluGlu};
+#             for syst in "${syslist[@]}" ; do
+#                 echo ${syst};
+#                 python python/AddSignalShapes.py -e ${method_hh} -t systematics -s ${syst} -d output/${method_hh} -c ${cat} ${files_GluGlu};
+#             done
+#         done
 
-    done
-done
+#     done
+# done
 
 # year=2017
 # coup="kMpl02"
@@ -128,7 +128,7 @@ mkdir ${InterpolateShapePath_grav}
 cd ${InterpolateShapePath_grav}
 rm -rf inputs InputShapes.root
 mkdir inputs
-filesToExtract_grav=`ls ${output}/${method} |grep .root | grep RSG `
+filesToExtract_grav=`ls ${output}/${method_grav} |grep .root | grep RSG `
 for file in ${filesToExtract_grav}; do
     echo ${file};
     cp ${output}/${method_grav}/${file} .;
@@ -141,7 +141,7 @@ mkdir ${InterpolateShapePath_hh}
 cd ${InterpolateShapePath_hh}
 rm -rf inputs InputShapes.root
 mkdir inputs
-filesToExtract_hh=`ls ${output}/${method} |grep .root | grep GluGlu `
+filesToExtract_hh=`ls ${output}/${method_hh} |grep .root | grep GluGlu `
 for file in ${filesToExtract_hh}; do
     echo ${file};
     cp ${output}/${method_hh}/${file} .;
@@ -155,7 +155,7 @@ done;
 # ############################################################
 
 cd ${InterpolateShapePath_grav}
-filesToExtract_grav=`ls ${output}/${method} |grep .root | grep RSG `
+filesToExtract_grav=`ls ${output}/${method_grav} |grep .root | grep RSG `
 rm ResonanceShapes*.root
 for file in ${filesToExtract_grav}; do
     echo ${file}
@@ -165,8 +165,8 @@ for file in ${filesToExtract_grav}; do
     ../getResonanceShapes.py -i inputs/${filename}.py -c ${coup} -f gg --massrange 600 7000 1 -o ResonanceShapes_${filename}.root;
 done;
 
-cd ${InterpolateShapePath_grav}
-filesToExtract_hh=`ls ${output}/${method} |grep .root | grep GluGlu `
+cd ${InterpolateShapePath_hh}
+filesToExtract_hh=`ls ${output}/${method_hh} |grep .root | grep GluGlu `
 rm ResonanceShapes*.root
 for file in ${filesToExtract_hh}; do
     echo ${file};
