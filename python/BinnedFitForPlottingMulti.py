@@ -1297,16 +1297,16 @@ if __name__ == '__main__':
         # PAS
         #myRebinnedDensityTH1.GetYaxis().SetTitle('d#sigma / dm_{jj} [pb / TeV]')
         myRebinnedDensityTH1.GetYaxis().SetLabelOffset(1000)
-        yLab = rt.TLatex()
-        yLab.SetTextAlign(32)
-        yLab.SetTextSize(0.05)
-        yLab.SetTextFont(42)
-        xM = 470
-        yLab.DrawLatex(xM, 1000, "10^{3}")
-        yLab.DrawLatex(xM, 100, "10^{2}")
-        yLab.DrawLatex(xM, 10, "10")
-        yLab.DrawLatex(xM, 1, "1")
-        yLab.DrawLatex(xM, 0.0001, "10^{#minus1}")
+        # yLab = rt.TLatex()
+        # yLab.SetTextAlign(32)
+        # yLab.SetTextSize(0.05)
+        # yLab.SetTextFont(42)
+        # xM = 470
+        # yLab.DrawLatex(xM, 1000, "10^{3}")
+        # yLab.DrawLatex(xM, 100, "10^{2}")
+        # yLab.DrawLatex(xM, 10, "10")
+        # yLab.DrawLatex(xM, 1, "1")
+        # yLab.DrawLatex(xM, 0.0001, "10^{#minus1}")
 
 
     #pad_1.Update()
