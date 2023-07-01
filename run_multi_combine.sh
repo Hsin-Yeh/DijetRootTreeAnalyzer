@@ -77,7 +77,7 @@ export binnedFit_flag=true
 export writeDataCard_flag=true
 export combineCard_flag=true
 export combineLimit_flag=true
-                                                                                                                                                                                                                   ; done; done; done;
+
 # ############################## bkg model ##############################
 if $binnedFit_flag; then
     mkdir ${bkgFitResultsPath}/blind
