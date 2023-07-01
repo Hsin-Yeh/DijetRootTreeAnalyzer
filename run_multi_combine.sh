@@ -74,9 +74,9 @@ export datacard_configfile="config/diphotons_bias_${year}_pdf_index_wopip_wopil.
 
 #################### Run flags ####################
 export binnedFit_flag=true
-export writeDataCard_flag=false
-export combineCard_flag=false
-export combineLimit_flag=false
+export writeDataCard_flag=true
+export combineCard_flag=true
+export combineLimit_flag=true
 
 # ############################## bkg model ##############################
 if $binnedFit_flag; then
