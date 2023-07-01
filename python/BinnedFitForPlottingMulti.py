@@ -1296,7 +1296,7 @@ if __name__ == '__main__':
         myRebinnedDensityTH1.GetYaxis().SetTitle('d#sigma/dm_{#gamma#gamma} [pb/TeV]')
         # PAS
         #myRebinnedDensityTH1.GetYaxis().SetTitle('d#sigma / dm_{jj} [pb / TeV]')
-        myRebinnedDensityTH1.GetYaxis().SetLabelOffset(1000)
+        # myRebinnedDensityTH1.GetYaxis().SetLabelOffset(1000)
         # yLab = rt.TLatex()
         # yLab.SetTextAlign(32)
         # yLab.SetTextSize(0.05)
