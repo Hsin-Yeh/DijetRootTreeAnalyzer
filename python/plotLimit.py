@@ -19,7 +19,7 @@ def lumi(year):
     if (year=="2016"): return 35.9
     elif (year=="2017"): return 41.5
     elif (year=="2018"): return 59.7
-    elif (year=="fullRun2"): return 137.1
+    elif (year=="fullRun2"): return 138
     else: return 0
 
 def redrawBorder():
@@ -122,7 +122,7 @@ if __name__ == "__main__":
     exp2SGraph.GetXaxis().SetTitleOffset(1.3);
     exp2SGraph.GetXaxis().SetMoreLogLabels();
     if (args.coupling=="kMpl01" or args.coupling=="kMpl02"): exp2SGraph.GetXaxis().SetRangeUser(600,7000)
-    else: exp2SGraph.GetXaxis().SetRangeUser(800,5000)
+    else: exp2SGraph.GetXaxis().SetRangeUser(600,5000)
     exp2SGraph.SetTitle("")
 
     exp2SGraph.Draw("AF");
@@ -210,8 +210,8 @@ if __name__ == "__main__":
     extraText.SetTextSize(0.04);
     extraText.Draw();
 
-    # lumiText=ROOT.TLatex(0.70,0.90, "%d fb^{-1} (13 TeV)"%(lumi(args.year)) );
-    lumiText=ROOT.TLatex(0.70,0.90, "%d fb^{-1} (13 TeV)"%(138));
+    lumiText=ROOT.TLatex(0.70,0.90, "%d fb^{-1} (13 TeV)"%(lumi(args.year)) );
+    # lumiText=ROOT.TLatex(0.70,0.90, "%d fb^{-1} (13 TeV)"%(138));
     lumiText.SetNDC(1);
     lumiText.SetTextFont(42);
     lumiText.SetLineColor(0);
