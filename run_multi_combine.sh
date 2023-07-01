@@ -20,7 +20,7 @@
 # ./run_multi_combine.sh 2018 1p4
 # ./run_multi_combine.sh 2018 5p6
 
-export version="2023-07-02-1"
+export version="2023-07-01-1"
 export year=$1
 export coupling=$2
 
