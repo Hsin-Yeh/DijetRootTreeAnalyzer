@@ -192,7 +192,9 @@ def initializeWorkspace(w,cfg,box,scaleFactor=1.,penalty=False,multi=False,x=Non
     if multi:
         #print(pdf_index)
         # print(box)
-        paramNames.append('pdf_index_%s_%s'%(box.split('_')[2],box.split('_')[3])) # DiPhotons_kMpl001_EBEB_2016
+        if len(box.split('_')==3): paramNames.append('pdf_index')
+        elif len(box.split('_')==4): paramNames.append('pdf_index_%s_%s'%(box.split('_')[2],box.split('_')[3])) # DiPhotons_kMpl001_EBEB_2016
+
         bkgs = ['multi']
     return paramNames, bkgs
 
