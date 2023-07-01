@@ -20,7 +20,7 @@
 # ./run_multi_combine.sh 2018 1p4
 # ./run_multi_combine.sh 2018 5p6
 
-export version="2023-07-01-1"
+export version="2023-07-02-1"
 export year=$1
 export coupling=$2
 
@@ -62,7 +62,6 @@ export unblind=false
 if [[ ${year} == "2016" ]]; then
     export unblind=false
 fi
-export massInterval=10
 
 #################### Paths ####################
 export InterpolateShapePath="/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/${method}"
@@ -73,9 +72,9 @@ export SignalNormFile="/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSS
 export datacard_configfile="config/diphotons_bias_${year}_pdf_index_wopip_wopil.config"
 
 #################### Run flags ####################
-export binnedFit_flag=true
-export writeDataCard_flag=true
-export combineCard_flag=true
+export binnedFit_flag=false
+export writeDataCard_flag=false
+export combineCard_flag=false
 export combineLimit_flag=true
 
 # ############################## bkg model ##############################
