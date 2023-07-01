@@ -442,10 +442,12 @@ if __name__ == '__main__':
                   help="eneScGain Up file")
     parser.add_option('--eneScSigmaUp',dest="eneScSigmaUpFile", default=None,type="string",
                   help="eneScSigma Up file")
-    parser.add_option('--SFScaleUp',dest="SFScaleUpFile", default=None,type="string",
-                  help="SFSCale Up file")
-    parser.add_option('--PUScaleUp',dest="PUScaleUpFile", default=None,type="string",
-                  help="PUScale Up file")
+    parser.add_option('--EEPFUp',dest="EEPFUpFile", default=None,type="string",
+                  help="EEPF Up file")
+    parser.add_option('--SFUp',dest="SFUpFile", default=None,type="string",
+                  help="SF Up file")
+    parser.add_option('--PuUp',dest="PuUpFile", default=None,type="string",
+                  help="Pu Up file")
     parser.add_option('--jesDown',dest="jesDownFile", default=None,type="string",
                   help="jes Down file")
     parser.add_option('--jerDown',dest="jerDownFile", default=None,type="string",
@@ -458,11 +460,12 @@ if __name__ == '__main__':
                   help="eneScGain Down file")
     parser.add_option('--eneScSigmaDown',dest="eneScSigmaDownFile", default=None,type="string",
                   help="eneScSigma Down file")
-    parser.add_option('--SFScaleDown',dest="SFScaleDownFile", default=None,type="string",
-                  help="SFScale Down file")
-    parser.add_option('--PUScaleDown',dest="PUScaleDownFile", default=None,type="string",
-                  help="PUScale Down file")
-
+    parser.add_option('--EEPFDown',dest="EEPFDownFile", default=None,type="string",
+                  help="EEPF Down file")
+    parser.add_option('--SFDown',dest="SFDownFile", default=None,type="string",
+                  help="SF Down file")
+    parser.add_option('--PuDown',dest="PuDownFile", default=None,type="string",
+                  help="Pu Down file")
     parser.add_option('-b','--box',dest="box", default="CaloDijet",type="string",
                   help="box name")
     parser.add_option('--asimov',dest="asimov",default=False,action='store_true',
@@ -744,15 +747,18 @@ if __name__ == '__main__':
             shapes.append('eneScSigma')
             shapeFiles['eneScSigmaUp'] = options.eneScSigmaUpFile
             shapeFiles['eneScSigmaDown'] = options.eneScSigmaDownFile
-        if options.SFScaleUpFile is not None or options.SFScaleDownFile is not None:
-            shapes.append('SFScale')
-            shapeFiles['SFScaleUp'] = options.SFScaleUpFile
-            shapeFiles['SFScaleDown'] = options.SFScaleDownFile
-        if options.PUScaleUpFile is not None or options.PUScaleDownFile is not None:
-            shapes.append('PUScale')
-            shapeFiles['PUScaleUp'] = options.PUScaleUpFile
-            shapeFiles['PUScaleDown'] = options.PUScaleDownFile
-
+        if options.SFUpFile is not None or options.SFDownFile is not None:
+            shapes.append('SF')
+            shapeFiles['SFUp'] = options.SFUpFile
+            shapeFiles['SFDown'] = options.SFDownFile
+        if options.PuUpFile is not None or options.PuDownFile is not None:
+            shapes.append('Pu')
+            shapeFiles['PuUp'] = options.PuUpFile
+            shapeFiles['PuDown'] = options.PuDownFile
+        if options.EEPFUpFile is not None or options.EEPFDownFile is not None:
+            shapes.append('EEPF')
+            shapeFiles['EEPFUp'] = options.EEPFUpFile
+            shapeFiles['EEPFDown'] = options.EEPFDownFile
 
     # JES and JER uncertainties
     hSigTh1x = signalHistos[0]
