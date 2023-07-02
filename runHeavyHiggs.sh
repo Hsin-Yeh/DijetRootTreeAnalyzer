@@ -24,7 +24,7 @@ export massInterval=100
 mkdir -p ${bkgFitResultsPath}
 cd /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/CMSDIJET/DijetRootTreeAnalyzer
 
-2016 Lumi 35900
+# 2016 Lumi 35900
 for coup in {"0p014","1p4","5p6"}; do echo $coup; for cat in {"EBEB","EBEE"}; do echo $cat; python python/BinnedFit.py -c config/diphotons_dijet.config -l 35900 -b DiPhotons_${coup}_${cat} -d ${bkgFitResultsPath} --fit-spectrum --plot-region Low --coup $coup --cat $cat --year 2016 output/InputShapes_data_${cat}_2016.root; done; done;
 
 #2017 Lumi 41527
