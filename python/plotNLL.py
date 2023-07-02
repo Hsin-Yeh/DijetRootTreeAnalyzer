@@ -50,7 +50,7 @@ def max_array(array):
 if __name__ == "__main__":
 
     # Define a list of colors
-    color_template = ['blue', 'green', 'orange', 'purple']
+    color_template = ['blue', 'green', 'orange', 'purple', 'red']
     # Create a figure and axes object
     fig, ax = plt.subplots()
 
