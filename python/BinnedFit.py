@@ -449,7 +449,7 @@ if __name__ == '__main__':
     plotband = convertSideband(plotRegion,w,x)
 
     if (len(box.split('_'))==3): extDijetPdf = w.pdf('extDijetPdf_%s_%s'%(options.coup, options.cat )) # Retrieve p.d.f --> Background pdf which will be fit with extended maximum likelihood method
-    elif (len(box.split('_'))==4) extDijetPdf = w.pdf('extDijetPdf_%s_%s_%s'%(options.coup, options.cat, options.year )) # Retrieve p.d.f --> Background pdf which will be fit with extended maximum likelihood method
+    elif (len(box.split('_'))==4): extDijetPdf = w.pdf('extDijetPdf_%s_%s_%s'%(options.coup, options.cat, options.year )) # Retrieve p.d.f --> Background pdf which will be fit with extended maximum likelihood method
 
     #extDijetPdf = w.pdf('DiPhotons_bkg_dijet_unbin')
 
