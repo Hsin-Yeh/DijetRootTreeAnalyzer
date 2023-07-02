@@ -268,7 +268,7 @@ if __name__ == '__main__':
                   help="fit spectrum")
     parser.add_option('--sim',dest="doSimultaneousFit", default=False,action='store_true',
                   help="do simultaneous trigger fit")
-    parser.add_option('--multi',dest="multi", default=True,action='store_true',
+    parser.add_option('--multi',dest="multi", default=False,action='store_true',
                   help="multiple background pdfs")
     parser.add_option('--linearX',dest="linearX", default=False,action='store_true',
                   help="linear X axis")
