@@ -37,7 +37,7 @@ if __name__ == "__main__":
     with open (args.in_filenames[0],'r') as infile:
         Lines = infile.readlines()
     for line in Lines:
-        if (line.split()[0]==args.year and line.split()[1]==args.coupling and float(line.split()[2])%20==0):
+        if (line.split()[0]==args.year and line.split()[1]==args.coupling and float(line.split()[2])%50==0):
             if (line.find("EBEB")!=-1): EBEBnorm_1.append(float(line.split(" ")[4])/luminosity[args.year])
             elif (line.find("EBEE")!=-1): EBEEnorm_1.append(float(line.split(" ")[4])/luminosity[args.year])
             elif (line.find("All")!=-1):
@@ -46,7 +46,7 @@ if __name__ == "__main__":
     with open (args.in_filenames[1],'r') as infile:
         Lines = infile.readlines()
     for line in Lines:
-        if (line.split()[0]==args.year and line.split()[1]=="0p014" and float(line.split()[2])%20==0):
+        if (line.split()[0]==args.year and line.split()[1]=="0p014" and float(line.split()[2])%50==0):
             if (line.find("EBEB")!=-1): EBEBnorm_2.append(float(line.split(" ")[4])/luminosity[args.year])
             elif (line.find("EBEE")!=-1): EBEEnorm_2.append(float(line.split(" ")[4])/luminosity[args.year])
             elif (line.find("All")!=-1):
