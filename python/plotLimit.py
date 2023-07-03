@@ -1,6 +1,10 @@
 #!/usr/bin/env python
-#for year in {"2016","2017","2018","fullRun2"}; do for coupling in {"kMpl001","kMpl01","kMpl02"}; do python ../../python/plotLimit.py -y ${year} -c ${coupling} -s grav; done; done
-#for year in {"2016","2017","2018","fullRun2"}; do for coupling in {"0p014","1p4","5p6"}; do python ../../python/plotLimit.py -y ${year} -c ${coupling} -s heavyhiggs; done; done
+# for year in {"2016","2017","2018","fullRun2"}; do for coupling in {"kMpl001","kMpl01","kMpl02"}; do python ../../python/plotLimit.py -y ${year} -c ${coupling} -s grav; done; done
+# for year in {"2016","2017","2018","fullRun2"}; do for coupling in {"0p014","1p4","5p6"}; do python ../../python/plotLimit.py -y ${year} -c ${coupling} -s heavyhiggs; done; done
+#
+# Unblind
+# for year in {"2016","2017","2018","fullRun2"}; do for coupling in {"kMpl001","kMpl01","kMpl02"}; do python ../../python/plotLimit.py -y ${year} -c ${coupling} -s grav --unblind; done; done
+# for year in {"2016","2017","2018","fullRun2"}; do for coupling in {"0p014","1p4","5p6"}; do python ../../python/plotLimit.py -y ${year} -c ${coupling} -s heavyhiggs --unblind; done; done
 
 import ROOT
 from array import array
@@ -43,9 +47,9 @@ def Acceptance(year, coupling, mass):
                 totalNorm += float(norm)
         elif (y==year and c==coupling and m==mass and cat=='All'):
             # totalNorm = float(norm)
-            totalNorm = 1
             break
     totalNorm = float(totalNorm)/float(lumi(year))
+    if (year!="fullRun2"): totalNorm = 1
     return totalNorm
 
 if __name__ == "__main__":
