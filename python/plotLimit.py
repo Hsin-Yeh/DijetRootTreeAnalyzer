@@ -113,7 +113,7 @@ if __name__ == "__main__":
 
     canv = ROOT.TCanvas("canv","Title",800,600);
     canv.SetLogy();
-    canv.SetLogx();
+    # canv.SetLogx();
     canv.SetRightMargin(0.08);
     canv.SetLeftMargin(0.15);
 
