@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 #for year in {"2016","2017","2018","fullRun2"}; do for coupling in {"kMpl001","kMpl01","kMpl02"}; do python ../../python/plotLimit.py -y ${year} -c ${coupling} -s grav; done; done
+#for year in {"2016","2017","2018","fullRun2"}; do for coupling in {"0p014","1p4","5p6"}; do python ../../python/plotLimit.py -y ${year} -c ${coupling} -s heavyhiggs; done; done
 
 import ROOT
 from array import array
@@ -222,7 +223,9 @@ if __name__ == "__main__":
 
     redrawBorder()
 
-    canv.SaveAs( "./limitplot_%s_%s_%s.png"% (args.signame, args.coupling, args.year) );
+    if(args.unblind): canv.SaveAs( "./limitplot_%s_%s_%s_unblind.png"% (args.signame, args.coupling, args.year) );
+    else: canv.SaveAs( "./limitplot_%s_%s_%s.png"% (args.signame, args.coupling, args.year) );
+
 
     outfile = ROOT.TFile( "./limitplot_%s_%s_%s.root"% (args.signame, args.coupling, args.year) , "RECREATE");
     canv.Write();
