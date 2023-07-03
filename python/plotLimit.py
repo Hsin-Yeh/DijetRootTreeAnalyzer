@@ -42,7 +42,8 @@ def Acceptance(year, coupling, mass):
         if (year=="fullRun2" and c==coupling and m==mass and cat=='All'):
                 totalNorm += float(norm)
         elif (y==year and c==coupling and m==mass and cat=='All'):
-            totalNorm = float(norm)
+            # totalNorm = float(norm)
+            totalNorm = 1
             break
     totalNorm = float(totalNorm)/float(lumi(year))
     return totalNorm
