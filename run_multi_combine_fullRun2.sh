@@ -1,6 +1,6 @@
 #!/bin/bash
 
-export version="2023-05-23-2"
+export version="2023-07-01-1"
 export coupling=$1
 
 #################### Constants ##########EEEEEEEEEE
@@ -67,4 +67,5 @@ if $combineLimit_flag; then
     cd ${mainpath}/${version}
     export plotLimit="/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/CMSDIJET/DijetRootTreeAnalyzer/python/plotLimit.py"
     python ${plotLimit} -y fullRun2 -c ${coupling} -s ${signal}
+    python ${plotLimit} -y fullRun2 -c ${coupling} -s ${signal} --blind
 fi
