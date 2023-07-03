@@ -123,7 +123,7 @@ if __name__ == "__main__":
     extraText.SetTextSize(0.04);
     extraText.Draw();
 
-    yearText=ROOT.TLatex(0.4,0.90, args.year);
+    yearText=ROOT.TLatex(0.39,0.90, args.year);
     yearText.SetNDC(1);
     yearText.SetTextFont(52);
     yearText.SetLineColor(0);
