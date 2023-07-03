@@ -24,7 +24,16 @@ if __name__ == "__main__":
     c1 = ROOT.TCanvas("c1","c1", 700, 600)
     l = ROOT.TLegend(0.4, 0.25, 0.88, 0.45)
     l.SetNColumns(2);
-    l.SetHeader("#tilde{k}=0.01              #frac{#Gamma_{X}}{m_{X}} = 1.4 #times 10^{-4}","C")
+    if (args.coupling=="kMpl001"):
+        l.SetHeader("#tilde{k}=0.01              #frac{#Gamma_{X}}{m_{X}} = 1.4 #times 10^{-4}","C")
+        hh_coupling="0p014"
+    elif (args.coupling=="kMpl01"):
+        l.SetHeader("#tilde{k}=0.1               #frac{#Gamma_{X}}{m_{X}} = 1.4 #times 10^{-2}","C")
+        hh_coupling="1p4"
+    elif (args.coupling=="kMpl02"):
+        l.SetHeader("#tilde{k}=0.2               #frac{#Gamma_{X}}{m_{X}} = 5.6 #times 10^{-2}","C")
+        hh_coupling="5p6"
+
     l.SetBorderSize(0);
     l.SetFillStyle(0);
     luminosity = {"2016":35.9, "2017":41.5, "2018":59.7}
@@ -37,7 +46,7 @@ if __name__ == "__main__":
     with open (args.in_filenames[0],'r') as infile:
         Lines = infile.readlines()
     for line in Lines:
-        if (line.split()[0]==args.year and line.split()[1]==args.coupling and float(line.split()[2])%50==0):
+        if (line.split()[0]==args.year and line.split()[1]==args.coupling and float(line.split()[2])%100==0):
             if (line.find("EBEB")!=-1): EBEBnorm_1.append(float(line.split(" ")[4])/luminosity[args.year])
             elif (line.find("EBEE")!=-1): EBEEnorm_1.append(float(line.split(" ")[4])/luminosity[args.year])
             elif (line.find("All")!=-1):
@@ -46,7 +55,7 @@ if __name__ == "__main__":
     with open (args.in_filenames[1],'r') as infile:
         Lines = infile.readlines()
     for line in Lines:
-        if (line.split()[0]==args.year and line.split()[1]=="0p014" and float(line.split()[2])%50==0):
+        if (line.split()[0]==args.year and line.split()[1]==hh_coupling and float(line.split()[2])%100==0):
             if (line.find("EBEB")!=-1): EBEBnorm_2.append(float(line.split(" ")[4])/luminosity[args.year])
             elif (line.find("EBEE")!=-1): EBEEnorm_2.append(float(line.split(" ")[4])/luminosity[args.year])
             elif (line.find("All")!=-1):
