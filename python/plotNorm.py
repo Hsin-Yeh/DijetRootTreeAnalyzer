@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 #
-# for year in {"2016","2017","2018"}; do for coup in {"kMpl01","kMpl02","kMpl001"}; do python python/plotNorm.py ../../SignalNorm_Splines_full.txt ../../SignalNorm_Splines_full_withEEPF.txt -y ${year} -c ${coup}; done; done
+# for year in {"2016","2017","2018"}; do for coup in {"kMpl01","kMpl02","kMpl001"}; do python python/plotNorm.py ../../SignalNorm_Splines_full.txt ../../SignalNorm_Splines_genFiducial.txt -y ${year} -c ${coup}; done; done
 #
 import ROOT
 from array import array
@@ -18,6 +18,8 @@ args = parser.parse_args()
 
 
 if __name__ == "__main__":
+
+    ROOT.gROOT.LoadMacro("~/rootlogon.C")
 
     c1 = ROOT.TCanvas("c1","c1", 700, 600)
     l = ROOT.TLegend(0.4, 0.25, 0.88, 0.45)
