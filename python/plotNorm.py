@@ -123,6 +123,15 @@ if __name__ == "__main__":
     extraText.SetTextSize(0.04);
     extraText.Draw();
 
+    yearText=ROOT.TLatex(0.31,0.90, args.year);
+    yearText.SetNDC(1);
+    yearText.SetTextFont(52);
+    yearText.SetLineColor(0);
+    yearText.SetLineStyle(1);
+    yearText.SetLineWidth(1);
+    yearText.SetTextSize(0.04);
+    yearText.Draw();
+
     lumiText=ROOT.TLatex(0.8,0.90, "13 TeV");
     lumiText.SetNDC(1);
     lumiText.SetTextFont(42);
