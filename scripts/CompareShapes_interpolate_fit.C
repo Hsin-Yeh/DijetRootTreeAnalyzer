@@ -65,6 +65,7 @@ void CompareShapes_interpolate_fit(int mass){
         // h.plotOn(p,RooFit.DrawOption("B"),RooFit.XErrorSize(0))
 
         TCanvas* canvas = new TCanvas();
+        canvas->SetLogy();
         // canvas->SetFillColor(0);
         // canvas->SetBorderMode(0);
         // canvas->SetFrameFillStyle(0);
