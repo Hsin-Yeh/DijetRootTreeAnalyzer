@@ -79,7 +79,7 @@ void CompareShapes_interpolate_fit(int mass){
 
 
 
-        TLegend* leg = new TLegend(0.55,0.5,0.9,0.7);
+        TLegend* leg = new TLegend(0.6,0.5,0.9,0.7);
         leg->SetBorderSize(0);
         // leg->SetLineColor(0);
         // leg->SetFillColor(0);
