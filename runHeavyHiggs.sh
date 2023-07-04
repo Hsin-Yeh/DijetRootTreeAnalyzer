@@ -1,6 +1,5 @@
 #!/bin/bash
 
-
 # ./runHeavyHiggs.sh
 # export method="full"
 export method="genFiducial"
