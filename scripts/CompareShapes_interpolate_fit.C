@@ -65,7 +65,6 @@ void CompareShapes_interpolate_fit(int mass){
         // h.plotOn(p,RooFit.DrawOption("B"),RooFit.XErrorSize(0))
 
         TCanvas* canvas = new TCanvas();
-        canvas->SetLogy();
         // canvas->SetFillColor(0);
         // canvas->SetBorderMode(0);
         // canvas->SetFrameFillStyle(0);
@@ -100,4 +99,7 @@ void CompareShapes_interpolate_fit(int mass){
         leg->Draw();
 
         canvas->SaveAs(Form("%s/test_%i.png",outDir.c_str(),mass) );
+
+        canvas->SetLogy();
+        canvas->SaveAs(Form("%s/test_%i_log.png",outDir.c_str(),mass) );
 }
