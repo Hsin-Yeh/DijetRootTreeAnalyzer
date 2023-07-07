@@ -35,8 +35,8 @@ for box in {"DiPhotons_0p014_EBEB","DiPhotons_0p014_EBEE","DiPhotons_1p4_EBEB","
     fi
     for mass in "${masslist[@]}"; do
         python python/WriteDataCard.py -m gg --mass ${mass} output/InputShapes_data_${cat}_2018.root -i ${bkgFitResultsPath}/FitResults_${box}_2018.root --lumi 59.670 -c ${configFile} -b ${box} --year 2018 --SigNorm ${SignalNormFile} --eneScStatUp ${InterpolateShapePath}/ResonanceShapes_InputShapes_GluGluSpin0ToGammaGamma_W_${coup}_${cat}_2018_energyScaleStatUp.root   --eneScStatDown ${InterpolateShapePath}/ResonanceShapes_InputShapes_GluGluSpin0ToGammaGamma_W_${coup}_${cat}_2018_energyScaleStatDown.root --eneScSystUp ${InterpolateShapePath}/ResonanceShapes_InputShapes_GluGluSpin0ToGammaGamma_W_${coup}_${cat}_2018_energyScaleSystUp.root   --eneScSystDown ${InterpolateShapePath}/ResonanceShapes_InputShapes_GluGluSpin0ToGammaGamma_W_${coup}_${cat}_2018_energyScaleSystDown.root --eneScGainUp ${InterpolateShapePath}/ResonanceShapes_InputShapes_GluGluSpin0ToGammaGamma_W_${coup}_${cat}_2018_energyScaleGainUp.root   --eneScGainDown ${InterpolateShapePath}/ResonanceShapes_InputShapes_GluGluSpin0ToGammaGamma_W_${coup}_${cat}_2018_energyScaleGainDown.root --eneScSigmaUp ${InterpolateShapePath}/ResonanceShapes_InputShapes_GluGluSpin0ToGammaGamma_W_${coup}_${cat}_2018_energySigmaUp.root       --eneScSigmaDown ${InterpolateShapePath}/ResonanceShapes_InputShapes_GluGluSpin0ToGammaGamma_W_${coup}_${cat}_2018_energySigmaDown.root     --SFUp ${InterpolateShapePath}/ResonanceShapes_InputShapes_GluGluSpin0ToGammaGamma_W_${coup}_${cat}_2018_SFUp.root                --SFDown ${InterpolateShapePath}/ResonanceShapes_InputShapes_GluGluSpin0ToGammaGamma_W_${coup}_${cat}_2018_SFDown.root              --PuUp ${InterpolateShapePath}/ResonanceShapes_InputShapes_GluGluSpin0ToGammaGamma_W_${coup}_${cat}_2018_PuUp.root                --PuDown ${InterpolateShapePath}/ResonanceShapes_InputShapes_GluGluSpin0ToGammaGamma_W_${coup}_${cat}_2018_PuDown.root              --EEPFUp ${InterpolateShapePath}/ResonanceShapes_InputShapes_GluGluSpin0ToGammaGamma_W_${coup}_${cat}_2018_EEPFUp.root              --EEPFDown ${InterpolateShapePath}/ResonanceShapes_InputShapes_GluGluSpin0ToGammaGamma_W_${coup}_${cat}_2018_EEPFDown.root ${InterpolateShapePath}/ResonanceShapes_InputShapes_GluGluSpin0ToGammaGamma_W_${coup}_${cat}_2018.root;
-        mv diphoton_combine_${mass}_${box}.txt test_directory/${method}/2018/${box}/diphoton_combine_${mass}_${box}_2018.txt;
-        mv diphoton_combine_${mass}_${box}.root test_directory/${method}/2018/${box}/diphoton_combine_${mass}_${box}_2018.root;
+        mv diphoton_combine_${mass}_${box}.txt test_directory/${method}/2018/${box}/diphoton_combine_${mass}_${box}.txt;
+        mv diphoton_combine_${mass}_${box}.root test_directory/${method}/2018/${box}/diphoton_combine_${mass}_${box}.root;
     done;
 done;
 
@@ -53,7 +53,7 @@ for scenario in {"DiPhotons_0p014","DiPhotons_1p4","DiPhotons_5p6"}; do
     fi
     for mass in "${masslist[@]}"; do
         echo ${mass};
-        combineCards.py  ${themainpath}/${method}/2018/${scenario}_EBEB/diphoton_combine_${mass}_${scenario}_EBEB_2018.txt ${themainpath}/${method}/2018/${scenario}_EBEE/diphoton_combine_${mass}_${scenario}_EBEE_2018.txt  > diphoton_combine_${mass}_${scenario}_2018.txt;
+        combineCards.py  ${themainpath}/${method}/2018/${scenario}_EBEB/diphoton_combine_${mass}_${scenario}_EBEB.txt ${themainpath}/${method}/2018/${scenario}_EBEE/diphoton_combine_${mass}_${scenario}_EBEE.txt  > diphoton_combine_${mass}_${scenario}_2018.txt;
     done;
 done;
 
