@@ -31,9 +31,9 @@ if $combineCard_flag; then
         for mass in "${masslist[@]}"; do
             echo ${mass};
             combineCards.py \
-                ${themainpath}/${method}/2016/${scenario}_EBEB/diphoton_combine_${mass}_${scenario}_EBEB_2016.txt ${themainpath}/${method}/2016/${scenario}_EBEE/diphoton_combine_${mass}_${scenario}_EBEE_2016.txt \
-                ${themainpath}/${method}/2017/${scenario}_EBEB/diphoton_combine_${mass}_${scenario}_EBEB_2017.txt ${themainpath}/${method}/2017/${scenario}_EBEE/diphoton_combine_${mass}_${scenario}_EBEE_2017.txt \
-                ${themainpath}/${method}/2018/${scenario}_EBEB/diphoton_combine_${mass}_${scenario}_EBEB_2018.txt ${themainpath}/${method}/2018/${scenario}_EBEE/diphoton_combine_${mass}_${scenario}_EBEE_2018.txt\
+                ${themainpath}/${method}/2016/${scenario}_EBEB/diphoton_combine_${mass}_${scenario}_EBEB.txt ${themainpath}/${method}/2016/${scenario}_EBEE/diphoton_combine_${mass}_${scenario}_EBEE.txt \
+                ${themainpath}/${method}/2017/${scenario}_EBEB/diphoton_combine_${mass}_${scenario}_EBEB.txt ${themainpath}/${method}/2017/${scenario}_EBEE/diphoton_combine_${mass}_${scenario}_EBEE.txt \
+                ${themainpath}/${method}/2018/${scenario}_EBEB/diphoton_combine_${mass}_${scenario}_EBEB.txt ${themainpath}/${method}/2018/${scenario}_EBEE/diphoton_combine_${mass}_${scenario}_EBEE.txt\
                 > diphoton_combine_${mass}_${scenario}.txt;
         done;
     done;
