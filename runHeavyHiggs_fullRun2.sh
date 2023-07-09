@@ -9,7 +9,7 @@ export massInterval=100
 
 #################### Run flags ####################
 export combineCard_flag=true
-export combineLimit_flag=true
+export combineLimit_flag=false
 
 
 if $combineCard_flag; then
