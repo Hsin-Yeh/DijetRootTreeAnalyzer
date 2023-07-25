@@ -47,7 +47,9 @@ if __name__ == '__main__':
         thetree=tfileIn.Get("HighMassDiphoton")
 
         project(thetree,h_mgg_1GeVbin, "mgg", 'eventClass==%d && mgg > 500'%(cat))
-        
+        project(thetree,h_mgg_50GeVbin, "mgg", 'eventClass==%d && mgg > 500'%(cat))
+        project(thetree,h_mgg_100GeVbin, "mgg", 'eventClass==%d && mgg > 500'%(cat))
+      
         #h = tfileIn.Get('h_mjj_ratio_%s'%options.type)
         # h_mgg_1GeVbin.SetName('h_%s'%(title))
         # h_mgg_1GeVbin.SetTitle('h_%s'%(title))
