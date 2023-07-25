@@ -60,6 +60,9 @@ if __name__ == '__main__':
         histos.append(h_mgg_50GeVbin)
         histos.append(h_mgg_100GeVbin)
 
+        for i in range(1,80):
+            print("%d, %d-%dGeV, %d",i, 500+100*(i-1), 500+100*i, h_mgg_100GeVbin.GetContent(i))
+
 
     if options.type=='nom':
         tfileOut = rt.TFile.Open('%s/InputShapes_%s_%s_%s.root'%(options.outDir,title,options.cat,year),'recreate')
