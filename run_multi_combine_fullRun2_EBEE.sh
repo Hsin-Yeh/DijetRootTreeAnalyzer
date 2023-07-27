@@ -1,6 +1,6 @@
 #!/bin/bash
 
-export version="2023-07-28-EBEE"
+export version="2023-07-01-1"
 export coupling=$1
 
 #################### Constants ##########EEEEEEEEEE
@@ -51,7 +51,7 @@ if $combineCard_flag; then
             ${datacardsDir}/${method}/2017/${scenario}_EBEE_2017/diphoton_combine_${mass}_${scenario}_EBEE_2017.txt \
             # ${datacardsDir}/${method}/2018/${scenario}_EBEB_2018/diphoton_combine_${mass}_${scenario}_EBEB_2018.txt \
             ${datacardsDir}/${method}/2018/${scenario}_EBEE_2018/diphoton_combine_${mass}_${scenario}_EBEE_2018.txt \
-            > diphoton_combine_${mass}_${scenario}_fullRun2.txt;
+            > diphoton_combine_${mass}_${scenario}_fullRun2_EBEE.txt;
     done
 fi
 
@@ -62,7 +62,7 @@ if $combineLimit_flag; then
     cd /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/CMSDIJET/DijetRootTreeAnalyzer/FinalResults/
 
     # Calculate limits
-    ./loopAllMassPoints.sh fullRun2 ${signal} ${coupling} ${method} ${datacardsDir} ${version}
+    ./loopAllMassPoints.sh fullRun2 ${signal} ${coupling} ${method} ${datacardsDir} ${version} EBEE
 
     # Limit Plot
     cd ${mainpath}/${version}
