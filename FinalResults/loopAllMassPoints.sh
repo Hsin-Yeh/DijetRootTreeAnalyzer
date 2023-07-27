@@ -20,8 +20,8 @@ elif [[ ${coupling} == "5p6" ]]; then
 fi
 echo $masslist
 
-rm -rf ${version}/${year}/${signal}/${coupling}
-mkdir -p ${version}/${year}/${signal}/${coupling}
+rm -rf ${version}_${cat}/${year}/${signal}/${coupling}
+mkdir -p ${version}_${cat}/${year}/${signal}/${coupling}
 
 finalResults="${version}_${cat}/finalResults_${year}_${signal}_${coupling}"
 
