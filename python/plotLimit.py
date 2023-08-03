@@ -162,9 +162,9 @@ if __name__ == "__main__":
         # g_xs_TuneCUEP8M1.Draw("Lsame");
 
     gr_2016  = ROOT.TGraph();
-    if (args.coupling=="kMpl001"): gr_2016.SetPoint(0,2300, 0.125977);
-    if (args.coupling=="kMpl01"): gr_2016.SetPoint(0,4100, 0.0983398);
-    if (args.coupling=="kMpl02"): gr_2016.SetPoint(0,4700, 0.1014);
+    if (args.coupling=="kMpl001"): gr_2016.SetPoint(0,2245, 0.1175);
+    if (args.coupling=="kMpl01"): gr_2016.SetPoint(0,4100, 0.0924);
+    if (args.coupling=="kMpl02"): gr_2016.SetPoint(0,4700, 0.0924);
     gr_2016.SetMarkerStyle(30);
     gr_2016.SetMarkerSize(4);
     gr_2016.SetMarkerColor(9);
