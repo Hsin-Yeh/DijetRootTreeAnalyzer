@@ -50,7 +50,6 @@ def Acceptance(year, coupling, mass):
             break
     totalNorm = float(totalNorm)/float(lumi(year))
     if (year!="fullRun2"): totalNorm = 0.85
-    totalNorm = 1
     return totalNorm
 
 if __name__ == "__main__":
