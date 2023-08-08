@@ -1078,7 +1078,7 @@ if __name__ == '__main__':
     l.SetTextFont(42)
     l.SetNDC()
     #l.DrawLatex(0.7,0.96,"%i pb^{-1} (%i TeV)"%(lumi,w.var('sqrts').getVal()/1000.))
-    l.DrawLatex(0.64,0.94,"%.3f fb^{-1} (13 TeV)"%(lumi/1000.))
+    l.DrawLatex(0.64,0.94,"%.1f fb^{-1} (13 TeV)"%(float(lumi/1000.)))
     # PAS
     #l.SetTextFont(62)
     #l.SetTextSize(0.055)
