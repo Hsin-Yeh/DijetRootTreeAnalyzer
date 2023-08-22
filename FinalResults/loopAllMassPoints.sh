@@ -56,6 +56,7 @@ if [[ ${combine_method} == "AsymptoticLimits" ]]; then
         echo $mass $obs $expM2s $expM1s $exp $expP1s $expP2s >> ${finalResults}
     done
 elif [[ ${combine_method} == "Significance" ]]; then
+    echo "Run Pvalue"
 
     finalResults="${version}/pvalue_${year}_${signal}_${coupling}"
 
