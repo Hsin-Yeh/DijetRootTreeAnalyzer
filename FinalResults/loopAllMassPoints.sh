@@ -72,7 +72,7 @@ elif [[ ${combine_method} == "Significance" ]]; then
         echo $datacardfile
 
         combine -d ${datacardfile} -M Significance --signif --pval --cminDefaultMinimizerType=Minuit2 -n Observed > ${datacardfile}_results_pvalue
-        mv higgsCombine${year}_${signal}_${coupling}.AsymptoticLimits.mH${mass}*.root ${version}/${year}/${signal}/${coupling}/.
+        rm higgsCombine*.root
 
         export pvalue=`cat ${datacardfile}_results_pvalue  | grep  "p-value of background:" | awk '{print $5}'`
 
