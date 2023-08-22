@@ -7,6 +7,7 @@ export method=$4
 export datacardsDir=$5
 export version=$6
 export cat=$7
+export combine_method=$8
 
 export masslist=(600 613 621 629 637 645 653 662 670 679 687 696 705 714 723 732 741 751 760 770 779 789 799 809 820 830 840 851 862 872 883 894 906 917 929 940 952 964 976 988 1001 1013 1026 1038 1051 1064 1078 1091 1105 1119 1132 1147 1161 1175 1190 1205 1219 1235 1250 1265 1281 1297 1313 1329 1346 1362 1379 1396 1413 1431 1449 1466 1485 1503 1521 1540 1559 1578 1598 1617 1637 1657 1678 1698 1719 1740 1762 1783 1805 1827 1850 1873 1895 1919 1942 1966 1990 2014 2039 2064 2089 2115 2141 2167 2193 2220 2247 2275 2303 2331 2359 2388 2417 2447 2477 2507 2537 2568 2600 2631 2663 2696 2729 2762 2795 2830 2864 2899 2934 2970 3006 3042 3079 3117 3155 3193 3232 3271 3311 3351 3392 3433 3475 3517 3560 3603 3647 3691 3736 3781 3827 3873 3920 3968 4016 4065 4114 4164 4214 4265 4317 4369 4422 4476 4530 4585 4640 4696 4753 4811 4869 4928 4987 5000)
 if [[ ${coupling} == "kMpl01" ]]; then
@@ -23,32 +24,59 @@ echo $masslist
 rm -rf ${version}_${cat}/${year}/${signal}/${coupling}
 mkdir -p ${version}_${cat}/${year}/${signal}/${coupling}
 
-finalResults="${version}_${cat}/finalResults_${year}_${signal}_${coupling}"
+if [[ ${combine_method} == "AsymptoticLimits" ]]; then
 
-rm ${finalResults}
-touch ${finalResults}
+    finalResults="${version}_${cat}/finalResults_${year}_${signal}_${coupling}"
 
-for mass in "${masslist[@]}"; do
-    echo "====================================================================="
-    echo $mass
+    rm ${finalResults}
+    touch ${finalResults}
 
-    datacardfile="${datacardsDir}/${method}/${year}/diphoton_combine_${mass}_DiPhotons_${coupling}_${year}_${cat}.txt"
+    for mass in "${masslist[@]}"; do
+        echo "====================================================================="
+        echo $mass
 
-    echo $datacardfile
+        datacardfile="${datacardsDir}/${method}/${year}/diphoton_combine_${mass}_DiPhotons_${coupling}_${year}_${cat}.txt"
 
-    # a priori
-    # combine -M AsymptoticLimits -s -1 -d $datacardfile --X-rtd MINIMIZER_freezeDisassociatedParams --bypassFrequentistFit > ${datacardfile}_results
-    # a posteriori
-    combine -M AsymptoticLimits -s -1 -d $datacardfile --X-rtd MINIMIZER_freezeDisassociatedParams -n ${year}_${signal}_${coupling} > ${datacardfile}_results
-    mv higgsCombine${year}_${signal}_${coupling}.AsymptoticLimits.mH${mass}*.root ${version}/${year}/${signal}/${coupling}/.
+        echo $datacardfile
 
-    export obs=`cat ${datacardfile}_results  | grep  "Observed Limit:" | awk '{print $5}'`
-    export expM2s=`cat ${datacardfile}_results  | grep  "Expected  2.5%:" | awk '{print $5}'`
-    export expM1s=`cat ${datacardfile}_results  | grep  "Expected 16.0%:" | awk '{print $5}'`
-    export exp=`cat ${datacardfile}_results  | grep  "Expected 50.0%:" | awk '{print $5}'`
-    export expP1s=`cat ${datacardfile}_results  | grep  "Expected 84.0%:" | awk '{print $5}'`
-    export expP2s=`cat ${datacardfile}_results  | grep  "Expected 97.5%:" | awk '{print $5}'`
+        # a priori
+        # combine -M AsymptoticLimits -s -1 -d $datacardfile --X-rtd MINIMIZER_freezeDisassociatedParams --bypassFrequentistFit > ${datacardfile}_results
+        # a posteriori
+        combine -M AsymptoticLimits -s -1 -d $datacardfile --X-rtd MINIMIZER_freezeDisassociatedParams -n ${year}_${signal}_${coupling} > ${datacardfile}_results
+        mv higgsCombine${year}_${signal}_${coupling}.AsymptoticLimits.mH${mass}*.root ${version}/${year}/${signal}/${coupling}/.
 
-    echo $mass $obs $expM2s $expM1s $exp $expP1s $expP2s
-    echo $mass $obs $expM2s $expM1s $exp $expP1s $expP2s >> ${finalResults}
-done
+        export obs=`cat ${datacardfile}_results  | grep  "Observed Limit:" | awk '{print $5}'`
+        export expM2s=`cat ${datacardfile}_results  | grep  "Expected  2.5%:" | awk '{print $5}'`
+        export expM1s=`cat ${datacardfile}_results  | grep  "Expected 16.0%:" | awk '{print $5}'`
+        export exp=`cat ${datacardfile}_results  | grep  "Expected 50.0%:" | awk '{print $5}'`
+        export expP1s=`cat ${datacardfile}_results  | grep  "Expected 84.0%:" | awk '{print $5}'`
+        export expP2s=`cat ${datacardfile}_results  | grep  "Expected 97.5%:" | awk '{print $5}'`
+
+        echo $mass $obs $expM2s $expM1s $exp $expP1s $expP2s
+        echo $mass $obs $expM2s $expM1s $exp $expP1s $expP2s >> ${finalResults}
+    done
+elif [[ ${combine_method} == "Significance" ]]; then
+
+    finalResults="${version}_${cat}/pvalue_${year}_${signal}_${coupling}"
+
+    rm ${finalResults}
+    touch ${finalResults}
+
+
+    for mass in "${masslist[@]}"; do
+        echo "====================================================================="
+        echo $mass
+
+        datacardfile="${datacardsDir}/${method}/${year}/diphoton_combine_${mass}_DiPhotons_${coupling}_${year}_${cat}.txt"
+
+        echo $datacardfile
+
+        combine -d ${datacardfile} -M Significance --signif --pval --cminDefaultMinimizerType=Minuit2 -n Observed > ${datacardfile}_results_pvalue
+        mv higgsCombine${year}_${signal}_${coupling}.AsymptoticLimits.mH${mass}*.root ${version}/${year}/${signal}/${coupling}/.
+
+        export pvalue=`cat ${datacardfile}_results_pvalue  | grep  "p-value of background:" | awk '{print $5}'`
+
+        echo $mass $pvalue
+        echo $mass $pvalue >> ${finalResults}
+    done
+fi

@@ -33,8 +33,9 @@ export datacardsDir="/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_
 export SignalNormFile="/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/SignalNorm_Splines_${method}.txt"
 
 #################### Run flags ####################
-export combineCard_flag=true
-export combineLimit_flag=true
+export combineCard_flag=false
+export combineLimit_flag=false
+export combine_pvalue_flag=true
 
 # ############################## Combine cards ##############################
 
@@ -45,7 +46,7 @@ if $combineCard_flag; then
     for mass in "${masslist[@]}"; do
         echo ${mass}
         combineCards.py ${datacardsDir}/${method}/2016/${scenario}_EBEB_2016/diphoton_combine_${mass}_${scenario}_EBEB_2016.txt \
-            ${datacardsDir}/${method}/2016/${scenario}_EBEE_2016/diphoton_combine_${mass}_${scenario}_EBEE_2016.txt \
+            # ${datacardsDir}/${method}/2016/${scenario}_EBEE_2016/diphoton_combine_${mass}_${scenario}_EBEE_2016.txt \
             ${datacardsDir}/${method}/2017/${scenario}_EBEB_2017/diphoton_combine_${mass}_${scenario}_EBEB_2017.txt \
             ${datacardsDir}/${method}/2017/${scenario}_EBEE_2017/diphoton_combine_${mass}_${scenario}_EBEE_2017.txt \
             ${datacardsDir}/${method}/2018/${scenario}_EBEB_2018/diphoton_combine_${mass}_${scenario}_EBEB_2018.txt \
@@ -61,11 +62,20 @@ if $combineLimit_flag; then
     cd /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/CMSDIJET/DijetRootTreeAnalyzer/FinalResults/
 
     # Calculate limits
-    ./loopAllMassPoints.sh fullRun2 ${signal} ${coupling} ${method} ${datacardsDir} ${version}
+    ./loopAllMassPoints.sh fullRun2 ${signal} ${coupling} ${method} ${datacardsDir} ${version} AsymptoticLimits
 
     # Limit Plot
     cd ${mainpath}/${version}
     export plotLimit="/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/CMSDIJET/DijetRootTreeAnalyzer/python/plotLimit.py"
     python ${plotLimit} -y fullRun2 -c ${coupling} -s ${signal}
     python ${plotLimit} -y fullRun2 -c ${coupling} -s ${signal} --blind
+fi
+
+if $combine_pvalue_flag; then
+    export mainpath="/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/CMSDIJET/DijetRootTreeAnalyzer/FinalResults"
+    cd /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/CMSDIJET/DijetRootTreeAnalyzer/FinalResults/
+
+    # Calculate limits
+    ./loopAllMassPoints.sh fullRun2 ${signal} ${coupling} ${method} ${datacardsDir} ${version} Significance
+
 fi
