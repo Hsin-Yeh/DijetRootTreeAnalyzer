@@ -43,14 +43,14 @@ if __name__ == '__main__':
         print(title,year)
         tfileIn = rt.TFile.Open(f)
 
-        h_mgg      = rt.TH1D('h_mgg     ','h_mgg     ',100,500,8500)
+        h_mgg      = rt.TH1D('h_mgg     ','h_mgg     ',100,200,8500)
         h_qt       = rt.TH1D('h_qt      ','h_qt      ',100,0,1000)
-        h_deltaR   = rt.TH1D('h_deltaR  ','h_deltaR  ',20,0,3.14)
+        h_deltaR   = rt.TH1D('h_deltaR  ','h_deltaR  ',20,0,10)
         h_deltaEta = rt.TH1D('h_deltaEta','h_deltaEta',20,0,6)
         h_deltaPhi = rt.TH1D('h_deltaPhi','h_deltaPhi',20,0,3.14)
-        h_ph1pt    = rt.TH1D('h_ph1pt   ','h_ph1pt   ',50,125,2000)
+        h_ph1pt    = rt.TH1D('h_ph1pt   ','h_ph1pt   ',50,125,1000)
         h_ph1scEta = rt.TH1D('h_ph1scEta','h_ph1scEta',20,-2.5,2.5)
-        h_ph2pt    = rt.TH1D('h_ph2pt'   ,'h_ph2pt',50,125,2000)
+        h_ph2pt    = rt.TH1D('h_ph2pt'   ,'h_ph2pt',50,125,1000)
         h_ph2scEta = rt.TH1D('h_ph2scEta','h_ph2scEta',20,-2.5,2.5)
 
         thetree=tfileIn.Get("HighMassDiphoton")
