@@ -43,7 +43,7 @@ if __name__ == '__main__':
         print(title,year)
         tfileIn = rt.TFile.Open(f)
 
-        h_mgg      = rt.TH1D('h_mgg','h_mgg',20,500,3000)
+        h_mgg      = rt.TH1D('h_mgg','h_mgg',50,500,3000)
         h_qt       = rt.TH1D('h_qt','h_qt',20,0,1000)
         h_deltaR   = rt.TH1D('h_deltaR','h_deltaR',10,0,5)
         h_deltaEta = rt.TH1D('h_deltaEta','h_deltaEta',10,0,4)
