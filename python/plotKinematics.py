@@ -45,12 +45,12 @@ if __name__ == '__main__':
 
         h_mgg      = rt.TH1D('h_mgg','h_mgg',100,500,3000)
         h_qt       = rt.TH1D('h_qt','h_qt',100,0,1000)
-        h_deltaR   = rt.TH1D('h_deltaR','h_deltaR',50,0,6)
+        h_deltaR   = rt.TH1D('h_deltaR','h_deltaR',50,0,5)
         h_deltaEta = rt.TH1D('h_deltaEta','h_deltaEta',50,0,4)
         h_deltaPhi = rt.TH1D('h_deltaPhi','h_deltaPhi',50,0,4)
-        h_ph1pt    = rt.TH1D('h_ph1pt','h_ph1pt',50,125,1000)
+        h_ph1pt    = rt.TH1D('h_ph1pt','h_ph1pt',100,0,1000)
         h_ph1scEta = rt.TH1D('h_ph1scEta','h_ph1scEta',50,-2.,2.)
-        h_ph2pt    = rt.TH1D('h_ph2pt'   ,'h_ph2pt',50,125,1000)
+        h_ph2pt    = rt.TH1D('h_ph2pt'   ,'h_ph2pt',100,0,1000)
         h_ph2scEta = rt.TH1D('h_ph2scEta','h_ph2scEta',50,-2.,2.)
 
         thetree=tfileIn.Get("HighMassDiphoton")
