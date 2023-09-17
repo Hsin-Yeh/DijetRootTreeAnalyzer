@@ -1293,7 +1293,7 @@ if __name__ == '__main__':
     #if 'Calo' in box:
     if 'DiPhotons' in box:
         # paper
-        myRebinnedDensityTH1.GetYaxis().SetTitle('d#sigma/dm_{#gamma#gamma} [pb/TeV]')
+        myRebinnedDensityTH1.GetYaxis().SetTitle('dN/dm_{#gamma#gamma}')
         # PAS
         #myRebinnedDensityTH1.GetYaxis().SetTitle('d#sigma / dm_{jj} [pb / TeV]')
         # myRebinnedDensityTH1.GetYaxis().SetLabelOffset(1000)
