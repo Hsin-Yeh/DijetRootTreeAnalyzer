@@ -1011,7 +1011,7 @@ if __name__ == '__main__':
     elif 'DiPhoton' in box:
         myRebinnedDensityTH1.SetMaximum(2e3)
         if w.var('mgg').getMax() > 2037:
-            myRebinnedDensityTH1.SetMaximum(2e3)
+            myRebinnedDensityTH1.SetMaximum(2e2)
             myRebinnedDensityTH1.SetMinimum(2e-4)
         else:
             myRebinnedDensityTH1.SetMinimum(2e-5)
@@ -1175,11 +1175,11 @@ if __name__ == '__main__':
         if w.var('mgg').getMax() > 2037:
             #pave_sel.AddText("%.1f < m_{jj} < %.1f TeV"%(w.var('mjj').getMin('Low')/1000.,w.var('mjj').getMax('High')/1000.))
             #BLIND
-            pave_sel.AddText("m_{#gamma#gamma} > %.2f TeV"%(w.var('mgg').getMin('Low')/1000.))
+            # pave_sel.AddText("m_{#gamma#gamma} > %.2f TeV"%(w.var('mgg').getMin('Low')/1000.))
             #UNBLIND
             # pave_sel.AddText(" %.2f TeV < m_{#gamma#gamma} < %.2f TeV "%(w.var('mgg').getMin('Low')/1000., w.var('mgg').getMax('Low')/1000.))
         else:
-            pave_sel.AddText("%.2f < m_{#gamma#gamma} < %.2f TeV"%(w.var('mgg').getMin('Low')/1000.,w.var('mgg').getMax('High')/1000.))
+            # pave_sel.AddText("%.2f < m_{#gamma#gamma} < %.2f TeV"%(w.var('mgg').getMin('Low')/1000.,w.var('mgg').getMax('High')/1000.))
             #pave_sel.AddText("%i < m_{jj} < %i GeV"%(w.var('mjj').getMin('Low'),w.var('mjj').getMax('High')))
     elif 'PF' in box:
         pave_sel.AddText("Wide PF-jets")
