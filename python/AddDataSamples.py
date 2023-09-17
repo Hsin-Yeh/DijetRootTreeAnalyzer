@@ -57,8 +57,8 @@ if __name__ == '__main__':
         # h_mgg_50GeVbin.SetDirectory(0)
         # h_mgg_100GeVbin.SetDirectory(0)
         histos.append(h_mgg_1GeVbin)
-        histos.append(h_mgg_50GeVbin)
-        histos.append(h_mgg_100GeVbin)
+        # histos.append(h_mgg_50GeVbin)
+        # histos.append(h_mgg_100GeVbin)
 
         # for i in range(1,80):
         #     print("%d, %d-%dGeV, %d"%(i, 500+100*(i-1), 500+100*i, h_mgg_100GeVbin.GetBinContent(i)))
