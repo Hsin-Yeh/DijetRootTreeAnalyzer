@@ -41,27 +41,27 @@ if __name__ == '__main__':
         print(title,year)
         tfileIn = rt.TFile.Open(f)
         
-        h_mgg_1GeVbin = rt.TH1D('h_mgg_1GeVbin','h_mgg_1GeVbin',8000,500,8500)
-        h_mgg_50GeVbin = rt.TH1D('h_mgg_50GeVbin','h_mgg_50GeVbin',160,500,8500)
-        h_mgg_100GeVbin = rt.TH1D('h_mgg_100GeVbin','h_mgg_100GeVbin',80,500,8500)
+        h_mgg_1GeVbin = rt.TH1D('h_mgg_1GeVbin','h_mgg_1GeVbin',14000,0,14000)
+        # h_mgg_50GeVbin = rt.TH1D('h_mgg_50GeVbin','h_mgg_50GeVbin',160,500,8500)
+        # h_mgg_100GeVbin = rt.TH1D('h_mgg_100GeVbin','h_mgg_100GeVbin',80,500,8500)
         thetree=tfileIn.Get("HighMassDiphoton")
 
         project(thetree,h_mgg_1GeVbin, "mgg", 'eventClass==%d && mgg > 500'%(cat))
-        project(thetree,h_mgg_50GeVbin, "mgg", 'eventClass==%d && mgg > 500'%(cat))
-        project(thetree,h_mgg_100GeVbin, "mgg", 'eventClass==%d && mgg > 500'%(cat))
+        # project(thetree,h_mgg_50GeVbin, "mgg", 'eventClass==%d && mgg > 500'%(cat))
+        # project(thetree,h_mgg_100GeVbin, "mgg", 'eventClass==%d && mgg > 500'%(cat))
       
         #h = tfileIn.Get('h_mjj_ratio_%s'%options.type)
-        # h_mgg_1GeVbin.SetName('h_%s'%(title))
-        # h_mgg_1GeVbin.SetTitle('h_%s'%(title))
+        h_mgg_1GeVbin.SetName('h_%s'%(title))
+        h_mgg_1GeVbin.SetTitle('h_%s'%(title))
         h_mgg_1GeVbin.SetDirectory(0)
-        h_mgg_50GeVbin.SetDirectory(0)
-        h_mgg_100GeVbin.SetDirectory(0)
+        # h_mgg_50GeVbin.SetDirectory(0)
+        # h_mgg_100GeVbin.SetDirectory(0)
         histos.append(h_mgg_1GeVbin)
         histos.append(h_mgg_50GeVbin)
         histos.append(h_mgg_100GeVbin)
 
-        for i in range(1,80):
-            print("%d, %d-%dGeV, %d"%(i, 500+100*(i-1), 500+100*i, h_mgg_100GeVbin.GetBinContent(i)))
+        # for i in range(1,80):
+        #     print("%d, %d-%dGeV, %d"%(i, 500+100*(i-1), 500+100*i, h_mgg_100GeVbin.GetBinContent(i)))
 
 
     if options.type=='nom':
