@@ -161,14 +161,14 @@ if __name__ == "__main__":
         # g_xs_TuneCUEP8M1.SetMarkerStyle(20);
         # g_xs_TuneCUEP8M1.Draw("Lsame");
 
-    gr_2016  = ROOT.TGraph();
-    if (args.coupling=="kMpl001"): gr_2016.SetPoint(0,2245, 0.1175);
-    if (args.coupling=="kMpl01"): gr_2016.SetPoint(0,4100, 0.0924);
-    if (args.coupling=="kMpl02"): gr_2016.SetPoint(0,4700, 0.0924);
-    gr_2016.SetMarkerStyle(30);
-    gr_2016.SetMarkerSize(4);
-    gr_2016.SetMarkerColor(9);
-    gr_2016.Draw("Psame");
+    # gr_2016  = ROOT.TGraph();
+    # if (args.coupling=="kMpl001"): gr_2016.SetPoint(0,2245, 0.1175);
+    # if (args.coupling=="kMpl01"): gr_2016.SetPoint(0,4100, 0.0924);
+    # if (args.coupling=="kMpl02"): gr_2016.SetPoint(0,4700, 0.0924);
+    # gr_2016.SetMarkerStyle(30);
+    # gr_2016.SetMarkerSize(4);
+    # gr_2016.SetMarkerColor(9);
+    # gr_2016.Draw("Psame");
 
     leg = ROOT.TLegend(0.55,0.6,0.75,0.85,"brNDC");
     leg.SetBorderSize(1);
@@ -191,7 +191,7 @@ if __name__ == "__main__":
     if ( args.signame == "grav" ):
         leg.AddEntry(g_xs_TuneCP2,"G_{RS}#rightarrow#gamma#gamma (LO)","l");
         # leg.AddEntry(g_xs_TuneCUEP8M1,"G_{RS}#rightarrow#gamma#gamma (LO) CUEP8M1","l");
-        leg.AddEntry(gr_2016,"Published 2016 Mass Limit","P");
+        # leg.AddEntry(gr_2016,"Published 2016 Mass Limit","P");
     leg.AddEntry(expGraph,"expected Limit","L"); #L_{int}=36.4/pb
     leg.AddEntry(exp1SGraph,"#pm1#sigma","F");
     leg.AddEntry(exp2SGraph,"#pm2#sigma","F");
