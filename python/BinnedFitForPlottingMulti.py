@@ -994,7 +994,7 @@ if __name__ == '__main__':
             myRebinnedDensityTH1.SetBinError(i,0)
     myRebinnedDensityTH1.GetXaxis().SetRangeUser(w.var('mgg').getMin(),w.var('mgg').getMax())
     # paper:
-    myRebinnedDensityTH1.GetYaxis().SetTitle('d#sigma/dm_{gg} [pb/TeV]')
+    myRebinnedDensityTH1.GetYaxis().SetTitle('dN/dM_{gg}')
     # PAS:
     #myRebinnedDensityTH1.GetYaxis().SetTitle('d#sigma / dm_{jj} [pb / GeV]')
     myRebinnedDensityTH1.GetYaxis().SetTitleOffset(1)
