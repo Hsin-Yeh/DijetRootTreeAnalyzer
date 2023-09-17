@@ -64,6 +64,7 @@ if [[ ${year} == "2016" ]]; then
 fi
 
 #################### Paths ####################
+export inputDataDir="/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/CMSDIJET/DijetRootTreeAnalyzer/output_backup"
 export InterpolateShapePath="/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/${method}"
 export configFile="config/diphotons_500GeV.config"
 export bkgFitResultsPath="datacards/multi"
@@ -87,13 +88,13 @@ if $binnedFit_flag; then
     for cat in "${catlist[@]}"; do
         echo ${cat};
         # blind
-        python python/BinnedFitForPlottingMulti.py -c ${fitconfigFile_multi} -l ${lumi_1000} -b DiPhotons_${coupling}_${cat} -d ${bkgFitResultsPath}/blind --fit-spectrum --plot-region Low --coup $coupling --cat $cat --year ${year} output/InputShapes_data_${cat}_${year}.root;
-        python python/BinnedFit.py -c ${fitconfigFile} -l ${lumi_1000} -b DiPhotons_${coupling}_${cat}_${year} -d ${bkgFitResultsPath}/blind --fit-spectrum --plot-region Low --coup $coupling --cat $cat --year ${year} output/InputShapes_data_${cat}_${year}.root;
+        python python/BinnedFitForPlottingMulti.py -c ${fitconfigFile_multi} -l ${lumi_1000} -b DiPhotons_${coupling}_${cat} -d ${bkgFitResultsPath}/blind --fit-spectrum --plot-region Low --coup $coupling --cat $cat --year ${year} ${inputDataDir}/InputShapes_data_${cat}_${year}.root;
+        python python/BinnedFit.py -c ${fitconfigFile} -l ${lumi_1000} -b DiPhotons_${coupling}_${cat}_${year} -d ${bkgFitResultsPath}/blind --fit-spectrum --plot-region Low --coup $coupling --cat $cat --year ${year} ${inputDataDir}/InputShapes_data_${cat}_${year}.root;
         # unblind
-        python python/BinnedFitForPlottingMulti.py -c ${fitconfigFile_multi} -l ${lumi_1000} -b DiPhotons_${coupling}_${cat} -d ${bkgFitResultsPath}/unblind --fit-spectrum --coup $coupling --cat $cat --year ${year} output/InputShapes_data_${cat}_${year}.root;
-        python python/BinnedFit.py -c ${fitconfigFile} -l ${lumi_1000} -b DiPhotons_${coupling}_${cat}_${year} -d ${bkgFitResultsPath}/unblind --fit-spectrum --coup $coupling --cat $cat --year ${year} output/InputShapes_data_${cat}_${year}.root;
+        python python/BinnedFitForPlottingMulti.py -c ${fitconfigFile_multi} -l ${lumi_1000} -b DiPhotons_${coupling}_${cat} -d ${bkgFitResultsPath}/unblind --fit-spectrum --coup $coupling --cat $cat --year ${year} ${inputDataDir}/InputShapes_data_${cat}_${year}.root;
+        python python/BinnedFit.py -c ${fitconfigFile} -l ${lumi_1000} -b DiPhotons_${coupling}_${cat}_${year} -d ${bkgFitResultsPath}/unblind --fit-spectrum --coup $coupling --cat $cat --year ${year} ${inputDataDir}/InputShapes_data_${cat}_${year}.root;
         # For datacards
-        python python/BinnedFit.py -c ${fitconfigFile} -l ${lumi_1000} -b DiPhotons_${coupling}_${cat}_${year} -d ${bkgFitResultsPath} --fit-spectrum --plot-region Low --coup $coupling --cat $cat --year ${year} output/InputShapes_data_${cat}_${year}.root;
+        python python/BinnedFit.py -c ${fitconfigFile} -l ${lumi_1000} -b DiPhotons_${coupling}_${cat}_${year} -d ${bkgFitResultsPath} --fit-spectrum --plot-region Low --coup $coupling --cat $cat --year ${year} ${inputDataDir}/InputShapes_data_${cat}_${year}.root;
     done
 fi
 ############################## WriteDataCard.py grav ##############################
