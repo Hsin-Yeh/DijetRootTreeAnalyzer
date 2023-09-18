@@ -1013,7 +1013,7 @@ if __name__ == '__main__':
         myRebinnedDensityTH1.SetMaximum(2e3)
         if w.var('mgg').getMax() > 2037:
             myRebinnedDensityTH1.SetMaximum(2e2)
-            myRebinnedDensityTH1.SetMinimum(2e-4)
+            myRebinnedDensityTH1.SetMinimum(1e-3)
         else:
             myRebinnedDensityTH1.SetMinimum(2e-5)
     myRebinnedDensityTH1.Draw("axis")
@@ -1315,7 +1315,7 @@ if __name__ == '__main__':
     pad_2.cd()
 
     # h_fit_residual_vs_mass.GetXaxis().SetRangeUser(w.var('mgg').getMin(),w.var('mgg').getMax())
-    h_fit_residual_vs_mass.GetXaxis().SetRangeUser(500,4000)
+    h_fit_residual_vs_mass.GetXaxis().SetRangeUser(500,3000)
     h_fit_residual_vs_mass.GetYaxis().SetRangeUser(-3.5,3.5)
     #h_fit_residual_vs_mass.GetYaxis().SetNdivisions(210,True)
     h_fit_residual_vs_mass.SetLineWidth(1)
