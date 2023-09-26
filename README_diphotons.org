@@ -188,7 +188,7 @@ done;
 
 #+begin_src bash
 #Data
-for year in {2016,2017,2018}; do echo $year; python python/AddDataSamples.py -t nom -d output -c EBEB /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/input/trees/data_${year}.root; python python/AddDataSamples.py -t nom -d output -c EBEE /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/input/trees/data_${year}.root; done;
+for year in {2016,2017,2018}; do echo $year; python python/AddDataSamples.py -t nom -d output -c EBEB /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/input/trees_oldCut/data_${year}.root; python python/AddDataSamples.py -t nom -d output -c EBEE /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/input/trees_oldCut/data_${year}.root; done;
 #+end_src
 
 *** Nom Signal
@@ -200,8 +200,8 @@ mkdir -p output/plots
 
 # method="full"
 # method="truncate"
-# method="genFiducial"
-method="prefiring"
+method="genFiducial"
+# method="prefiring"
 mkdir -p output/${method}
 #RS
 for year in {2016,2017,2018}; do echo $year; for coup in {"kMpl001","kMpl01","kMpl02"}; do echo $coup; files_RS=`ls /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/input/trees/RSGravitonToGammaGamma_${coup}*${year}*.root`; python python/AddSignalShapes.py -e ${method} -t nom -d output/${method} -c EBEB ${files_RS}; python python/AddSignalShapes.py -e ${method} -t nom -d output/${method} -c EBEE ${files_RS}; done; done;
@@ -456,7 +456,6 @@ git cherry-pick 723a25391ae4d3c1f28ca2f8c53f3f44c5641eaa
 ** Bkg fit
 
 #+begin_src bash
-
 # You should create the config file. For the number of bins do :
 python python/BinningDiPhotons.py -m 500
 
@@ -1036,6 +1035,10 @@ for year in {"2016","2017","2018"}; do for coup in {"kMpl01","kMpl02","kMpl001"}
 #+end_src
 * Scripts
 #+begin_src bash
+
+for year in {"2016","2017","2018"}; do for coup in {"kMpl001","kMpl01","kMpl02"}; do  ./run_multi_combine.sh ${year} ${coup}; done; done
+
+
 cd /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/CMSDIJET/DijetRootTreeAnalyzer
 ./runRS_parallel.sh
 #+end_src
