@@ -122,7 +122,7 @@ if __name__ == "__main__":
     exp2SGraph.GetXaxis().SetTitleSize(0.045);
     exp2SGraph.GetYaxis().SetTitleSize(0.045);
 
-    exp2SGraph.GetYaxis().SetRangeUser(0.9,30);
+    exp2SGraph.GetYaxis().SetRangeUser(0.9,90);
     exp2SGraph.GetYaxis().SetTitle("95% CL limit #sigma(pp#rightarrowG#rightarrow#gamma#gamma) (fb)" if args.signame == "grav" else "95% CL limit #sigma(pp#rightarrowS#rightarrow#gamma#gamma) (fb)" );
     exp2SGraph.GetXaxis().SetTitle("m_{G} (GeV)" if args.signame == "grav" else "m_{S} (GeV)");
     exp2SGraph.GetXaxis().SetTitleOffset(1.3);
