@@ -111,7 +111,7 @@ if __name__ == '__main__':
 
         if options.type=='nom':
             project(thetree,h_mgg_ratio, "mgg/%f"%(float(mass)), allCuts )
-            project(thetree,h_mgg_8GeVbin, "mgg"%(float(mass)), allCuts )
+            project(thetree,h_mgg_8GeVbin, "mgg", allCuts )
         elif options.sys in energySyslist:
             project(thetree,h_mgg_ratio, "mgg*%s/%f"%(energySyslist[options.sys],float(mass)), allCuts )
 
