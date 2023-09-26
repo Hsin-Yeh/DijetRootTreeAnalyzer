@@ -93,7 +93,7 @@ if __name__ == '__main__':
 
         # h_mgg_1GeVbin = rt.TH1D('h_mgg_1GeVbin','h_mgg_1GeVbin',14000,0,14000)
         #h_mgg_5GeVbin = rt.TH1D('h_mgg_5GeVbin','h_mgg_5GeVbin',2800,0,14000)
-        h_mgg_8GeVbin = rt.TH1D('h_mgg_1GeVbin','h_mgg_8GeVbin',1750, 0, 14000)
+        h_mgg_8GeVbin = rt.TH1D('h_mgg_8GeVbin','h_mgg_8GeVbin',1750, 0, 14000)
         h_mgg_ratio = rt.TH1D('h_mgg_ratio','h_mgg_ratio',1000,0,2.0)
 
         if options.sys.find("Up")!=-1: numSigma = 1
