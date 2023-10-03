@@ -993,7 +993,7 @@ if __name__ == '__main__':
             myRebinnedDensityTH1.SetBinContent(i,0)
             myRebinnedDensityTH1.SetBinError(i,0)
     # myRebinnedDensityTH1.GetXaxis().SetRangeUser(w.var('mgg').getMin(),w.var('mgg').getMax())
-    myRebinnedDensityTH1.GetXaxis().SetRangeUser(500,4000)
+    myRebinnedDensityTH1.GetXaxis().SetRangeUser(500,3000)
     # paper:
     myRebinnedDensityTH1.GetYaxis().SetTitle('dN/dM_{gg}')
     # PAS:
