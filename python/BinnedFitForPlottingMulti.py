@@ -1378,10 +1378,13 @@ if __name__ == '__main__':
         #a.Draw()
         #abot = rt.TGaxis(h_fit_residual_vs_mass.GetXaxis().GetXmin(),-3.5,h_fit_residual_vs_mass.GetXaxis().GetXmax(), -3.5,0.001,10000,509,"UG");
         #atop = rt.TGaxis(h_fit_residual_vs_mass.GetXaxis().GetXmin(),3.5,h_fit_residual_vs_mass.GetXaxis().GetXmax(), 3.5,0.001,10000,509,"-UG");
-        abot = rt.TGaxis(myRebinnedDensityTH1.GetXaxis().GetXmin(), -3.5,
-	                 myRebinnedDensityTH1.GetXaxis().GetXmax(), -3.5, "f_h2_log10_x_axis", 509,"UBS", 0.0);
-        atop = rt.TGaxis(myRebinnedDensityTH1.GetXaxis().GetXmin(), 3.5,
-	                 myRebinnedDensityTH1.GetXaxis().GetXmax(), 3.5,  "f_h2_log10_x_axis", 509,"-UBS", 0.0);
+        # abot = rt.TGaxis(myRebinnedDensityTH1.GetXaxis().GetXmin(), -3.5,
+	    #              myRebinnedDensityTH1.GetXaxis().GetXmax(), -3.5, "f_h2_log10_x_axis", 509,"UBS", 0.0);
+        # atop = rt.TGaxis(myRebinnedDensityTH1.GetXaxis().GetXmin(), 3.5,
+	    #              myRebinnedDensityTH1.GetXaxis().GetXmax(), 3.5,  "f_h2_log10_x_axis", 509,"-UBS", 0.0);
+        abot = rt.TGaxis(500, -3.5, 4000, -3.5, "f_h2_log10_x_axis", 509,"UBS", 0.0);
+        atop = rt.TGaxis(500, 3.5, 4000, 3.5,  "f_h2_log10_x_axis", 509,"-UBS", 0.0);
+
 	abot.Draw()
 	atop.Draw()
 
