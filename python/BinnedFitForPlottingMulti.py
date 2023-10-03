@@ -1133,7 +1133,7 @@ if __name__ == '__main__':
     pave_sel.SetBorderSize(0)
     pave_sel.SetFillStyle(0)
     pave_sel.SetTextFont(42)
-    pave_sel.SetTextSize(0.055)
+    pave_sel.SetTextSize(0.06)
     pave_sel.SetTextAlign(11)
     pave_sel.AddText(options.cat)
     thealtmodel = options.config.split("_")[-1].split(".")[-2]
