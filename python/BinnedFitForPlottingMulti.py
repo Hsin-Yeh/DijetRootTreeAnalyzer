@@ -1363,9 +1363,9 @@ if __name__ == '__main__':
             xLab.DrawLatex(1000, -4, "1")
         xLab.DrawLatex(2000, -4, "2")
         xLab.DrawLatex(3000, -4, "3")
-        xLab.DrawLatex(4000, -4, "4")
-        xLab.DrawLatex(5000, -4, "5")
-        xLab.DrawLatex(6000, -4, "6")
+        # xLab.DrawLatex(4000, -4, "4")
+        # xLab.DrawLatex(5000, -4, "5")
+        # xLab.DrawLatex(6000, -4, "6")
         #xLab.DrawLatex(7000, -4, "7")
         #xLab.DrawLatex(8000, -4, "8")
 
