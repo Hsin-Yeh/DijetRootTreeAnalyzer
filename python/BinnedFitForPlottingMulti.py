@@ -993,7 +993,7 @@ if __name__ == '__main__':
             myRebinnedDensityTH1.SetBinContent(i,0)
             myRebinnedDensityTH1.SetBinError(i,0)
     # myRebinnedDensityTH1.GetXaxis().SetRangeUser(w.var('mgg').getMin(),w.var('mgg').getMax())
-    myRebinnedDensityTH1.GetXaxis().SetRangeUser(500,3000)
+    myRebinnedDensityTH1.GetXaxis().SetRangeUser(500,4000)
     # paper:
     myRebinnedDensityTH1.GetYaxis().SetTitle('dN/dM_{gg}')
     # PAS:
@@ -1315,7 +1315,7 @@ if __name__ == '__main__':
     pad_2.cd()
 
     # h_fit_residual_vs_mass.GetXaxis().SetRangeUser(w.var('mgg').getMin(),w.var('mgg').getMax())
-    h_fit_residual_vs_mass.GetXaxis().SetRangeUser(500,3000)
+    h_fit_residual_vs_mass.GetXaxis().SetRangeUser(500,4000)
     h_fit_residual_vs_mass.GetYaxis().SetRangeUser(-3.5,3.5)
     #h_fit_residual_vs_mass.GetYaxis().SetNdivisions(210,True)
     h_fit_residual_vs_mass.SetLineWidth(1)
@@ -1363,7 +1363,7 @@ if __name__ == '__main__':
             xLab.DrawLatex(1000, -4, "1")
         xLab.DrawLatex(2000, -4, "2")
         xLab.DrawLatex(3000, -4, "3")
-        # xLab.DrawLatex(4000, -4, "4")
+        xLab.DrawLatex(4000, -4, "4")
         # xLab.DrawLatex(5000, -4, "5")
         # xLab.DrawLatex(6000, -4, "6")
         #xLab.DrawLatex(7000, -4, "7")
