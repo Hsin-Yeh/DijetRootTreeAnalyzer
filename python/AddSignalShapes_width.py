@@ -68,9 +68,7 @@ if __name__ == '__main__':
     eff["2018"] = "isGood*(HLT_DoublePhoton70 || HLT_ECALHT800)"
 
     for f in args:
-        print (f)
         year = f.split('.root')[0].split('_')[-1]
-        print (year)
         mass = int(f.split('_M_')[1].split('_TuneCP2')[0])
         coup = f.split('_M_')[0].split('/')[-1].split('_')[-1]
         title = f.split('/')[-1].split("_")[0] + "_M_" + str(mass)
