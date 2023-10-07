@@ -48,16 +48,16 @@ if __name__ == '__main__':
                      "energySigmaDown"       : "ph1energySigmaDown*ph2energySigmaDown" }
 
     SFSyslist     = {"nom" : "ph1SF*ph2SF",
-                     "SFUp" : "ph1SFUp*ph2SFUp",
-                     "SFDown" : "ph1SFDown*ph2SFDown"}
+                     "SFScaleUp" : "ph1SFUp*ph2SFUp",
+                     "SFScaleDown" : "ph1SFDown*ph2SFDown"}
 
     EEPFSyslist   = {"nom" : "ph1EEPF*ph2EEPF",
-                     "EEPFUp" : "ph1EEPFUp*ph2EEPFUp",
-                     "EEPFDown" : "ph1EEPFDown*ph2EEPFDown"}
+                     "EEPFScaleUp" : "ph1EEPFUp*ph2EEPFUp",
+                     "EEPFScaleDown" : "ph1EEPFDown*ph2EEPFDown"}
 
     PuSyslist   = {"nom" : "weightPuManual",
-                   "PuUp" : "weightPuManualUp",
-                   "PuDown" : "weightPuManualDown"}
+                   "PUScaleUp" : "weightPuManualUp",
+                   "PUScaleDown" : "weightPuManualDown"}
 
     acc={}
     eff={}
