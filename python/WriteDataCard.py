@@ -750,11 +750,11 @@ if __name__ == '__main__':
             shapeFiles['eneScSigmaUp'] = options.eneScSigmaUpFile
             shapeFiles['eneScSigmaDown'] = options.eneScSigmaDownFile
         if options.SFScaleUpFile is not None or options.SFScaleDownFile is not None:
-            shapes.append('SF')
+            shapes.append('SFScale')
             shapeFiles['SFScaleUp'] = options.SFScaleUpFile
             shapeFiles['SFScaleDown'] = options.SFScaleDownFile
         if options.PUScaleUpFile is not None or options.PUScaleDownFile is not None:
-            shapes.append('PU')
+            shapes.append('PUScale')
             shapeFiles['PUScaleUp'] = options.PUScaleUpFile
             shapeFiles['PUScaleDown'] = options.PUScaleDownFile
         if options.EEPFUpFile is not None or options.EEPFDownFile is not None:
