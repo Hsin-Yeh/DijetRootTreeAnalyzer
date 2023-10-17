@@ -1,5 +1,6 @@
 #!/bin/bash
 
+# for year in {"2016","2017","2018","fullRun2"}; do for coup in {"kMpl001","kMpl01","kMpl02"}; do ./run_multi_combine.sh ${year} ${coup}; done; done;
 # ./run_multi_combine.sh 2016 kMpl001
 # ./run_multi_combine.sh 2016 kMpl01
 # ./run_multi_combine.sh 2016 kMpl02
@@ -72,8 +73,8 @@ export InterpolateShapePath="/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysi
 export configFile="config/diphotons_500GeV.config"
 export bkgFitResultsPath="datacards/multi"
 export datacardsDir="/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/CMSDIJET/DijetRootTreeAnalyzer/datacards/multi/${version}"
-export SignalNormFile="/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/SignalNorm_Splines_${method}.txt"
-export datacard_configfile="config/diphotons_bias_${year}_pdf_index_wopip_wopil.config"
+export SignalNormFile="/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/SignalNorm_Splines_${method}_multiWidth.txt"
+export datacard_configfile="config/diphotons_bias_${year}_pdf_index_wopip_wopil_multiWidth.config"
 
 #################### Run flags ####################
 export binnedFit_flag=true
@@ -120,12 +121,10 @@ if $writeDataCard_flag; then
                 --eneScGainDown  ${InterpolateShapePath}/ResonanceShapes_InputShapes_${signal_LongName}_${coupling}_${cat}_${year}_energyScaleGainDown.root \
                 --eneScSigmaUp   ${InterpolateShapePath}/ResonanceShapes_InputShapes_${signal_LongName}_${coupling}_${cat}_${year}_energySigmaUp.root       \
                 --eneScSigmaDown ${InterpolateShapePath}/ResonanceShapes_InputShapes_${signal_LongName}_${coupling}_${cat}_${year}_energySigmaDown.root     \
-                --SFUp           ${InterpolateShapePath}/ResonanceShapes_InputShapes_${signal_LongName}_${coupling}_${cat}_${year}_SFUp.root           \
-                --SFDown         ${InterpolateShapePath}/ResonanceShapes_InputShapes_${signal_LongName}_${coupling}_${cat}_${year}_SFDown.root         \
-                --PuUp           ${InterpolateShapePath}/ResonanceShapes_InputShapes_${signal_LongName}_${coupling}_${cat}_${year}_PuUp.root           \
-                --PuDown         ${InterpolateShapePath}/ResonanceShapes_InputShapes_${signal_LongName}_${coupling}_${cat}_${year}_PuDown.root         \
-                --EEPFUp         ${InterpolateShapePath}/ResonanceShapes_InputShapes_${signal_LongName}_${coupling}_${cat}_${year}_EEPFUp.root           \
-                --EEPFDown       ${InterpolateShapePath}/ResonanceShapes_InputShapes_${signal_LongName}_${coupling}_${cat}_${year}_EEPFDown.root         \
+                --SFScaleUp      ${InterpolateShapePath}/ResonanceShapes_InputShapes_${signal_LongName}_${coupling}_${cat}_${year}_SFScaleUp.root           \
+                --SFScaleDown    ${InterpolateShapePath}/ResonanceShapes_InputShapes_${signal_LongName}_${coupling}_${cat}_${year}_SFScaleDown.root         \
+                --PUScaleUp      ${InterpolateShapePath}/ResonanceShapes_InputShapes_${signal_LongName}_${coupling}_${cat}_${year}_PUScaleUp.root           \
+                --PUScaleDown    ${InterpolateShapePath}/ResonanceShapes_InputShapes_${signal_LongName}_${coupling}_${cat}_${year}_PUScaleDown.root         \
                 ${InterpolateShapePath}/ResonanceShapes_InputShapes_${signal_LongName}_${coupling}_${cat}_${year}.root;
             mv diphoton_combine_${mass}_${box}.* ${datacardsDir}/${method}/${year}/${box}/.
         done
