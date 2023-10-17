@@ -84,6 +84,7 @@ export combineLimit_flag=false
 
 # ############################## bkg model ##############################
 if $binnedFit_flag; then
+    mkdir ${bkgFitResultsPath}
     mkdir ${bkgFitResultsPath}/blind
     mkdir ${bkgFitResultsPath}/unblind
     echo $coupling;
