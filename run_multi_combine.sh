@@ -88,8 +88,8 @@ if $binnedFit_flag; then
     mkdir ${bkgFitResultsPath}/blind
     mkdir ${bkgFitResultsPath}/unblind
     echo $coupling;
-    fitconfigFile="config/diphotons_dijet_${year}.config"
-    fitconfigFile_multi="config/diphotons_multiplot_500GeV.config"
+    fitconfigFile="config/diphotons_dijet_${year}_multiWidth.config"
+    fitconfigFile_multi="config/diphotons_multiplot_500GeV_multiWidth.config"
     for cat in "${catlist[@]}"; do
         echo ${cat};
         # blind
