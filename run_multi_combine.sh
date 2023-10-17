@@ -71,7 +71,7 @@ fi
 
 #################### Paths ####################
 export inputDataDir="/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/CMSDIJET/DijetRootTreeAnalyzer/output/InputShapes_data_backup"
-export InterpolateShapePath="/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/full_backup"
+export InterpolateShapePath="/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/full_backup/width/"
 export configFile="config/diphotons_500GeV.config"
 export bkgFitResultsPath="datacards/multiWidth"
 export datacardsDir="/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/CMSDIJET/DijetRootTreeAnalyzer/datacards/multiWidth/${version}"
@@ -79,7 +79,7 @@ export SignalNormFile="/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSS
 export datacard_configfile="config/diphotons_bias_${year}_pdf_index_wopip_wopil_multiWidth.config"
 
 #################### Run flags ####################
-export binnedFit_flag=true
+export binnedFit_flag=false
 export writeDataCard_flag=true
 export combineCard_flag=false
 export combineLimit_flag=false
