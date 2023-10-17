@@ -21,7 +21,7 @@
 # ./run_multi_combine.sh 2018 1p4
 # ./run_multi_combine.sh 2018 5p6
 
-export version="2023-07-01-1"
+export version="2023-10-17"
 export year=$1
 export coupling=$2
 
@@ -71,8 +71,8 @@ fi
 export inputDataDir="/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/CMSDIJET/DijetRootTreeAnalyzer/output/InputShapes_data_backup"
 export InterpolateShapePath="/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/${method}"
 export configFile="config/diphotons_500GeV.config"
-export bkgFitResultsPath="datacards/multi"
-export datacardsDir="/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/CMSDIJET/DijetRootTreeAnalyzer/datacards/multi/${version}"
+export bkgFitResultsPath="datacards/multiWidth"
+export datacardsDir="/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/CMSDIJET/DijetRootTreeAnalyzer/datacards/multiWidth/${version}"
 export SignalNormFile="/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/SignalNorm_Splines_${method}_multiWidth.txt"
 export datacard_configfile="config/diphotons_bias_${year}_pdf_index_wopip_wopil_multiWidth.config"
 
