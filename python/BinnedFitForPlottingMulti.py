@@ -1107,12 +1107,19 @@ if __name__ == '__main__':
     leg.SetLineWidth(0)
     leg.SetLineColor(rt.kWhite)
     leg.AddEntry(g_data,"Data","pe")
-    modelforms = {"dijet"      : "x^{p_{1}+p_{2}*log(x)}",
-                  "expow1"     : "e^{p_{1} x} x^{p_{2}}",
-                  "invpow1"    : "(1+x*p_{1})^{p_{2}}",
-                  "invpowlin1" : "(1+x*p_{1})^{p_{2}+p_{3}*x}"}
+    # modelforms = {"dijet"      : "x^{p_{1}+p_{2}*log(x)}",
+    #               "expow1"     : "e^{p_{1} x} x^{p_{2}}",
+    #               "invpow1"    : "(1+x*p_{1})^{p_{2}}",
+    #               "invpowlin1" : "(1+x*p_{1})^{p_{2}+p_{3}*x}"}
+    modelforms = {"dijet"      : "f1",
+                  "expow1"     : "f2",
+                  "invpow1"    : "f3",
+                  "invpowlin1" : "f4"}
+
     for key, value in backgrounds.iteritems():
-        leg.AddEntry(value,"%s: %s "%(key, modelforms[key]),"l")
+        # leg.AddEntry(value,"%s: %s "%(key, modelforms[key]),"l")
+        leg.AddEntry(value,"%s "%(modelforms[key]),"l")
+
     for model, mass, xsec, signalFileName, g_signal in zip(models,masses,xsecs,signalFileNames, g_signals):
         if 'PF' in box:
             leg.AddEntry(g_signal,"%s (%.1f TeV)"%(model,float(mass)/1000.),"l")
@@ -1139,18 +1146,34 @@ if __name__ == '__main__':
     thealtmodel = options.config.split("_")[-1].split(".")[-2]
     theformname = ""
     theform = ""
+    # if thealtmodel == "dijet":
+    #     theform = "x^{p_{1}+p_{2}*log(x)}"
+    #     theformname = "dijet"
+    # if thealtmodel == "expow1":
+    #     theform = "e^{p_{1} x} x^{p_{2}}"
+    #     theformname = "expow"
+    # elif thealtmodel == "invpow1":
+    #     theform = "(1+x*p_{1})^{p_{2}}"
+    #     theformname = "invpow"
+    # elif thealtmodel == "invpowlin1":
+    #     theform = "(1+x*p_{1})^{p_{2}+p_{3}*x}"
+    #     theformname = "invpowlin"
+    # elif thealtmodel == "moddijet1":
+    #     theform = "x^{p_{1}+p_{2}*log(x)}*(1.-x*p_{3})^{p_{4}}"
+    #     theformname = "moddijet"
+
     if thealtmodel == "dijet":
-        theform = "x^{p_{1}+p_{2}*log(x)}"
-        theformname = "dijet"
+        theform = ""
+        theformname = "f1"
     if thealtmodel == "expow1":
-        theform = "e^{p_{1} x} x^{p_{2}}"
-        theformname = "expow"
+        theform = ""
+        theformname = "f2"
     elif thealtmodel == "invpow1":
-        theform = "(1+x*p_{1})^{p_{2}}"
-        theformname = "invpow"
+        theform = ""
+        theformname = "f3"
     elif thealtmodel == "invpowlin1":
-        theform = "(1+x*p_{1})^{p_{2}+p_{3}*x}"
-        theformname = "invpowlin"
+        theform = ""
+        theformname = "f4"
     elif thealtmodel == "moddijet1":
         theform = "x^{p_{1}+p_{2}*log(x)}*(1.-x*p_{3})^{p_{4}}"
         theformname = "moddijet"
