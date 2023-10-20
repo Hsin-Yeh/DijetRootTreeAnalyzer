@@ -73,14 +73,14 @@ fi
 export inputDataDir="/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/CMSDIJET/DijetRootTreeAnalyzer/output/InputShapes_data_backup"
 export InterpolateShapePath="/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/full_backup/width/"
 export configFile="config/diphotons_500GeV.config"
-export bkgFitResultsPath="datacards/multiWidth"
-export datacardsDir="/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/CMSDIJET/DijetRootTreeAnalyzer/datacards/multiWidth/${version}"
-export SignalNormFile="/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/SignalNorm_Splines_full_multiWidth.txt"
-export datacard_configfile="config/diphotons_bias_${year}_pdf_index_wopip_wopil_multiWidth.config"
+export bkgFitResultsPath="datacards/multi"
+export datacardsDir="/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/CMSDIJET/DijetRootTreeAnalyzer/datacards/multi/${version}"
+export SignalNormFile="/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/SignalNorm_Splines_full.txt"
+export datacard_configfile="config/diphotons_bias_${year}_pdf_index_wopip_wopil.config"
 
 #################### Run flags ####################
-export binnedFit_flag=false
-export writeDataCard_flag=true
+export binnedFit_flag=true
+export writeDataCard_flag=false
 export combineCard_flag=false
 export combineLimit_flag=false
 
@@ -90,8 +90,8 @@ if $binnedFit_flag; then
     mkdir ${bkgFitResultsPath}/blind
     mkdir ${bkgFitResultsPath}/unblind
     echo $coupling;
-    fitconfigFile="config/diphotons_dijet_${year}_multiWidth.config"
-    fitconfigFile_multi="config/diphotons_multiplot_500GeV_multiWidth.config"
+    fitconfigFile="config/diphotons_dijet_${year}.config"
+    fitconfigFile_multi="config/diphotons_multiplot_500GeV.config"
     for cat in "${catlist[@]}"; do
         echo ${cat};
         # blind
