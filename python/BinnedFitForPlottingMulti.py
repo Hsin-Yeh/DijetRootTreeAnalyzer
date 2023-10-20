@@ -1117,10 +1117,10 @@ if __name__ == '__main__':
                   "expow1"     : "f2",
                   "invpow1"    : "f3",
                   "invpowlin1" : "f4"}
-    leg.AddEntry(background["dijet"],"modelforms[dijet]","l")
-    leg.AddEntry(background["expow1"],"modelforms[expow1]","l")
-    leg.AddEntry(background["invpow1"],"modelforms[invpow1]","l")
-    leg.AddEntry(background["invpowlin1"],"modelforms[invpowlin1]","l")
+    leg.AddEntry(backgrounds["dijet"],"modelforms[dijet]","l")
+    leg.AddEntry(backgrounds["expow1"],"modelforms[expow1]","l")
+    leg.AddEntry(backgrounds["invpow1"],"modelforms[invpow1]","l")
+    leg.AddEntry(backgrounds["invpowlin1"],"modelforms[invpowlin1]","l")
 
     # for key, value in backgrounds.iteritems():
         # leg.AddEntry(value,"%s: %s "%(key, modelforms[key]),"l")
