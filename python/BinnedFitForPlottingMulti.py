@@ -1113,10 +1113,10 @@ if __name__ == '__main__':
     #               "expow1"     : "e^{p_{1} x} x^{p_{2}}",
     #               "invpow1"    : "(1+x*p_{1})^{p_{2}}",
     #               "invpowlin1" : "(1+x*p_{1})^{p_{2}+p_{3}*x}"}
-    modelforms = {"dijet"      : "f1",
-                  "expow1"     : "f2",
-                  "invpow1"    : "f3",
-                  "invpowlin1" : "f4"}
+    modelforms = {"dijet"      : "f_{1}",
+                  "expow1"     : "f_{2}",
+                  "invpow1"    : "f_{3}",
+                  "invpowlin1" : "f_{4}"}
     leg.AddEntry(backgrounds["dijet"],"%s"%(modelforms["dijet"]),"l")
     leg.AddEntry(backgrounds["expow1"],"%s"%(modelforms["expow1"]),"l")
     leg.AddEntry(backgrounds["invpow1"],"%s"%(modelforms["invpow1"]),"l")
