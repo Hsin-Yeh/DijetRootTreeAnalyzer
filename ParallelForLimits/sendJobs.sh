@@ -11,10 +11,10 @@ for coupling in "${couplist[@]}"; do
         jobDir="${version}/${coupling}/${mass}"
         submitFile="${jobDir}/jobs/limit_${coupling}_${mass}.sub"
         #echo ${run}
-        chmod 755 ${workpath}/${run}
+        chmod 755 ${submitFile}
 
-        echo "Sending ${run}"
-        condor_submit ${workpath}/${run}
-        echo "condor_submit ${workpath}/${run}"
+        echo "Sending ${submitFile}"
+        condor_submit ${submitFile}
+        echo "condor_submit ${submitFile}"
     done
 done

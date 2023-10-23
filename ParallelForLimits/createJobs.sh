@@ -28,7 +28,7 @@ for coupling in "${couplist[@]}"; do
         echo "log         = ${PWD}/${jobDir}/logs/limit_${coupling}_${mass}_htc.log " >> ${submitFile}
         echo 'requirements = (OpSysAndVer =?= "CentOS7") ' >> ${submitFile}
         echo 'max_retries = 1' >> ${submitFile}
-        echo "queue 1 " >> ${submitFile}
+        echo "queue infile in (1) " >> ${submitFile}
 
         chmod 755 ${submitFile}
 
