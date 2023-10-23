@@ -80,10 +80,10 @@ export SignalNormFile="/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSS
 export datacard_configfile="config/diphotons_bias_${year}_pdf_index_wopip_wopil_multiWidth.config"
 
 #################### Run flags ####################
-export binnedFit_flag=false
+export binnedFit_flag=true
 export writeDataCard_flag=false
-export combineCard_flag=true
-export combineLimit_flag=true
+export combineCard_flag=false
+export combineLimit_flag=false
 
 # ############################## bkg model ##############################
 if $binnedFit_flag; then
