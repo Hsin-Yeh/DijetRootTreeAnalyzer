@@ -2,7 +2,9 @@
 
 export coupling=$1
 export mass=$2
-
+echo ""
+echo "########## Run Limit script for ${coupling} ${mass} ##########"
+echo ""
 #################### Constants ##########EEEEEEEEEE
 yearlist=("2016" "2017" "2018")
 # Cats
@@ -31,8 +33,8 @@ export SignalNormFile="${diphoton}/SignalNorm_Splines_full_multiWidth.txt"
 #################### mkdirs ####################
 mkdir -p signal_shapes/extraShape
 mkdir -p signal_shapes/width_interpolated_shapes
-mkdir datacards
-mkdir FinalResults
+mkdir -p datacards
+mkdir -p FinalResults
 
 #################### Get Width Interpolated shapes ####################
 
