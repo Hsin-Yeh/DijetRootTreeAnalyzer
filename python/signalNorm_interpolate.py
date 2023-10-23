@@ -6,6 +6,8 @@ import argparse
 parser = argparse.ArgumentParser(description='')
 parser.add_argument('--inputfile','-i',default="SignalNorm_Splines_full.txt",type=str,help='input file')
 parser.add_argument('--outputfile','-o',default="./test.txt",type=str,help='output file')
+parser.add_argument('--width','-w',default=-1,type=int)
+parser.add_argument('--mass','-m',default=-1,type=int)
 parser.add_argument('--debug','-d',action="store_true",help='debug mode')
 args = parser.parse_args()
 
@@ -48,15 +50,17 @@ def Interpolate(year, cint, mass, cat,df):
 def Write_interpolate_file():
     df = Read_SignalNorm()
     cats = ["EBEB","EBEE","All"]
-    cints = [14, 707, 1400, 3500, 5600]
+    if (args.width == -1): widths = [14, 361, 707, 1054, 1400, 2450, 3500, 4550, 5600]
+    else: widths = [args.width]
+    if (args.mass == -1): masses = [*range(500,5010,10)]
+    else: masses = [args.mass]
     # Open the file in write mode and write the lines
     with open(args.outputfile, "w") as file:
         for year in range(2016,2019):
-            print(year)
-            for coup in cints:
-                print(coup)
+            for coup in widths:
                 for cat in cats:
-                    for mass in range(500, 5000, 10):
+                    for mass in masses:
+                        print(year,coup,cat,mass)
                         norm = Interpolate(year, coup, mass, cat, df)
                         line = f"{year} {coup} {mass} {cat} {norm:.6f}\n"
                         file.write(line)
