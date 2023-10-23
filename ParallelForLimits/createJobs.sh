@@ -30,7 +30,7 @@ for coupling in "${couplist[@]}"; do
         echo 'max_retries = 1' >> ${submitFile}
         echo "queue 1 " >> ${submitFile}
 
-        chmod 755 ${jobDir}/jobs/${submitFile}
+        chmod 755 ${submitFile}
 
         echo ${submitFile}
     done
