@@ -14,8 +14,6 @@ cd ${mainpath}
 eval `scramv1 runtime -sh`
 cd -
 
-export PWD=`pwd`
-
 # Run script
 cp ${mainpath}/run_multi_combine_multiWidth_singleMass.sh ./.
 ./run_multi_combine_multiWidth_singleMass.sh ${coupling} ${mass}
@@ -23,4 +21,4 @@ cp ${mainpath}/run_multi_combine_multiWidth_singleMass.sh ./.
 # Copy output file
 outfile="finalResults_grav_${coupling}_${mass}.txt"
 echo ${outfile}
-cp ${outfile} ${outDir}/.
+echo "The script completed"
