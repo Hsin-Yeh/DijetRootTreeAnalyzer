@@ -16,7 +16,7 @@ for coupling in "${couplist[@]}"; do
         #echo ${run}
         chmod 755 ${submitFile}
 
-        # echo "Sending ${submitFile}"
+        echo "Sending ${submitFile}"
         condor_submit ${submitFile}
         # echo "condor_submit ${submitFile}"
     done
