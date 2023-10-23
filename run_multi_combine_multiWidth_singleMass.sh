@@ -85,7 +85,7 @@ for year in "${yearlist[@]}"; do
     for cat in "${catlist[@]}"; do
         box="DiPhotons_${coupling}_${cat}_${year}"
         echo ${year} ${box}
-        export datacard_configfile="${DijetRootTreeAnalyzer}/config/diphotons_bias_${year}_pdf_index_wopip_wopil.config"
+        export datacard_configfile="${DijetRootTreeAnalyzer}/config/diphotons_bias_${year}_pdf_index_wopip_wopil_multiWidth.config"
         python ${DijetRootTreeAnalyzer}/python/WriteDataCard.py --multi -m gg --mass ${mass} output/InputShapes_data_${cat}_${year}.root \
             -i ${bkgFitResultsPath}/FitResults_${box}.root --lumi ${lumi} -c ${datacard_configfile} -b ${box} --year ${year} \
             --SigNorm ${SignalNormFile} \
