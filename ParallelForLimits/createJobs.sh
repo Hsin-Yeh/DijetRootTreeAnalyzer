@@ -8,7 +8,8 @@ masslist=($(seq 600 10 5000))
 
 cd ${version}
 for coupling in "${couplist[@]}"; do
-    echo "===================================================================================="
+    echo "==========Creating jobs=========="
+    echo ${coupling}
     for mass in "${masslist[@]}"; do
         jobDir="${coupling}/${mass}"
         #Create local structure for jobs
@@ -20,7 +21,6 @@ for coupling in "${couplist[@]}"; do
         transferFile="finalResults_grav_${coupling}_${mass}.txt"
         outDir="${jobDir}/output/"
 
-        echo ${coupling} ${mass}
 
         echo '+JobFlavour = "longlunch" ' > ${submitFile}
         echo ' ' >> ${submitFile}
