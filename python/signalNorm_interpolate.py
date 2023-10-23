@@ -62,7 +62,7 @@ def Write_interpolate_file():
                     for mass in masses:
                         print(year,coup,cat,mass)
                         norm = Interpolate(year, coup, mass, cat, df)
-                        line = f"{year} {coup} {mass} {cat} {norm:.6f}\n"
+                        line = "%i %i %i %s %:.6f\n"%(year,coup,mass,cat,norm)
                         file.write(line)
 
 if __name__ == "__main__":
