@@ -19,7 +19,7 @@ def Read_SignalNorm():
     # Read the data from the file into a DataFrame
     df = pd.read_csv(file_path, sep=" ", header=None, names=columns)
     # Print the resulting DataFrame
-    print(df)
+    # print(df)
     return df
 
 def get_norm(year, coup, mass, cat, df):
@@ -62,7 +62,7 @@ def Write_interpolate_file():
                     for mass in masses:
                         print(year,coup,cat,mass)
                         norm = Interpolate(year, coup, mass, cat, df)
-                        line = "%i %i %i %s %:.6f\n"%(year,coup,mass,cat,norm)
+                        line = "%i %i %i %s %.6f\n"%(year,coup,mass,cat,norm)
                         file.write(line)
 
 if __name__ == "__main__":
