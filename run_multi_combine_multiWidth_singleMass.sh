@@ -20,15 +20,16 @@ if [[ ${coupling} == "0p014" || ${coupling} == "1p4" || ${coupling} == "5p6" ]];
 fi
 
 #################### Paths ####################
-export DijetRootTreeAnalyzer="/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/CMSDIJET/DijetRootTreeAnalyzer/"
-export DijetShapeInterpolator="/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/"
-export diphoton="/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/"
+DijetRootTreeAnalyzer="/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/CMSDIJET/DijetRootTreeAnalyzer/"
+DijetShapeInterpolator="/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/"
+diphoton="/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/"
 
-export inputDataDir="${DijetRootTreeAnalyzer}/output/InputShapes_data_backup"
-export configFile="${DijetRootTreeAnalyzer}/config/diphotons_500GeV.config"
-export InterpolateShapePath="${DijetShapeInterpolator}/full_backup/width/"
-export bkgFitResultsPath="${DijetRootTreeAnalyzer}/datacards/multiWidth/"
-export SignalNormFile="${diphoton}/SignalNorm_Splines_full_multiWidth.txt"
+inputDataDir="${DijetRootTreeAnalyzer}/output/InputShapes_data_backup"
+configFile="${DijetRootTreeAnalyzer}/config/diphotons_500GeV.config"
+InterpolateShapePath="${DijetShapeInterpolator}/full_backup/width/"
+bkgFitResultsPath="${DijetRootTreeAnalyzer}/datacards/multiWidth/"
+SignalNormFile_input="${diphoton}/SignalNorm_Splines_full.txt"
+SignalNormFile="SignalNorm_Splines_full_multiWidth.txt"
 
 #################### mkdirs ####################
 mkdir -p signal_shapes
@@ -69,8 +70,11 @@ mkdir -p FinalResults
 # # Merge
 # python ${DijetShapeInterpolator}/Merge_width_interpolation.py --mass ${mass} --width ${coupling}
 
-############################## WriteDataCard.py grav ##############################
+############################## Signal Norm ##############################
+echo "########## Calculate Signal Norm... ##########"
+python python/signalNorm_interpolate.py -i ${SignalNormFile_input} --mass ${mass} --width ${coupling} -o ${SignalNormFile}
 
+############################## WriteDataCard.py grav ##############################
 # The yield was initially normalized to 1000/pb.
 echo "########## Write Datacards... ##########"
 for year in "${yearlist[@]}"; do
