@@ -35,11 +35,12 @@ mkdir datacards
 mkdir FinalResults
 
 #################### Get Width Interpolated shapes ####################
+
 # Nom
+echo "########## Get Interpolated Shapes... ##########"
 for year in "${yearlist[@]}"; do
-    echo ${year}
     for cat in "${catlist[@]}"; do
-        echo ${cat}
+        echo ${year} ${cat}
         narrow_file="${InterpolateShapePath}/inputs/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_kMpl001_${cat}_${year}_ratio.root"
         medium_file="${InterpolateShapePath}/inputs/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_kMpl01_${cat}_${year}_ratio.root"
         wide_file="${InterpolateShapePath}/inputs/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_kMpl02_${cat}_${year}_ratio.root"
@@ -50,13 +51,11 @@ for year in "${yearlist[@]}"; do
 done
 
 # Systematics
+echo "########## Get Interpolated Systematic Shapes... ##########"
 for year in "${yearlist[@]}"; do
-    echo ${year}
     for cat in "${catlist[@]}"; do
-        echo ${cat}
-        for systematics in {"energyScaleStatUp","energyScaleSystUp","energyScaleGainUp","energySigmaUp",
-                            "energyScaleStatDown","energyScaleSystDown","energyScaleGainDown","energySigmaDown","SFScaleUp","SFScaleDown","PUScaleUp","PUScaleDown"}; do
-            echo ${systematics}
+        for systematics in {"energyScaleStatUp","energyScaleSystUp","energyScaleGainUp","energySigmaUp","energyScaleStatDown","energyScaleSystDown","energyScaleGainDown","energySigmaDown","SFScaleUp","SFScaleDown","PUScaleUp","PUScaleDown"}; do
+            echo ${year} ${cat} ${systematics}
             narrow_file="${InterpolateShapePath}/inputs/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_kMpl001_${cat}_${year}_${systematics}_ratio.root"
             medium_file="${InterpolateShapePath}/inputs/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_kMpl01_${cat}_${year}_${systematics}_ratio.root"
             wide_file="${InterpolateShapePath}/inputs/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_kMpl02_${cat}_${year}_${systematics}_ratio.root"
@@ -72,8 +71,8 @@ python ${DijetShapeInterpolator}/Merge_width_interpolation.py --mass ${mass} --w
 ############################## WriteDataCard.py grav ##############################
 
 # The yield was initially normalized to 1000/pb.
+echo "########## Write Datacards... ##########"
 for year in "${yearlist[@]}"; do
-    echo ${year}
     # Lumi
     export lumi=35.9
     if [[ ${year} == "2017" ]]; then
@@ -83,7 +82,7 @@ for year in "${yearlist[@]}"; do
     fi
     for cat in "${catlist[@]}"; do
         box="DiPhotons_${coupling}_${cat}_${year}"
-        echo ${box}
+        echo ${year} ${box}
         export datacard_configfile="${DijetRootTreeAnalyzer}/config/diphotons_bias_${year}_pdf_index_wopip_wopil.config"
         python python/WriteDataCard.py --multi -m gg --mass ${mass} output/InputShapes_data_${cat}_${year}.root \
             -i ${bkgFitResultsPath}/FitResults_${box}.root --lumi ${lumi} -c ${datacard_configfile} -b ${box} --year ${year} \
@@ -105,6 +104,7 @@ for year in "${yearlist[@]}"; do
     done
 done
 # ############################## Combine cards ##############################
+echo "########## Combine Datacards ##########"
 scenario="DiPhotons_${coupling}"
 combineCards.py datacards/diphoton_combine_${mass}_${scenario}_EBEB_2016.txt \
     datacards/diphoton_combine_${mass}_${scenario}_EBEE_2016.txt \
@@ -115,7 +115,7 @@ combineCards.py datacards/diphoton_combine_${mass}_${scenario}_EBEB_2016.txt \
     > datacards/diphoton_combine_${mass}_${scenario}_fullRun2.txt;
 
 # ############################## Combine Limit ##############################
-
+echo "########## Run Limits ##########"
 datacardfile="datacards/diphoton_combine_${mass}_${scenario}_fullRun2.txt"
 finalResults="finalResults_${signal}_${coupling}_${mass}.txt"
 
