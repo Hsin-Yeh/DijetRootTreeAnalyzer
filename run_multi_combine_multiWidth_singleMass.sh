@@ -72,7 +72,7 @@ mkdir -p FinalResults
 
 ############################## Signal Norm ##############################
 echo "########## Calculate Signal Norm... ##########"
-python python/signalNorm_interpolate.py -i ${SignalNormFile_input} --mass ${mass} --width ${coupling} -o ${SignalNormFile}
+python ${DijetRootTreeAnalyzer}/python/signalNorm_interpolate.py -i ${SignalNormFile_input} --mass ${mass} --width ${coupling} -o ${SignalNormFile}
 
 ############################## WriteDataCard.py grav ##############################
 # The yield was initially normalized to 1000/pb.
