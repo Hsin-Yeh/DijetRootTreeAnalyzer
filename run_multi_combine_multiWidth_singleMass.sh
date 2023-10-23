@@ -31,8 +31,7 @@ export bkgFitResultsPath="${DijetRootTreeAnalyzer}/datacards/multiWidth/"
 export SignalNormFile="${diphoton}/SignalNorm_Splines_full_multiWidth.txt"
 
 #################### mkdirs ####################
-mkdir -p signal_shapes/extraShape
-mkdir -p signal_shapes/width_interpolated_shapes
+mkdir -p signal_shapes
 mkdir -p datacards
 mkdir -p FinalResults
 
@@ -86,7 +85,7 @@ for year in "${yearlist[@]}"; do
         box="DiPhotons_${coupling}_${cat}_${year}"
         echo ${year} ${box}
         export datacard_configfile="${DijetRootTreeAnalyzer}/config/diphotons_bias_${year}_pdf_index_wopip_wopil_multiWidth.config"
-        python ${DijetRootTreeAnalyzer}/python/WriteDataCard.py --multi -m gg --mass ${mass} output/InputShapes_data_${cat}_${year}.root \
+        python ${DijetRootTreeAnalyzer}/python/WriteDataCard.py --multi -m gg --mass ${mass} ${inputDataDir}/InputShapes_data_${cat}_${year}.root \
             -i ${bkgFitResultsPath}/FitResults_${box}.root --lumi ${lumi} -c ${datacard_configfile} -b ${box} --year ${year} \
             --SigNorm ${SignalNormFile} \
             --eneScStatUp    signal_shapes/ResonanceShapes_InputShapes_${signal_LongName}_${coupling}_${cat}_${year}_energyScaleStatUp.root   \
