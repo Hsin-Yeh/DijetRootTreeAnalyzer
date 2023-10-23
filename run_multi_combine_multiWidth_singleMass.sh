@@ -44,8 +44,8 @@ for year in "${yearlist[@]}"; do
         medium_file="${InterpolateShapePath}/inputs/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_kMpl01_${cat}_${year}_ratio.root"
         wide_file="${InterpolateShapePath}/inputs/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_kMpl02_${cat}_${year}_ratio.root"
         filename="InputShapes_RSGravitonToGammaGamma_${cat}_${year}"
-        python ${DijetShapeInterpolator}/extractShapes_width.py -n ${narrow_file} -m ${medium_file} -w ${wide_file} --mass ${mass} > extraShape/${filename}_${mass}GeV.py
-        python ${DijetShapeInterpolator}/getResonanceShapes_width.py -i extraShape/${filename}_${mass}GeV.py -m ${mass} -f gg -o width_interpolated_shapes/width_${filename}_${mass}GeV.root
+        python ${DijetShapeInterpolator}/extractShapes_width.py -n ${narrow_file} -m ${medium_file} -w ${wide_file} --mass ${mass} > signal_shapes/extraShape/${filename}_${mass}GeV.py
+        python ${DijetShapeInterpolator}/getResonanceShapes_width.py -i extraShape/${filename}_${mass}GeV.py -m ${mass} -f gg -o signal_shapes/width_interpolated_shapes/width_${filename}_${mass}GeV.root
     done
 done
 
@@ -61,8 +61,8 @@ for year in "${yearlist[@]}"; do
             medium_file="${InterpolateShapePath}/inputs/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_kMpl01_${cat}_${year}_${systematics}_ratio.root"
             wide_file="${InterpolateShapePath}/inputs/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_kMpl02_${cat}_${year}_${systematics}_ratio.root"
             filename="InputShapes_RSGravitonToGammaGamma_${cat}_${year}_${systematics}"
-            python ${DijetShapeInterpolator}/extractShapes_width.py -n ${narrow_file} -m ${medium_file} -w ${wide_file} --mass ${mass} > extraShape/${filename}_${mass}GeV.py
-            python ${DijetShapeInterpolator}/getResonanceShapes_width.py -i extraShape/${filename}_${mass}GeV.py -m ${mass} -f gg -o width_interpolated_shapes/width_${filename}_${mass}GeV.root
+            python ${DijetShapeInterpolator}/extractShapes_width.py -n ${narrow_file} -m ${medium_file} -w ${wide_file} --mass ${mass} > signal_shapes/extraShape/${filename}_${mass}GeV.py
+            python ${DijetShapeInterpolator}/getResonanceShapes_width.py -i extraShape/${filename}_${mass}GeV.py -m ${mass} -f gg -o signal_shapes/width_interpolated_shapes/width_${filename}_${mass}GeV.root
         done
     done
 done
