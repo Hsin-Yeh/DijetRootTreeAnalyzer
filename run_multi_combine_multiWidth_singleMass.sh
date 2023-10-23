@@ -3,7 +3,7 @@
 export coupling=$1
 export mass=$2
 echo ""
-echo "########## Run Limit script for ${coupling} ${mass} ##########"
+echo "########## Run Limit script for ${coupling} ${mass}GeV ##########"
 echo ""
 #################### Constants ##########EEEEEEEEEE
 yearlist=("2016" "2017" "2018")
@@ -111,6 +111,7 @@ done
 # ############################## Combine cards ##############################
 echo "########## Combine Datacards ##########"
 scenario="DiPhotons_${coupling}"
+datacardfile="datacards/diphoton_combine_${mass}_${scenario}_fullRun2.txt"
 combineCards.py datacards/diphoton_combine_${mass}_${scenario}_EBEB_2016.txt \
     datacards/diphoton_combine_${mass}_${scenario}_EBEE_2016.txt \
     datacards/diphoton_combine_${mass}_${scenario}_EBEB_2017.txt \
@@ -118,10 +119,10 @@ combineCards.py datacards/diphoton_combine_${mass}_${scenario}_EBEB_2016.txt \
     datacards/diphoton_combine_${mass}_${scenario}_EBEB_2018.txt \
     datacards/diphoton_combine_${mass}_${scenario}_EBEE_2018.txt \
     > datacards/diphoton_combine_${mass}_${scenario}_fullRun2.txt;
+echo ${datacardfile}
 
 # ############################## Combine Limit ##############################
-echo "########## Run Limits ##########"
-datacardfile="datacards/diphoton_combine_${mass}_${scenario}_fullRun2.txt"
+echo "########## Run AsymptoticLimits ##########"
 finalResults="finalResults_${signal}_${coupling}_${mass}.txt"
 
 combine -M AsymptoticLimits -s -1 -d $datacardfile --X-rtd MINIMIZER_freezeDisassociatedParams -n ${year}_${signal}_${coupling} > results
@@ -137,7 +138,7 @@ echo $mass $obs $expM2s $expM1s $exp $expP1s $expP2s
 echo $mass $obs $expM2s $expM1s $exp $expP1s $expP2s > ${finalResults}
 
 # ############################## Combine Significance ##############################
-
+echo "########## Run Significance ##########"
 combine -d ${datacardfile} -M Significance --signif --pval --cminDefaultMinimizerType=Minuit2 -n Observed > results_pvalue
 rm higgsCombine*.root
 

@@ -60,9 +60,9 @@ def Write_interpolate_file():
             for coup in widths:
                 for cat in cats:
                     for mass in masses:
-                        print(year,coup,cat,mass)
                         norm = Interpolate(year, coup, mass, cat, df)
                         line = "%i %i %i %s %.6f\n"%(year,coup,mass,cat,norm)
+                        print(line)
                         file.write(line)
 
 if __name__ == "__main__":
