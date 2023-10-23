@@ -1,13 +1,12 @@
 #!/bin/bash
 
-export version="2023-10-17"
 export coupling=$1
 export mass=$2
 
 #################### Constants ##########EEEEEEEEEE
-export yearlist=("2016" "2017" "2018")
+yearlist=("2016" "2017" "2018")
 # Cats
-export catlist=("EBEB" "EBEE")
+catlist=("EBEB" "EBEE")
 # method
 export method="full"
 export signal="grav"
@@ -45,8 +44,8 @@ for year in "${yearlist[@]}"; do
         medium_file="${InterpolateShapePath}/inputs/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_kMpl01_${cat}_${year}_ratio.root"
         wide_file="${InterpolateShapePath}/inputs/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_kMpl02_${cat}_${year}_ratio.root"
         filename="InputShapes_RSGravitonToGammaGamma_${cat}_${year}"
-        python ../../extractShapes_width.py -n ${narrow_file} -m ${medium_file} -w ${wide_file} --mass ${mass} > extraShape/${filename}_${mass}GeV.py
-        python ../../getResonanceShapes_width.py -i extraShape/${filename}_${mass}GeV.py -m ${mass} -f gg -o width_interpolated_shapes/width_${filename}_${mass}GeV.root
+        python ${DijetShapeInterpolator}/extractShapes_width.py -n ${narrow_file} -m ${medium_file} -w ${wide_file} --mass ${mass} > extraShape/${filename}_${mass}GeV.py
+        python ${DijetShapeInterpolator}/getResonanceShapes_width.py -i extraShape/${filename}_${mass}GeV.py -m ${mass} -f gg -o width_interpolated_shapes/width_${filename}_${mass}GeV.root
     done
 done
 
@@ -55,19 +54,20 @@ for year in "${yearlist[@]}"; do
     echo ${year}
     for cat in "${catlist[@]}"; do
         echo ${cat}
-        for systematics in {"energyScaleStatUp","energyScaleSystUp","energyScaleGainUp","energySigmaUp","energyScaleStatDown","energyScaleSystDown","energyScaleGainDown","energySigmaDown","SFScaleUp","SFScaleDown","PUScaleUp","PUScaleDown"}; do
+        for systematics in {"energyScaleStatUp","energyScaleSystUp","energyScaleGainUp","energySigmaUp",
+                            "energyScaleStatDown","energyScaleSystDown","energyScaleGainDown","energySigmaDown","SFScaleUp","SFScaleDown","PUScaleUp","PUScaleDown"}; do
             echo ${systematics}
             narrow_file="${InterpolateShapePath}/inputs/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_kMpl001_${cat}_${year}_${systematics}_ratio.root"
             medium_file="${InterpolateShapePath}/inputs/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_kMpl01_${cat}_${year}_${systematics}_ratio.root"
             wide_file="${InterpolateShapePath}/inputs/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_kMpl02_${cat}_${year}_${systematics}_ratio.root"
             filename="InputShapes_RSGravitonToGammaGamma_${cat}_${year}_${systematics}"
-            python ../../extractShapes_width.py -n ${narrow_file} -m ${medium_file} -w ${wide_file} --mass ${mass} > extraShape/${filename}_${mass}GeV.py
-            python ../../getResonanceShapes_width.py -i extraShape/${filename}_${mass}GeV.py -m ${mass} -f gg -o width_interpolated_shapes/width_${filename}_${mass}GeV.root
+            python ${DijetShapeInterpolator}/extractShapes_width.py -n ${narrow_file} -m ${medium_file} -w ${wide_file} --mass ${mass} > extraShape/${filename}_${mass}GeV.py
+            python ${DijetShapeInterpolator}/getResonanceShapes_width.py -i extraShape/${filename}_${mass}GeV.py -m ${mass} -f gg -o width_interpolated_shapes/width_${filename}_${mass}GeV.root
         done
     done
 done
 # Merge
-python ../../Merge_width_interpolation.py --mass ${mass} --width ${coupling}
+python ${DijetShapeInterpolator}/Merge_width_interpolation.py --mass ${mass} --width ${coupling}
 
 ############################## WriteDataCard.py grav ##############################
 
@@ -85,7 +85,8 @@ for year in "${yearlist[@]}"; do
         box="DiPhotons_${coupling}_${cat}_${year}"
         echo ${box}
         export datacard_configfile="${DijetRootTreeAnalyzer}/config/diphotons_bias_${year}_pdf_index_wopip_wopil.config"
-        python python/WriteDataCard.py --multi -m gg --mass ${mass} output/InputShapes_data_${cat}_${year}.root -i ${bkgFitResultsPath}/FitResults_${box}.root --lumi ${lumi} -c ${datacard_configfile} -b ${box} --year ${year} \
+        python python/WriteDataCard.py --multi -m gg --mass ${mass} output/InputShapes_data_${cat}_${year}.root \
+            -i ${bkgFitResultsPath}/FitResults_${box}.root --lumi ${lumi} -c ${datacard_configfile} -b ${box} --year ${year} \
             --SigNorm ${SignalNormFile} \
             --eneScStatUp    signal_shapes/ResonanceShapes_InputShapes_${signal_LongName}_${coupling}_${cat}_${year}_energyScaleStatUp.root   \
             --eneScStatDown  signal_shapes/ResonanceShapes_InputShapes_${signal_LongName}_${coupling}_${cat}_${year}_energyScaleStatDown.root \
@@ -116,10 +117,9 @@ combineCards.py datacards/diphoton_combine_${mass}_${scenario}_EBEB_2016.txt \
 # ############################## Combine Limit ##############################
 
 datacardfile="datacards/diphoton_combine_${mass}_${scenario}_fullRun2.txt"
-finalResults="finalResults_${signal}_${coupling}_${mass}"
+finalResults="finalResults_${signal}_${coupling}_${mass}.txt"
 
 combine -M AsymptoticLimits -s -1 -d $datacardfile --X-rtd MINIMIZER_freezeDisassociatedParams -n ${year}_${signal}_${coupling} > results
-mv higgsCombine${year}_${signal}_${coupling}.AsymptoticLimits.mH${mass}*.root ${version}/${year}/${signal}/${coupling}/.
 
 export obs=`cat results  | grep  "Observed Limit:" | awk '{print $5}'`
 export expM2s=`cat results  | grep  "Expected  2.5%:" | awk '{print $5}'`
@@ -130,3 +130,13 @@ export expP2s=`cat results  | grep  "Expected 97.5%:" | awk '{print $5}'`
 
 echo $mass $obs $expM2s $expM1s $exp $expP1s $expP2s
 echo $mass $obs $expM2s $expM1s $exp $expP1s $expP2s >> ${finalResults}
+
+# ############################## Combine Significance ##############################
+
+combine -d ${datacardfile} -M Significance --signif --pval --cminDefaultMinimizerType=Minuit2 -n Observed > results_pvalue
+rm higgsCombine*.root
+
+export pvalue=`cat results_pvalue  | grep  "p-value of background:" | awk '{print $4}'`
+
+echo $mass $pvalue
+echo $mass $pvalue >> ${finalResults}
