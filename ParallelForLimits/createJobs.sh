@@ -1,10 +1,10 @@
 #!/bin/bash
 
 version="2023-10-23"
-couplist=(4550)
-masslist=(1300)
-# couplist=(14, 361, 707, 1054, 1400, 2450, 3500, 4550, 5600)
-# masslist=($(seq 600 10 5000))
+# couplist=(4550)
+# masslist=(1300)
+couplist=(14, 361, 707, 1054, 1400, 2450, 3500, 4550, 5600)
+masslist=($(seq 600 10 5000))
 
 for coupling in "${couplist[@]}"; do
     for mass in "${masslist[@]}"; do
@@ -16,8 +16,8 @@ for coupling in "${couplist[@]}"; do
 
         submitFile="${jobDir}/jobs/limit_${coupling}_${mass}.sub"
         outDir="${jobDir}/output"
-
         echo "===================================================================================="
+        echo ${coupling} ${mass}
 
         echo '+JobFlavour = "workday" ' > ${submitFile}
         echo ' ' >> ${submitFile}
@@ -32,6 +32,5 @@ for coupling in "${couplist[@]}"; do
 
         chmod 755 ${submitFile}
 
-        echo ${submitFile}
     done
 done
