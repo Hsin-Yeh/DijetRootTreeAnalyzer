@@ -19,7 +19,7 @@ for coupling in "${couplist[@]}"; do
         echo "===================================================================================="
         echo ${coupling} ${mass}
 
-        echo '+JobFlavour = "workday" ' > ${submitFile}
+        echo '+JobFlavour = "longlunch" ' > ${submitFile}
         echo ' ' >> ${submitFile}
         echo "executable  = ${PWD}/setupCombine.sh" >> ${submitFile}
         echo "arguments   = "'$(ClusterID) $(ProcId)'" ${outDir} ${coupling} ${mass} " >> ${submitFile}
