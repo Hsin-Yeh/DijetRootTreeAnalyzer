@@ -52,7 +52,7 @@ def Write_interpolate_file():
     cats = ["EBEB","EBEE","All"]
     if (args.width == -1): widths = [14, 361, 707, 1054, 1400, 2450, 3500, 4550, 5600]
     else: widths = [args.width]
-    if (args.mass == -1): masses = [*range(500,5010,10)]
+    if (args.mass == -1): masses = [500,600,700,800,900,100]
     else: masses = [args.mass]
     # Open the file in write mode and write the lines
     with open(args.outputfile, "w") as file:
