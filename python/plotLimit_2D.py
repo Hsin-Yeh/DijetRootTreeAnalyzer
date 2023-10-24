@@ -51,8 +51,10 @@ def pvalue2D():
                     h_zvalue.SetBinContent(binxy,zvalue)
     c1 = ROOT.TCanvas()
     h_pvalue.Draw("colz")
+    h_pvalue.GetYaxis().SetTitle("#Gamma/m[%]")
     c1.SaveAs("pvalue.png")
     h_zvalue.Draw("colz")
+    h_pvalue.GetYaxis().SetTitle("#Gamma/m[%]")
     c1.SaveAs("zvalue.png")
 
 
