@@ -31,27 +31,27 @@ def pvalue2D():
     for mass in range(600,5010,10):
         masses.append(mass)
     couplings = array('d',[14, 361, 707, 1054, 1400, 2450, 3500, 4550, 5600])
-    h_sigma = ROOT.TH2F("h_sigma","h_sigma",len(masses)-1,masses,len(couplings)-1,couplings)
+    h_zvalue = ROOT.TH2F("h_zvalue","h_zvalue",len(masses)-1,masses,len(couplings)-1,couplings)
     h_pvalue = ROOT.TH2F("h_pvalue","h_pvalue",len(masses)-1,masses,len(couplings)-1,couplings)
 
     for coupling in couplings:
         print(coupling)
         for mass in masses:
             in_filename = "ParallelForLimits/2023-10-23/results/grav/" + str(int(coupling)) + "/finalResults_" + args.signame + "_" + str(int(coupling)) + "_" + str(int(mass)) + ".txt";
-            binx = h_sigma.GetXaxis().FindBin(mass)
-            biny = h_sigma.GetYaxis().FindBin(coupling)
-            binxy = h_sigma.GetBin(binx,biny,0)
+            binx = h_zvalue.GetXaxis().FindBin(mass)
+            biny = h_zvalue.GetYaxis().FindBin(coupling)
+            binxy = h_zvalue.GetBin(binx,biny,0)
             with open (in_filename,'r') as infile:
                 Lines = infile.readlines()
                 if (len(Lines)>0 and len(Lines[1].split())>1):
                     pvalue=Lines[1].split()[1]
                     h_pvalue.SetBinContent(binxy,float(pvalue))
-                    sigma = z_value_from_p_value(float(pvalue))
-                    h_sigma.SetBinContent(binxy,sigma)
+                    zvalue = z_value_from_p_value(float(pvalue))
+                    h_zvalue.SetBinContent(binxy,zvalue)
     c1 = ROOT.TCanvas()
     h_pvalue.Draw("colz")
     c1.SaveAs("pvalue.png")
-    h_sigma.Draw("colz")
+    h_zvalue.Draw("colz")
     c1.SaveAs("zvalue.png")
 
 
