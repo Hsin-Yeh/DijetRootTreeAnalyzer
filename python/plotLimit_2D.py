@@ -35,7 +35,7 @@ def pvalue2D():
     h_pvalue = ROOT.TH2F("h_pvalue","pvalue",len(masses)-1,masses,len(couplings)-1,couplings)
 
     for coupling in couplings:
-        coupname = str((coupling*100000))
+        coupname = str(int(coupling*100000))
         print(coupname)
         for mass in masses:
             in_filename = "ParallelForLimits/2023-10-23/results/grav/" + coupname + "/finalResults_" + args.signame + "_" + coupname + "_" + str(int(mass)) + ".txt";
