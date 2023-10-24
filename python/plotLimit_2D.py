@@ -50,13 +50,14 @@ def pvalue2D():
                     zvalue = z_value_from_p_value(float(pvalue))
                     h_zvalue.SetBinContent(binxy,zvalue)
     c1 = ROOT.TCanvas()
-    h_pvalue.Draw("colz")
+    c1.SetRightMargin(0.2)
     h_pvalue.GetYaxis().SetTitle("#Gamma/m[%]")
     h_pvalue.GetZaxis().SetTitle("P value")
+    h_pvalue.Draw("colz")
     c1.SaveAs("pvalue.png")
-    h_zvalue.Draw("colz")
     h_zvalue.GetYaxis().SetTitle("#Gamma/m[%]")
-    h_zvalue.GetZaxis().SetTitle("Z score [#sigma]")
+    h_zvalue.GetZaxis().SetTitle("Z value [#sigma]")
+    h_zvalue.Draw("colz")
     c1.SaveAs("zvalue.png")
 
 
