@@ -14,6 +14,10 @@ parser.add_argument('--debug','-d',action="store_true",help='debug mode')
 parser.add_argument('--unblind',action="store_true",help='debug mode')
 args = parser.parse_args()
 
+def pvalue2sigma(pvalue):
+    sigma = ROOT.PValueToSignificance(pvalue)
+    return sigma
+
 def pvalue2D():
     ROOT.gROOT.LoadMacro("~/rootlogon.C")
 
@@ -24,7 +28,7 @@ def pvalue2D():
     for mass in range(600,5010,10):
         masses.append(mass)
     couplings = array('d',[14, 361, 707, 1054, 1400, 2450, 3500, 4550, 5600])
-    h_pvalue = ROOT.TH2F("h_pvalue","h_pvalue",len(masses)-1,masses,len(couplings)-1,couplings)
+    h_sigma = ROOT.TH2F("h_pvalue","h_pvalue",len(masses)-1,masses,len(couplings)-1,couplings)
 
     for coupling in couplings:
         for mass in masses:
@@ -37,7 +41,8 @@ def pvalue2D():
                 Lines = infile.readlines()
                 if (len(Lines)>0 and len(Lines[1].split())>1):
                     pvalue=Lines[1].split()[1]
-                    h_pvalue.SetBinContent(binxy,float(pvalue))
+                    sigma = pvalue2sigma(float(pvalue))
+                    h_sigma.SetBinContent(binxy,sigma)
     c1 = ROOT.TCanvas()
     h_pvalue.Draw("colz")
     c1.SaveAs("test.png")
