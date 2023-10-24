@@ -28,7 +28,7 @@ def pvalue2D():
 
     for coupling in couplings:
         for mass in masses:
-            in_filename = "ParallelForLimits/2023-10-23/results/grav/coupling/finalResults_" + args.signame + "_" + str(int(coupling)) + "_" + str(int(mass)) + ".txt";
+            in_filename = "ParallelForLimits/2023-10-23/results/grav/" + str(int(coupling)) + "/finalResults_" + args.signame + "_" + str(int(coupling)) + "_" + str(int(mass)) + ".txt";
             binx = h_pvalue.GetXaxis().FindBin(mass)
             biny = h_pvalue.GetYaxis().FindBin(coupling)
             binxy = h_pvalue.GetBin(binx,biny,0)
