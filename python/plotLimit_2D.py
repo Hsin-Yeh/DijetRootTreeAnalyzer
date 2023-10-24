@@ -32,8 +32,10 @@ def pvalue2D():
         masses.append(mass)
     couplings = array('d',[14, 361, 707, 1054, 1400, 2450, 3500, 4550, 5600])
     h_sigma = ROOT.TH2F("h_sigma","h_sigma",len(masses)-1,masses,len(couplings)-1,couplings)
+    h_pvalue = ROOT.TH2F("h_pvalue","h_pvalue",len(masses)-1,masses,len(couplings)-1,couplings)
 
     for coupling in couplings:
+        print(coupling)
         for mass in masses:
             in_filename = "ParallelForLimits/2023-10-23/results/grav/" + str(int(coupling)) + "/finalResults_" + args.signame + "_" + str(int(coupling)) + "_" + str(int(mass)) + ".txt";
             binx = h_sigma.GetXaxis().FindBin(mass)
@@ -43,12 +45,15 @@ def pvalue2D():
                 Lines = infile.readlines()
                 if (len(Lines)>0 and len(Lines[1].split())>1):
                     pvalue=Lines[1].split()[1]
+                    h_pvalue.SetBinContent(binxy,float(pvalue))
                     sigma = z_value_from_p_value(float(pvalue))
                     h_sigma.SetBinContent(binxy,sigma)
-                    print(coupling,mass,sigma)
     c1 = ROOT.TCanvas()
+    h_pvalue.Draw("colz")
+    c1.SaveAs("pvalue.png")
     h_sigma.Draw("colz")
-    c1.SaveAs("test.png")
+    c1.SaveAs("zvalue.png")
+
 
 if __name__ == "__main__":
     pvalue2D()
