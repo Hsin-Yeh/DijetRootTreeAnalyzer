@@ -30,15 +30,14 @@ def pvalue2D():
     masses=array('d')
     for mass in range(600,5010,10):
         masses.append(mass)
-    couplings = array('d',[14, 361, 707, 1054, 1400, 2450, 3500, 4550, 5600])
-    couplings = couplings*0.001
+    couplings = array('d',[0.00014, 0.00361, 0.00707, 0.01054, 0.014, 0.02450, 0.03500, 0.04550, 0.05600])
     h_zvalue = ROOT.TH2F("h_zvalue","zvalue",len(masses)-1,masses,len(couplings)-1,couplings)
     h_pvalue = ROOT.TH2F("h_pvalue","pvalue",len(masses)-1,masses,len(couplings)-1,couplings)
 
     for coupling in couplings:
         print(coupling)
         for mass in masses:
-            in_filename = "ParallelForLimits/2023-10-23/results/grav/" + str(int(coupling)) + "/finalResults_" + args.signame + "_" + str(int(coupling)) + "_" + str(int(mass)) + ".txt";
+            in_filename = "ParallelForLimits/2023-10-23/results/grav/" + str(int(coupling*100000)) + "/finalResults_" + args.signame + "_" + str(int(coupling*100000)) + "_" + str(int(mass)) + ".txt";
             binx = h_zvalue.GetXaxis().FindBin(mass)
             biny = h_zvalue.GetYaxis().FindBin(coupling)
             binxy = h_zvalue.GetBin(binx,biny,0)
