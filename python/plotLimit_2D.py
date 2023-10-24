@@ -44,7 +44,7 @@ def pvalue2D():
                     sigma = pvalue2sigma(float(pvalue))
                     h_sigma.SetBinContent(binxy,sigma)
     c1 = ROOT.TCanvas()
-    h_pvalue.Draw("colz")
+    h_sigma.Draw("colz")
     c1.SaveAs("test.png")
 
 if __name__ == "__main__":
