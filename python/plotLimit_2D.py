@@ -20,15 +20,15 @@ def pvalue2D():
     m_gStyle = ROOT.TStyle();
     m_gStyle.SetOptFit(0);
 
-    masses=array('i')
+    masses=array('d')
     for mass in range(600,5010,10):
         masses.append(mass)
-    couplings = array('i',[14, 361, 707, 1054, 1400, 2450, 3500, 4550, 5600])
+    couplings = array('d',[14, 361, 707, 1054, 1400, 2450, 3500, 4550, 5600])
     h_pvalue = ROOT.TH2F("h_pvalue","h_pvalue",len(masses)-1,masses,len(couplings)-1,couplings)
 
     for coupling in couplings:
         for mass in masses:
-            in_filename = "ParallelForLimits/2023-10-23/results/grav/coupling/finalResults_" + args.signame + "_" + str(coupling) + "_" + str(mass) + ".txt";
+            in_filename = "ParallelForLimits/2023-10-23/results/grav/coupling/finalResults_" + args.signame + "_" + str(int(coupling)) + "_" + str(int(mass)) + ".txt";
             binx = h_pvalue.GetXaxis().FindBin(mass)
             biny = h_pvalue.GetYaxis().FindBin(coupling)
             binxy = h_pvalue.GetBin(binx,biny,0)
