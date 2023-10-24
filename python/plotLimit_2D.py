@@ -35,7 +35,6 @@ def pvalue2D():
 
     for coupling in couplings:
         for mass in masses:
-            print(coupling,mass)
             in_filename = "ParallelForLimits/2023-10-23/results/grav/" + str(int(coupling)) + "/finalResults_" + args.signame + "_" + str(int(coupling)) + "_" + str(int(mass)) + ".txt";
             binx = h_sigma.GetXaxis().FindBin(mass)
             biny = h_sigma.GetYaxis().FindBin(coupling)
@@ -46,6 +45,7 @@ def pvalue2D():
                     pvalue=Lines[1].split()[1]
                     sigma = z_value_from_p_value(float(pvalue))
                     h_sigma.SetBinContent(binxy,sigma)
+                    print(coupling,mass,sigma)
     c1 = ROOT.TCanvas()
     h_sigma.Draw("colz")
     c1.SaveAs("test.png")
