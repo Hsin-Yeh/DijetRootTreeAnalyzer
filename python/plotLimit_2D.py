@@ -49,7 +49,7 @@ def pvalue2D():
                     h_pvalue.SetBinContent(binxy,float(pvalue))
                     zvalue = z_value_from_p_value(float(pvalue))
                     h_zvalue.SetBinContent(binxy,zvalue)
-    c1 = ROOT.TCanvas("c1","c1",900,600)
+    c1 = ROOT.TCanvas("c1","c1",700,600)
     c1.SetRightMargin(0.2)
     h_pvalue.GetYaxis().SetTitle("#Gamma/m[%]")
     h_pvalue.GetZaxis().SetTitle("P value")
