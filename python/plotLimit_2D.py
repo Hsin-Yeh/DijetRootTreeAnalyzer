@@ -4,6 +4,7 @@ import ROOT
 from array import array
 import numpy as np
 import argparse
+from scipy.stats import norm
 
 parser = argparse.ArgumentParser(description='')
 parser.add_argument('--year','-y',default="2016",type=str,help='year')
@@ -14,9 +15,10 @@ parser.add_argument('--debug','-d',action="store_true",help='debug mode')
 parser.add_argument('--unblind',action="store_true",help='debug mode')
 args = parser.parse_args()
 
-def pvalue2sigma(pvalue):
-    sigma = ROOT.PValueToSignificance(pvalue)
-    return sigma
+def z_value_from_p_value(p_value, two_tailed=True):
+    alpha = p_value / 2 if two_tailed else p_value
+    z_value = norm.ppf(1 - alpha)
+    return z_value
 
 def pvalue2D():
     ROOT.gROOT.LoadMacro("~/rootlogon.C")
@@ -41,7 +43,7 @@ def pvalue2D():
                 Lines = infile.readlines()
                 if (len(Lines)>0 and len(Lines[1].split())>1):
                     pvalue=Lines[1].split()[1]
-                    sigma = pvalue2sigma(float(pvalue))
+                    sigma = z_value_from_p_value(float(pvalue))
                     h_sigma.SetBinContent(binxy,sigma)
     c1 = ROOT.TCanvas()
     h_sigma.Draw("colz")
