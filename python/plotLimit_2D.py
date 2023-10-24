@@ -25,6 +25,7 @@ def pvalue2D():
 
     m_gStyle = ROOT.TStyle();
     m_gStyle.SetOptFit(0);
+    m_gStyle.SetPalette(55);
 
     masses=array('d')
     for mass in range(600,5010,10):
