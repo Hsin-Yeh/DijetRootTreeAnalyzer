@@ -30,7 +30,7 @@ def pvalue2D():
     masses=array('d')
     for mass in range(600,5010,10):
         masses.append(mass)
-    couplings = array('d',[0.00014, 0.00361, 0.00707, 0.01054, 0.014, 0.02450, 0.03500, 0.04550, 0.05600])
+    couplings = array('d',[0.0001400, 0.0036100, 0.0070700, 0.01054, 0.014, 0.02450, 0.03500, 0.04550, 0.05600])
     h_zvalue = ROOT.TH2F("h_zvalue","zvalue",len(masses)-1,masses,len(couplings)-1,couplings)
     h_pvalue = ROOT.TH2F("h_pvalue","pvalue",len(masses)-1,masses,len(couplings)-1,couplings)
 
