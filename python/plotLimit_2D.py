@@ -35,7 +35,7 @@ def pvalue2D():
             with open (in_filename,'r') as infile:
                 Lines = infile.readlines()
                 mass, pvalue = Lines[1].split()
-                h_pvalue.SetBinContent(binxy,pvalue)
+                h_pvalue.SetBinContent(binxy,float(pvalue))
     c1 = ROOT.TCanvas()
     h_pvalue.Draw("colz")
     c1.SaveAs("test.png")
