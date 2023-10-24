@@ -52,9 +52,11 @@ def pvalue2D():
     c1 = ROOT.TCanvas()
     h_pvalue.Draw("colz")
     h_pvalue.GetYaxis().SetTitle("#Gamma/m[%]")
+    h_pvalue.GetZaxis().SetTitle("P value")
     c1.SaveAs("pvalue.png")
     h_zvalue.Draw("colz")
     h_zvalue.GetYaxis().SetTitle("#Gamma/m[%]")
+    h_zvalue.GetZaxis().SetTitle("Z score [#sigma]")
     c1.SaveAs("zvalue.png")
 
 
