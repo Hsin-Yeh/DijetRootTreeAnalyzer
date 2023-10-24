@@ -20,10 +20,10 @@ def pvalue2D():
     m_gStyle = ROOT.TStyle();
     m_gStyle.SetOptFit(0);
 
-    masses=array('d')
+    masses=array('i')
     for mass in range(600,5010,10):
         masses.append(mass)
-    couplings = array('d',[14, 361, 707, 1054, 1400, 2450, 3500, 4550, 5600])
+    couplings = array('i',[14, 361, 707, 1054, 1400, 2450, 3500, 4550, 5600])
     h_pvalue = ROOT.TH2F("h_pvalue","h_pvalue",len(masses)-1,masses,len(couplings)-1,couplings)
 
     for coupling in couplings:
