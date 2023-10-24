@@ -58,6 +58,7 @@ def pvalue2D():
     c1.SaveAs("pvalue.png")
     h_zvalue.GetYaxis().SetTitle("#Gamma/m[%]")
     h_zvalue.GetZaxis().SetTitle("Z value [#sigma]")
+    h_zvalue.GetZaxis().SetTitleOffset(1)
     h_zvalue.Draw("colz")
     c1.SaveAs("zvalue.png")
 
