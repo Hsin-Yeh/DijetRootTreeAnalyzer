@@ -74,6 +74,12 @@ def pvalue2D():
     h_obslimit.GetZaxis().SetTitleOffset(1)
     h_obslimit.Draw("colz")
     c1.SaveAs("observedlimit.png")
+    h_explimit.GetXaxis().SetTitle("Mass [GeV]")
+    h_explimit.GetYaxis().SetTitle("#Gamma/m[%]")
+    h_explimit.GetZaxis().SetTitle("Z value [#sigma]")
+    h_explimit.GetZaxis().SetTitleOffset(1)
+    h_explimit.Draw("colz")
+    c1.SaveAs("expectedlimit.png")
 
 
 if __name__ == "__main__":
