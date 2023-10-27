@@ -34,21 +34,29 @@ def pvalue2D():
     coupnames = array('i',[14, 361, 707, 1054, 1400, 2450, 3500, 4550, 5600])
     h_zvalue = ROOT.TH2F("h_zvalue","zvalue",len(masses)-1,masses,len(couplings)-1,couplings)
     h_pvalue = ROOT.TH2F("h_pvalue","pvalue",len(masses)-1,masses,len(couplings)-1,couplings)
+    h_obslimit = ROOT.TH2F("h_obslimit","observed limit",len(masses)-1,masses,len(couplings)-1,couplings)
+    h_explimit = ROOT.TH2F("h_explimit","expected limit",len(masses)-1,masses,len(couplings)-1,couplings)
 
     for icoup, coupling in enumerate(couplings):
         coupname = str(coupnames[icoup])
         for mass in masses:
-            in_filename = "ParallelForLimits/2023-10-23/results/grav/" + coupname + "/finalResults_" + args.signame + "_" + coupname + "_" + str(int(mass)) + ".txt";
+            in_filename = "ParallelForLimits/2023-10-25/results/grav/" + coupname + "/finalResults_" + args.signame + "_" + coupname + "_" + str(int(mass)) + ".txt";
             binx = h_zvalue.GetXaxis().FindBin(mass)
             biny = h_zvalue.GetYaxis().FindBin(coupling)
             binxy = h_zvalue.GetBin(binx,biny,0)
             with open (in_filename,'r') as infile:
                 Lines = infile.readlines()
-                if (len(Lines)>0 and len(Lines[1].split())>1):
+                if (Lines==0 or len(Lines[1].split())==1):
+                    print("No limits for %f %f"%(coupling,mass))
+                else:
+                    mass, obs, expP2s, expP1s, exp, expM1s, expM2s = Lines[0].split()
                     pvalue=Lines[1].split()[1]
-                    h_pvalue.SetBinContent(binxy,float(pvalue))
                     zvalue = z_value_from_p_value(float(pvalue))
+                    h_obslimit.SetBinContent(binxy,float(obs))
+                    h_explimit.SetBinContent(binxy,float(exp))
+                    h_pvalue.SetBinContent(binxy,float(pvalue))
                     h_zvalue.SetBinContent(binxy,zvalue)
+
     c1 = ROOT.TCanvas("c1","c1",700,600)
     c1.SetRightMargin(0.2)
     h_pvalue.GetXaxis().SetTitle("Mass [GeV]")

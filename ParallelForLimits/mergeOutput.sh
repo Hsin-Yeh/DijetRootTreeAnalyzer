@@ -6,9 +6,9 @@ masslist=($(seq 600 10 5000))
 
 for coupling in "${couplist[@]}"; do
     echo ${coupling}
-    touch ${version}/finalResults_grav_${coupling}.txt
+    mkdir ${version}/results/grav/${coupling}
     for mass in "${masslist[@]}"; do
-        cat ${version}/finalResults_grav_${coupling}_${mass}.txt >> ${version}/finalResults_grav_${coupling}.txt
+        mv ${version}/finalResults_grav_${coupling}_${mass}.txt ${version}/results/grav/${coupling}
     done
 
 done
