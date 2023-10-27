@@ -8,11 +8,8 @@ from scipy.stats import norm
 
 parser = argparse.ArgumentParser(description='')
 parser.add_argument('--year','-y',default="2016",type=str,help='year')
-parser.add_argument('--coupling','-c',default="kMpl001",type=str,help='coupling')
 parser.add_argument('--signame','-s',default="grav",type=str,help='grav or heavyhiggs')
 parser.add_argument('--outputDir','-o',default="./",type=str,help='output directory')
-parser.add_argument('--debug','-d',action="store_true",help='debug mode')
-parser.add_argument('--unblind',action="store_true",help='debug mode')
 args = parser.parse_args()
 
 def z_value_from_p_value(p_value, two_tailed=True):
@@ -71,6 +68,12 @@ def pvalue2D():
     h_zvalue.GetZaxis().SetTitleOffset(1)
     h_zvalue.Draw("colz")
     c1.SaveAs("zvalue.png")
+    h_obslimit.GetXaxis().SetTitle("Mass [GeV]")
+    h_obslimit.GetYaxis().SetTitle("#Gamma/m[%]")
+    h_obslimit.GetZaxis().SetTitle("Z value [#sigma]")
+    h_obslimit.GetZaxis().SetTitleOffset(1)
+    h_obslimit.Draw("colz")
+    c1.SaveAs("observedlimit.png")
 
 
 if __name__ == "__main__":
