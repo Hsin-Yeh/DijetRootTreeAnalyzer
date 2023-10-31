@@ -102,6 +102,7 @@ def pvalue2D():
     h_zvalue.GetZaxis().SetTitle("Z value (#sigma)")
     h_zvalue.GetZaxis().SetTitleOffset(1.1)
     h_zvalue.GetZaxis().SetTitleSize(0.05)
+    h_zvalue.GetZaxis().SetMinimum(-0.1)
     h_zvalue.Draw("colz")
     cmsText.Draw();
     extraText.Draw();
