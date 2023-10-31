@@ -54,31 +54,68 @@ def pvalue2D():
                     h_pvalue.SetBinContent(binxy,float(pvalue))
                     h_zvalue.SetBinContent(binxy,zvalue)
 
+    cmsText=ROOT.TLatex(0.17,0.90, "CMS");
+    cmsText.SetNDC(1);
+    cmsText.SetTextFont(61);
+    cmsText.SetLineColor(0);
+    cmsText.SetLineStyle(1);
+    cmsText.SetLineWidth(1);
+    cmsText.SetTextSize(0.04);
+
+    extraText=ROOT.TLatex(0.23,0.90, "Preliminary");
+    extraText.SetNDC(1);
+    extraText.SetTextFont(52);
+    extraText.SetLineColor(0);
+    extraText.SetLineStyle(1);
+    extraText.SetLineWidth(1);
+    extraText.SetTextSize(0.04);
+
+    lumiText=ROOT.TLatex(0.70,0.90, "%d fb^{-1} (13 TeV)"%(lumi(args.year)) );
+    # lumiText=ROOT.TLatex(0.70,0.90, "%d fb^{-1} (13 TeV)"%(138));
+    lumiText.SetNDC(1);
+    lumiText.SetTextFont(42);
+    lumiText.SetLineColor(0);
+    lumiText.SetLineStyle(1);
+    lumiText.SetLineWidth(1);
+    lumiText.SetTextSize(0.04);
+
     c1 = ROOT.TCanvas("c1","c1",700,600)
     c1.SetRightMargin(0.2)
-    h_pvalue.GetXaxis().SetTitle("Mass [GeV]")
-    h_pvalue.GetYaxis().SetTitle("#Gamma/m [%]")
+    h_pvalue.GetXaxis().SetTitle("M_{X} [GeV]")
+    h_pvalue.GetYaxis().SetTitle("#Gamma_{X}/M_{X} [%]")
     h_pvalue.GetZaxis().SetTitle("P value")
     h_pvalue.GetZaxis().SetTitleOffset(1)
     h_pvalue.Draw("colz")
+    cmsText.Draw();
+    extraText.Draw();
+    lumiText.Draw();
     c1.SaveAs("pvalue.png")
-    h_zvalue.GetXaxis().SetTitle("Mass [GeV]")
-    h_zvalue.GetYaxis().SetTitle("#Gamma/m[%]")
-    h_zvalue.GetZaxis().SetTitle("Z value [#sigma]")
+    h_zvalue.GetXaxis().SetTitle("M_{X} [GeV]")
+    h_zvalue.GetYaxis().SetTitle("#Gamma_{X}/M_{X} [%]")
+    h_zvalue.GetZaxis().SetTitle("Z value (#sigma)")
     h_zvalue.GetZaxis().SetTitleOffset(1)
     h_zvalue.Draw("colz")
+    cmsText.Draw();
+    extraText.Draw();
+    lumiText.Draw();
     c1.SaveAs("zvalue.png")
-    h_obslimit.GetXaxis().SetTitle("Mass [GeV]")
-    h_obslimit.GetYaxis().SetTitle("#Gamma/m[%]")
-    h_obslimit.GetZaxis().SetTitle("Z value [#sigma]")
+    h_obslimit.GetXaxis().SetTitle("M_{X} [GeV]")
+    h_obslimit.GetYaxis().SetTitle("#Gamma_{X}/M_{X} [%]")
+    h_obslimit.GetZaxis().SetTitle("95% CL limit #sigma(X#rightarrow#gamma#gamma) (fb)")
     h_obslimit.GetZaxis().SetTitleOffset(1)
     h_obslimit.Draw("colz")
+    cmsText.Draw();
+    extraText.Draw();
+    lumiText.Draw();
     c1.SaveAs("observedlimit.png")
-    h_explimit.GetXaxis().SetTitle("Mass [GeV]")
-    h_explimit.GetYaxis().SetTitle("#Gamma/m[%]")
-    h_explimit.GetZaxis().SetTitle("Z value [#sigma]")
+    h_explimit.GetXaxis().SetTitle("M_{X} [GeV]")
+    h_explimit.GetYaxis().SetTitle("#Gamma_{X}/M_{X} [%]")
+    h_explimit.GetZaxis().SetTitle("95% CL limit #sigma(X#rightarrow#gamma#gamma) (fb)")
     h_explimit.GetZaxis().SetTitleOffset(1)
     h_explimit.Draw("colz")
+    cmsText.Draw();
+    extraText.Draw();
+    lumiText.Draw();
     c1.SaveAs("expectedlimit.png")
 
 
