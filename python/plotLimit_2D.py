@@ -115,10 +115,12 @@ def pvalue2D():
 
     h_explimit.SetTitle("")
     h_explimit.GetXaxis().SetTitle("M_{X} [GeV]")
+    h_explimit.GetXaxis().SetTitleSize(0.05)
     h_explimit.GetYaxis().SetTitle("#Gamma_{X}/M_{X} [%]")
+    h_explimit.GetYaxis().SetTitleSize(0.05)
     h_explimit.GetZaxis().SetTitle("#sigmaB(X#rightarrow#gamma#gamma)_{95%CL} (fb)")
     h_explimit.GetZaxis().SetTitleOffset(1)
-    h_explimit.GetZaxis().SetTitleSize(0.08)
+    h_explimit.GetZaxis().SetTitleSize(0.05)
     h_explimit.Draw("colz")
     cmsText.Draw();
     extraText.Draw();
