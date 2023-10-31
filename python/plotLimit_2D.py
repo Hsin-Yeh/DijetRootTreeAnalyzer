@@ -46,6 +46,7 @@ def pvalue2D():
                 if (Lines==0 or len(Lines[1].split())==1):
                     print("No limits for %f %f"%(coupling,mass))
                 else:
+                    print (mass, coupling)
                     mass, obs, expP2s, expP1s, exp, expM1s, expM2s = Lines[0].split()
                     pvalue=Lines[1].split()[1]
                     # zvalue = z_value_from_p_value(float(pvalue))
