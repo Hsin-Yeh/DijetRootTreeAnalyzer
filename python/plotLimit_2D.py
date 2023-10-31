@@ -49,15 +49,12 @@ def pvalue2D():
                     mass, obs, expP2s, expP1s, exp, expM1s, expM2s = Lines[0].split()
                     pvalue=Lines[1].split()[1]
                     zvalue = z_value_from_p_value(float(pvalue))
-
-                    print (mass, coupling, z_value_from_p_value(float(pvalue)), Lines[2].split()[1])
-                    # zvalue=Lines[2].split()[1]
                     h_obslimit.SetBinContent(binxy,float(obs))
                     h_explimit.SetBinContent(binxy,float(exp))
                     h_pvalue.SetBinContent(binxy,float(pvalue))
                     h_zvalue.SetBinContent(binxy,float(zvalue))
 
-    cmsText=ROOT.TLatex(0.17,0.90, "CMS");
+    cmsText=ROOT.TLatex(0.15,0.90, "CMS");
     cmsText.SetNDC(1);
     cmsText.SetTextFont(61);
     cmsText.SetLineColor(0);
