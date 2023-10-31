@@ -54,7 +54,7 @@ def pvalue2D():
                     h_pvalue.SetBinContent(binxy,float(pvalue))
                     h_zvalue.SetBinContent(binxy,float(zvalue))
 
-    cmsText=ROOT.TLatex(0.15,0.90, "CMS");
+    cmsText=ROOT.TLatex(0.14,0.90, "CMS");
     cmsText.SetNDC(1);
     cmsText.SetTextFont(61);
     cmsText.SetLineColor(0);
@@ -70,7 +70,7 @@ def pvalue2D():
     extraText.SetLineWidth(1);
     extraText.SetTextSize(0.04);
 
-    lumiText=ROOT.TLatex(0.60,0.90, "138 fb^{-1} (13 TeV)");
+    lumiText=ROOT.TLatex(0.58,0.90, "138 fb^{-1} (13 TeV)");
     lumiText.SetNDC(1);
     lumiText.SetTextFont(42);
     lumiText.SetLineColor(0);
@@ -79,7 +79,7 @@ def pvalue2D():
     lumiText.SetTextSize(0.04);
 
     c1 = ROOT.TCanvas("c1","c1",600,600)
-    c1.SetRightMargin(0.15)
+    c1.SetRightMargin(0.2)
     h_pvalue.SetTitle("")
     h_pvalue.GetXaxis().SetTitle("M_{X} [GeV]")
     h_pvalue.GetYaxis().SetTitle("#Gamma_{X}/M_{X} [%]")
@@ -118,7 +118,7 @@ def pvalue2D():
     h_explimit.GetYaxis().SetTitle("#Gamma_{X}/M_{X} [%]")
     h_explimit.GetZaxis().SetTitle("#sigmaB(X#rightarrow#gamma#gamma)_{95%CL} (fb)")
     h_explimit.GetZaxis().SetTitleOffset(1)
-    # h_explimit.GetZaxis().SetFontSize(1)
+    h_explimit.GetZaxis().SetFontSize(0.8)
     h_explimit.Draw("colz")
     cmsText.Draw();
     extraText.Draw();
