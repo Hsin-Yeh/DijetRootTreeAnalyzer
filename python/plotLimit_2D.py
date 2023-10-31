@@ -71,7 +71,7 @@ def pvalue2D():
     extraText.SetLineWidth(1);
     extraText.SetTextSize(0.04);
 
-    lumiText=ROOT.TLatex(0.70,0.90, "138 fb^{-1} (13 TeV)");
+    lumiText=ROOT.TLatex(0.60,0.90, "138 fb^{-1} (13 TeV)");
     lumiText.SetNDC(1);
     lumiText.SetTextFont(42);
     lumiText.SetLineColor(0);
@@ -79,8 +79,8 @@ def pvalue2D():
     lumiText.SetLineWidth(1);
     lumiText.SetTextSize(0.04);
 
-    c1 = ROOT.TCanvas("c1","c1",700,600)
-    c1.SetRightMargin(0.2)
+    c1 = ROOT.TCanvas("c1","c1",600,600)
+    c1.SetRightMargin(0.15)
     h_pvalue.SetTitle("")
     h_pvalue.GetXaxis().SetTitle("M_{X} [GeV]")
     h_pvalue.GetYaxis().SetTitle("#Gamma_{X}/M_{X} [%]")
