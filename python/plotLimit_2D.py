@@ -46,10 +46,11 @@ def pvalue2D():
                 if (Lines==0 or len(Lines[1].split())==1):
                     print("No limits for %f %f"%(coupling,mass))
                 else:
-                    print (mass, coupling, z_value_from_p_value(float(pvalue)), Lines[2].split()[1])
                     mass, obs, expP2s, expP1s, exp, expM1s, expM2s = Lines[0].split()
                     pvalue=Lines[1].split()[1]
                     zvalue = z_value_from_p_value(float(pvalue))
+
+                    print (mass, coupling, z_value_from_p_value(float(pvalue)), Lines[2].split()[1])
                     # zvalue=Lines[2].split()[1]
                     h_obslimit.SetBinContent(binxy,float(obs))
                     h_explimit.SetBinContent(binxy,float(exp))
