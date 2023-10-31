@@ -12,7 +12,7 @@ parser.add_argument('--signame','-s',default="grav",type=str,help='grav or heavy
 parser.add_argument('--outputDir','-o',default="./",type=str,help='output directory')
 args = parser.parse_args()
 
-def z_value_from_p_value(p_value, two_tailed=True):
+def z_value_from_p_value(p_value, two_tailed=False):
     alpha = p_value / 2 if two_tailed else p_value
     z_value = norm.ppf(1 - alpha)
     return z_value
