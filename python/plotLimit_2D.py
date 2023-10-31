@@ -48,11 +48,12 @@ def pvalue2D():
                 else:
                     mass, obs, expP2s, expP1s, exp, expM1s, expM2s = Lines[0].split()
                     pvalue=Lines[1].split()[1]
-                    zvalue = z_value_from_p_value(float(pvalue))
+                    # zvalue = z_value_from_p_value(float(pvalue))
+                    zvalue=Lines[2].split()[1]
                     h_obslimit.SetBinContent(binxy,float(obs))
                     h_explimit.SetBinContent(binxy,float(exp))
                     h_pvalue.SetBinContent(binxy,float(pvalue))
-                    h_zvalue.SetBinContent(binxy,zvalue)
+                    h_zvalue.SetBinContent(binxy,float(zvalue))
 
     cmsText=ROOT.TLatex(0.17,0.90, "CMS");
     cmsText.SetNDC(1);
@@ -118,6 +119,7 @@ def pvalue2D():
     h_explimit.GetYaxis().SetTitle("#Gamma_{X}/M_{X} [%]")
     h_explimit.GetZaxis().SetTitle("#sigmaB(X#rightarrow#gamma#gamma)_{95%CL} (fb)")
     h_explimit.GetZaxis().SetTitleOffset(1)
+    # h_explimit.GetZaxis().SetFontSize(1)
     h_explimit.Draw("colz")
     cmsText.Draw();
     extraText.Draw();
