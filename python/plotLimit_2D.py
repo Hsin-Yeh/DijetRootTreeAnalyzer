@@ -85,14 +85,14 @@ def pvalue2D():
     h_pvalue.GetXaxis().SetTitleSize(0.05)
     h_pvalue.GetYaxis().SetTitle("#Gamma_{X}/M_{X} [%]")
     h_pvalue.GetYaxis().SetTitleSize(0.05)
-    h_pvalue.GetZaxis().SetTitle("Z value (#sigma)")
-    h_pvalue.GetZaxis().SetTitleOffset(1.1)
+    h_pvalue.GetZaxis().SetTitle("p value")
+    h_pvalue.GetZaxis().SetTitleOffset(0.9)
     h_pvalue.GetZaxis().SetTitleSize(0.05)
     h_pvalue.Draw("colz")
     cmsText.Draw();
     extraText.Draw();
     lumiText.Draw();
-    c1.SaveAs("pvalue.png")
+    c1.SaveAs("%s/pvalue.png"%(args.outputDir))
 
     h_zvalue.SetTitle("")
     h_zvalue.GetXaxis().SetTitle("M_{X} [GeV]")
@@ -100,14 +100,14 @@ def pvalue2D():
     h_zvalue.GetYaxis().SetTitle("#Gamma_{X}/M_{X} [%]")
     h_zvalue.GetYaxis().SetTitleSize(0.05)
     h_zvalue.GetZaxis().SetTitle("Z value (#sigma)")
-    h_zvalue.GetZaxis().SetTitleOffset(1.1)
+    h_zvalue.GetZaxis().SetTitleOffset(0.9)
     h_zvalue.GetZaxis().SetTitleSize(0.05)
     h_zvalue.SetMinimum(-0.01)
     h_zvalue.Draw("colz")
     cmsText.Draw();
     extraText.Draw();
     lumiText.Draw();
-    c1.SaveAs("zvalue.png")
+    c1.SaveAs("%s/zvalue.png"%(args.outputDir))
 
     h_obslimit.SetTitle("")
     h_obslimit.GetXaxis().SetTitle("M_{X} [GeV]")
@@ -121,7 +121,7 @@ def pvalue2D():
     cmsText.Draw();
     extraText.Draw();
     lumiText.Draw();
-    c1.SaveAs("observedlimit.png")
+    c1.SaveAs("%s/observedlimit.png"%(args.outputDir))
 
     h_explimit.SetTitle("")
     h_explimit.GetXaxis().SetTitle("M_{X} [GeV]")
@@ -135,7 +135,69 @@ def pvalue2D():
     cmsText.Draw();
     extraText.Draw();
     lumiText.Draw();
-    c1.SaveAs("expectedlimit.png")
+    c1.SaveAs("%s/expectedlimit.png"%(args.outputDir))
+
+    ########## Set Range 600-2500GeV
+    h_pvalue.SetTitle("")
+    h_pvalue.GetXaxis().SetTitle("M_{X} [GeV]")
+    h_pvalue.GetXaxis().SetTitleSize(0.05)
+    h_pvalue.GetXaxis().SetRangeUser(600,2500)
+    h_pvalue.GetYaxis().SetTitle("#Gamma_{X}/M_{X} [%]")
+    h_pvalue.GetYaxis().SetTitleSize(0.05)
+    h_pvalue.GetZaxis().SetTitle("p value")
+    h_pvalue.GetZaxis().SetTitleOffset(0.9)
+    h_pvalue.GetZaxis().SetTitleSize(0.05)
+    h_pvalue.Draw("colz")
+    cmsText.Draw();
+    extraText.Draw();
+    lumiText.Draw();
+    c1.SaveAs("%s/pvalue_zoomin.png"%(args.outputDir))
+
+    h_zvalue.SetTitle("")
+    h_zvalue.GetXaxis().SetTitle("M_{X} [GeV]")
+    h_zvalue.GetXaxis().SetTitleSize(0.05)
+    h_zvalue.GetXaxis().SetRangeUser(600,2500)
+    h_zvalue.GetYaxis().SetTitle("#Gamma_{X}/M_{X} [%]")
+    h_zvalue.GetYaxis().SetTitleSize(0.05)
+    h_zvalue.GetZaxis().SetTitle("Z value (#sigma)")
+    h_zvalue.GetZaxis().SetTitleOffset(0.9)
+    h_zvalue.GetZaxis().SetTitleSize(0.05)
+    h_zvalue.SetMinimum(-0.01)
+    h_zvalue.Draw("colz")
+    cmsText.Draw();
+    extraText.Draw();
+    lumiText.Draw();
+    c1.SaveAs("%s/zvalue_zoomin.png"%(args.outputDir))
+
+    h_obslimit.SetTitle("")
+    h_obslimit.GetXaxis().SetTitle("M_{X} [GeV]")
+    h_obslimit.GetXaxis().SetTitleSize(0.05)
+    h_obslimit.GetXaxis().SetRangeUser(600,2500)
+    h_obslimit.GetYaxis().SetTitle("#Gamma_{X}/M_{X} [%]")
+    h_obslimit.GetYaxis().SetTitleSize(0.05)
+    h_obslimit.GetZaxis().SetTitle("#sigmaB(X#rightarrow#gamma#gamma)_{95%CL} (fb)")
+    h_obslimit.GetZaxis().SetTitleOffset(1.1)
+    h_obslimit.GetZaxis().SetTitleSize(0.05)
+    h_obslimit.Draw("colz")
+    cmsText.Draw();
+    extraText.Draw();
+    lumiText.Draw();
+    c1.SaveAs("%s/observedlimit_zoomin.png"%(args.outputDir))
+
+    h_explimit.SetTitle("")
+    h_explimit.GetXaxis().SetTitle("M_{X} [GeV]")
+    h_explimit.GetXaxis().SetTitleSize(0.05)
+    h_explimit.GetXaxis().SetRangeUser(600,2500)
+    h_explimit.GetYaxis().SetTitle("#Gamma_{X}/M_{X} [%]")
+    h_explimit.GetYaxis().SetTitleSize(0.05)
+    h_explimit.GetZaxis().SetTitle("#sigmaB(X#rightarrow#gamma#gamma)_{95%CL} (fb)")
+    h_explimit.GetZaxis().SetTitleOffset(1.1)
+    h_explimit.GetZaxis().SetTitleSize(0.05)
+    h_explimit.Draw("colz")
+    cmsText.Draw();
+    extraText.Draw();
+    lumiText.Draw();
+    c1.SaveAs("%s/expectedlimit_zoomin.png"%(args.outputDir))
 
 
 if __name__ == "__main__":
