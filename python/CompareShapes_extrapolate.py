@@ -60,7 +60,10 @@ def createRatio(h1, h2):
 
     return h3
 
-if __name__ == '__main__':
+def main():
+    plotxmin=500
+    plotxmax=800
+
     f_ext = ROOT.TFile("ResonanceShapes_GluGluSpin0ToGammaGamma_W_0p014_EBEB_2017_finebinned.root")
     f_gen = ROOT.TFile("InputShapes_GluGluSpin0ToGammaGamma_W_0p014_EBEB_2017.root")
 
@@ -75,7 +78,7 @@ if __name__ == '__main__':
     c, pad1, pad2 = createCanvasPads()
     pad1.cd()
     h_gen.Draw("HIST")
-    h_gen.GetXaxis().SetRangeUser(550,750)
+    h_gen.GetXaxis().SetRangeUser(plotxmin,plotxmax)
     h_gen.GetXaxis().SetTitle("M_{#gamma#gamma} [GeV]")
     h_gen.GetXaxis().SetTitleSize(0.07)
     h_gen.GetXaxis().SetTitleOffset(0.8)
@@ -97,7 +100,10 @@ if __name__ == '__main__':
     axis.Draw()
     pad2.cd()
     h_compare.Draw("HIST")
-    h_compare.GetXaxis().SetRangeUser(550,700)
+    h_compare.GetXaxis().SetRangeUser(plotxmin,plotxmax)
     h_compare.GetXaxis().SetTitle("M_{#gamma#gamma} [GeV]")
 
     c.SaveAs("test.png")
+
+if __name__ == '__main__':
+    main()
