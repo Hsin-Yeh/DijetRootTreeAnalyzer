@@ -9,7 +9,7 @@ from scipy.stats import norm
 parser = argparse.ArgumentParser(description='')
 parser.add_argument('--year','-y',default="2016",type=str,help='year')
 parser.add_argument('--signame','-s',default="grav",type=str,help='grav or heavyhiggs')
-parser.add_argument('--outputDir','-o',default="./",type=str,help='output directory')
+parser.add_argument('--outputDir','-o',default="./output/plots/2Dplot",type=str,help='output directory')
 args = parser.parse_args()
 
 def z_value_from_p_value(p_value, two_tailed=False):
