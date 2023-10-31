@@ -70,7 +70,7 @@ def pvalue2D():
     extraText.SetLineWidth(1);
     extraText.SetTextSize(0.04);
 
-    lumiText=ROOT.TLatex(0.55,0.90, "138 fb^{-1} (13 TeV)");
+    lumiText=ROOT.TLatex(0.53,0.90, "138 fb^{-1} (13 TeV)");
     lumiText.SetNDC(1);
     lumiText.SetTextFont(42);
     lumiText.SetLineColor(0);
@@ -93,9 +93,12 @@ def pvalue2D():
 
     h_zvalue.SetTitle("")
     h_zvalue.GetXaxis().SetTitle("M_{X} [GeV]")
+    h_zvalue.GetXaxis().SetTitleSize(0.05)
     h_zvalue.GetYaxis().SetTitle("#Gamma_{X}/M_{X} [%]")
+    h_zvalue.GetYaxis().SetTitleSize(0.05)
     h_zvalue.GetZaxis().SetTitle("Z value (#sigma)")
-    h_zvalue.GetZaxis().SetTitleOffset(1)
+    h_zvalue.GetZaxis().SetTitleOffset(1.1)
+    h_zvalue.GetZaxis().SetTitleSize(0.05)
     h_zvalue.Draw("colz")
     cmsText.Draw();
     extraText.Draw();
@@ -104,9 +107,12 @@ def pvalue2D():
 
     h_obslimit.SetTitle("")
     h_obslimit.GetXaxis().SetTitle("M_{X} [GeV]")
+    h_obslimit.GetXaxis().SetTitleSize(0.05)
     h_obslimit.GetYaxis().SetTitle("#Gamma_{X}/M_{X} [%]")
+    h_obslimit.GetYaxis().SetTitleSize(0.05)
     h_obslimit.GetZaxis().SetTitle("#sigmaB(X#rightarrow#gamma#gamma)_{95%CL} (fb)")
-    h_obslimit.GetZaxis().SetTitleOffset(1)
+    h_obslimit.GetZaxis().SetTitleOffset(1.1)
+    h_obslimit.GetZaxis().SetTitleSize(0.05)
     h_obslimit.Draw("colz")
     cmsText.Draw();
     extraText.Draw();
