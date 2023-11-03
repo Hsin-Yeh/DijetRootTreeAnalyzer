@@ -10,14 +10,9 @@ yearlist=("2016" "2017" "2018")
 # Cats
 catlist=("EBEB" "EBEE")
 # method
-export method="full"
-export signal="grav"
-export signal_LongName="RSGravitonToGammaGamma"
-if [[ ${coupling} == "0p014" || ${coupling} == "1p4" || ${coupling} == "5p6" ]]; then
-    export method="genFiducial"
-    export signal="heavyhiggs"
-    export signal_LongName="GluGluSpin0ToGammaGamma_W"
-fi
+method="full"
+signal="grav"
+signal_LongName="RSGravitonToGammaGamma"
 
 #################### Paths ####################
 DijetRootTreeAnalyzer="/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/CMSDIJET/DijetRootTreeAnalyzer/"
@@ -30,6 +25,10 @@ InterpolateShapePath="${DijetShapeInterpolator}/full_backup/width/"
 bkgFitResultsPath="${DijetRootTreeAnalyzer}/datacards/multiWidth/"
 SignalNormFile_input="${diphoton}/SignalNorm_Splines_full.txt"
 SignalNormFile="SignalNorm_Splines_full_multiWidth.txt"
+# toysfile created by: combine -M GenerateOnly datacards/diphoton_combine_1300_DiPhotons_4550_fullRun2.txt -n _bkgOnly --toysFrequentist -t 100 --saveToys --expectSignal=0
+toysfile="${DijetRootTreeAnalyzer}/ParallelForLimits/higgsCombine_Generate_bkgOnly.root"
+
+
 
 #################### mkdirs ####################
 mkdir -p signal_shapes
@@ -137,9 +136,9 @@ export expP2s=`cat results  | grep  "Expected 97.5%:" | awk '{print $5}'`
 echo $mass $obs $expM2s $expM1s $exp $expP1s $expP2s
 echo $mass $obs $expM2s $expM1s $exp $expP1s $expP2s > ${finalResults}
 
-# ############################## Combine pvalue ##############################
+# ############################## Combine local pvalue ##############################
 echo "########## Run Significance ##########"
-combine -d ${datacardfile} -M Significance --signif --pval --cminDefaultMinimizerType=Minuit2 -n Observed > results_pvalue
+combine -d ${datacardfile} -M Significance --pval --cminDefaultMinimizerType=Minuit2 -n Observed_pvalue > results_pvalue
 rm higgsCombine*.root
 
 export pvalue=`cat results_pvalue  | grep  "p-value of background:" | awk '{print $4}'`
@@ -149,10 +148,20 @@ echo $mass $pvalue >> ${finalResults}
 
 # ############################## Combine zvalue ##############################
 echo "########## Run Significance ##########"
-combine -d ${datacardfile} -M Significance --signif --cminDefaultMinimizerType=Minuit2 -n Observed > results_zvalue
+combine -d ${datacardfile} -M Significance --cminDefaultMinimizerType=Minuit2 -n Observed_zvalue > results_zvalue
 rm higgsCombine*.root
 
 export zvalue=`cat results_zvalue  | grep  "Significance:" | awk '{print $2}'`
 
 echo $mass $zvalue
 echo $mass $zvalue >> ${finalResults}
+
+# ############################## Combine Global zvalue ##############################
+echo "########## Run Global Significance ##########"
+combine -d ${datacardfile} -M Significance --cminDefaultMinimizerType=Minuit2 -n Observed_global --toysFile ${toysfile} -t 100 > results_global_zvalue
+rm higgsCombine*.root
+
+export global_zvalue=`cat results_global_zvalue  | grep  "Significance:" | awk '{print $2}'`
+
+echo $mass $global_zvalue
+echo $mass $global_zvalue >> ${finalResults}
