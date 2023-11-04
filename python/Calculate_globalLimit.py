@@ -46,7 +46,7 @@ def globalLimit():
                 in_filename = "ParallelForLimits/2023-11-03/finalResults_" + args.signame + "_" + str(coupname) + "_" + str(int(mass)) + ".txt";
                 with open (in_filename,'r') as infile:
                     Lines = infile.readlines()
-                    if (Lines==4 and len(Lines[1].split())==1):
+                    if (len(Lines)==4 and len(Lines[1].split())==2):
                         toy_zvalue = Lines[3].split()[itoy]
                         toy_zvalues.append(toy_zvalue)
             sigma_max = max(toy_zvalues)
