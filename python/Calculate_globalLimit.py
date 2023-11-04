@@ -13,7 +13,7 @@ parser.add_argument('--mass','-m',default=1300,type=int,help='mass to calculate 
 parser.add_argument('--out_filename','-o',default="./text.txt",type=str,help='output filename')
 args = parser.parse_args()
 
-def z_value_from_p_value(p_value, two_tailed=False):
+def z_value_from_p_value(p_value, two_tailed=True):
     alpha = p_value / 2 if two_tailed else p_value
     z_value = norm.ppf(1 - alpha)
     return z_value
