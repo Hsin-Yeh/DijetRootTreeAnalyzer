@@ -10,8 +10,13 @@ parser = argparse.ArgumentParser(description='')
 parser.add_argument('--signame','-s',default="grav",type=str,help='grav or heavyhiggs')
 parser.add_argument('--coupling','-c',default=14,type=int,help='coupling to calculate global significance')
 parser.add_argument('--mass','-m',default=1300,type=int,help='mass to calculate global significance')
-parser.add_argument('--outputDir','-o',default="./output/plots/2Dplot",type=str,help='output directory')
+parser.add_argument('--out_filename','-o',default="./text.txt",type=str,help='output filename')
 args = parser.parse_args()
+
+def z_value_from_p_value(p_value, two_tailed=False):
+    alpha = p_value / 2 if two_tailed else p_value
+    z_value = norm.ppf(1 - alpha)
+    return z_value
 
 def globalLimit():
     ROOT.gROOT.LoadMacro("~/rootlogon.C")
@@ -52,8 +57,12 @@ def globalLimit():
             sigma_max = max(toy_zvalues)
             for mass, zvalue in zvalues.items():
                 if (sigma_max > zvalue): counts[mass] = counts[mass]+1
-        for mass in masses:
-            print(mass, counts[mass])
+
+        with open (args.out_filename,'a') as outfile:
+            for mass in masses:
+                p_value = counts[mass]/100
+                global_z_value = z_value_from_p_value(p_value)
+                outfile.write('%i, %f'%(mass, global_z_value))
 
 if __name__ == "__main__":
     globalLimit()
