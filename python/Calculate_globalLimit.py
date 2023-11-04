@@ -38,7 +38,6 @@ def globalLimit():
                 else:
                     zvalue=Lines[2].split()[1]
                     zvalues[mass]=zvalue
-                    print(mass, zvalue)
 
         # Switch to Toy significance to calculate global significance
         for itoy in range(100):
@@ -47,15 +46,14 @@ def globalLimit():
                 in_filename = "ParallelForLimits/2023-11-03/finalResults_" + args.signame + "_" + str(coupname) + "_" + str(int(mass)) + ".txt";
                 with open (in_filename,'r') as infile:
                     Lines = infile.readlines()
-                    if (Lines==0 or len(Lines[1].split())==1):
-                        print("No limits for %f %f"%(coupling,mass))
-                    else:
+                    if (Lines==4 and len(Lines[1].split())==1):
                         toy_zvalue = Lines[3].split()[itoy]
                         toy_zvalues.append(toy_zvalue)
             sigma_max = max(toy_zvalues)
             for mass, zvalue in zvalues.items():
                 if (sigma_max > zvalue): counts[mass] = counts[mass]+1
-
+        for mass in masses:
+            print(mass, counts[mass])
 
 if __name__ == "__main__":
     globalLimit()
