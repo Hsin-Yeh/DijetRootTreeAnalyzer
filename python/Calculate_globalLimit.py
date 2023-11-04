@@ -20,9 +20,6 @@ def globalLimit():
     m_gStyle.SetOptFit(0);
     m_gStyle.SetPalette(55);
 
-    masses=array('i')
-    for mass in range(600,3010,10):
-        masses.append(mass)
     coupnames = array('i',[14, 361, 707, 1054, 1400, 2450, 3500, 4550, 5600])
 
     for coupname in coupnames:
@@ -34,12 +31,12 @@ def globalLimit():
             with open (in_filename,'r') as infile:
                 Lines = infile.readlines()
                 if (Lines==0 or len(Lines[1].split())==1):
-                    print("No limits for %f %f"%(coupling,mass))
+                    print("No limits for %i %i"%(coupname,mass))
                 else:
                     zvalue=Lines[2].split()[1]
                     zvalues[mass]=zvalue
+                    print(mass, zvalue)
 
-        print(zvalues)
         # Switch to Toy significance to calculate global significance
         for itoy in range(100):
             toy_zvalues=[]
