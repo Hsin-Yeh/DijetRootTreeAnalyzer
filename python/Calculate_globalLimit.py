@@ -60,9 +60,9 @@ def globalLimit():
 
         with open (args.out_filename,'w') as outfile:
             for mass in masses:
-                p_value = float(counts[mass])/100
+                p_value = float(counts[mass]/100)
                 global_z_value = z_value_from_p_value(p_value)
-                outfile.write('%s, %i, %f\n'%(coupname, mass, global_z_value))
+                outfile.write('%s, %i, %f, %f\n'%(coupname, mass, p_value, global_z_value))
 
 if __name__ == "__main__":
     globalLimit()
