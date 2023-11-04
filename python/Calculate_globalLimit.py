@@ -58,11 +58,11 @@ def globalLimit():
             for mass, zvalue in zvalues.items():
                 if (sigma_max > zvalue): counts[mass] = counts[mass]+1
 
-        with open (args.out_filename,'a') as outfile:
+        with open (args.out_filename,'w') as outfile:
             for mass in masses:
                 p_value = counts[mass]/100
                 global_z_value = z_value_from_p_value(p_value)
-                outfile.write('%i, %f'%(mass, global_z_value))
+                outfile.write('%s %i, %f'%(coupname, mass, global_z_value))
 
 if __name__ == "__main__":
     globalLimit()
