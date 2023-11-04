@@ -25,7 +25,7 @@ InterpolateShapePath="${DijetShapeInterpolator}/full_backup/width/"
 bkgFitResultsPath="${DijetRootTreeAnalyzer}/datacards/multiWidth/"
 SignalNormFile_input="${diphoton}/SignalNorm_Splines_full.txt"
 SignalNormFile="SignalNorm_Splines_full_multiWidth.txt"
-# toysfile created by: combine -M GenerateOnly datacards/diphoton_combine_1300_DiPhotons_4550_fullRun2.txt -n _bkgOnly --toysFrequentist -t 100 --saveToys --expectSignal=0
+# toysfile created by: combine -M GenerateOnly datacards/diphoton_combine_1300_DiPhotons_4550_fullRun2.txt -n _bkgOnly --toysFrequentist -t 10000 --saveToys --expectSignal=0
 toysfile="${DijetRootTreeAnalyzer}/ParallelForLimits/higgsCombine_Generate_bkgOnly.root"
 
 
