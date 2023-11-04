@@ -20,18 +20,17 @@ def globalLimit():
     m_gStyle.SetOptFit(0);
     m_gStyle.SetPalette(55);
 
-    masses=array('d')
+    masses=array('i')
     for mass in range(600,3010,10):
         masses.append(mass)
-    couplings = array('d',[0.014, 0.361, 0.707, 1.054, 1.4, 2.450, 3.500, 4.550, 5.600])
     coupnames = array('i',[14, 361, 707, 1054, 1400, 2450, 3500, 4550, 5600])
 
-    for icoup, coupling in enumerate(couplings):
-        coupname = str(coupnames[icoup])
+    for coupname in coupnames:
         zvalues, counts={}, {}
         # Record observed zvalues
         for mass in masses:
-            in_filename = "ParallelForLimits/2023-11-03/finalResults_" + args.signame + "_" + coupname + "_" + str(int(mass)) + ".txt";
+            counts[mass]=0
+            in_filename = "ParallelForLimits/2023-11-03/finalResults_" + args.signame + "_" + str(coupname) + "_" + str(int(mass)) + ".txt";
             with open (in_filename,'r') as infile:
                 Lines = infile.readlines()
                 if (Lines==0 or len(Lines[1].split())==1):
@@ -40,11 +39,12 @@ def globalLimit():
                     zvalue=Lines[2].split()[1]
                     zvalues[mass]=zvalue
 
+        print(zvalues)
         # Switch to Toy significance to calculate global significance
         for itoy in range(100):
             toy_zvalues=[]
             for mass in masses:
-                in_filename = "ParallelForLimits/2023-11-03/finalResults_" + args.signame + "_" + coupname + "_" + str(int(mass)) + ".txt";
+                in_filename = "ParallelForLimits/2023-11-03/finalResults_" + args.signame + "_" + str(coupname) + "_" + str(int(mass)) + ".txt";
                 with open (in_filename,'r') as infile:
                     Lines = infile.readlines()
                     if (Lines==0 or len(Lines[1].split())==1):
