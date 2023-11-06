@@ -1,6 +1,6 @@
 #!/bin/bash
 
-version="2023-11-05"
+version="2023-11-06"
 # couplist=(4550)
 # masslist=(1300)
 # couplist=(14 361 707 1054 1400 2450 3500 4550 5600)
