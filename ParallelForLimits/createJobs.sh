@@ -26,7 +26,7 @@ for coupling in "${couplist[@]}"; do
         outDir="${jobDir}/output/"
 
 
-        echo '+JobFlavour = "testmatch" ' > ${submitFile}
+        echo '+JobFlavour = "tomorrow" ' > ${submitFile}
         echo ' ' >> ${submitFile}
         echo "executable  = /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/CMSDIJET/DijetRootTreeAnalyzer/ParallelForLimits/setupCombine.sh" >> ${submitFile}
         echo "arguments   = "'$(ClusterID) $(ProcId)'" ${outDir} ${coupling} ${mass} " >> ${submitFile}
