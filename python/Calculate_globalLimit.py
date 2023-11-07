@@ -21,9 +21,10 @@ def z_value_from_p_value(p_value, two_tailed=False):
 
 def globalLimit():
     numtoys=1000
+    f = open(f"{args.out_filename}", "w")
+    f.close()
 
     ROOT.gROOT.LoadMacro("~/rootlogon.C")
-
     m_gStyle = ROOT.TStyle();
     m_gStyle.SetOptFit(0);
     m_gStyle.SetPalette(55);
