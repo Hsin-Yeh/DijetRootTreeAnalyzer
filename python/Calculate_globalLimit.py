@@ -27,9 +27,9 @@ def globalLimit():
     m_gStyle.SetPalette(55);
 
     masses=array('d')
-    for mass in range(600,3010,10):
+    for mass in range(600,2010,10):
         masses.append(mass)
-    coupnames = array('i',[14, 361, 707, 1054, 1400, 2450, 3500, 4550, 5600])
+    coupnames = array('i',[14, 1400, 5600])
 
     for coupname in coupnames:
         zvalues, counts={}, {}
