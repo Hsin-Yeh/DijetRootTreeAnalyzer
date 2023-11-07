@@ -11,7 +11,7 @@ parser.add_argument('--signame','-s',default="grav",type=str,help='grav or heavy
 parser.add_argument('--coupling','-c',default=14,type=int,help='coupling to calculate global significance')
 parser.add_argument('--mass','-m',default=1300,type=int,help='mass to calculate global significance')
 parser.add_argument('--inputDir','-i',default="./ParallelForLimits/2023-11-06/",type=str,help='input directory')
-parser.add_argument('--out_filename','-o',default="./text.txt",type=str,help='output filename')
+parser.add_argument('--out_filename','-o',default="./global_significance.txt",type=str,help='output filename')
 args = parser.parse_args()
 
 def z_value_from_p_value(p_value, two_tailed=False):
@@ -66,7 +66,7 @@ def globalLimit():
                     print("No limits for %i %i"%(coupname,mass))
 
             sigma_max = max(toy_zvalues)
-            print(len(toy_zvalues), masses[toy_zvalues.index(max(toy_zvalues))], sigma_max)
+            print(coupname, len(toy_zvalues), masses[toy_zvalues.index(max(toy_zvalues))], sigma_max)
             for mass, zvalue in zvalues.items():
                 if (sigma_max > zvalue):
                     counts[mass] = counts[mass]+1
