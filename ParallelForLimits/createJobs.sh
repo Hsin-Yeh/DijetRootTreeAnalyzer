@@ -1,6 +1,6 @@
 #!/bin/bash
 
-version="2023-11-06"
+version="2023-11-07"
 mkdir ${version}
 cd ${version}
 
@@ -8,7 +8,7 @@ cd ${version}
 # masslist=(1300)
 # couplist=(14 361 707 1054 1400 2450 3500 4550 5600)
 couplist=(14 1400 5600)
-masslist=($(seq 600 10 2000))
+masslist=($(seq 600 40 2000))
 
 
 echo "==========Creating jobs=========="
