@@ -65,8 +65,8 @@ def globalLimit():
                 except IOError:
                     print("No limits for %i %i"%(coupname,mass))
 
-
             sigma_max = max(toy_zvalues)
+            print(len(sigma_max), sigma_max)
             for mass, zvalue in zvalues.items():
                 if (sigma_max > zvalue):
                     counts[mass] = counts[mass]+1
