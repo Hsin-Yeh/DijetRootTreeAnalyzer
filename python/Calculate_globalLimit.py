@@ -10,6 +10,7 @@ parser = argparse.ArgumentParser(description='')
 parser.add_argument('--signame','-s',default="grav",type=str,help='grav or heavyhiggs')
 parser.add_argument('--coupling','-c',default=14,type=int,help='coupling to calculate global significance')
 parser.add_argument('--mass','-m',default=1300,type=int,help='mass to calculate global significance')
+parser.add_argument('--inputDir','-i',default="./ParallelForLimits/2023-11-06/",type=str,help='input directory')
 parser.add_argument('--out_filename','-o',default="./text.txt",type=str,help='output filename')
 args = parser.parse_args()
 
@@ -35,25 +36,33 @@ def globalLimit():
         # Record observed zvalues
         for mass in masses:
             counts[mass]=0
-            in_filename = "ParallelForLimits/2023-11-06/finalResults_" + args.signame + "_" + str(coupname) + "_" + str(int(mass)) + ".txt";
-            with open (in_filename,'r') as infile:
-                Lines = infile.readlines()
-                if (Lines==0 or len(Lines[1].split())==1):
-                    print("No limits for %i %i"%(coupname,mass))
-                else:
-                    zvalue=Lines[2].split()[1]
-                    zvalues[mass]=zvalue
+
+            in_filename = args.inputDir + "/finalResults_" + args.signame + "_" + str(coupname) + "_" + str(int(mass)) + ".txt";
+            try:
+                with open (in_filename,'r') as infile:
+                    Lines = infile.readlines()
+                    if (Lines==0 or len(Lines[1].split())==1):
+                        print("No limits for %i %i"%(coupname,mass))
+                    else:
+                        zvalue=Lines[2].split()[1]
+                        zvalues[mass]=zvalue
+            except FileNotFoundError:
+                print("No limits for %i %i"%(coupname,mass))
 
         # Switch to Toy significance to calculate global significance
         for itoy in range(100):
             toy_zvalues=[]
             for mass in masses:
-                in_filename = "ParallelForLimits/2023-11-06/finalResults_" + args.signame + "_" + str(coupname) + "_" + str(int(mass)) + ".txt";
-                with open (in_filename,'r') as infile:
-                    Lines = infile.readlines()
-                    if (len(Lines)==4 and len(Lines[1].split())==2):
-                        toy_zvalue = Lines[3].split()[itoy]
-                        toy_zvalues.append(toy_zvalue)
+                in_filename = args.inputDir + "/finalResults_" + args.signame + "_" + str(coupname) + "_" + str(int(mass)) + ".txt";
+                try:
+                    with open (in_filename,'r') as infile:
+                        Lines = infile.readlines()
+                        if (len(Lines)==4 and len(Lines[1].split())==2):
+                            toy_zvalue = Lines[3].split()[itoy]
+                            toy_zvalues.append(toy_zvalue)
+                except FileNotFoundError:
+                    print("")
+
             sigma_max = max(toy_zvalues)
             for mass, zvalue in zvalues.items():
                 if (sigma_max > zvalue): counts[mass] = counts[mass]+1
