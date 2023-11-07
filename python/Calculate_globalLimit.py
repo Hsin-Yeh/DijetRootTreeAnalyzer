@@ -35,7 +35,7 @@ def globalLimit():
         # Record observed zvalues
         for mass in masses:
             counts[mass]=0
-            in_filename = "ParallelForLimits/2023-11-03/finalResults_" + args.signame + "_" + str(coupname) + "_" + str(int(mass)) + ".txt";
+            in_filename = "ParallelForLimits/2023-11-06/finalResults_" + args.signame + "_" + str(coupname) + "_" + str(int(mass)) + ".txt";
             with open (in_filename,'r') as infile:
                 Lines = infile.readlines()
                 if (Lines==0 or len(Lines[1].split())==1):
@@ -48,7 +48,7 @@ def globalLimit():
         for itoy in range(100):
             toy_zvalues=[]
             for mass in masses:
-                in_filename = "ParallelForLimits/2023-11-03/finalResults_" + args.signame + "_" + str(coupname) + "_" + str(int(mass)) + ".txt";
+                in_filename = "ParallelForLimits/2023-11-06/finalResults_" + args.signame + "_" + str(coupname) + "_" + str(int(mass)) + ".txt";
                 with open (in_filename,'r') as infile:
                     Lines = infile.readlines()
                     if (len(Lines)==4 and len(Lines[1].split())==2):
