@@ -73,9 +73,9 @@ def globalLimit():
 
         with open (args.out_filename,'a') as outfile:
             for mass in masses:
-                p_value = float(float(counts[mass])/numtoys)
+                global_p_value = float(float(counts[mass])/numtoys)
                 global_z_value = z_value_from_p_value(p_value)
-                outfile.write('%s, %i, %f, %f\n'%(coupname, mass, p_value, global_z_value))
+                outfile.write('%s, %i, %f, %f, %f\n'%(coupname, mass, z_value[mass], global_p_value, global_z_value))
 
 if __name__ == "__main__":
     globalLimit()
