@@ -60,8 +60,9 @@ def globalLimit():
                         if (len(Lines)==4 and len(Lines[1].split())==2):
                             toy_zvalue = Lines[3].split()[itoy]
                             toy_zvalues.append(toy_zvalue)
-                # except IOError:
-                #     print("")
+                except IOError:
+                    print("No limits for %i %i"%(coupname,mass))
+
 
             sigma_max = max(toy_zvalues)
             for mass, zvalue in zvalues.items():
