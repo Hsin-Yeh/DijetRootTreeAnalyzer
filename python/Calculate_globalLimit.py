@@ -14,12 +14,14 @@ parser.add_argument('--inputDir','-i',default="./ParallelForLimits/2023-11-06/",
 parser.add_argument('--out_filename','-o',default="./text.txt",type=str,help='output filename')
 args = parser.parse_args()
 
-def z_value_from_p_value(p_value, two_tailed=True):
+def z_value_from_p_value(p_value, two_tailed=False):
     alpha = p_value / 2 if two_tailed else p_value
     z_value = norm.ppf(1 - alpha)
     return z_value
 
 def globalLimit():
+    numtoys=1000
+
     ROOT.gROOT.LoadMacro("~/rootlogon.C")
 
     m_gStyle = ROOT.TStyle();
@@ -50,7 +52,7 @@ def globalLimit():
                 print("No limits for %i %i"%(coupname,mass))
 
         # Switch to Toy significance to calculate global significance
-        for itoy in range(100):
+        for itoy in range(numtoys):
             toy_zvalues=[]
             for mass in masses:
                 in_filename = args.inputDir + "/finalResults_" + args.signame + "_" + str(coupname) + "_" + str(int(mass)) + ".txt";
@@ -66,11 +68,12 @@ def globalLimit():
 
             sigma_max = max(toy_zvalues)
             for mass, zvalue in zvalues.items():
-                if (sigma_max > zvalue): counts[mass] = counts[mass]+1
+                if (sigma_max > zvalue):
+                    counts[mass] = counts[mass]+1
 
         with open (args.out_filename,'a') as outfile:
             for mass in masses:
-                p_value = float(float(counts[mass])/100)
+                p_value = float(float(counts[mass])/numtoys)
                 global_z_value = z_value_from_p_value(p_value)
                 outfile.write('%s, %i, %f, %f\n'%(coupname, mass, p_value, global_z_value))
 
