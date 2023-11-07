@@ -46,7 +46,7 @@ def globalLimit():
                     else:
                         zvalue=Lines[2].split()[1]
                         zvalues[mass]=zvalue
-            except FileNotFoundError:
+            except IOError:
                 print("No limits for %i %i"%(coupname,mass))
 
         # Switch to Toy significance to calculate global significance
@@ -60,7 +60,7 @@ def globalLimit():
                         if (len(Lines)==4 and len(Lines[1].split())==2):
                             toy_zvalue = Lines[3].split()[itoy]
                             toy_zvalues.append(toy_zvalue)
-                except FileNotFoundError:
+                except IOError:
                     print("")
 
             sigma_max = max(toy_zvalues)
