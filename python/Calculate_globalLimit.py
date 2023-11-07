@@ -21,7 +21,7 @@ def z_value_from_p_value(p_value, two_tailed=False):
 
 def globalLimit():
     numtoys=1000
-    f = open("%s"%args.out_filename, "w")
+    f = open(args.out_filename, "w")
     f.close()
 
     ROOT.gROOT.LoadMacro("~/rootlogon.C")
