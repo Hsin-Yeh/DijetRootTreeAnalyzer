@@ -8,8 +8,6 @@ from scipy.stats import norm
 
 parser = argparse.ArgumentParser(description='')
 parser.add_argument('--signame','-s',default="grav",type=str,help='grav or heavyhiggs')
-parser.add_argument('--coupling','-c',default=14,type=int,help='coupling to calculate global significance')
-parser.add_argument('--mass','-m',default=1300,type=int,help='mass to calculate global significance')
 parser.add_argument('--inputDir','-i',default="./ParallelForLimits/2023-11-06/",type=str,help='input directory')
 parser.add_argument('--out_filename','-o',default="./global_significance.txt",type=str,help='output filename')
 args = parser.parse_args()
@@ -30,7 +28,7 @@ def globalLimit():
     m_gStyle.SetPalette(55);
 
     masses=array('d')
-    for mass in range(600,2010,10):
+    for mass in range(600,2010,40):
         masses.append(mass)
     coupnames = array('i',[14, 1400, 5600])
 
