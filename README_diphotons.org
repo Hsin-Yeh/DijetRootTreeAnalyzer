@@ -200,7 +200,7 @@ mkdir -p output/plots
 
 # method="full"
 # method="truncate"
-method="genFiducial"
+# method="genFiducial"
 # method="prefiring"
 mkdir -p output/${method}
 #RS
@@ -208,6 +208,11 @@ for year in {2016,2017,2018}; do echo $year; for coup in {"kMpl001","kMpl01","kM
 
 #GluGlu
 for year in {2016,2017,2018}; do echo $year; for coup in {"0p014","1p4","5p6"}; do echo $coup; files_GluGlu=`ls /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/input/trees/GluGluSpin0ToGammaGamma_W_${coup}*${year}*.root`; python python/AddSignalShapes.py -e ${method} -t nom -d output/${method} -c EBEB ${files_GluGlu}; python python/AddSignalShapes.py -e ${method} -t nom -d output/${method} -c EBEE ${files_GluGlu}; done; done;
+
+
+#RS for width interpolation
+for year in {2016,2017,2018}; do echo $year; for mass in {750,1000,1250,1500,1750,2000,2250,2500,2750,3000,3250,3500,4000,5000}; do echo $mass; files_RS=`ls /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/input/trees/RSGravitonToGammaGamma_*_M_${mass}_*${year}*.root`; python python/AddSignalShapes_width.py -e full -t nom -d output/full -c EBEB ${files_RS}; python python/AddSignalShapes_width.py -e full -t nom -d output/full -c EBEE ${files_RS}; done; done;
+
 #+end_src
 
 *** Systematics
@@ -226,6 +231,9 @@ for year in {2016,2017,2018}; do echo $year; for coup in {"kMpl001","kMpl01","kM
 
 #GluGlu
 for year in {2016,2017,2018}; do echo $year; for coup in {"0p014","1p4","5p6"}; do echo $coup; files_GluGlu=`ls /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/input/trees/GluGluSpin0ToGammaGamma_W_${coup}*${year}*.root`;for syst in {"energyScaleStatUp","energyScaleSystUp","energyScaleGainUp","energySigmaUp","energyScaleStatDown","energyScaleSystDown","energyScaleGainDown","energySigmaDown","SFScaleUp","SFScaleDown","PUScaleUp","PUScaleDown"}; do echo ${syst}; python python/AddSignalShapes.py -e ${method} -t systematics -s ${syst} -d output/${method} -c EBEB ${files_GluGlu}; python python/AddSignalShapes.py -e ${method} -t systematics -s ${syst} -d output/${method} -c EBEE ${files_GluGlu}; done; done; done;
+
+#RS for width interpolation
+for year in {2016,2017,2018}; do echo $year; for mass in {750,1000,1250,1500,1750,2000,2250,2500,3000,3500,4000,5000}; do echo $mass; files_RS=`ls /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/input/trees/RSGravitonToGammaGamma_*_M_${mass}_*${year}*.root`; for syst in {"energyScaleStatUp","energyScaleSystUp","energyScaleGainUp","energySigmaUp","energyScaleStatDown","energyScaleSystDown","energyScaleGainDown","energySigmaDown","SFScaleUp","SFScaleDown","PUScaleUp","PUScaleDown","EEPFScaleUp","EEPFScaleDown"}; do echo ${syst}; python python/AddSignalShapes_width.py -e full -t systematics -s ${syst} -d output/full -c EBEB ${files_RS}; python python/AddSignalShapes_width.py -e full -t systematics -s ${syst} -d output/full -c EBEE ${files_RS}; done; done; done;
 
 #+end_src
 
@@ -376,12 +384,13 @@ export method="full"
 # export method="genFiducial"
 cd /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/${method}
 
-filesToExtractRS=`ls /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/CMSDIJET/DijetRootTreeAnalyzer/output/${method} |grep 7.root | grep RSG`
+filesToExtractRS=`ls /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/CMSDIJET/DijetRootTreeAnalyzer/output/${method} |grep .root | grep RSG`
 
 filesToExtractGluGlu=`ls /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/CMSDIJET/DijetRootTreeAnalyzer/output/${method} |grep .root | grep GluGlu`
 
+
 for file in ${filesToExtractRS};
-do echo ${file}; coup=`echo ${file} | cut -d'_' -f 3`; echo $coup; filename=`echo ${file} | cut -d'.' -f 1`; ../getResonanceShapes.py -i inputs/${filename}.py -c ${coup} -f gg --massrange 600 1000 10 --fineBinning -o ResonanceShapes_${filename}_finebinned.root; done;
+do echo ${file}; coup=`echo ${file} | cut -d'_' -f 3`; echo $coup; filename=`echo ${file} | cut -d'.' -f 1`; ../getResonanceShapes.py -i inputs/${filename}.py -c ${coup} -f gg --massrange 600 5000 100 --fineBinning -o finebinning/ResonanceShapes_${filename}_finebinned.root; done;
 
 
 for file in ${filesToExtractRS};
@@ -401,6 +410,58 @@ cp /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphot
 
 #+end_src
 
+* Get Width Interpolated shapes
+#+begin_src bash
+filesToExtractRS=`ls InputShapes/. | grep RSG`
+for file in ${filesToExtractRS}; do echo ${file}; coup=`echo ${file} | cut -d'_' -f 3`; echo $coup; filename=`echo ${file} | cut -d'.' -f 1`; ../getResonanceShapes.py -i inputs/${filename}.py -c ${coup} -f gg --massrange 600 5000 10 --doWidthInterp -o width/inputs/ResonanceShapes_${filename}_ratio.root; done;
+
+filesToExtractGluGlu=`ls InputShapes/. | grep GluGlu`
+for file in ${filesToExtractGluGlu}; do echo ${file}; coup=`echo ${file} | cut -d'_' -f 4`; echo $coup; filename=`echo ${file} | cut -d'.' -f 1`; ../getResonanceShapes.py -i inputs/${filename}.py -c ${coup} -f gg --massrange 600 5000 10 --doWidthInterp -o width/inputs/ResonanceShapes_${filename}_ratio.root; done;
+
+
+cd width/.
+# Nom
+for year in {2016..2018}; do
+    echo ${year}
+    for cat in {"EBEB","EBEE"}; do
+        echo ${cat}
+        for mass in {600..5100..10}; do
+            echo ${mass}
+            narrow_file="inputs/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_kMpl001_${cat}_${year}_ratio.root"
+            medium_file="inputs/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_kMpl01_${cat}_${year}_ratio.root"
+            wide_file="inputs/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_kMpl02_${cat}_${year}_ratio.root"
+            filename="InputShapes_RSGravitonToGammaGamma_${cat}_${year}"
+            python ../../extractShapes_width.py -n ${narrow_file} -m ${medium_file} -w ${wide_file} --mass ${mass} > extraShape/${filename}_${mass}GeV.py
+            python ../../getResonanceShapes_width.py -i extraShape/${filename}_${mass}GeV.py -m ${mass} -f gg -o width_interpolated_shapes/width_${filename}_${mass}GeV.root
+        done
+    done
+done
+
+# Systematics
+for year in {2016..2018}; do
+    echo ${year}
+    for cat in {"EBEB","EBEE"}; do
+        echo ${cat}
+        # for systematics in {"energyScaleStatUp","energyScaleSystUp","energyScaleGainUp","energySigmaUp","energyScaleStatDown","energyScaleSystDown","energyScaleGainDown","energySigmaDown","SFScaleUp","SFScaleDown","PUScaleUp","PUScaleDown"}; do
+        for systematics in {"PUScaleUp","PUScaleDown"}; do
+            echo ${systematics}
+            for mass in {600..5000..100}; do
+                echo ${mass}
+                narrow_file="inputs/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_kMpl001_${cat}_${year}_${systematics}_ratio.root"
+                medium_file="inputs/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_kMpl01_${cat}_${year}_${systematics}_ratio.root"
+                wide_file="inputs/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_kMpl02_${cat}_${year}_${systematics}_ratio.root"
+                filename="InputShapes_RSGravitonToGammaGamma_${cat}_${year}_${systematics}"
+                python ../../extractShapes_width.py -n ${narrow_file} -m ${medium_file} -w ${wide_file} --mass ${mass} > extraShape/${filename}_${mass}GeV.py
+                python ../../getResonanceShapes_width.py -i extraShape/${filename}_${mass}GeV.py -m ${mass} -f gg -o width_interpolated_shapes/width_${filename}_${mass}GeV.root
+            done
+        done
+    done
+done
+python ../../Merge_width_interpolation.py
+
+python ../../extractShapes_width.py -n inputs/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_kMpl001_EBEB_2016_energySigmaDown_ratio.root -m inputs/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_kMpl01_EBEB_2016_energySigmaDown_ratio.root -w inputs/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_kMpl02_EBEB_2016_energySigmaDown_ratio.root --mass 2500 > extraShape/InputShapes_RSGravitonToGammaGamma_EBEB_2016_energySigmaDown_2500GeV.py
+# Nom
+#+end_src
 * Compare shapes - Closure Test - single plot comparison
 
 #+begin_src bash
