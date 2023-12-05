@@ -1,6 +1,5 @@
 #+TITLE: README_diphotons
 #+Author: Hsin-Yeh, Andreas
-#+OPTIONS: toc:2
 
 The diphoton resonant analysis strategy was changed to match the dijet analysis.
 So we implement some of our code into their repository. There are two repos:
@@ -8,6 +7,50 @@ The DijetRootTreeAnalyzer is the main repo for sample processing, background fit
 The DijetShapeInterpolator is a special repo for signal shape interpolating using template morphing.
 The decision of changing method could be find in this meeting minutes: https://indico.cern.ch/event/966790/?note=147555
 
+* Table Of Contents :TOC:
+- [[#setup][Setup]]
+- [[#basic-plots][Basic plots]]
+- [[#prepare-samples][Prepare samples]]
+  - [[#prepare-trees][prepare trees]]
+  - [[#merge-files][Merge files]]
+- [[#parametric-signal-model][Parametric signal model]]
+  - [[#second-step--fit-response-and-gen-distribution][Second step : Fit response and gen distribution]]
+  - [[#third-step--convolution-and-closure-test][Third step : Convolution and closure test]]
+  - [[#fourth-step--final-shapes][Fourth step : Final Shapes]]
+  - [[#fifth-step--test-the-final-shape-against-the-reconstructed-one][Fifth step : Test the final shape against the reconstructed one]]
+  - [[#sixth-step--calculate-parametric-signal-nuisances][Sixth step : Calculate parametric signal nuisances]]
+- [[#add-samples][Add Samples]]
+- [[#signal-normalization][Signal Normalization]]
+- [[#save-normalization-----dont-use-that-no-more][Save Normalization <<<--- DON'T USE THAT NO MORE.]]
+- [[#extract-shapes][Extract shapes]]
+- [[#get-resonance-shapes][Get Resonance shapes]]
+- [[#get-width-interpolated-shapes][Get Width Interpolated shapes]]
+- [[#compare-shapes---closure-test---single-plot-comparison][Compare shapes - Closure Test - single plot comparison]]
+- [[#compare-shapes---closure-test---multi-plot-comparison][Compare shapes - Closure Test - multi plot comparison]]
+- [[#background-model][Background model]]
+  - [[#higgs-combine-function-addons][higgs combine function addons]]
+  - [[#bkg-fit][Bkg fit]]
+- [[#create-the-datacard][Create the datacard]]
+  - [[#writedatacard-naming][WriteDataCard naming]]
+  - [[#write-datacards][Write datacards]]
+  - [[#write-test-datacards-large-scale-factor-systematics][Write test datacards (large scale factor systematics)]]
+- [[#bias][Bias]]
+  - [[#alternative-bkg-models][Alternative bkg models]]
+  - [[#writedatacard-naming-1][WriteDataCard naming]]
+  - [[#run-bias-study][Run Bias Study]]
+  - [[#plot][plot]]
+  - [[#not-needed][NOT NEEDED]]
+- [[#combine-checks-limits][Combine: checks, limits]]
+  - [[#systematics-plots][Systematics plots]]
+  - [[#standard-checks][Standard Checks]]
+  - [[#yields][Yields]]
+  - [[#limits][Limits]]
+  - [[#observed-significance][Observed Significance]]
+  - [[#impact-plots][Impact plots]]
+  - [[#cutflow][cutflow]]
+  - [[#discrete][discrete]]
+  - [[#ee_l1_prefiring][EE_L1_prefiring]]
+- [[#scripts][Scripts]]
 
 * Setup
 #+begin_src bash
