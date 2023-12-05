@@ -2,26 +2,106 @@
 #+Author: Hsin-Yeh, Andreas
 Starting from dijet analysis
 
-* Prepare samples
-** prepare trees for BB and BE seperately
+* Setup
+#+begin_src bash
+#log in lxplus7
+export SCRAM_ARCH=slc7_amd64_gcc700
+cmsrel CMSSW_10_2_13
+cd CMSSW_10_2_13/src
+cmsenv
 
+#The diphoton repository from my fork
+git clone git@github.com:Hsin-Yeh/diphoton-analysis.git
+cd diphoton-analysis
+git checkout resana_hsinyeh
+# The diphoton resonant analysis strategy was changed to match the dijet analysis. So we implement some of our code into their repository. There are two repos:
+# The DijetRootTreeAnalyzer is the main repo for sample processing, background fitting, studies, getting limits, plots...
+# The DijetShapeInterpolator is a special repo for signal shape interpolating using template morphing.
+# The decision of changing method could be find in this meeting minutes: https://indico.cern.ch/event/966790/?note=147555
+mkdir CMSDIJET
+cd CMSDIJET
+# DijetRootTreeAnalyzer
+git clone git@github.com:Hsin-Yeh/DijetRootTreeAnalyzer.git DijetRootTreeAnalyzer
+cd DijetRootTreeAnalyzer
+git checkout diphotonresonant_hsinyeh
+cd -
+# DijetShapeInterpolator
+git clone git@github.com:Hsin-Yeh/DijetShapeInterpolator.git DijetShapeInterpolator
+cd DijetShapeInterpolator
+git checkout diphotonresonant
+
+# The Combine package
+cd $CMSSW_BASE/src
+git clone git@github.com:apsallid/HiggsAnalysis-CombinedLimit.git HiggsAnalysis/CombinedLimit
+cd $CMSSW_BASE/src/HiggsAnalysis/CombinedLimit
+git checkout diphotfuns
+
+# Instead, if you would like to have the latest functions/recommendations in combine. One could do cherry-picking:
+git clone https://github.com/cms-analysis/HiggsAnalysis-CombinedLimit.git HiggsAnalysis/CombinedLimit
+cd $CMSSW_BASE/src/HiggsAnalysis/CombinedLimit
+git fetch origin
+git checkout v8.0.1 # Or any other particular branch that you need
+git cherry-pick 723a25391ae4d3c1f28ca2f8c53f3f44c5641eaa # Cloning the functions added by Andreas
+
+cd $CMSSW_BASE/src
+scramv1 b clean; scramv1 b # make a clean build
+
+# Change this baseDir to your own path. This variable will be used through out the README
+# It will be convenient to add this directly to the shell init config such as the .bashrc
+ggBaseDir="/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/"
+#+end_src
+
+
+* Basic plots
+First we can plot a data and background MC comparison plots for each kinematics variable. The photon+jet, and dijet background(fake backgrounds) are being studied in a data-driven fashion by the non-resonant search. For the resonant search, we are using data-driven background fitting for the whole background in the end, but it is still important to learn how the kinematics variables look like to get a better idea of the analysis phase space.
+#+begin_src bash
+cd ${ggBaseDir}
+cmsenv
+mkdir plots
+# Syntax basicplots.exe [barrel/endcap] [2016/2017/2018]
+# Example
+basicplots.exe barrel 2018
+#+end_src
+* Prepare samples
+In this step we skim the ntuples generated from the ExoDiphotonAnalyzer, and pick the variables relevant to the resonant search.
+** prepare trees
+- Create the trees for each sample in each category(EBEB EBEE), then merge them in the next step
 - Lxplus kills the process if we run all the samples at once (chain too many samples)
-- Run RS, HeavyHiggs, data one by one ( Comment out the others in "Tools/interface/sampleList.hh" )
+- Run RS, HeavyHiggs, data one by one
+- command syntax: prepareTrees.exe [data/grav/heavyhiggs] [BB/BE] [2016/2017/2018] [coupling] [OutputDir]
+- Currently the event selections in the code are commented out. The event selection is now done in the "Add Samples" step in the DijetRootTreeAnalyzer repo.
+- If one wants to process the "Parametric signal model" then the event selections should be added back
 
 #+begin_src bash
-prepareTrees.exe grav BB 2016 "/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/input"
-prepareTrees.exe grav BB 2017 "/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/input"
-prepareTrees.exe grav BE 2017 "/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/input"
-prepareTrees.exe heavyhiggs BB 2016 "/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/input"
-prepareTrees.exe heavyhiggs BB 2017 "/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/input"
-prepareTrees.exe heavyhiggs BB 2018 "/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/input"
+# Example
+cd ${ggBaseDir}
+mkdir input
+prepareTrees.exe grav BB 2018 all "${ggBaseDir}/input"
 
+outputDir="${ggBaseDir}/input"
+samplelist=("data" "grav" "heavyhiggs") # input sample list
+couplist=("kMpl001" "kMpl01" "kMpl02" "0p014" "1p4" "5p6")
+yearlist=("2016" "2017" "2018") # year list
+catlist=("BB" "BE") # Category list
+
+for sample in "${samplelist[@]}"; do
+    for year in "${yearlist[@]}"; do
+        for cat in "${catlist[@]}"; do
+            echo ${sample} ${year} ${cat}
+            prepareTrees.exe ${sample} ${cat} ${year} all ${outputDir}
+        done
+    done
+done
 #+end_src
 
 ** Merge files
+Merge EBEB and EBEE files
 #+begin_src bash
 cd input
 ./haddsamples.sh
+
+# If storage is limited, the pre-merged files can be deleted
+rm *.root
 #+end_src
 
 * Parametric signal model
@@ -183,18 +263,30 @@ for i in {2017,2018}; do echo $i;
 cpwww ${mainpath}/output/$i/FinalParametricShape/systematics ~/www/diphoton-analysis/$i/FinalParametricShape/systematics/${dateDir};
 done;
 #+end_src
-* ADD Samples
+* Add Samples
+Apply event selections and get the invariant mass shapes (Minv/Mgg) in histogram form.
 *** Data
-
+Get Minv for data. The historgram is binned in 1GeV interval and will be rebinned later.
 #+begin_src bash
-#Data
-for year in {2016,2017,2018}; do echo $year; python python/AddDataSamples.py -t nom -d output -c EBEB /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/input/trees_oldCut/data_${year}.root; python python/AddDataSamples.py -t nom -d output -c EBEE /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/input/trees_oldCut/data_${year}.root; done;
+cd ${ggBaseDir}/CMSDIJET/DijetRootTreeAnalyzer
+mkdir output
+
+# Example
+python python/AddDataSamples.py -t nom -d output -c EBEB ${ggBaseDir}/input/trees/data_2018.root;
+
+# inputDir="/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/input/trees_oldCut/"
+inputDir="${ggBaseDir}/input/trees/"
+for year in {2016,2017,2018}; do
+    for cat in {EBEB,EBEE}; do
+    echo ${year} ${cat};
+    python python/AddDataSamples.py -t nom -d output -c ${cat} ${inputDir}/data_${year}.root;
+done;
 #+end_src
 
 *** Nom Signal
-
+Get Minv for signal model. A ratio histogram is made to perform the signal shape interpolating in the "DijetShapeInterpolator" repo later.
 #+begin_src bash
-cd /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/CMSDIJET/DijetRootTreeAnalyzer/
+
 cmsenv
 mkdir -p output/plots
 
@@ -203,17 +295,33 @@ mkdir -p output/plots
 # method="genFiducial"
 # method="prefiring"
 mkdir -p output/${method}
+
 #RS
-for year in {2016,2017,2018}; do echo $year; for coup in {"kMpl001","kMpl01","kMpl02"}; do echo $coup; files_RS=`ls /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/input/trees/RSGravitonToGammaGamma_${coup}*${year}*.root`; python python/AddSignalShapes.py -e ${method} -t nom -d output/${method} -c EBEB ${files_RS}; python python/AddSignalShapes.py -e ${method} -t nom -d output/${method} -c EBEE ${files_RS}; done; done;
+for year in {2016,2017,2018}; do
+    for coup in {"kMpl001","kMpl01","kMpl02"}; do
+        for cat in {"EBEB","EBEE"}; do
+            echo ${year} ${coup} ${cat};
+            files_RS=`ls ${ggBaseDir}/input/trees/RSGravitonToGammaGamma_${coup}*${year}*.root`;
+            python python/AddSignalShapes.py -e ${method} -t nom -d output/${method} -c ${cat} ${files_RS};
+    done;
+done;
 
 #GluGlu
-for year in {2016,2017,2018}; do echo $year; for coup in {"0p014","1p4","5p6"}; do echo $coup; files_GluGlu=`ls /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/input/trees/GluGluSpin0ToGammaGamma_W_${coup}*${year}*.root`; python python/AddSignalShapes.py -e ${method} -t nom -d output/${method} -c EBEB ${files_GluGlu}; python python/AddSignalShapes.py -e ${method} -t nom -d output/${method} -c EBEE ${files_GluGlu}; done; done;
-
+for year in {2016,2017,2018}; do
+    echo $year;
+    for coup in {"0p014","1p4","5p6"}; do
+        echo $coup; files_GluGlu=`ls ${ggBaseDir}/src/diphoton-analysis/input/trees/GluGluSpin0ToGammaGamma_W_${coup}*${year}*.root`;
+        python python/AddSignalShapes.py -e ${method} -t nom -d output/${method} -c EBEB ${files_GluGlu};
+        python python/AddSignalShapes.py -e ${method} -t nom -d output/${method} -c EBEE ${files_GluGlu};
+    done;
+done;
 
 #RS for width interpolation
 for year in {2016,2017,2018}; do echo $year; for mass in {750,1000,1250,1500,1750,2000,2250,2500,2750,3000,3250,3500,4000,5000}; do echo $mass; files_RS=`ls /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/input/trees/RSGravitonToGammaGamma_*_M_${mass}_*${year}*.root`; python python/AddSignalShapes_width.py -e full -t nom -d output/full -c EBEB ${files_RS}; python python/AddSignalShapes_width.py -e full -t nom -d output/full -c EBEE ${files_RS}; done; done;
 
 #+end_src
+
+#+RESULTS:
 
 *** Systematics
 "energyScaleStatUp","energyScaleSystUp","energyScaleGainUp","energySigmaUp",
@@ -264,11 +372,6 @@ python python/AddSignalShapes.py -t nom -d output ${files_RS_001_2017} ${files_R
 #+end_src
 
 * Signal Normalization
-
-- Check "Tools/interface/sampleList.hh"
-  - Signal samples are initialized
-  - Data samples are commented out
-
 
 #+begin_src bash
 #make some structure
@@ -436,6 +539,8 @@ for year in {2016..2018}; do
         done
     done
 done
+
+# hi2
 
 # hi
 # Systematics
@@ -1100,7 +1205,7 @@ for year in {"2016","2017","2018"}; do for coup in {"kMpl01","kMpl02","kMpl001"}
 
 for year in {"2016","2017","2018"}; do for coup in {"kMpl001","kMpl01","kMpl02"}; do  ./run_multi_combine.sh ${year} ${coup}; done; done
 
-
+# hi3
 cd /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/CMSDIJET/DijetRootTreeAnalyzer
 ./runRS_parallel.sh
 #+end_src
