@@ -1,11 +1,13 @@
 #+TITLE: README_diphotons
 #+Author: Hsin-Yeh, Andreas
+#+OPTIONS: toc:2
 
 The diphoton resonant analysis strategy was changed to match the dijet analysis.
 So we implement some of our code into their repository. There are two repos:
 The DijetRootTreeAnalyzer is the main repo for sample processing, background fitting, studies, getting limits, plots...
 The DijetShapeInterpolator is a special repo for signal shape interpolating using template morphing.
 The decision of changing method could be find in this meeting minutes: https://indico.cern.ch/event/966790/?note=147555
+
 
 * Setup
 #+begin_src bash
@@ -52,7 +54,6 @@ scramv1 b clean; scramv1 b # make a clean build
 # It will be convenient to add this directly to the shell init config such as the .bashrc
 ggBaseDir="/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/"
 #+end_src
-
 
 * Basic plots
 First we can plot a data and background MC comparison plots for each kinematics variable. The photon+jet, and dijet background(fake backgrounds) are being studied in a data-driven fashion by the non-resonant search. For the resonant search, we are using data-driven background fitting for the whole background in the end, but it is still important to learn how the kinematics variables look like to get a better idea of the analysis phase space.
