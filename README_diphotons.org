@@ -1,6 +1,11 @@
 #+TITLE: README_diphotons
 #+Author: Hsin-Yeh, Andreas
-Starting from dijet analysis
+
+The diphoton resonant analysis strategy was changed to match the dijet analysis.
+So we implement some of our code into their repository. There are two repos:
+The DijetRootTreeAnalyzer is the main repo for sample processing, background fitting, studies, getting limits, plots...
+The DijetShapeInterpolator is a special repo for signal shape interpolating using template morphing.
+The decision of changing method could be find in this meeting minutes: https://indico.cern.ch/event/966790/?note=147555
 
 * Setup
 #+begin_src bash
@@ -14,10 +19,7 @@ cmsenv
 git clone git@github.com:Hsin-Yeh/diphoton-analysis.git
 cd diphoton-analysis
 git checkout resana_hsinyeh
-# The diphoton resonant analysis strategy was changed to match the dijet analysis. So we implement some of our code into their repository. There are two repos:
-# The DijetRootTreeAnalyzer is the main repo for sample processing, background fitting, studies, getting limits, plots...
-# The DijetShapeInterpolator is a special repo for signal shape interpolating using template morphing.
-# The decision of changing method could be find in this meeting minutes: https://indico.cern.ch/event/966790/?note=147555
+
 mkdir CMSDIJET
 cd CMSDIJET
 # DijetRootTreeAnalyzer
