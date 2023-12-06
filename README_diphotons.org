@@ -24,6 +24,10 @@ Currently there are a few packages involved in this analysis:
   - [[#fifth-step--test-the-final-shape-against-the-reconstructed-one][Fifth step : Test the final shape against the reconstructed one]]
   - [[#sixth-step--calculate-parametric-signal-nuisances][Sixth step : Calculate parametric signal nuisances]]
 - [[#add-samples][Add Samples]]
+  - [[#data][Data]]
+  - [[#nom-signal][Nom Signal]]
+  - [[#systematics][Systematics]]
+  - [[#split-files-fixme][Split files FIXME]]
 - [[#signal-normalization][Signal Normalization]]
 - [[#extract-shapes][Extract shapes]]
 - [[#get-resonance-shapes][Get Resonance shapes]]
@@ -314,7 +318,7 @@ done;
 #+end_src
 * Add Samples
 Apply event selections and get the invariant mass shapes (Minv/Mgg) in histogram form.
-*** Data
+** Data
 Get Minv for data. The historgram is binned in 1GeV interval and will be rebinned later.
 #+begin_src bash
 cd ${ggBaseDir}/CMSDIJET/DijetRootTreeAnalyzer
@@ -332,7 +336,7 @@ for year in {2016,2017,2018}; do
 done;
 #+end_src
 
-*** Nom Signal
+** Nom Signal
 Get Minv for signal model. A ratio histogram is made to perform the signal shape interpolating in the "DijetShapeInterpolator" repo later.
 #+begin_src bash
 
@@ -372,7 +376,7 @@ for year in {2016,2017,2018}; do echo $year; for mass in {750,1000,1250,1500,175
 
 #+RESULTS:
 
-*** Systematics
+** Systematics
 "energyScaleStatUp","energyScaleSystUp","energyScaleGainUp","energySigmaUp",
 "energyScaleStatDown","energyScaleSystDown","energyScaleGainDown","energySigmaDown",
 "SFScaleUp","SFScaleDown","PUScaleUp","PUScaleDown","testScaleUp","testScaleDown"
@@ -394,7 +398,7 @@ for year in {2016,2017,2018}; do echo $year; for mass in {750,1000,1250,1500,175
 
 #+end_src
 
-*** Split files FIXME
+** Split files FIXME
 I CANNOT MAKE WORK THE ONE FILE TO HAVE THEM ALL BECAUSE
 LATER I WANT TO SPLIT INTO FILES.
 
