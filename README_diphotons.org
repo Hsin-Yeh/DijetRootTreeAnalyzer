@@ -1,11 +1,17 @@
 #+TITLE: README_diphotons
 #+Author: Hsin-Yeh, Andreas
 
-The diphoton resonant analysis strategy was changed to match the dijet analysis.
-So we implement some of our code into their repository. There are two repos:
-The DijetRootTreeAnalyzer is the main repo for sample processing, background fitting, studies, getting limits, plots...
-The DijetShapeInterpolator is a special repo for signal shape interpolating using template morphing.
+The diphoton resonant analysis strategy in signal modeling was modified to match the dijet analysis.
+So we implement some of our code into their repository.
 The decision of changing method could be find in this meeting minutes: https://indico.cern.ch/event/966790/?note=147555
+In short the parametric signal modeling failed at high mass region (>4TeV), so we switch to template morphing scheme.
+
+So currently there are a few packages involved in this analysis:
+- [[https://github.com/Hsin-Yeh/diphoton-analysis/tree/resana_hsinyeh][diphoton_analysis]]: the original analysis repo for diphoton searches (resonant and non-resonant). The ExoDiphotonAnalyzer is the MiniAOD to root ntupler. Some tools for resonant analysis are stored in the Tools/bin directory, which we still use, including the prepareTrees.cc, signalNorm.cc.
+- [[https://github.com/Hsin-Yeh/DijetRootTreeAnalyzer/tree/diphotonresonant_hsinyeh][DijetRootTreeAnalyzer]]: the main repo after the method switching. For sample processing, background fitting, studies, getting limits, plots, etc. Most of the code is written in python and stored in the python directory.
+- [[https://github.com/Hsin-Yeh/DijetRootTreeAnalyzer/tree/diphotonresonant_hsinyeh][DijetShapeInterpolator]]: This is a special repo for signal shape interpolating using template morphing.
+- [[https://cms-analysis.github.io/HiggsAnalysis-CombinedLimit/][Combine]]: The cms official package for calculating limits, significance, and more.
+- [[https://github.com/Hsin-Yeh/EgammaAnalysis-TnPTreeProducer/tree/RunIIfinalForExoGG][EgammaAnalysis-TnPTreeProducer]], [[https://github.com/Hsin-Yeh/egm_tnp_analysis][egm_tnp_analysis]]: A fork of the CMS EGamma official Tag-and-probe package. It is used for calculating the scale facors of the high pT photon ID.
 
 * Table Of Contents :TOC:
 - [[#setup][Setup]]
@@ -21,7 +27,6 @@ The decision of changing method could be find in this meeting minutes: https://i
   - [[#sixth-step--calculate-parametric-signal-nuisances][Sixth step : Calculate parametric signal nuisances]]
 - [[#add-samples][Add Samples]]
 - [[#signal-normalization][Signal Normalization]]
-- [[#save-normalization-----dont-use-that-no-more][Save Normalization <<<--- DON'T USE THAT NO MORE.]]
 - [[#extract-shapes][Extract shapes]]
 - [[#get-resonance-shapes][Get Resonance shapes]]
 - [[#get-width-interpolated-shapes][Get Width Interpolated shapes]]
@@ -480,28 +485,6 @@ time parallel --progress --jobs 10 'year={1}; method={2}; signal={3}; signalNorm
 # Copy png to website
 time parallel --progress -jobs 6 'year={1}; method={2}; dateDir=$(date +"%Y%m%d_%H%M%S"); ~/scripts/cpwww_png.sh output/{1}/signalNorm/{2} ~/www/diphoton-analysis/{1}/signalNorm/{2}/${dateDir}' ::: 2016 2017 2018 ::: "full" "genFiducial"
 #+end_src
-
-* Save Normalization <<<--- DON'T USE THAT NO MORE.
-#=======================================================
-The signal samples trees and the initial histos that are input to the interpolation package are
-normalized to 1000/pb luminosity.
-
-Then, the interpolation code outputs histograms normalized to unity. So, to get the correct
-normalization we save the initial integral of the histos
-
-Remember that in the preparation of the trees we have
-#used the weightAll cut to normalize the signal samples to 1000/pb luminosity.
-
-
-#Be CAREFUL: We will append so remove the file first!
-#=======================================================
-#RS
-for year in {2017,2018}; do echo $year; for coup in {"kMpl001","kMpl01","kMpl02"}; do echo $coup; files_RS=`ls /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/input/trees/RSGravitonToGammaGamma_${coup}*${year}*.root`; python python/SaveSignalNormalization.py -t nom -d output --year ${year} ${files_RS}; done; done;
-
-#=======================================================
-#GluGlu
-for year in {2017,2018}; do echo $year; for coup in {"0p014","1p4","5p6"}; do echo $coup; files_GluGlu=`ls /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/input/trees/GluGluSpin0ToGammaGamma_W_${coup}*${year}*.root`; python python/SaveSignalNormalization.py -t nom -d output --year ${year} ${files_GluGlu}; done; done;
-
 * Extract shapes
 
 #+begin_src bash
