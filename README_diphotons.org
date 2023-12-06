@@ -1,12 +1,10 @@
 #+TITLE: README_diphotons
 #+Author: Hsin-Yeh, Andreas
 
-The diphoton resonant analysis strategy in signal modeling was modified to match the dijet analysis.
+The parametric signal modeling failed at high mass region (>4TeV), so the diphoton resonant analysis strategy in signal modeling was recommended to follow the dijet analysis, which is using a template morphing scheme. The decision of changing method could be find in this [[https://indico.cern.ch/event/966790/?note=147555][meeting minutes]].
 So we implement some of our code into their repository.
-The decision of changing method could be find in this meeting minutes: https://indico.cern.ch/event/966790/?note=147555
-In short the parametric signal modeling failed at high mass region (>4TeV), so we switch to template morphing scheme.
 
-So currently there are a few packages involved in this analysis:
+Currently there are a few packages involved in this analysis:
 - [[https://github.com/Hsin-Yeh/diphoton-analysis/tree/resana_hsinyeh][diphoton_analysis]]: the original analysis repo for diphoton searches (resonant and non-resonant). The ExoDiphotonAnalyzer is the MiniAOD to root ntupler. Some tools for resonant analysis are stored in the Tools/bin directory, which we still use, including the prepareTrees.cc, signalNorm.cc.
 - [[https://github.com/Hsin-Yeh/DijetRootTreeAnalyzer/tree/diphotonresonant_hsinyeh][DijetRootTreeAnalyzer]]: the main repo after the method switching. For sample processing, background fitting, studies, getting limits, plots, etc. Most of the code is written in python and stored in the python directory.
 - [[https://github.com/Hsin-Yeh/DijetRootTreeAnalyzer/tree/diphotonresonant_hsinyeh][DijetShapeInterpolator]]: This is a special repo for signal shape interpolating using template morphing.
