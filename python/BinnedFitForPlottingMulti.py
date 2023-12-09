@@ -1510,6 +1510,7 @@ if __name__ == '__main__':
     if not options.linearX:
         c.Print(options.outDir+"/fit_mgg_%s_%s_%s.pdf"%(fitRegion.replace(',','_'),box,options.year))
         c.Print(options.outDir+"/fit_mgg_%s_%s_%s.png"%(fitRegion.replace(',','_'),box,options.year))
+        c.SaveAs(options.outDir+"/fit_mgg_%s_%s_%s.root"%(fitRegion.replace(',','_'),box,options.year))
         #c.Print(options.outDir+"/fit_mgg_%s_%s_%s_%s.C"%(fitRegion.replace(',','_'),box,options.coup,options.year))
     else:
         c.Print(options.outDir+"/fit_mgg_%s_%s_linearX.pdf"%(fitRegion.replace(',','_'),box))
