@@ -1530,11 +1530,12 @@ if __name__ == '__main__':
     backgrounds["expow1"].Write()
     backgrounds["invpow1"].Write()
     backgrounds["invpowlin1"].Write()
-    outFile.Close()
+    # outFile.Close()
     #w.Close()
-    del w
+    # del w
 
     print("Crash 1")
     #Shouldn't close outFile and del w
-    #outFile.Close()
+    outFile.Close()
+    del w
     print("Crash 2")
