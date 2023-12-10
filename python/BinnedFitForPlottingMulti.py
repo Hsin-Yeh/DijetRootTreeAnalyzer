@@ -1518,6 +1518,10 @@ if __name__ == '__main__':
 
     tdirectory.cd()
     c.Write()
+    backgrounds["dijet"].Write()
+    backgrounds["expow1"].Write()
+    backgrounds["invpow1"].Write()
+    backgrounds["invpowlin1"].Write()
     rootFile.Close()
 
 
@@ -1526,10 +1530,6 @@ if __name__ == '__main__':
     outFile.cd()
     w.Write()
     c.Write()
-    backgrounds["dijet"].Write()
-    backgrounds["expow1"].Write()
-    backgrounds["invpow1"].Write()
-    backgrounds["invpowlin1"].Write()
     # outFile.Close()
     #w.Close()
     # del w
