@@ -1530,7 +1530,7 @@ if __name__ == '__main__':
     backgrounds["expow1"].Write()
     backgrounds["invpow1"].Write()
     backgrounds["invpowlin1"].Write()
-
+    outFile.Close()
     #w.Close()
     del w
 
