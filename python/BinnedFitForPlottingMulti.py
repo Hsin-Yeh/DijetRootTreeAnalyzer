@@ -1032,7 +1032,6 @@ if __name__ == '__main__':
         h_background.SetLineWidth(2)
         h_background.Draw("histsame")
 
-
     g_signals = []
     for model, mass, xsec, signalFileName, sigHist, color, style in zip(models,masses,xsecs,signalFileNames,signalHistosRebin,colors,styles):
         g_signal = rt.TGraphAsymmErrors(sigHist)
@@ -1526,6 +1525,12 @@ if __name__ == '__main__':
     outFile = rt.TFile.Open(options.outDir+"/"+outFileName,'recreate')
     outFile.cd()
     w.Write()
+    c.Write()
+    backgrounds["dijet"].Write()
+    backgrounds["expow1"].Write()
+    backgrounds["invpow1"].Write()
+    backgrounds["invpowlin1"].Write()
+
     #w.Close()
     del w
 
