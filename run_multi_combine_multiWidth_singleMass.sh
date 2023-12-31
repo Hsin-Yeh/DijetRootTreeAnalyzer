@@ -25,6 +25,7 @@ InterpolateShapePath="${DijetShapeInterpolator}/full_backup/width/"
 bkgFitResultsPath="${DijetRootTreeAnalyzer}/datacards/multiWidth/"
 SignalNormFile_input="${diphoton}/SignalNorm_Splines_full.txt"
 SignalNormFile="SignalNorm_Splines_full_multiWidth.txt"
+datacardsDir="datacards/${signal}"
 # toysfile created by: combine -M GenerateOnly datacards/diphoton_combine_1300_DiPhotons_4550_fullRun2.txt -n _bkgOnly --toysFrequentist -t 10000 --saveToys --expectSignal=0
 toysfile="${DijetRootTreeAnalyzer}/ParallelForLimits/higgsCombine_Generate_bkgOnly.root"
 
@@ -32,7 +33,7 @@ toysfile="${DijetRootTreeAnalyzer}/ParallelForLimits/higgsCombine_Generate_bkgOn
 
 #################### mkdirs ####################
 mkdir -p signal_shapes
-mkdir -p datacards
+mkdir -p ${datacardsDir}
 mkdir -p FinalResults
 
 #################### Get Width Interpolated shapes ####################
@@ -104,20 +105,20 @@ for year in "${yearlist[@]}"; do
             --PUScaleUp      signal_shapes/ResonanceShapes_InputShapes_${signal_LongName}_${coupling}_${cat}_${year}_PUScaleUp.root           \
             --PUScaleDown    signal_shapes/ResonanceShapes_InputShapes_${signal_LongName}_${coupling}_${cat}_${year}_PUScaleDown.root         \
             signal_shapes/ResonanceShapes_InputShapes_${signal_LongName}_${coupling}_${cat}_${year}.root;
-        mv diphoton_combine_${mass}_${box}.* datacards/.
+        mv diphoton_combine_${mass}_${box}.* ${datacardsDir}/.
     done
 done
 # ############################## Combine cards ##############################
 echo "########## Combine Datacards ##########"
 scenario="DiPhotons_${coupling}"
-datacardfile="datacards/diphoton_combine_${mass}_${scenario}_fullRun2.txt"
-combineCards.py datacards/diphoton_combine_${mass}_${scenario}_EBEB_2016.txt \
-    datacards/diphoton_combine_${mass}_${scenario}_EBEE_2016.txt \
-    datacards/diphoton_combine_${mass}_${scenario}_EBEB_2017.txt \
-    datacards/diphoton_combine_${mass}_${scenario}_EBEE_2017.txt \
-    datacards/diphoton_combine_${mass}_${scenario}_EBEB_2018.txt \
-    datacards/diphoton_combine_${mass}_${scenario}_EBEE_2018.txt \
-    > datacards/diphoton_combine_${mass}_${scenario}_fullRun2.txt;
+datacardfile="${datacardsDir}/diphoton_combine_${mass}_${scenario}_fullRun2.txt"
+combineCards.py ${datacardsDir}/diphoton_combine_${mass}_${scenario}_EBEB_2016.txt \
+    ${datacardsDir}/diphoton_combine_${mass}_${scenario}_EBEE_2016.txt \
+    ${datacardsDir}/diphoton_combine_${mass}_${scenario}_EBEB_2017.txt \
+    ${datacardsDir}/diphoton_combine_${mass}_${scenario}_EBEE_2017.txt \
+    ${datacardsDir}/diphoton_combine_${mass}_${scenario}_EBEB_2018.txt \
+    ${datacardsDir}/diphoton_combine_${mass}_${scenario}_EBEE_2018.txt \
+    > ${datacardsDir}/diphoton_combine_${mass}_${scenario}_fullRun2.txt;
 echo ${datacardfile}
 
 # ############################## Combine Limit ##############################

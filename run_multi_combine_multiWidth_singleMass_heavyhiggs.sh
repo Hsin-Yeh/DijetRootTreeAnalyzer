@@ -10,7 +10,6 @@ yearlist=("2016" "2017" "2018")
 # Cats
 catlist=("EBEB" "EBEE")
 # method
-method="genFiducial"
 signame="heavyhiggs"
 signal_LongName="GluGluSpin0ToGammaGamma_W"
 
@@ -21,14 +20,17 @@ diphoton="/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src
 
 inputDataDir="${DijetRootTreeAnalyzer}/output/InputShapes_data_backup"
 configFile="${DijetRootTreeAnalyzer}/config/diphotons_500GeV.config"
-InterpolateShapePath="${DijetShapeInterpolator}/${method}/width/"
+InterpolateShapePath="${DijetShapeInterpolator}/genFiducial/width/"
 bkgFitResultsPath="${DijetRootTreeAnalyzer}/datacards/multiWidth/"
-SignalNormFile_input="${diphoton}/SignalNorm_Splines_${method}.txt"
-SignalNormFile="SignalNorm_Splines_${method}_multiWidth.txt"
+SignalNormFile_input="${diphoton}/SignalNorm_Splines_genFiducial.txt"
+SignalNormFile="SignalNorm_Splines_genFiducial_multiWidth.txt"
+datacardsDir="datacards/${signal}"
+# toysfile created by: combine -M GenerateOnly datacards/diphoton_combine_1300_DiPhotons_4550_fullRun2.txt -n _bkgOnly --toysFrequentist -t 10000 --saveToys --expectSignal=0
+toysfile="${DijetRootTreeAnalyzer}/ParallelForLimits/higgsCombine_Generate_bkgOnly.root"
 
 #################### mkdirs ####################
 mkdir -p signal_shapes
-mkdir -p datacards
+mkdir -p ${datacardsDir}
 mkdir -p FinalResults
 
 #################### Get Width Interpolated shapes ####################
@@ -100,20 +102,20 @@ for year in "${yearlist[@]}"; do
             --PUScaleUp      signal_shapes/ResonanceShapes_InputShapes_${signal_LongName}_${coupling}_${cat}_${year}_PUScaleUp.root           \
             --PUScaleDown    signal_shapes/ResonanceShapes_InputShapes_${signal_LongName}_${coupling}_${cat}_${year}_PUScaleDown.root         \
             signal_shapes/ResonanceShapes_InputShapes_${signal_LongName}_${coupling}_${cat}_${year}.root;
-        mv diphoton_combine_${mass}_${box}.* datacards/.
+        mv diphoton_combine_${mass}_${box}.* ${datacardsDir}/.
     done
 done
 # ############################## Combine cards ##############################
 echo "########## Combine Datacards ##########"
 scenario="DiPhotons_${coupling}"
-datacardfile="datacards/diphoton_combine_${mass}_${scenario}_fullRun2.txt"
-combineCards.py datacards/diphoton_combine_${mass}_${scenario}_EBEB_2016.txt \
-    datacards/diphoton_combine_${mass}_${scenario}_EBEE_2016.txt \
-    datacards/diphoton_combine_${mass}_${scenario}_EBEB_2017.txt \
-    datacards/diphoton_combine_${mass}_${scenario}_EBEE_2017.txt \
-    datacards/diphoton_combine_${mass}_${scenario}_EBEB_2018.txt \
-    datacards/diphoton_combine_${mass}_${scenario}_EBEE_2018.txt \
-    > datacards/diphoton_combine_${mass}_${scenario}_fullRun2.txt;
+datacardfile="${datacardsDir}/diphoton_combine_${mass}_${scenario}_fullRun2.txt"
+combineCards.py ${datacardsDir}/diphoton_combine_${mass}_${scenario}_EBEB_2016.txt \
+    ${datacardsDir}/diphoton_combine_${mass}_${scenario}_EBEE_2016.txt \
+    ${datacardsDir}/diphoton_combine_${mass}_${scenario}_EBEB_2017.txt \
+    ${datacardsDir}/diphoton_combine_${mass}_${scenario}_EBEE_2017.txt \
+    ${datacardsDir}/diphoton_combine_${mass}_${scenario}_EBEB_2018.txt \
+    ${datacardsDir}/diphoton_combine_${mass}_${scenario}_EBEE_2018.txt \
+    > ${datacardsDir}/diphoton_combine_${mass}_${scenario}_fullRun2.txt;
 echo ${datacardfile}
 
 # ############################## Combine Limit ##############################
@@ -132,7 +134,7 @@ export expP2s=`cat results  | grep  "Expected 97.5%:" | awk '{print $5}'`
 echo $mass $obs $expM2s $expM1s $exp $expP1s $expP2s
 echo $mass $obs $expM2s $expM1s $exp $expP1s $expP2s > ${finalResults}
 
-# ############################## Combine pvalue ##############################
+# ############################## Combine local pvalue ##############################
 echo "########## Run Significance ##########"
 combine -d ${datacardfile} -M Significance --signif --pval --cminDefaultMinimizerType=Minuit2 -n Observed > results_pvalue
 rm higgsCombine*.root
@@ -151,3 +153,13 @@ export zvalue=`cat results_zvalue  | grep  "Significance:" | awk '{print $2}'`
 
 echo $mass $zvalue
 echo $mass $zvalue >> ${finalResults}
+
+# ############################## Combine Global zvalue ##############################
+echo "########## Run Global Significance ##########"
+combine -d ${datacardfile} -M Significance --cminDefaultMinimizerType=Minuit2 -n Observed_global --toysFile ${toysfile} -t 1000 > results_global_zvalue
+rm higgsCombine*.root
+
+export global_zvalue=`cat results_global_zvalue  | grep  "Significance:" | awk '{print $2}'`
+
+echo $mass $global_zvalue
+echo $mass $global_zvalue >> ${finalResults}
