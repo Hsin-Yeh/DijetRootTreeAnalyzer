@@ -1,5 +1,18 @@
+# Hey Emacs, this is a -*- org -*- file ...
 #+TITLE: README_diphotons
 #+Author: Hsin-Yeh, Andreas
+#+EMAIL: hsin-yeh.wu@cern.ch
+#+OPTIONS: H:5 num:nil toc:2 p:t
+#+OPTIONS: ^:nil
+#+SETUPFILE: https://fniessen.github.io/org-html-themes/org/theme-readtheorg.setup
+
+#+HTML_HEAD: <style> #content{max-width:1000px;}</style>
+#+HTML_HEAD: <style> p{max-width:800px;}</style>
+#+HTML_HEAD: <style> li{max-width:800px;}</style
+# #+HTML_HEAD_EXTRA: <style>*{font-size: x-large;}</style>
+# Change the background of source block.
+# #+HTML_HEAD: <style>pre.src{background:#343131;color:black;} </style>
+
 
 The parametric signal modeling failed at high mass region (>4TeV), so the diphoton resonant analysis strategy in signal modeling was recommended to follow the dijet analysis, which is using a template morphing scheme. The decision of changing method could be find in this [[https://indico.cern.ch/event/966790/?note=147555][meeting minutes]].
 So we implement some of our code into their repository.
@@ -11,92 +24,47 @@ Currently there are a few packages involved in this analysis:
 - [[https://cms-analysis.github.io/HiggsAnalysis-CombinedLimit/][Combine]]: The cms official package for calculating limits, significance, and more.
 - [[https://github.com/Hsin-Yeh/EgammaAnalysis-TnPTreeProducer/tree/RunIIfinalForExoGG][EgammaAnalysis-TnPTreeProducer]], [[https://github.com/Hsin-Yeh/egm_tnp_analysis][egm_tnp_analysis]]: A fork of the CMS EGamma official Tag-and-probe package. It is used for calculating the scale facors of the high pT photon ID.
 
-* Table Of Contents :TOC:
-- [[#setup][Setup]]
-- [[#basic-plots][Basic plots]]
-- [[#prepare-samples][Prepare samples]]
-  - [[#prepare-trees][prepare trees]]
-  - [[#merge-files][Merge files]]
-- [[#parametric-signal-model][Parametric signal model]]
-  - [[#second-step--fit-response-and-gen-distribution][Second step : Fit response and gen distribution]]
-  - [[#third-step--convolution-and-closure-test][Third step : Convolution and closure test]]
-  - [[#fourth-step--final-shapes][Fourth step : Final Shapes]]
-  - [[#fifth-step--test-the-final-shape-against-the-reconstructed-one][Fifth step : Test the final shape against the reconstructed one]]
-  - [[#sixth-step--calculate-parametric-signal-nuisances][Sixth step : Calculate parametric signal nuisances]]
-- [[#add-samples][Add Samples]]
-  - [[#data][Data]]
-  - [[#nom-signal][Nom Signal]]
-  - [[#systematics][Systematics]]
-  - [[#split-files-fixme][Split files FIXME]]
-- [[#signal-normalization][Signal Normalization]]
-- [[#extract-shapes][Extract shapes]]
-- [[#get-resonance-shapes][Get Resonance shapes]]
-- [[#get-width-interpolated-shapes][Get Width Interpolated shapes]]
-- [[#compare-shapes---closure-test---single-plot-comparison][Compare shapes - Closure Test - single plot comparison]]
-- [[#compare-shapes---closure-test---multi-plot-comparison][Compare shapes - Closure Test - multi plot comparison]]
-- [[#background-model][Background model]]
-  - [[#higgs-combine-function-addons][higgs combine function addons]]
-  - [[#bkg-fit][Bkg fit]]
-- [[#create-the-datacard][Create the datacard]]
-  - [[#writedatacard-naming][WriteDataCard naming]]
-  - [[#write-datacards][Write datacards]]
-  - [[#write-test-datacards-large-scale-factor-systematics][Write test datacards (large scale factor systematics)]]
-- [[#bias][Bias]]
-  - [[#alternative-bkg-models][Alternative bkg models]]
-  - [[#writedatacard-naming-1][WriteDataCard naming]]
-  - [[#run-bias-study][Run Bias Study]]
-  - [[#plot][plot]]
-  - [[#not-needed][NOT NEEDED]]
-- [[#combine-checks-limits][Combine: checks, limits]]
-  - [[#systematics-plots][Systematics plots]]
-  - [[#standard-checks][Standard Checks]]
-  - [[#yields][Yields]]
-  - [[#limits][Limits]]
-  - [[#observed-significance][Observed Significance]]
-  - [[#impact-plots][Impact plots]]
-  - [[#cutflow][cutflow]]
-  - [[#discrete][discrete]]
-  - [[#ee_l1_prefiring][EE_L1_prefiring]]
-- [[#scripts][Scripts]]
-
 * Setup
 #+begin_src bash
-#log in lxplus7
+##### log in lxplus7 (ssh username@lxplus7.cern.ch) #####
 export SCRAM_ARCH=slc7_amd64_gcc700
 cmsrel CMSSW_10_2_13
 cd CMSSW_10_2_13/src
 cmsenv
 
-#The diphoton repository from my fork
+##### The diphoton repository from my fork #####
 git clone git@github.com:Hsin-Yeh/diphoton-analysis.git
 cd diphoton-analysis
 git checkout resana_hsinyeh
 
+##### The two dijet repos after method switching #####
 mkdir CMSDIJET
 cd CMSDIJET
-# DijetRootTreeAnalyzer
+##### DijetRootTreeAnalyzer #####
 git clone git@github.com:Hsin-Yeh/DijetRootTreeAnalyzer.git DijetRootTreeAnalyzer
 cd DijetRootTreeAnalyzer
 git checkout diphotonresonant_hsinyeh
 cd -
-# DijetShapeInterpolator
+##### DijetShapeInterpolator #####
 git clone git@github.com:Hsin-Yeh/DijetShapeInterpolator.git DijetShapeInterpolator
 cd DijetShapeInterpolator
 git checkout diphotonresonant
 
-# The Combine package
+##### The Combine package #####
 cd $CMSSW_BASE/src
 git clone git@github.com:apsallid/HiggsAnalysis-CombinedLimit.git HiggsAnalysis/CombinedLimit
 cd $CMSSW_BASE/src/HiggsAnalysis/CombinedLimit
 git checkout diphotfuns
+##### Instead, if you would like to have the latest functions/recommendations in combine. One could do cherry-picking: #####
+# git clone https://github.com/cms-analysis/HiggsAnalysis-CombinedLimit.git HiggsAnalysis/CombinedLimit
+# cd $CMSSW_BASE/src/HiggsAnalysis/CombinedLimit
+# git fetch origin
+# git remote add diphotfuns git@github.com:apsallid/HiggsAnalysis-CombinedLimit.git
+# git fetch diphotfuns
+# git checkout v8.0.1 # Or any other particular branch that you need
+# git cherry-pick 723a25391ae4d3c1f28ca2f8c53f3f44c5641eaa # Cloning the functions added by Andreas
 
-# Instead, if you would like to have the latest functions/recommendations in combine. One could do cherry-picking:
-git clone https://github.com/cms-analysis/HiggsAnalysis-CombinedLimit.git HiggsAnalysis/CombinedLimit
-cd $CMSSW_BASE/src/HiggsAnalysis/CombinedLimit
-git fetch origin
-git checkout v8.0.1 # Or any other particular branch that you need
-git cherry-pick 723a25391ae4d3c1f28ca2f8c53f3f44c5641eaa # Cloning the functions added by Andreas
-
+##### Build #####
 cd $CMSSW_BASE/src
 scramv1 b clean; scramv1 b # make a clean build
 
@@ -345,7 +313,7 @@ mkdir -p output/plots
 
 # method="full"
 # method="truncate"
-# method="genFiducial"
+method="genFiducial"
 # method="prefiring"
 mkdir -p output/${method}
 
@@ -361,11 +329,12 @@ done;
 
 #GluGlu
 for year in {2016,2017,2018}; do
-    echo $year;
     for coup in {"0p014","1p4","5p6"}; do
-        echo $coup; files_GluGlu=`ls ${ggBaseDir}/src/diphoton-analysis/input/trees/GluGluSpin0ToGammaGamma_W_${coup}*${year}*.root`;
-        python python/AddSignalShapes.py -e ${method} -t nom -d output/${method} -c EBEB ${files_GluGlu};
-        python python/AddSignalShapes.py -e ${method} -t nom -d output/${method} -c EBEE ${files_GluGlu};
+        for cat in {"EBEB","EBEE"}; do
+            echo ${year} ${coup} ${cat};
+            files_GluGlu=`ls ${ggBaseDir}/input/trees/GluGluSpin0ToGammaGamma_W_${coup}*${year}*.root`;
+            python python/AddSignalShapes.py -e ${method} -t nom -d output/${method} -c ${cat} ${files_GluGlu};
+        done;
     done;
 done;
 
@@ -395,32 +364,6 @@ for year in {2016,2017,2018}; do echo $year; for coup in {"0p014","1p4","5p6"}; 
 
 #RS for width interpolation
 for year in {2016,2017,2018}; do echo $year; for mass in {750,1000,1250,1500,1750,2000,2250,2500,3000,3500,4000,5000}; do echo $mass; files_RS=`ls /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/input/trees/RSGravitonToGammaGamma_*_M_${mass}_*${year}*.root`; for syst in {"energyScaleStatUp","energyScaleSystUp","energyScaleGainUp","energySigmaUp","energyScaleStatDown","energyScaleSystDown","energyScaleGainDown","energySigmaDown","SFScaleUp","SFScaleDown","PUScaleUp","PUScaleDown","EEPFScaleUp","EEPFScaleDown"}; do echo ${syst}; python python/AddSignalShapes_width.py -e full -t systematics -s ${syst} -d output/full -c EBEB ${files_RS}; python python/AddSignalShapes_width.py -e full -t systematics -s ${syst} -d output/full -c EBEE ${files_RS}; done; done; done;
-
-#+end_src
-
-** Split files FIXME
-I CANNOT MAKE WORK THE ONE FILE TO HAVE THEM ALL BECAUSE
-LATER I WANT TO SPLIT INTO FILES.
-
-#+begin_src bash
-
-#RS and GluGlu
-files_RS_001_2017=`ls /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/input/trees/RSGravitonToGammaGamma_kMpl001*2017*.root`;
-files_RS_01_2017=`ls /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/input/trees/RSGravitonToGammaGamma_kMpl01*2017*.root`;
-files_RS_01_2017=`ls /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/input/trees/RSGravitonToGammaGamma_kMpl02*2017*.root`;
-files_RS_001_2018=`ls /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/input/trees/RSGravitonToGammaGamma_kMpl001*2018*.root`;
-files_RS_01_2018=`ls /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/input/trees/RSGravitonToGammaGamma_ kMpl01*2018*.root`;
-files_RS_01_2018=`ls /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/input/trees/RSGravitonToGammaGamma_kMpl02*2018*.root`;
-
-files_GluGlu_0p014_2017=`ls /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/input/trees/GluGluSpin0ToGammaGamma_W_0p014*2017*.root`
-files_GluGlu_1p4_2017=`ls /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/input/trees/GluGluSpin0ToGammaGamma_W_1p4*2017*.root`
-files_GluGlu_5p6_2017=`ls /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/input/trees/GluGluSpin0ToGammaGamma_W_5p6*2017*.root`
-files_GluGlu_0p014_2018=`ls /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/input/trees/GluGluSpin0ToGammaGamma_W_0p014*2018*.root`
-files_GluGlu_1p4_2018=`ls /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/input/trees/GluGluSpin0ToGammaGamma_W_1p4*2018*.root`
-files_GluGlu_5p6_2018=`ls /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/input/trees/GluGluSpin0ToGammaGamma_W_5p6*2018*.root`
-
-
-python python/AddSignalShapes.py -t nom -d output ${files_RS_001_2017} ${files_RS_01_2017} ${files_RS_02_2017} ${files_RS_001_2018} ${files_RS_01_2018} ${files_RS_02_2018} ${files_GluGlu_0p014_2017} ${files_GluGlu_1p4_2017} ${files_GluGlu_5p6_2017} ${files_GluGlu_0p014_2018} ${files_GluGlu_1p4_2018} ${files_GluGlu_5p6_2018}
 
 #+end_src
 
