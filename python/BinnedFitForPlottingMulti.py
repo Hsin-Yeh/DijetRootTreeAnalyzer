@@ -875,7 +875,7 @@ if __name__ == '__main__':
             p0_b =  w.var('Ntot_%s_bkg'%(box)).getVal() / int_b
         else:
             p0_b =  w.var('Ntot_%s_bkg%s'%(box,key)).getVal() / int_b
-            print(int_b,p0_b, w.var('Ntot_%s_bkg%s'%(box,key)).getVal() )
+        print(int_b,p0_b, w.var('Ntot_%s_bkg%s'%(box,key)).getVal() )
 
             #print(int_b,p0_b, w.var('Ntot_%s_bkg'%box).getVal() )
             #print(int_b,p0_b, w.var('Ntot_%s_bkg%s'%(box,options.config.split("_")[-1].split(".")[-2])).getVal() )
