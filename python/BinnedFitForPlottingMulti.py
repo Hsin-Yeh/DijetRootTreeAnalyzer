@@ -854,6 +854,7 @@ if __name__ == '__main__':
     for key, value in background_pdfs.iteritems():
         if "dijet" == key:
             backgrounds[key]= value.asTF(rt.RooArgList(w.var('mgg')),rt.RooArgList(w.var('p0_%s'%box), w.var('p1_%s'%box), w.var('p2_%s'%box)))
+            print(type(backgrounds[key]))
         if "expow1" == key:
             backgrounds[key]= value.asTF(rt.RooArgList(w.var('mgg')),rt.RooArgList(w.var('pex1_0_%s'%box), w.var('pex1_1_%s'%box), w.var('pex1_2_%s'%box)))
         if "invpow1" == key:
