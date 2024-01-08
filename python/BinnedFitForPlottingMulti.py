@@ -882,7 +882,7 @@ if __name__ == '__main__':
 
         backgrounds[key].SetParameter(0,p0_b)
     c_fr = rt.TCanvas()
-    c_fr.Setlogy()
+    c_fr.SetLogy()
     backgrounds["dijet"].SetLineColor(rt.kBlack)
     backgrounds["dijet"].Draw("Al")
     backgrounds["expow1"].SetLineColor(rt.kRed)
