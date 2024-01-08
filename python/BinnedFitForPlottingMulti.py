@@ -853,6 +853,7 @@ if __name__ == '__main__':
     #background= background_pdf.asTF(rt.RooArgList(w.var('th1x')),rt.RooArgList(w.var('p0_%s'%box)))
     for key, value in background_pdfs.iteritems():
         if "dijet" == key:
+            print(type(w.var('p1_%s'%box)), w.var('p1_%s'%box))
             backgrounds[key]= value.asTF(rt.RooArgList(w.var('mgg')),rt.RooArgList(w.var('p0_%s'%box), w.var('p1_%s'%box), w.var('p2_%s'%box)))
         if "expow1" == key:
             backgrounds[key]= value.asTF(rt.RooArgList(w.var('mgg')),rt.RooArgList(w.var('pex1_0_%s'%box), w.var('pex1_1_%s'%box), w.var('pex1_2_%s'%box)))
@@ -881,17 +882,6 @@ if __name__ == '__main__':
             #print(background)
 
         backgrounds[key].SetParameter(0,p0_b)
-    c_fr = rt.TCanvas()
-    c_fr.SetLogy()
-    backgrounds["dijet"].SetLineColor(rt.kBlack)
-    backgrounds["dijet"].Draw("Al")
-    backgrounds["expow1"].SetLineColor(rt.kRed)
-    backgrounds["expow1"].Draw("lsame")
-    backgrounds["invpow1"].SetLineColor(rt.kGreen)
-    backgrounds["invpow1"].Draw("lsame")
-    backgrounds["invpowlin1"].SetLineColor(rt.kBlue)
-    backgrounds["invpowlin1"].Draw("lsame")
-    c_fr.SaveAs("fit_results.png")
 
     alpha = 1-0.6827
     for i in range(0,g_data.GetN()):

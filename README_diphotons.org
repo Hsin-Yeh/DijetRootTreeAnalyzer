@@ -97,7 +97,6 @@ In this step we skim the ntuples generated from the ExoDiphotonAnalyzer, and pic
 # Example
 cd ${ggBaseDir}
 mkdir input
-prepareTrees.exe grav BB 2018 all "${ggBaseDir}/input"
 
 outputDir="${ggBaseDir}/input"
 samplelist=("data" "grav" "heavyhiggs") # input sample list
@@ -113,6 +112,9 @@ for sample in "${samplelist[@]}"; do
         done
     done
 done
+
+# Example for 1 year
+prepareTrees.exe grav BB 2018 all "${ggBaseDir}/input"
 #+end_src
 
 ** Merge files
