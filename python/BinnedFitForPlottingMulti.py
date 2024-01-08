@@ -853,7 +853,7 @@ if __name__ == '__main__':
     #background= background_pdf.asTF(rt.RooArgList(w.var('th1x')),rt.RooArgList(w.var('p0_%s'%box)))
     for key, value in background_pdfs.iteritems():
         if "dijet" == key:
-            print(type(w.var('p1_%s'%box)), w.var('p1_%s'%box))
+            print(type(w.var('p1_%s'%box)), w.var('p1_%s'%box), w.var('p1_%s'%box).getVal())
             backgrounds[key]= value.asTF(rt.RooArgList(w.var('mgg')),rt.RooArgList(w.var('p0_%s'%box), w.var('p1_%s'%box), w.var('p2_%s'%box)))
         if "expow1" == key:
             backgrounds[key]= value.asTF(rt.RooArgList(w.var('mgg')),rt.RooArgList(w.var('pex1_0_%s'%box), w.var('pex1_1_%s'%box), w.var('pex1_2_%s'%box)))
