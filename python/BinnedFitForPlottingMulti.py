@@ -860,7 +860,7 @@ if __name__ == '__main__':
             print(w.var('Ntot_%s_bkg%s'%(box,key)).getVal(), w.var('pex1_0_%s'%box).getVal(), w.var('pex1_1_%s'%box).getVal(), w.var('pex1_2_%s'%box).getVal())
         if "invpow1" == key:
             backgrounds[key]= value.asTF(rt.RooArgList(w.var('mgg')),rt.RooArgList(w.var('pip1_0_%s'%box), w.var('pip1_1_%s'%box), w.var('pip1_2_%s'%box)))
-            print(w.var('Ntot_%s_bkg%s'%(box,key)).getVal(), w.var('pip1_0_%s'%box).getVal(), w.var('pip1_1_%s'%box).getVal(), w.var('pip1_2_%s'%box),getVal())
+            print(w.var('Ntot_%s_bkg%s'%(box,key)).getVal(), w.var('pip1_0_%s'%box).getVal(), w.var('pip1_1_%s'%box).getVal(), w.var('pip1_2_%s'%box).getVal())
         if "invpowlin1" == key:
             backgrounds[key]= value.asTF(rt.RooArgList(w.var('mgg')),rt.RooArgList(w.var('pil1_0_%s'%box), w.var('pil1_1_%s'%box), w.var('pil1_2_%s'%box), w.var('pil1_3_%s'%box)))
             print(w.var('Ntot_%s_bkg%s'%(box,key)).getVal(), w.var('pil1_0_%s'%box).getVal(), w.var('pil1_1_%s'%box).getVal(), w.var('pil1_2_%s'%box).getVal(), w.var('pil1_3_%s'%box).getVal())
