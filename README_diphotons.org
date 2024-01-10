@@ -313,23 +313,22 @@ Get Minv for signal model. A ratio histogram is made to perform the signal shape
 cmsenv
 mkdir -p output/plots
 
-# method="full"
-# method="truncate"
-method="genFiducial"
-# method="prefiring"
-mkdir -p output/${method}
-
 #RS
+method="full"
+mkdir -p output/${method}
 for year in {2016,2017,2018}; do
     for coup in {"kMpl001","kMpl01","kMpl02"}; do
         for cat in {"EBEB","EBEE"}; do
             echo ${year} ${coup} ${cat};
             files_RS=`ls ${ggBaseDir}/input/trees/RSGravitonToGammaGamma_${coup}*${year}*.root`;
             python python/AddSignalShapes.py -e ${method} -t nom -d output/${method} -c ${cat} ${files_RS};
+        done;
     done;
 done;
 
 #GluGlu
+method="genFiducial"
+mkdir -p output/${method}
 for year in {2016,2017,2018}; do
     for coup in {"0p014","1p4","5p6"}; do
         for cat in {"EBEB","EBEE"}; do
@@ -340,33 +339,43 @@ for year in {2016,2017,2018}; do
     done;
 done;
 
-#RS for width interpolation
-for year in {2016,2017,2018}; do echo $year; for mass in {750,1000,1250,1500,1750,2000,2250,2500,2750,3000,3250,3500,4000,5000}; do echo $mass; files_RS=`ls /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/input/trees/RSGravitonToGammaGamma_*_M_${mass}_*${year}*.root`; python python/AddSignalShapes_width.py -e full -t nom -d output/full -c EBEB ${files_RS}; python python/AddSignalShapes_width.py -e full -t nom -d output/full -c EBEE ${files_RS}; done; done;
-
 #+end_src
 
-#+RESULTS:
-
 ** Systematics
+Get Minv for signal models with varying systematics uncertainties:
 "energyScaleStatUp","energyScaleSystUp","energyScaleGainUp","energySigmaUp",
 "energyScaleStatDown","energyScaleSystDown","energyScaleGainDown","energySigmaDown",
-"SFScaleUp","SFScaleDown","PUScaleUp","PUScaleDown","testScaleUp","testScaleDown"
+"SFScaleUp","SFScaleDown","PUScaleUp","PUScaleDown"
 
 #+begin_src bash
 
-# method="full"
-# method="truncate"
-# method="genFiducial"
-method="prefiring"
-#RS
-for year in {2016,2017,2018}; do echo $year; for coup in {"kMpl001","kMpl01","kMpl02"}; do echo $coup; files_RS=`ls /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/input/trees/RSGravitonToGammaGamma_${coup}*${year}*.root`; for syst in {"energyScaleStatUp","energyScaleSystUp","energyScaleGainUp","energySigmaUp","energyScaleStatDown","energyScaleSystDown","energyScaleGainDown","energySigmaDown","SFScaleUp","SFScaleDown","PUScaleUp","PUScaleDown"}; do echo ${syst}; python python/AddSignalShapes.py -e ${method} -t systematics -s ${syst} -d output/${method} -c EBEB ${files_RS}; python python/AddSignalShapes.py -e ${method} -t systematics -s ${syst} -d output/${method} -c EBEE ${files_RS}; done; done; done;
+# RS
+method="full"
+for year in {2016,2017,2018}; do
+    for coup in {"kMpl001","kMpl01","kMpl02"}; do
+        for cat in {"EBEB","EBEE"}; do
+            files_RS=`ls /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/input/trees/RSGravitonToGammaGamma_${coup}*${year}*.root`;
+            for syst in {"energyScaleStatUp","energyScaleSystUp","energyScaleGainUp","energySigmaUp","energyScaleStatDown","energyScaleSystDown","energyScaleGainDown","energySigmaDown","SFScaleUp","SFScaleDown","PUScaleUp","PUScaleDown"}; do
+                echo ${year} ${coup} ${cat} ${syst};
+                python python/AddSignalShapes.py -e ${method} -t systematics -s ${syst} -d output/${method} -c ${cat} ${files_RS};
+            done;
+        done;
+    done;
+done;
 
 #GluGlu
-for year in {2016,2017,2018}; do echo $year; for coup in {"0p014","1p4","5p6"}; do echo $coup; files_GluGlu=`ls /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/input/trees/GluGluSpin0ToGammaGamma_W_${coup}*${year}*.root`;for syst in {"energyScaleStatUp","energyScaleSystUp","energyScaleGainUp","energySigmaUp","energyScaleStatDown","energyScaleSystDown","energyScaleGainDown","energySigmaDown","SFScaleUp","SFScaleDown","PUScaleUp","PUScaleDown"}; do echo ${syst}; python python/AddSignalShapes.py -e ${method} -t systematics -s ${syst} -d output/${method} -c EBEB ${files_GluGlu}; python python/AddSignalShapes.py -e ${method} -t systematics -s ${syst} -d output/${method} -c EBEE ${files_GluGlu}; done; done; done;
-
-#RS for width interpolation
-for year in {2016,2017,2018}; do echo $year; for mass in {750,1000,1250,1500,1750,2000,2250,2500,3000,3500,4000,5000}; do echo $mass; files_RS=`ls /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/input/trees/RSGravitonToGammaGamma_*_M_${mass}_*${year}*.root`; for syst in {"energyScaleStatUp","energyScaleSystUp","energyScaleGainUp","energySigmaUp","energyScaleStatDown","energyScaleSystDown","energyScaleGainDown","energySigmaDown","SFScaleUp","SFScaleDown","PUScaleUp","PUScaleDown","EEPFScaleUp","EEPFScaleDown"}; do echo ${syst}; python python/AddSignalShapes_width.py -e full -t systematics -s ${syst} -d output/full -c EBEB ${files_RS}; python python/AddSignalShapes_width.py -e full -t systematics -s ${syst} -d output/full -c EBEE ${files_RS}; done; done; done;
-
+method="genFiducial"
+for year in {2016,2017,2018}; do
+    for coup in {"0p014","1p4","5p6"}; do
+        for cat in {"EBEB","EBEE"}; do
+            files_GluGlu=`ls /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/input/trees/GluGluSpin0ToGammaGamma_W_${coup}*${year}*.root`;
+            for syst in {"energyScaleStatUp","energyScaleSystUp","energyScaleGainUp","energySigmaUp","energyScaleStatDown","energyScaleSystDown","energyScaleGainDown","energySigmaDown","SFScaleUp","SFScaleDown","PUScaleUp","PUScaleDown"}; do
+                echo ${year} ${coup} ${cat} ${syst};
+                python python/AddSignalShapes.py -e ${method} -t systematics -s ${syst} -d output/${method} -c ${cat} ${files_GluGlu};
+            done;
+        done;
+    done;
+done;
 #+end_src
 
 * Signal Normalization
@@ -436,22 +445,32 @@ time parallel --progress -jobs 6 'year={1}; method={2}; dateDir=$(date +"%Y%m%d_
 
 #+begin_src bash
 
-# export method="full"
-# export method="truncate"
-export method="genFiducial"
 mkdir /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/${method}
 cd /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/${method}
 
 rm -rf inputs *.root
 mkdir inputs
 
+# RS
+method="full"
 filesToExtractRS=`ls /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/CMSDIJET/DijetRootTreeAnalyzer/output/${method} |grep .root | grep RSG`
+for file in ${filesToExtractRS}; do
+    echo ${file};
+    cp /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/CMSDIJET/DijetRootTreeAnalyzer/output/${method}/${file} .;
+    filename=`echo ${file} | cut -d'.' -f 1`;
+    rm -rf inputs/${filename}.py;
+    ../extractShapes.py -i ${file} > inputs/${filename}.py;
+done;
 
-for file in ${filesToExtractRS}; do echo ${file}; cp /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/CMSDIJET/DijetRootTreeAnalyzer/output/${method}/${file} .; filename=`echo ${file} | cut -d'.' -f 1`; rm -rf inputs/${filename}.py; ../extractShapes.py -i ${file} > inputs/${filename}.py; done;
-
+# GluGlu
+export method="genFiducial"
 filesToExtractGluGlu=`ls /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/CMSDIJET/DijetRootTreeAnalyzer/output/${method} |grep .root | grep GluGlu`
-
-for file in ${filesToExtractGluGlu}; do echo ${file}; cp /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/CMSDIJET/DijetRootTreeAnalyzer/output/${method}/${file} .; filename=`echo ${file} | cut -d'.' -f 1`; rm -rf inputs/${filename}.py; ../extractShapes.py -i ${file} > inputs/${filename}.py; done;
+for file in ${filesToExtractGluGlu};
+do echo ${file};
+   cp /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/CMSDIJET/DijetRootTreeAnalyzer/output/${method}/${file} .;
+   filename=`echo ${file} | cut -d'.' -f 1`;
+   rm -rf inputs/${filename}.py; ../extractShapes.py -i ${file} > inputs/${filename}.py;
+done;
 
 #+end_src
 
