@@ -853,14 +853,17 @@ if __name__ == '__main__':
     #background= background_pdf.asTF(rt.RooArgList(w.var('th1x')),rt.RooArgList(w.var('p0_%s'%box)))
     for key, value in background_pdfs.iteritems():
         if "dijet" == key:
-            print(type(w.var('p1_%s'%box)), w.var('p1_%s'%box), w.var('p1_%s'%box).getVal())
             backgrounds[key]= value.asTF(rt.RooArgList(w.var('mgg')),rt.RooArgList(w.var('p0_%s'%box), w.var('p1_%s'%box), w.var('p2_%s'%box)))
+            print(w.var('Ntot_%s_bkg'%(box)).getVal(), w.var('p0_%s'%box).getVal(), w.var('p1_%s'%box).getVal(), w.var('p2_%s'%box).getVal())
         if "expow1" == key:
             backgrounds[key]= value.asTF(rt.RooArgList(w.var('mgg')),rt.RooArgList(w.var('pex1_0_%s'%box), w.var('pex1_1_%s'%box), w.var('pex1_2_%s'%box)))
+            print(w.var('Ntot_%s_bkg%s'%(box,key)).getVal(), w.var('pex1_0_%s'%box).getVal(), w.var('pex1_1_%s'%box).getVal(), w.var('pex1_2_%s'%box).getVal())
         if "invpow1" == key:
             backgrounds[key]= value.asTF(rt.RooArgList(w.var('mgg')),rt.RooArgList(w.var('pip1_0_%s'%box), w.var('pip1_1_%s'%box), w.var('pip1_2_%s'%box)))
+            print(w.var('Ntot_%s_bkg%s'%(box,key)).getVal(), w.var('pip1_0_%s'%box).getVal(), w.var('pip1_1_%s'%box).getVal(), w.var('pip1_2_%s'%box),getVal())
         if "invpowlin1" == key:
             backgrounds[key]= value.asTF(rt.RooArgList(w.var('mgg')),rt.RooArgList(w.var('pil1_0_%s'%box), w.var('pil1_1_%s'%box), w.var('pil1_2_%s'%box), w.var('pil1_3_%s'%box)))
+            print(w.var('Ntot_%s_bkg%s'%(box,key)).getVal(), w.var('pil1_0_%s'%box).getVal(), w.var('pil1_1_%s'%box).getVal(), w.var('pil1_2_%s'%box).getVal(), w.var('pil1_3_%s'%box).getVal())
         #background= background_pdf.asTF(rt.RooArgList(w.var('mgg')),rt.RooArgList(w.var('p0_%s'%box), w.var('p1_%s'%box), w.var('p2_%s'%box), w.var('p3_%s'%box), w.var('sqrts') ))
         #background= background_pdf.asTF(rt.RooArgList(w.var('mgg')),rt.RooArgList(w.var('p0_%s'%box) ))
         print("DO I REACH HERE?")
@@ -873,9 +876,10 @@ if __name__ == '__main__':
         #p0_b =  int_b/w.var('Ntot_%s_bkg'%box).getVal()
         if "dijet" == key:
             p0_b =  w.var('Ntot_%s_bkg'%(box)).getVal() / int_b
+            print(int_b,p0_b, w.var('Ntot_%s_bkg'%(box)).getVal() )
         else:
             p0_b =  w.var('Ntot_%s_bkg%s'%(box,key)).getVal() / int_b
-        print(int_b,p0_b, w.var('Ntot_%s_bkg%s'%(box,key)).getVal() )
+            print(int_b,p0_b, w.var('Ntot_%s_bkg%s'%(box,key)).getVal() )
 
             #print(int_b,p0_b, w.var('Ntot_%s_bkg'%box).getVal() )
             #print(int_b,p0_b, w.var('Ntot_%s_bkg%s'%(box,options.config.split("_")[-1].split(".")[-2])).getVal() )
