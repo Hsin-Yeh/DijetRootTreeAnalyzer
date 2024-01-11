@@ -1101,7 +1101,7 @@ if __name__ == '__main__':
 
     if options.signalFileName!=None:
         if 'DiPhoton' in box:
-            leg = rt.TLegend(0.5,0.4,1.,0.87)
+            leg = rt.TLegend(0.4,0.35,0.88,0.87)
         else:
             leg = rt.TLegend(0.58,0.55,0.85,0.87)
     else:
