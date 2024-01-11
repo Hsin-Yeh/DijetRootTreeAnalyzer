@@ -171,7 +171,7 @@ if __name__ == "__main__":
     # gr_2016.SetMarkerColor(9);
     # gr_2016.Draw("Psame");
 
-    leg = ROOT.TLegend(0.55,0.55,0.85,0.85,"brNDC");
+    leg = ROOT.TLegend(0.55,0.45,0.89,0.85,"brNDC");
     leg.SetBorderSize(1);
     leg.SetTextFont(62);
     leg.SetLineColor(0);
@@ -188,7 +188,7 @@ if __name__ == "__main__":
     elif ( args.coupling == "1p4"): plabel = "#frac{#Gamma}{m} = 1.4 #times 10^{-2},J=0"
     elif ( args.coupling == "5p6"): plabel = "#frac{#Gamma}{m} = 5.6 #times 10^{-2},J=0"
 
-    leg.SetHeader(plabel,"C");
+    leg.SetHeader(plabel);
     if ( args.signame == "grav" ):
         leg.AddEntry(g_xs_TuneCP2,"G_{RS}#rightarrow#gamma#gamma (LO)","l");
         # leg.AddEntry(g_xs_TuneCUEP8M1,"G_{RS}#rightarrow#gamma#gamma (LO) CUEP8M1","l");
