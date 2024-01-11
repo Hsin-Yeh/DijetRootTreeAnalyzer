@@ -171,7 +171,7 @@ if __name__ == "__main__":
     # gr_2016.SetMarkerColor(9);
     # gr_2016.Draw("Psame");
 
-    leg = ROOT.TLegend(0.55,0.45,0.89,0.85,"brNDC");
+    leg = ROOT.TLegend(0.55,0.45,0.85,0.85,"brNDC");
     leg.SetBorderSize(1);
     leg.SetTextFont(62);
     leg.SetLineColor(0);
@@ -179,7 +179,7 @@ if __name__ == "__main__":
     leg.SetLineWidth(2);
     leg.SetFillColor(0);
     leg.SetFillStyle(1001);
-    leg.SetTextSize(0.05);
+    leg.SetTextSize(0.04);
 
     if ( args.coupling == "kMpl001" ): plabel = "#tilde{k}=0.01,J=2"
     elif ( args.coupling == "kMpl01" ): plabel = "#tilde{k}=0.1,J=2"
