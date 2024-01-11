@@ -887,6 +887,8 @@ if __name__ == '__main__':
 
         backgrounds[key].SetParameter(0,p0_b)
 
+    g_data = rt.TGraphAsymmErrors(myRebinnedTH1)
+
     alpha = 1-0.6827
     for i in range(0,g_data.GetN()):
         N = g_data.GetY()[i]
