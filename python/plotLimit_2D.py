@@ -93,7 +93,7 @@ def pvalue2D():
     cmsText.Draw();
     # extraText.Draw();
     lumiText.Draw();
-    c1.SaveAs("%s/pvalue.png"%(args.outputDir))
+    c1.SaveAs("%s/pvalue.pdf"%(args.outputDir))
 
     h_zvalue.SetTitle("")
     h_zvalue.GetXaxis().SetTitle("M_{X} [GeV]")
@@ -108,7 +108,7 @@ def pvalue2D():
     cmsText.Draw();
     # extraText.Draw();
     lumiText.Draw();
-    c1.SaveAs("%s/zvalue.png"%(args.outputDir))
+    c1.SaveAs("%s/zvalue.pdf"%(args.outputDir))
 
     h_obslimit.SetTitle("")
     h_obslimit.GetXaxis().SetTitle("M_{X} [GeV]")
@@ -122,7 +122,7 @@ def pvalue2D():
     cmsText.Draw();
     # extraText.Draw();
     lumiText.Draw();
-    c1.SaveAs("%s/observedlimit.png"%(args.outputDir))
+    c1.SaveAs("%s/observedlimit.pdf"%(args.outputDir))
 
     h_explimit.SetTitle("")
     h_explimit.GetXaxis().SetTitle("M_{X} [GeV]")
@@ -136,7 +136,7 @@ def pvalue2D():
     cmsText.Draw();
     # extraText.Draw();
     lumiText.Draw();
-    c1.SaveAs("%s/expectedlimit.png"%(args.outputDir))
+    c1.SaveAs("%s/expectedlimit.pdf"%(args.outputDir))
 
     ########## Set Range 600-2500GeV
     h_pvalue.SetTitle("")
@@ -152,7 +152,7 @@ def pvalue2D():
     cmsText.Draw();
     # extraText.Draw();
     lumiText.Draw();
-    c1.SaveAs("%s/pvalue_zoomin.png"%(args.outputDir))
+    c1.SaveAs("%s/pvalue_zoomin.pdf"%(args.outputDir))
 
     h_zvalue.SetTitle("")
     h_zvalue.GetXaxis().SetTitle("M_{X} [GeV]")
@@ -168,7 +168,7 @@ def pvalue2D():
     cmsText.Draw();
     # extraText.Draw();
     lumiText.Draw();
-    c1.SaveAs("%s/zvalue_zoomin.png"%(args.outputDir))
+    c1.SaveAs("%s/zvalue_zoomin.pdf"%(args.outputDir))
 
     h_obslimit.SetTitle("")
     h_obslimit.GetXaxis().SetTitle("M_{X} [GeV]")
@@ -183,7 +183,7 @@ def pvalue2D():
     cmsText.Draw();
     # extraText.Draw();
     lumiText.Draw();
-    c1.SaveAs("%s/observedlimit_zoomin.png"%(args.outputDir))
+    c1.SaveAs("%s/observedlimit_zoomin.pdf"%(args.outputDir))
 
     h_explimit.SetTitle("")
     h_explimit.GetXaxis().SetTitle("M_{X} [GeV]")
@@ -198,7 +198,7 @@ def pvalue2D():
     cmsText.Draw();
     # extraText.Draw();
     lumiText.Draw();
-    c1.SaveAs("%s/expectedlimit_zoomin.png"%(args.outputDir))
+    c1.SaveAs("%s/expectedlimit_zoomin.pdf"%(args.outputDir))
 
 
 if __name__ == "__main__":
