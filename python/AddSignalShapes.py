@@ -93,7 +93,7 @@ if __name__ == '__main__':
 
         # h_mgg_1GeVbin = rt.TH1D('h_mgg_1GeVbin','h_mgg_1GeVbin',14000,0,14000)
         #h_mgg_5GeVbin = rt.TH1D('h_mgg_5GeVbin','h_mgg_5GeVbin',2800,0,14000)
-        h_mgg_8GeVbin = rt.TH1D('h_mgg_8GeVbin','h_mgg_8GeVbin',1750, 0, 14000)
+        # h_mgg_8GeVbin = rt.TH1D('h_mgg_8GeVbin','h_mgg_8GeVbin',1750, 0, 14000)
         h_mgg_ratio = rt.TH1D('h_mgg_ratio','h_mgg_ratio',1000,0,2.0)
 
         if options.sys.find("Up")!=-1: numSigma = 1
@@ -111,7 +111,7 @@ if __name__ == '__main__':
 
         if options.type=='nom':
             project(thetree,h_mgg_ratio, "mgg/%f"%(float(mass)), allCuts )
-            project(thetree,h_mgg_8GeVbin, "mgg", allCuts )
+            # project(thetree,h_mgg_8GeVbin, "mgg", allCuts )
         elif options.sys in energySyslist:
             project(thetree,h_mgg_ratio, "mgg*%s/%f"%(energySyslist[options.sys],float(mass)), allCuts )
 
@@ -132,10 +132,10 @@ if __name__ == '__main__':
         h_mgg_ratio.SetTitle('h_%s_M%i_%s'%(title,mass,year))
         h_mgg_ratio.SetDirectory(0)
         histos.append(h_mgg_ratio)
-        h_mgg_8GeVbin.SetName('h_%s_M%i_%s_8Gev'%(title,mass,year))
-        h_mgg_8GeVbin.SetTitle('h_%s_M%i_%s_8GeV'%(title,mass,year))
-        h_mgg_8GeVbin.SetDirectory(0)
-        histos.append(h_mgg_8GeVbin)
+        # h_mgg_8GeVbin.SetName('h_%s_M%i_%s_8Gev'%(title,mass,year))
+        # h_mgg_8GeVbin.SetTitle('h_%s_M%i_%s_8GeV'%(title,mass,year))
+        # h_mgg_8GeVbin.SetDirectory(0)
+        # histos.append(h_mgg_8GeVbin)
 
 
 
