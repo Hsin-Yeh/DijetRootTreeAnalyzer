@@ -6,6 +6,7 @@ import argparse
 parser = argparse.ArgumentParser(description='')
 parser.add_argument('--inputfile','-i',default="SignalNorm_Splines_full.txt",type=str,help='input file')
 parser.add_argument('--outputfile','-o',default="./test.txt",type=str,help='output file')
+parser.add_argument('--signal','-s',default="grav",type=str,help='signal model')
 parser.add_argument('--width','-w',default=-1,type=int)
 parser.add_argument('--mass','-m',default=-1,type=int)
 parser.add_argument('--debug','-d',action="store_true",help='debug mode')
@@ -23,9 +24,14 @@ def Read_SignalNorm():
     return df
 
 def get_norm(year, coup, mass, cat, df):
-    if (coup==14): coupstr = "kMpl001"
-    elif (coup==1400): coupstr = "kMpl01"
-    elif (coup==5600): coupstr = "kMpl02"
+    if (args.signal=="grav"):
+        if (coup==14): coupstr = "kMpl001"
+        elif (coup==1400): coupstr = "kMpl01"
+        elif (coup==5600): coupstr = "kMpl02"
+    elif (args.signal=="heavyhiggs"):
+        if (coup==14): coupstr = "0p014"
+        elif (coup==1400): coupstr = "1p4"
+        elif (coup==5600): coupstr = "5p6"
     condition = (df["year"] == year) & (df["coup"] == coupstr) & (df["mass"] == mass) & (df["cat"] == cat)
 
     # Use loc to filter the DataFrame based on the condition and retrieve the "norm" value
