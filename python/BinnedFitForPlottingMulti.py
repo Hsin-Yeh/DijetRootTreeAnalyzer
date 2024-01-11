@@ -1106,7 +1106,7 @@ if __name__ == '__main__':
             leg = rt.TLegend(0.58,0.55,0.85,0.87)
     else:
         # leg = rt.TLegend(0.6,0.6,0.89,0.89)
-        leg = rt.TLegend(0.56,0.45,0.88,0.89)
+        leg = rt.TLegend(0.56,0.45,0.88,1)
     leg.SetTextFont(42)
     leg.SetTextSize(0.06)
     leg.SetFillColor(rt.kWhite)
