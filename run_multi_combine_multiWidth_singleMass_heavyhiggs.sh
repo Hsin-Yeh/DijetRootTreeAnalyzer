@@ -64,8 +64,8 @@ mkdir -p FinalResults
 #         done
 #     done
 # done
-# # Merge
-# python ${DijetShapeInterpolator}/Merge_width_interpolation.py --mass ${mass} --width ${coupling} --signame ${signame}
+# Merge
+python ${DijetShapeInterpolator}/Merge_width_interpolation.py --mass ${mass} --width ${coupling} --signame ${signame}
 
 ############################## Signal Norm ##############################
 echo "########## Calculate Signal Norm... ##########"
