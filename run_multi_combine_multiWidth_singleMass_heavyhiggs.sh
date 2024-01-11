@@ -120,7 +120,7 @@ echo ${datacardfile}
 
 # ############################## Combine Limit ##############################
 echo "########## Run AsymptoticLimits ##########"
-finalResults="finalResults_${signal}_${coupling}_${mass}.txt"
+finalResults="finalResults_${signame}_${coupling}_${mass}.txt"
 
 combine -M AsymptoticLimits -s -1 -d $datacardfile --X-rtd MINIMIZER_freezeDisassociatedParams -n ${year}_${signal}_${coupling} > results
 
