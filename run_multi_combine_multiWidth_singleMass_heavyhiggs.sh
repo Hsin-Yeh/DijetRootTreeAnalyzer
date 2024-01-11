@@ -35,41 +35,41 @@ mkdir -p FinalResults
 
 #################### Get Width Interpolated shapes ####################
 
-# # Nom
-# echo "########## Get Interpolated Shapes... ##########"
-# for year in "${yearlist[@]}"; do
-#     for cat in "${catlist[@]}"; do
-#         echo ${year} ${cat}
-#         narrow_file="${InterpolateShapePath}/inputs/ResonanceShapes_InputShapes_${signal_LongName}_0p014_${cat}_${year}_ratio.root"
-#         medium_file="${InterpolateShapePath}/inputs/ResonanceShapes_InputShapes_${signal_LongName}_1p4_${cat}_${year}_ratio.root"
-#         wide_file="${InterpolateShapePath}/inputs/ResonanceShapes_InputShapes_${signal_LongName}_5p6_${cat}_${year}_ratio.root"
-#         filename="InputShapes_GluGluSpin0ToGammaGamma_${cat}_${year}"
-#         python ${DijetShapeInterpolator}/extractShapes_width.py -n ${narrow_file} -m ${medium_file} -w ${wide_file} --mass ${mass} > signal_shapes/${filename}_${mass}GeV.py
-#         python ${DijetShapeInterpolator}/getResonanceShapes_width.py -i signal_shapes/${filename}_${mass}GeV.py -m ${mass} -f gg -o signal_shapes/width_${filename}_${mass}GeV.root
-#     done
-# done
+# Nom
+echo "########## Get Interpolated Shapes... ##########"
+for year in "${yearlist[@]}"; do
+    for cat in "${catlist[@]}"; do
+        echo ${year} ${cat}
+        narrow_file="${InterpolateShapePath}/inputs/ResonanceShapes_InputShapes_${signal_LongName}_0p014_${cat}_${year}_ratio.root"
+        medium_file="${InterpolateShapePath}/inputs/ResonanceShapes_InputShapes_${signal_LongName}_1p4_${cat}_${year}_ratio.root"
+        wide_file="${InterpolateShapePath}/inputs/ResonanceShapes_InputShapes_${signal_LongName}_5p6_${cat}_${year}_ratio.root"
+        filename="InputShapes_GluGluSpin0ToGammaGamma_${cat}_${year}"
+        python ${DijetShapeInterpolator}/extractShapes_width.py -n ${narrow_file} -m ${medium_file} -w ${wide_file} --mass ${mass} > signal_shapes/${filename}_${mass}GeV.py
+        python ${DijetShapeInterpolator}/getResonanceShapes_width.py -i signal_shapes/${filename}_${mass}GeV.py -m ${mass} -f gg -o signal_shapes/width_${filename}_${mass}GeV.root
+    done
+done
 
-# # Systematics
-# echo "########## Get Interpolated Systematic Shapes... ##########"
-# for year in "${yearlist[@]}"; do
-#     for cat in "${catlist[@]}"; do
-#         for systematics in {"energyScaleStatUp","energyScaleSystUp","energyScaleGainUp","energySigmaUp","energyScaleStatDown","energyScaleSystDown","energyScaleGainDown","energySigmaDown","SFScaleUp","SFScaleDown","PUScaleUp","PUScaleDown"}; do
-#             echo ${year} ${cat} ${systematics}
-#             narrow_file="${InterpolateShapePath}/inputs/ResonanceShapes_InputShapes_${signal_LongName}_0p014_${cat}_${year}_${systematics}_ratio.root"
-#             medium_file="${InterpolateShapePath}/inputs/ResonanceShapes_InputShapes_${signal_LongName}_1p4_${cat}_${year}_${systematics}_ratio.root"
-#             wide_file="${InterpolateShapePath}/inputs/ResonanceShapes_InputShapes_${signal_LongName}_5p6_${cat}_${year}_${systematics}_ratio.root"
-#             filename="InputShapes_GluGluSpin0ToGammaGamma_${cat}_${year}_${systematics}"
-#             python ${DijetShapeInterpolator}/extractShapes_width.py -n ${narrow_file} -m ${medium_file} -w ${wide_file} --mass ${mass} > signal_shapes/${filename}_${mass}GeV.py
-#             python ${DijetShapeInterpolator}/getResonanceShapes_width.py -i signal_shapes/${filename}_${mass}GeV.py -m ${mass} -f gg -o signal_shapes/width_${filename}_${mass}GeV.root
-#         done
-#     done
-# done
-# # Merge
-# python ${DijetShapeInterpolator}/Merge_width_interpolation.py --mass ${mass} --width ${coupling} --signame ${signame}
+# Systematics
+echo "########## Get Interpolated Systematic Shapes... ##########"
+for year in "${yearlist[@]}"; do
+    for cat in "${catlist[@]}"; do
+        for systematics in {"energyScaleStatUp","energyScaleSystUp","energyScaleGainUp","energySigmaUp","energyScaleStatDown","energyScaleSystDown","energyScaleGainDown","energySigmaDown","SFScaleUp","SFScaleDown","PUScaleUp","PUScaleDown"}; do
+            echo ${year} ${cat} ${systematics}
+            narrow_file="${InterpolateShapePath}/inputs/ResonanceShapes_InputShapes_${signal_LongName}_0p014_${cat}_${year}_${systematics}_ratio.root"
+            medium_file="${InterpolateShapePath}/inputs/ResonanceShapes_InputShapes_${signal_LongName}_1p4_${cat}_${year}_${systematics}_ratio.root"
+            wide_file="${InterpolateShapePath}/inputs/ResonanceShapes_InputShapes_${signal_LongName}_5p6_${cat}_${year}_${systematics}_ratio.root"
+            filename="InputShapes_GluGluSpin0ToGammaGamma_${cat}_${year}_${systematics}"
+            python ${DijetShapeInterpolator}/extractShapes_width.py -n ${narrow_file} -m ${medium_file} -w ${wide_file} --mass ${mass} > signal_shapes/${filename}_${mass}GeV.py
+            python ${DijetShapeInterpolator}/getResonanceShapes_width.py -i signal_shapes/${filename}_${mass}GeV.py -m ${mass} -f gg -o signal_shapes/width_${filename}_${mass}GeV.root
+        done
+    done
+done
+# Merge
+python ${DijetShapeInterpolator}/Merge_width_interpolation.py --mass ${mass} --width ${coupling} --signame ${signame}
 
 ############################## Signal Norm ##############################
 echo "########## Calculate Signal Norm... ##########"
-python ${DijetRootTreeAnalyzer}/python/signalNorm_interpolate.py -i ${SignalNormFile_input} --mass ${mass} --width ${coupling} -o ${SignalNormFile}
+python ${DijetRootTreeAnalyzer}/python/signalNorm_interpolate.py -s ${signame} -i ${SignalNormFile_input} --mass ${mass} --width ${coupling} -o ${SignalNormFile}
 
 ############################## WriteDataCard.py grav ##############################
 # The yield was initially normalized to 1000/pb.
@@ -105,61 +105,61 @@ for year in "${yearlist[@]}"; do
         mv diphoton_combine_${mass}_${box}.* ${datacardsDir}/.
     done
 done
-# # ############################## Combine cards ##############################
-# echo "########## Combine Datacards ##########"
-# scenario="DiPhotons_${coupling}"
-# datacardfile="${datacardsDir}/diphoton_combine_${mass}_${scenario}_fullRun2.txt"
-# combineCards.py ${datacardsDir}/diphoton_combine_${mass}_${scenario}_EBEB_2016.txt \
-#     ${datacardsDir}/diphoton_combine_${mass}_${scenario}_EBEE_2016.txt \
-#     ${datacardsDir}/diphoton_combine_${mass}_${scenario}_EBEB_2017.txt \
-#     ${datacardsDir}/diphoton_combine_${mass}_${scenario}_EBEE_2017.txt \
-#     ${datacardsDir}/diphoton_combine_${mass}_${scenario}_EBEB_2018.txt \
-#     ${datacardsDir}/diphoton_combine_${mass}_${scenario}_EBEE_2018.txt \
-#     > ${datacardsDir}/diphoton_combine_${mass}_${scenario}_fullRun2.txt;
-# echo ${datacardfile}
+# ############################## Combine cards ##############################
+echo "########## Combine Datacards ##########"
+scenario="DiPhotons_${coupling}"
+datacardfile="${datacardsDir}/diphoton_combine_${mass}_${scenario}_fullRun2.txt"
+combineCards.py ${datacardsDir}/diphoton_combine_${mass}_${scenario}_EBEB_2016.txt \
+    ${datacardsDir}/diphoton_combine_${mass}_${scenario}_EBEE_2016.txt \
+    ${datacardsDir}/diphoton_combine_${mass}_${scenario}_EBEB_2017.txt \
+    ${datacardsDir}/diphoton_combine_${mass}_${scenario}_EBEE_2017.txt \
+    ${datacardsDir}/diphoton_combine_${mass}_${scenario}_EBEB_2018.txt \
+    ${datacardsDir}/diphoton_combine_${mass}_${scenario}_EBEE_2018.txt \
+    > ${datacardsDir}/diphoton_combine_${mass}_${scenario}_fullRun2.txt;
+echo ${datacardfile}
 
-# # ############################## Combine Limit ##############################
-# echo "########## Run AsymptoticLimits ##########"
-# finalResults="finalResults_${signal}_${coupling}_${mass}.txt"
+# ############################## Combine Limit ##############################
+echo "########## Run AsymptoticLimits ##########"
+finalResults="finalResults_${signal}_${coupling}_${mass}.txt"
 
-# combine -M AsymptoticLimits -s -1 -d $datacardfile --X-rtd MINIMIZER_freezeDisassociatedParams -n ${year}_${signal}_${coupling} > results
+combine -M AsymptoticLimits -s -1 -d $datacardfile --X-rtd MINIMIZER_freezeDisassociatedParams -n ${year}_${signal}_${coupling} > results
 
-# export obs=`cat results  | grep  "Observed Limit:" | awk '{print $5}'`
-# export expM2s=`cat results  | grep  "Expected  2.5%:" | awk '{print $5}'`
-# export expM1s=`cat results  | grep  "Expected 16.0%:" | awk '{print $5}'`
-# export exp=`cat results  | grep  "Expected 50.0%:" | awk '{print $5}'`
-# export expP1s=`cat results  | grep  "Expected 84.0%:" | awk '{print $5}'`
-# export expP2s=`cat results  | grep  "Expected 97.5%:" | awk '{print $5}'`
+export obs=`cat results  | grep  "Observed Limit:" | awk '{print $5}'`
+export expM2s=`cat results  | grep  "Expected  2.5%:" | awk '{print $5}'`
+export expM1s=`cat results  | grep  "Expected 16.0%:" | awk '{print $5}'`
+export exp=`cat results  | grep  "Expected 50.0%:" | awk '{print $5}'`
+export expP1s=`cat results  | grep  "Expected 84.0%:" | awk '{print $5}'`
+export expP2s=`cat results  | grep  "Expected 97.5%:" | awk '{print $5}'`
 
-# echo $mass $obs $expM2s $expM1s $exp $expP1s $expP2s
-# echo $mass $obs $expM2s $expM1s $exp $expP1s $expP2s > ${finalResults}
+echo $mass $obs $expM2s $expM1s $exp $expP1s $expP2s
+echo $mass $obs $expM2s $expM1s $exp $expP1s $expP2s > ${finalResults}
 
-# # ############################## Combine local pvalue ##############################
-# echo "########## Run Significance ##########"
-# combine -d ${datacardfile} -M Significance --signif --pval --cminDefaultMinimizerType=Minuit2 -n Observed > results_pvalue
-# rm higgsCombine*.root
+# ############################## Combine local pvalue ##############################
+echo "########## Run Significance ##########"
+combine -d ${datacardfile} -M Significance --signif --pval --cminDefaultMinimizerType=Minuit2 -n Observed > results_pvalue
+rm higgsCombine*.root
 
-# export pvalue=`cat results_pvalue  | grep  "p-value of background:" | awk '{print $4}'`
+export pvalue=`cat results_pvalue  | grep  "p-value of background:" | awk '{print $4}'`
 
-# echo $mass $pvalue
-# echo $mass $pvalue >> ${finalResults}
+echo $mass $pvalue
+echo $mass $pvalue >> ${finalResults}
 
-# # ############################## Combine zvalue ##############################
-# echo "########## Run Significance ##########"
-# combine -d ${datacardfile} -M Significance --signif --cminDefaultMinimizerType=Minuit2 -n Observed > results_zvalue
-# rm higgsCombine*.root
+# ############################## Combine zvalue ##############################
+echo "########## Run Significance ##########"
+combine -d ${datacardfile} -M Significance --signif --cminDefaultMinimizerType=Minuit2 -n Observed > results_zvalue
+rm higgsCombine*.root
 
-# export zvalue=`cat results_zvalue  | grep  "Significance:" | awk '{print $2}'`
+export zvalue=`cat results_zvalue  | grep  "Significance:" | awk '{print $2}'`
 
-# echo $mass $zvalue
-# echo $mass $zvalue >> ${finalResults}
+echo $mass $zvalue
+echo $mass $zvalue >> ${finalResults}
 
-# # ############################## Combine Global zvalue ##############################
-# echo "########## Run Global Significance ##########"
-# combine -d ${datacardfile} -M Significance --cminDefaultMinimizerType=Minuit2 -n Observed_global --toysFile ${toysfile} -t 1000 > results_global_zvalue
-# rm higgsCombine*.root
+# ############################## Combine Global zvalue ##############################
+echo "########## Run Global Significance ##########"
+combine -d ${datacardfile} -M Significance --cminDefaultMinimizerType=Minuit2 -n Observed_global --toysFile ${toysfile} -t 1000 > results_global_zvalue
+rm higgsCombine*.root
 
-# export global_zvalue=`cat results_global_zvalue  | grep  "Significance:" | awk '{print $2}'`
+export global_zvalue=`cat results_global_zvalue  | grep  "Significance:" | awk '{print $2}'`
 
-# echo $mass $global_zvalue
-# echo $mass $global_zvalue >> ${finalResults}
+echo $mass $global_zvalue
+echo $mass $global_zvalue >> ${finalResults}
