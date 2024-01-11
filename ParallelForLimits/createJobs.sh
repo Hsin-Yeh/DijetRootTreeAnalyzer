@@ -24,7 +24,7 @@ for coupling in "${couplist[@]}"; do
         chmod 755 -R ${jobDir}/output ${jobDir}/jobs ${jobDir}/logs
 
         submitFile="${jobDir}/jobs/limit_${coupling}_${mass}.sub"
-        transferFile="finalResults_grav_${coupling}_${mass}.txt"
+        transferFile="finalResults_${signame}_${coupling}_${mass}.txt"
         outDir="${jobDir}/output/"
 
 
