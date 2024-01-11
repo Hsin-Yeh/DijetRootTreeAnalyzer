@@ -15,8 +15,11 @@ cd ${mainpath}
 eval `scramv1 runtime -sh`
 cd -
 
-# Run script
+# cp script
+echo "cp ${mainpath}/run_multi_combine_multiWidth_singleMass_${signame}.sh ./."
 cp ${mainpath}/run_multi_combine_multiWidth_singleMass_${signame}.sh ./.
+# Run script
+echo "./run_multi_combine_multiWidth_singleMass_${signame}.sh ${coupling} ${mass}"
 ./run_multi_combine_multiWidth_singleMass_${signame}.sh ${coupling} ${mass}
 
 # Copy output file
