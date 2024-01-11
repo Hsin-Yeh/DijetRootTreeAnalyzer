@@ -43,7 +43,7 @@ def Acceptance(year, coupling, mass):
     totalNorm=0
     for line in Lines:
         y, c, m, cat, norm = line.split()
-        if (year=="fullRun2" and c==coupling and m==mass and cat=='EBEE'):
+        if (year=="fullRun2" and c==coupling and m==mass and cat=='All'):
                 totalNorm += float(norm)
         elif (y==year and c==coupling and m==mass and cat=='All'):
             totalNorm = float(norm)
