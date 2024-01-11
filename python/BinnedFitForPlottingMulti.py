@@ -1084,7 +1084,7 @@ if __name__ == '__main__':
     l.SetNDC()
     #l.DrawLatex(0.7,0.96,"%i pb^{-1} (%i TeV)"%(lumi,w.var('sqrts').getVal()/1000.))
     # l.DrawLatex(0.64,0.94,"%.1f fb^{-1} (13 TeV)"%(lumi/1000.))
-    l.DrawLatex(0.7,0.94,"138 fb^{-1} (13 TeV)")
+    l.DrawLatex(0.68,0.94,"138 fb^{-1} (13 TeV)")
     # PAS
     #l.SetTextFont(62)
     #l.SetTextSize(0.055)
