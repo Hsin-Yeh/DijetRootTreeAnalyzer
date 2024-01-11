@@ -170,7 +170,7 @@ if __name__ == "__main__":
     # gr_2016.SetMarkerColor(9);
     # gr_2016.Draw("Psame");
 
-    leg = ROOT.TLegend(0.55,0.6,0.75,0.85,"brNDC");
+    leg = ROOT.TLegend(0.55,0.55,0.85,0.85,"brNDC");
     leg.SetBorderSize(1);
     leg.SetTextFont(62);
     leg.SetLineColor(0);
@@ -207,14 +207,14 @@ if __name__ == "__main__":
     cmsText.SetTextSize(0.04);
     cmsText.Draw();
 
-    extraText=ROOT.TLatex(0.23,0.90, "Preliminary");
-    extraText.SetNDC(1);
-    extraText.SetTextFont(52);
-    extraText.SetLineColor(0);
-    extraText.SetLineStyle(1);
-    extraText.SetLineWidth(1);
-    extraText.SetTextSize(0.04);
-    extraText.Draw();
+    # extraText=ROOT.TLatex(0.23,0.90, "Preliminary");
+    # extraText.SetNDC(1);
+    # extraText.SetTextFont(52);
+    # extraText.SetLineColor(0);
+    # extraText.SetLineStyle(1);
+    # extraText.SetLineWidth(1);
+    # extraText.SetTextSize(0.04);
+    # extraText.Draw();
 
     lumiText=ROOT.TLatex(0.70,0.90, "%d fb^{-1} (13 TeV)"%(lumi(args.year)) );
     # lumiText=ROOT.TLatex(0.70,0.90, "%d fb^{-1} (13 TeV)"%(138));
