@@ -5,6 +5,7 @@
 # Unblind
 # for year in {"2016","2017","2018","fullRun2"}; do for coupling in {"kMpl001","kMpl01","kMpl02"}; do python ../../python/plotLimit.py -y ${year} -c ${coupling} -s grav --unblind; done; done
 # for year in {"2016","2017","2018","fullRun2"}; do for coupling in {"0p014","1p4","5p6"}; do python ../../python/plotLimit.py -y ${year} -c ${coupling} -s heavyhiggs --unblind; done; done
+# for coupling in {"kMpl001","kMpl01","kMpl02"}; do python ../../python/plotLimit.py -y fullRun2 -c ${coupling} -s grav --unblind; done;
 
 import ROOT
 from array import array
