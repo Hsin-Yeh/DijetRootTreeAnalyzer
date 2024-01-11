@@ -1,11 +1,17 @@
 #!/usr/bin/env python
+#
+# Commands
+#
 # for year in {"2016","2017","2018","fullRun2"}; do for coupling in {"kMpl001","kMpl01","kMpl02"}; do python ../../python/plotLimit.py -y ${year} -c ${coupling} -s grav; done; done
 # for year in {"2016","2017","2018","fullRun2"}; do for coupling in {"0p014","1p4","5p6"}; do python ../../python/plotLimit.py -y ${year} -c ${coupling} -s heavyhiggs; done; done
 #
 # Unblind
 # for year in {"2016","2017","2018","fullRun2"}; do for coupling in {"kMpl001","kMpl01","kMpl02"}; do python ../../python/plotLimit.py -y ${year} -c ${coupling} -s grav --unblind; done; done
 # for year in {"2016","2017","2018","fullRun2"}; do for coupling in {"0p014","1p4","5p6"}; do python ../../python/plotLimit.py -y ${year} -c ${coupling} -s heavyhiggs --unblind; done; done
+#
+# Unblind fullRun2 only
 # for coupling in {"kMpl001","kMpl01","kMpl02"}; do python ../../python/plotLimit.py -y fullRun2 -c ${coupling} -s grav --unblind; done;
+# for coupling in {"0p014","1p4","5p6"}; do python ../../python/plotLimit.py -y fullRun2 -c ${coupling} -s heavyhiggs --unblind; done;
 
 import ROOT
 from array import array
@@ -171,7 +177,7 @@ if __name__ == "__main__":
     # gr_2016.SetMarkerColor(9);
     # gr_2016.Draw("Psame");
 
-    leg = ROOT.TLegend(0.55,0.48,0.85,0.87,"brNDC");
+    leg = ROOT.TLegend(0.55,0.5,0.85,0.87,"brNDC");
     leg.SetBorderSize(1);
     leg.SetTextFont(62);
     leg.SetLineColor(0);
