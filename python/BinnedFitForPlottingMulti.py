@@ -1095,7 +1095,7 @@ if __name__ == '__main__':
     # paper
     l.SetTextFont(62)
     l.SetTextSize(0.065)
-    l.DrawLatex(0.22,0.85,"CMS")
+    l.DrawLatex(0.22,0.85,"CMS Supplementary")
     l.SetTextFont(52)
     l.SetTextSize(0.045)
 
