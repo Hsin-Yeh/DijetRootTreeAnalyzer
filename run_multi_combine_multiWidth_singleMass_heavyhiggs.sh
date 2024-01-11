@@ -135,7 +135,7 @@ echo $mass $obs $expM2s $expM1s $exp $expP1s $expP2s
 echo $mass $obs $expM2s $expM1s $exp $expP1s $expP2s > ${finalResults}
 
 # ############################## Combine local pvalue ##############################
-echo "########## Run Significance ##########"
+echo "########## Run Combine local pvalue ##########"
 combine -d ${datacardfile} -M Significance --signif --pval --cminDefaultMinimizerType=Minuit2 -n Observed > results_pvalue
 rm higgsCombine*.root
 
@@ -144,8 +144,8 @@ export pvalue=`cat results_pvalue  | grep  "p-value of background:" | awk '{prin
 echo $mass $pvalue
 echo $mass $pvalue >> ${finalResults}
 
-# ############################## Combine zvalue ##############################
-echo "########## Run Significance ##########"
+# ############################## Combine local zvalue ##############################
+echo "########## Run Combine local zvalue ##########"
 combine -d ${datacardfile} -M Significance --signif --cminDefaultMinimizerType=Minuit2 -n Observed > results_zvalue
 rm higgsCombine*.root
 
