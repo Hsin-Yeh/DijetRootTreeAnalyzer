@@ -86,43 +86,50 @@ basicplots.exe barrel 2018
 * Prepare samples
 In this step we skim the ntuples generated from the ExoDiphotonAnalyzer, and pick the variables relevant to the resonant search.
 ** prepare trees
-- Create the trees for each sample in each category(EBEB EBEE), then merge them in the next step
 - Lxplus kills the process if we run all the samples at once (chain too many samples)
-- Run RS, HeavyHiggs, data one by one
 - command syntax: prepareTrees.exe [data/grav/heavyhiggs] [BB/BE] [2016/2017/2018] [coupling] [OutputDir]
 - Currently the event selections in the code are commented out. The event selection is now done in the "Add Samples" step in the DijetRootTreeAnalyzer repo.
 - If one wants to process the "Parametric signal model" then the event selections should be added back
+- There may be core-dump errors after the program finishes: such as
+  Error in `prepareTrees.exe': double free or corruption (!prev): 0x0000000005dfb440
+  This is annoying but it is fine. FIXME
 
 #+begin_src bash
 # Example
 cd ${ggBaseDir}
 mkdir input
 
-outputDir="${ggBaseDir}/input"
-samplelist=("data" "grav" "heavyhiggs") # input sample list
-couplist=("kMpl001" "kMpl01" "kMpl02" "0p014" "1p4" "5p6")
-yearlist=("2016" "2017" "2018") # year list
-catlist=("BB" "BE") # Category list
-
-for sample in "${samplelist[@]}"; do
-    for year in "${yearlist[@]}"; do
-        for cat in "${catlist[@]}"; do
-            echo ${sample} ${year} ${cat}
-            prepareTrees.exe ${sample} ${cat} ${year} all ${outputDir}
-        done
+# RS
+for year in {2016,2017,2018}; do
+    for coup in {"kMpl001","kMpl01","kMpl02"}; do
+        echo "RS" ${year} ${coup}
+        prepareTrees.exe grav BB ${year} ${coup} "${ggBaseDir}/input/trees"
     done
 done
 
+# HeavyHiggs
+for year in {2016,2017,2018}; do
+    for coup in {"0p014","1p4","5p6"}; do
+        echo "heavyhiggs" ${year} ${coup}
+        prepareTrees.exe heavyhiggs BB ${year} ${coup} "${ggBaseDir}/input/trees"
+    done
+done
+
+# Data
+for year in {2016,2017,2018}; do
+    echo "data" ${year}
+    prepareTrees.exe data BB ${year} all "${ggBaseDir}/input/trees"
+done
+
 # Example for 1 year
-prepareTrees.exe grav BB 2018 all "${ggBaseDir}/input"
 #+end_src
 
 ** Merge files
-Merge EBEB and EBEE files
+Merge EBEB and EBEE files.
+No need to do this step now
 #+begin_src bash
 cd input
 ./haddsamples.sh
-
 # If storage is limited, the pre-merged files can be deleted
 rm *.root
 #+end_src
@@ -445,14 +452,12 @@ time parallel --progress -jobs 6 'year={1}; method={2}; dateDir=$(date +"%Y%m%d_
 
 #+begin_src bash
 
-mkdir /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/${method}
-cd /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/${method}
-
-rm -rf inputs *.root
-mkdir inputs
-
 # RS
 method="full"
+mkdir /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/${method}
+cd /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/${method}
+rm -rf inputs *.root
+mkdir inputs
 filesToExtractRS=`ls /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/CMSDIJET/DijetRootTreeAnalyzer/output/${method} |grep .root | grep RSG`
 for file in ${filesToExtractRS}; do
     echo ${file};
@@ -464,6 +469,10 @@ done;
 
 # GluGlu
 export method="genFiducial"
+mkdir /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/${method}
+cd /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/${method}
+rm -rf inputs *.root
+mkdir inputs
 filesToExtractGluGlu=`ls /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/CMSDIJET/DijetRootTreeAnalyzer/output/${method} |grep .root | grep GluGlu`
 for file in ${filesToExtractGluGlu};
 do echo ${file};
@@ -477,18 +486,21 @@ done;
 * Get Resonance shapes
 
 #+begin_src bash
-export method="full"
+# export method="full"
 # export method="truncate"
-# export method="genFiducial"
 cd /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/${method}
 
 filesToExtractRS=`ls /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/CMSDIJET/DijetRootTreeAnalyzer/output/${method} |grep .root | grep RSG`
 
+export method="genFiducial"
 filesToExtractGluGlu=`ls /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/CMSDIJET/DijetRootTreeAnalyzer/output/${method} |grep .root | grep GluGlu`
 
 
 for file in ${filesToExtractRS};
 do echo ${file}; coup=`echo ${file} | cut -d'_' -f 3`; echo $coup; filename=`echo ${file} | cut -d'.' -f 1`; ../getResonanceShapes.py -i inputs/${filename}.py -c ${coup} -f gg --massrange 600 5000 100 --fineBinning -o finebinning/ResonanceShapes_${filename}_finebinned.root; done;
+
+for file in ${filesToExtractGluGlu};
+do echo ${file}; coup=`echo ${file} | cut -d'_' -f 4`; echo $coup; filename=`echo ${file} | cut -d'.' -f 1`; ../getResonanceShapes.py -i inputs/${filename}.py -c ${coup} -f gg --massrange 500 5000 100 --fineBinning -o finebinning/ResonanceShapes_${filename}.root; done;
 
 
 for file in ${filesToExtractRS};
@@ -514,7 +526,13 @@ filesToExtractRS=`ls InputShapes/. | grep RSG`
 for file in ${filesToExtractRS}; do echo ${file}; coup=`echo ${file} | cut -d'_' -f 3`; echo $coup; filename=`echo ${file} | cut -d'.' -f 1`; ../getResonanceShapes.py -i inputs/${filename}.py -c ${coup} -f gg --massrange 600 5000 10 --doWidthInterp -o width/inputs/ResonanceShapes_${filename}_ratio.root; done;
 
 filesToExtractGluGlu=`ls InputShapes/. | grep GluGlu`
-for file in ${filesToExtractGluGlu}; do echo ${file}; coup=`echo ${file} | cut -d'_' -f 4`; echo $coup; filename=`echo ${file} | cut -d'.' -f 1`; ../getResonanceShapes.py -i inputs/${filename}.py -c ${coup} -f gg --massrange 600 5000 10 --doWidthInterp -o width/inputs/ResonanceShapes_${filename}_ratio.root; done;
+for file in ${filesToExtractGluGlu}; do
+    echo ${file};
+    coup=`echo ${file} | cut -d'_' -f 4`;
+    echo $coup;
+    filename=`echo ${file} | cut -d'.' -f 1`;
+    ../getResonanceShapes.py -i inputs/${filename}.py -c ${coup} -f gg --massrange 600 5000 10 --doWidthInterp -o width/inputs/ResonanceShapes_${filename}_ratio.root;
+done;
 
 
 cd width/.
