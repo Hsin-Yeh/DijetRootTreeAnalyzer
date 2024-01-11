@@ -10,8 +10,8 @@ couplist=(14 361 707 1054 1400 2450 3500 4550 5600)
 ############################
 
 versionDir="${Version}_${signame}"
+cd ${versionDir}
 
-cd ${version}
 echo "==========Sending Jobs=========="
 for coupling in "${couplist[@]}"; do
     echo ${coupling}
