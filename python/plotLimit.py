@@ -188,7 +188,7 @@ if __name__ == "__main__":
     elif ( args.coupling == "1p4"): plabel = "#frac{#Gamma}{m} = 1.4 #times 10^{-2},J=0"
     elif ( args.coupling == "5p6"): plabel = "#frac{#Gamma}{m} = 5.6 #times 10^{-2},J=0"
 
-    leg.SetHeader(plabel);
+    leg.SetHeader(plabel,"C");
     if ( args.signame == "grav" ):
         leg.AddEntry(g_xs_TuneCP2,"G_{RS}#rightarrow#gamma#gamma (LO)","l");
         # leg.AddEntry(g_xs_TuneCUEP8M1,"G_{RS}#rightarrow#gamma#gamma (LO) CUEP8M1","l");
