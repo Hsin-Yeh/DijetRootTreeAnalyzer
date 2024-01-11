@@ -106,7 +106,7 @@ def pvalue2D():
     h_zvalue.SetMinimum(-0.01)
     h_zvalue.Draw("colz")
     cmsText.Draw();
-    extraText.Draw();
+    # extraText.Draw();
     lumiText.Draw();
     c1.SaveAs("%s/zvalue.png"%(args.outputDir))
 
@@ -120,7 +120,7 @@ def pvalue2D():
     h_obslimit.GetZaxis().SetTitleSize(0.05)
     h_obslimit.Draw("colz")
     cmsText.Draw();
-    extraText.Draw();
+    # extraText.Draw();
     lumiText.Draw();
     c1.SaveAs("%s/observedlimit.png"%(args.outputDir))
 
@@ -134,7 +134,7 @@ def pvalue2D():
     h_explimit.GetZaxis().SetTitleSize(0.05)
     h_explimit.Draw("colz")
     cmsText.Draw();
-    extraText.Draw();
+    # extraText.Draw();
     lumiText.Draw();
     c1.SaveAs("%s/expectedlimit.png"%(args.outputDir))
 
@@ -150,7 +150,7 @@ def pvalue2D():
     h_pvalue.GetZaxis().SetTitleSize(0.05)
     h_pvalue.Draw("colz")
     cmsText.Draw();
-    extraText.Draw();
+    # extraText.Draw();
     lumiText.Draw();
     c1.SaveAs("%s/pvalue_zoomin.png"%(args.outputDir))
 
@@ -166,7 +166,7 @@ def pvalue2D():
     h_zvalue.SetMinimum(-0.01)
     h_zvalue.Draw("colz")
     cmsText.Draw();
-    extraText.Draw();
+    # extraText.Draw();
     lumiText.Draw();
     c1.SaveAs("%s/zvalue_zoomin.png"%(args.outputDir))
 
@@ -181,7 +181,7 @@ def pvalue2D():
     h_obslimit.GetZaxis().SetTitleSize(0.05)
     h_obslimit.Draw("colz")
     cmsText.Draw();
-    extraText.Draw();
+    # extraText.Draw();
     lumiText.Draw();
     c1.SaveAs("%s/observedlimit_zoomin.png"%(args.outputDir))
 
@@ -196,7 +196,7 @@ def pvalue2D():
     h_explimit.GetZaxis().SetTitleSize(0.05)
     h_explimit.Draw("colz")
     cmsText.Draw();
-    extraText.Draw();
+    # extraText.Draw();
     lumiText.Draw();
     c1.SaveAs("%s/expectedlimit_zoomin.png"%(args.outputDir))
 
