@@ -176,10 +176,10 @@ if __name__ == "__main__":
     leg.SetTextFont(62);
     leg.SetLineColor(0);
     leg.SetLineStyle(1);
-    leg.SetLineWidth(1);
+    leg.SetLineWidth(2);
     leg.SetFillColor(0);
     leg.SetFillStyle(1001);
-    leg.SetTextSize(0.033);
+    leg.SetTextSize(0.05);
 
     if ( args.coupling == "kMpl001" ): plabel = "#tilde{k}=0.01,J=2"
     elif ( args.coupling == "kMpl01" ): plabel = "#tilde{k}=0.1,J=2"
@@ -196,7 +196,7 @@ if __name__ == "__main__":
     leg.AddEntry(expGraph,"expected Limit","L"); #L_{int}=36.4/pb
     leg.AddEntry(exp1SGraph,"#pm1#sigma","F");
     leg.AddEntry(exp2SGraph,"#pm2#sigma","F");
-    leg.AddEntry(obsGraph,"observed Limit (Asymptotic)","L");
+    leg.AddEntry(obsGraph,"observed Limit","L");
     leg.Draw();
 
     cmsText=ROOT.TLatex(0.17,0.90, "CMS");
