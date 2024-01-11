@@ -35,37 +35,37 @@ mkdir -p FinalResults
 
 #################### Get Width Interpolated shapes ####################
 
-# Nom
-echo "########## Get Interpolated Shapes... ##########"
-for year in "${yearlist[@]}"; do
-    for cat in "${catlist[@]}"; do
-        echo ${year} ${cat}
-        narrow_file="${InterpolateShapePath}/inputs/ResonanceShapes_InputShapes_${signal_LongName}_0p014_${cat}_${year}_ratio.root"
-        medium_file="${InterpolateShapePath}/inputs/ResonanceShapes_InputShapes_${signal_LongName}_1p4_${cat}_${year}_ratio.root"
-        wide_file="${InterpolateShapePath}/inputs/ResonanceShapes_InputShapes_${signal_LongName}_5p6_${cat}_${year}_ratio.root"
-        filename="InputShapes_GluGluSpin0ToGammaGamma_${cat}_${year}"
-        python ${DijetShapeInterpolator}/extractShapes_width.py -n ${narrow_file} -m ${medium_file} -w ${wide_file} --mass ${mass} > signal_shapes/${filename}_${mass}GeV.py
-        python ${DijetShapeInterpolator}/getResonanceShapes_width.py -i signal_shapes/${filename}_${mass}GeV.py -m ${mass} -f gg -o signal_shapes/width_${filename}_${mass}GeV.root
-    done
-done
+# # Nom
+# echo "########## Get Interpolated Shapes... ##########"
+# for year in "${yearlist[@]}"; do
+#     for cat in "${catlist[@]}"; do
+#         echo ${year} ${cat}
+#         narrow_file="${InterpolateShapePath}/inputs/ResonanceShapes_InputShapes_${signal_LongName}_0p014_${cat}_${year}_ratio.root"
+#         medium_file="${InterpolateShapePath}/inputs/ResonanceShapes_InputShapes_${signal_LongName}_1p4_${cat}_${year}_ratio.root"
+#         wide_file="${InterpolateShapePath}/inputs/ResonanceShapes_InputShapes_${signal_LongName}_5p6_${cat}_${year}_ratio.root"
+#         filename="InputShapes_GluGluSpin0ToGammaGamma_${cat}_${year}"
+#         python ${DijetShapeInterpolator}/extractShapes_width.py -n ${narrow_file} -m ${medium_file} -w ${wide_file} --mass ${mass} > signal_shapes/${filename}_${mass}GeV.py
+#         python ${DijetShapeInterpolator}/getResonanceShapes_width.py -i signal_shapes/${filename}_${mass}GeV.py -m ${mass} -f gg -o signal_shapes/width_${filename}_${mass}GeV.root
+#     done
+# done
 
-# Systematics
-echo "########## Get Interpolated Systematic Shapes... ##########"
-for year in "${yearlist[@]}"; do
-    for cat in "${catlist[@]}"; do
-        for systematics in {"energyScaleStatUp","energyScaleSystUp","energyScaleGainUp","energySigmaUp","energyScaleStatDown","energyScaleSystDown","energyScaleGainDown","energySigmaDown","SFScaleUp","SFScaleDown","PUScaleUp","PUScaleDown"}; do
-            echo ${year} ${cat} ${systematics}
-            narrow_file="${InterpolateShapePath}/inputs/ResonanceShapes_InputShapes_${signal_LongName}_0p014_${cat}_${year}_${systematics}_ratio.root"
-            medium_file="${InterpolateShapePath}/inputs/ResonanceShapes_InputShapes_${signal_LongName}_1p4_${cat}_${year}_${systematics}_ratio.root"
-            wide_file="${InterpolateShapePath}/inputs/ResonanceShapes_InputShapes_${signal_LongName}_5p6_${cat}_${year}_${systematics}_ratio.root"
-            filename="InputShapes_GluGluSpin0ToGammaGamma_${cat}_${year}_${systematics}"
-            python ${DijetShapeInterpolator}/extractShapes_width.py -n ${narrow_file} -m ${medium_file} -w ${wide_file} --mass ${mass} > signal_shapes/${filename}_${mass}GeV.py
-            python ${DijetShapeInterpolator}/getResonanceShapes_width.py -i signal_shapes/${filename}_${mass}GeV.py -m ${mass} -f gg -o signal_shapes/width_${filename}_${mass}GeV.root
-        done
-    done
-done
-# Merge
-python ${DijetShapeInterpolator}/Merge_width_interpolation.py --mass ${mass} --width ${coupling} --signame ${signame}
+# # Systematics
+# echo "########## Get Interpolated Systematic Shapes... ##########"
+# for year in "${yearlist[@]}"; do
+#     for cat in "${catlist[@]}"; do
+#         for systematics in {"energyScaleStatUp","energyScaleSystUp","energyScaleGainUp","energySigmaUp","energyScaleStatDown","energyScaleSystDown","energyScaleGainDown","energySigmaDown","SFScaleUp","SFScaleDown","PUScaleUp","PUScaleDown"}; do
+#             echo ${year} ${cat} ${systematics}
+#             narrow_file="${InterpolateShapePath}/inputs/ResonanceShapes_InputShapes_${signal_LongName}_0p014_${cat}_${year}_${systematics}_ratio.root"
+#             medium_file="${InterpolateShapePath}/inputs/ResonanceShapes_InputShapes_${signal_LongName}_1p4_${cat}_${year}_${systematics}_ratio.root"
+#             wide_file="${InterpolateShapePath}/inputs/ResonanceShapes_InputShapes_${signal_LongName}_5p6_${cat}_${year}_${systematics}_ratio.root"
+#             filename="InputShapes_GluGluSpin0ToGammaGamma_${cat}_${year}_${systematics}"
+#             python ${DijetShapeInterpolator}/extractShapes_width.py -n ${narrow_file} -m ${medium_file} -w ${wide_file} --mass ${mass} > signal_shapes/${filename}_${mass}GeV.py
+#             python ${DijetShapeInterpolator}/getResonanceShapes_width.py -i signal_shapes/${filename}_${mass}GeV.py -m ${mass} -f gg -o signal_shapes/width_${filename}_${mass}GeV.root
+#         done
+#     done
+# done
+# # Merge
+# python ${DijetShapeInterpolator}/Merge_width_interpolation.py --mass ${mass} --width ${coupling} --signame ${signame}
 
 ############################## Signal Norm ##############################
 echo "########## Calculate Signal Norm... ##########"
