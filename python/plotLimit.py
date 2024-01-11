@@ -196,7 +196,7 @@ if __name__ == "__main__":
     leg.AddEntry(expGraph,"expected Limit","L"); #L_{int}=36.4/pb
     leg.AddEntry(exp1SGraph,"#pm1#sigma","F");
     leg.AddEntry(exp2SGraph,"#pm2#sigma","F");
-    # leg.AddEntry(obsGraph,"observed Limit (Asymptotic)","L");
+    leg.AddEntry(obsGraph,"observed Limit (Asymptotic)","L");
     leg.Draw();
 
     cmsText=ROOT.TLatex(0.17,0.90, "CMS");
