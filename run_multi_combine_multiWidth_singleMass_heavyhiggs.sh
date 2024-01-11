@@ -24,7 +24,7 @@ InterpolateShapePath="${DijetShapeInterpolator}/genFiducial/width/"
 bkgFitResultsPath="${DijetRootTreeAnalyzer}/datacards/multiWidth/"
 SignalNormFile_input="${diphoton}/SignalNorm_Splines_genFiducial.txt"
 SignalNormFile="SignalNorm_Splines_genFiducial_multiWidth.txt"
-datacardsDir="datacards/${signal}"
+datacardsDir="datacards/${signame}"
 # toysfile created by: combine -M GenerateOnly datacards/diphoton_combine_1300_DiPhotons_4550_fullRun2.txt -n _bkgOnly --toysFrequentist -t 10000 --saveToys --expectSignal=0
 toysfile="${DijetRootTreeAnalyzer}/ParallelForLimits/higgsCombine_Generate_bkgOnly.root"
 
