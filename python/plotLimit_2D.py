@@ -91,7 +91,7 @@ def pvalue2D():
     h_pvalue.GetZaxis().SetTitleSize(0.05)
     h_pvalue.Draw("colz")
     cmsText.Draw();
-    extraText.Draw();
+    # extraText.Draw();
     lumiText.Draw();
     c1.SaveAs("%s/pvalue.png"%(args.outputDir))
 
