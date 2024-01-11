@@ -155,11 +155,11 @@ echo $mass $zvalue
 echo $mass $zvalue >> ${finalResults}
 
 # ############################## Combine Global zvalue ##############################
-echo "########## Run Global Significance ##########"
-combine -d ${datacardfile} -M Significance --cminDefaultMinimizerType=Minuit2 -n Observed_global --toysFile ${toysfile} -t 1000 > results_global_zvalue
-rm higgsCombine*.root
+# echo "########## Run Global Significance ##########"
+# combine -d ${datacardfile} -M Significance --cminDefaultMinimizerType=Minuit2 -n Observed_global --toysFile ${toysfile} -t 1000 > results_global_zvalue
+# rm higgsCombine*.root
 
-export global_zvalue=`cat results_global_zvalue  | grep  "Significance:" | awk '{print $2}'`
+# export global_zvalue=`cat results_global_zvalue  | grep  "Significance:" | awk '{print $2}'`
 
-echo $mass $global_zvalue
-echo $mass $global_zvalue >> ${finalResults}
+# echo $mass $global_zvalue
+# echo $mass $global_zvalue >> ${finalResults}
