@@ -1081,7 +1081,8 @@ if __name__ == '__main__':
     l.SetTextFont(42)
     l.SetNDC()
     #l.DrawLatex(0.7,0.96,"%i pb^{-1} (%i TeV)"%(lumi,w.var('sqrts').getVal()/1000.))
-    l.DrawLatex(0.64,0.94,"%.1f fb^{-1} (13 TeV)"%(lumi/1000.))
+    # l.DrawLatex(0.64,0.94,"%.1f fb^{-1} (13 TeV)"%(lumi/1000.))
+    l.DrawLatex(0.64,0.94,"138 fb^{-1} (13 TeV)")
     # PAS
     #l.SetTextFont(62)
     #l.SetTextSize(0.055)
@@ -1115,10 +1116,10 @@ if __name__ == '__main__':
     #               "expow1"     : "e^{p_{1} x} x^{p_{2}}",
     #               "invpow1"    : "(1+x*p_{1})^{p_{2}}",
     #               "invpowlin1" : "(1+x*p_{1})^{p_{2}+p_{3}*x}"}
-    modelforms = {"dijet"      : "f_{1}",
-                  "expow1"     : "f_{2}",
-                  "invpow1"    : "f_{3}",
-                  "invpowlin1" : "f_{4}"}
+    modelforms = {"dijet"      : "f_{1}:x^{p_{1}+p_{2}*log(x)}",
+                  "expow1"     : "f_{2}:e^{p_{1} x} x^{p_{2}}",
+                  "invpow1"    : "f_{3}:(1+x*p_{1})^{p_{2}}",
+                  "invpowlin1" : "f_{4}:(1+x*p_{1})^{p_{2}+p_{3}*x}"}
     leg.AddEntry(backgrounds["dijet"],"%s"%(modelforms["dijet"]),"l")
     leg.AddEntry(backgrounds["expow1"],"%s"%(modelforms["expow1"]),"l")
     leg.AddEntry(backgrounds["invpow1"],"%s"%(modelforms["invpow1"]),"l")
@@ -1512,8 +1513,6 @@ if __name__ == '__main__':
     if not options.linearX:
         c.Print(options.outDir+"/fit_mgg_%s_%s_%s.pdf"%(fitRegion.replace(',','_'),box,options.year))
         c.Print(options.outDir+"/fit_mgg_%s_%s_%s.png"%(fitRegion.replace(',','_'),box,options.year))
-        c.Print(options.outDir+"/fit_mgg_%s_%s_%s.C"%(fitRegion.replace(',','_'),box,options.year))
-        c.Print(options.outDir+"/fit_mgg_%s_%s_%s.root"%(fitRegion.replace(',','_'),box,options.year))
         #c.Print(options.outDir+"/fit_mgg_%s_%s_%s_%s.C"%(fitRegion.replace(',','_'),box,options.coup,options.year))
     else:
         c.Print(options.outDir+"/fit_mgg_%s_%s_linearX.pdf"%(fitRegion.replace(',','_'),box))
