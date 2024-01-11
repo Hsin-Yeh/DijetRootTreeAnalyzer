@@ -63,13 +63,13 @@ def pvalue2D():
     cmsText.SetLineWidth(1);
     cmsText.SetTextSize(0.04);
 
-    extraText=ROOT.TLatex(0.23,0.90, "Preliminary");
-    extraText.SetNDC(1);
-    extraText.SetTextFont(52);
-    extraText.SetLineColor(0);
-    extraText.SetLineStyle(1);
-    extraText.SetLineWidth(1);
-    extraText.SetTextSize(0.04);
+    # extraText=ROOT.TLatex(0.23,0.90, "Preliminary");
+    # extraText.SetNDC(1);
+    # extraText.SetTextFont(52);
+    # extraText.SetLineColor(0);
+    # extraText.SetLineStyle(1);
+    # extraText.SetLineWidth(1);
+    # extraText.SetTextSize(0.04);
 
     lumiText=ROOT.TLatex(0.54,0.90, "138 fb^{-1} (13 TeV)");
     lumiText.SetNDC(1);
