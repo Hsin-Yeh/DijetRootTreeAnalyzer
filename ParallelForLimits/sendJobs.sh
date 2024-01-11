@@ -1,11 +1,15 @@
 #!/bin/bash
 
-version="2023-11-07"
+########## Config ##########
+signame="heavyhiggs" # grav
+Version="2024-01-11"
+masslist=($(seq 600 10 2000))
 # couplist=(4550)
 # masslist=(1300)
-# couplist=(14 361 707 1054 1400 2450 3500 4550 5600)
-couplist=(14 1400 5600)
-masslist=($(seq 600 40 2000))
+couplist=(14 361 707 1054 1400 2450 3500 4550 5600)
+############################
+
+versionDir="${Version}_${signame}"
 
 cd ${version}
 echo "==========Sending Jobs=========="

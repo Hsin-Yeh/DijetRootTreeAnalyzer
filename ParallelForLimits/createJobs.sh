@@ -1,15 +1,17 @@
 #!/bin/bash
 
-version="2023-11-07"
-mkdir ${version}
-cd ${version}
-
+########## Config ##########
+signame="heavyhiggs" # grav
+Version="2024-01-11"
+masslist=($(seq 600 10 2000))
 # couplist=(4550)
 # masslist=(1300)
-# couplist=(14 361 707 1054 1400 2450 3500 4550 5600)
-couplist=(14 1400 5600)
-masslist=($(seq 600 40 2000))
+couplist=(14 361 707 1054 1400 2450 3500 4550 5600)
+############################
 
+versionDir="${Version}_${signame}"
+mkdir ${versionDir}
+cd ${versionDir}
 
 echo "==========Creating jobs=========="
 for coupling in "${couplist[@]}"; do
@@ -29,7 +31,7 @@ for coupling in "${couplist[@]}"; do
         echo '+JobFlavour = "tomorrow" ' > ${submitFile}
         echo ' ' >> ${submitFile}
         echo "executable  = /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/CMSDIJET/DijetRootTreeAnalyzer/ParallelForLimits/setupCombine.sh" >> ${submitFile}
-        echo "arguments   = "'$(ClusterID) $(ProcId)'" ${outDir} ${coupling} ${mass} " >> ${submitFile}
+        echo "arguments   = "'$(ClusterID) $(ProcId)'" ${outDir} ${coupling} ${mass} ${signame} " >> ${submitFile}
         echo "output      = ${PWD}/${jobDir}/logs/limit_${coupling}_${mass}.out " >> ${submitFile}
         echo "error       = ${PWD}/${jobDir}/logs/limit_${coupling}_${mass}.err " >> ${submitFile}
         echo "log         = ${PWD}/${jobDir}/logs/limit_${coupling}_${mass}_htc.log " >> ${submitFile}
