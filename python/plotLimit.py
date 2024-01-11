@@ -181,9 +181,9 @@ if __name__ == "__main__":
     leg.SetFillStyle(1001);
     leg.SetTextSize(0.04);
 
-    if ( args.coupling == "kMpl001" ): plabel = "#tilde{k}=0.01, J=2"
-    elif ( args.coupling == "kMpl01" ): plabel = "#tilde{k}=0.1, J=2"
-    elif ( args.coupling == "kMpl02" ): plabel = "#tilde{k}=0.2, J=2"
+    if ( args.coupling == "kMpl001" ): plabel = "#tilde{k}=0.01,  J=2"
+    elif ( args.coupling == "kMpl01" ): plabel = "#tilde{k}=0.1,  J=2"
+    elif ( args.coupling == "kMpl02" ): plabel = "#tilde{k}=0.2,  J=2"
     elif ( args.coupling == "0p014"): plabel = "#frac{#Gamma}{m} = 1.4 #times 10^{-4}, J=0"
     elif ( args.coupling == "1p4"): plabel = "#frac{#Gamma}{m} = 1.4 #times 10^{-2}, J=0"
     elif ( args.coupling == "5p6"): plabel = "#frac{#Gamma}{m} = 5.6 #times 10^{-2}, J=0"
