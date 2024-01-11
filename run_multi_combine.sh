@@ -1,6 +1,7 @@
 #!/bin/bash
 #
 # for year in {"2016","2017","2018","fullRun2"}; do for coup in {"kMpl001","kMpl01","kMpl02"}; do ./run_multi_combine.sh ${year} ${coup}; done; done;
+# for year in {"2016","2017","2018"}; do ./run_multi_combine.sh ${year} kMpl001; done;
 # ./run_multi_combine.sh 2016 kMpl001
 # ./run_multi_combine.sh 2016 kMpl01
 # ./run_multi_combine.sh 2016 kMpl02
