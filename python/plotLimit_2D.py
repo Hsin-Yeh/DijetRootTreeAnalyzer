@@ -161,15 +161,15 @@ def limit_1D(mass_array, exp_array, expM1s_array, expM2s_array, expP1s_array, ex
     # extraText.SetTextSize(0.04);
     # extraText.Draw();
 
-    lumiText=ROOT.TLatex(0.72,0.90, "%d fb^{-1} (13 TeV)"%(lumi(args.year)) );
-    # lumiText=ROOT.TLatex(0.70,0.90, "%d fb^{-1} (13 TeV)"%(138));
-    lumiText.SetNDC(1);
-    lumiText.SetTextFont(42);
-    lumiText.SetLineColor(0);
-    lumiText.SetLineStyle(1);
-    lumiText.SetLineWidth(1);
-    lumiText.SetTextSize(0.04);
-    lumiText.Draw();
+    # lumiText=ROOT.TLatex(0.72,0.90, "%d fb^{-1} (13 TeV)"%(lumi(year)) );
+    # # lumiText=ROOT.TLatex(0.70,0.90, "%d fb^{-1} (13 TeV)"%(138));
+    # lumiText.SetNDC(1);
+    # lumiText.SetTextFont(42);
+    # lumiText.SetLineColor(0);
+    # lumiText.SetLineStyle(1);
+    # lumiText.SetLineWidth(1);
+    # lumiText.SetTextSize(0.04);
+    # lumiText.Draw();
 
     redrawBorder()
 
