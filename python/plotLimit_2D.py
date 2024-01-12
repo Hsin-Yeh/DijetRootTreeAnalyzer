@@ -61,6 +61,7 @@ def pvalue2D():
 
     for icoup, coupling in enumerate(couplings):
         coupname = str(coupnames[icoup])
+        print(coupname)
         for mass in masses:
             in_filename = args.inputDir + "/results/finalResults_" + args.signame + "_" + coupname + "_" + str(int(mass)) + ".txt";
             norm = Acceptance("fullRun2", str(coupname), str(int(mass)))
