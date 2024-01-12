@@ -71,9 +71,9 @@ elif [[ ${runMethod} == "send" ]]; then
 elif [[ ${runMethod} == "merge" ]]; then
         for coupling in "${couplist[@]}"; do
                 echo ${coupling}
-                mkdir -p ${version}/results/grav/${coupling}
+                mkdir -p ${version}/results/${signame}/${coupling}
                 for mass in "${masslist[@]}"; do
-                        mv ${version}/finalResults_grav_${coupling}_${mass}.txt ${version}/results/grav/${coupling}
+                        mv ${version}/finalResults_${signame}_${coupling}_${mass}.txt ${version}/results/${signame}/${coupling}
                 done
 
         done
