@@ -56,7 +56,7 @@ def pvalue2D():
                         h_pvalue.SetBinContent(binxy,float(pvalue))
                         h_zvalue.SetBinContent(binxy,float(zvalue))
             except IOError:
-                print("No finalResults file for %s"%(in_filename))
+                print("%s not found"%(in_filename))
 
     cmsText=ROOT.TLatex(0.14,0.90, "CMS");
     cmsText.SetNDC(1);
