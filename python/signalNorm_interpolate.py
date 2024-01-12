@@ -68,10 +68,11 @@ def Write_interpolate_file():
         for year in range(2016,2019):
             for coup in widths:
                 for cat in cats:
+                    print(year,coup,cat)
                     for mass in masses:
                         norm = Interpolate(year, coup, mass, cat, df)
                         line = "%i %i %i %s %.6f\n"%(year,coup,mass,cat,norm)
-                        print(line)
+                        # print(line)
                         file.write(line)
 
 if __name__ == "__main__":
