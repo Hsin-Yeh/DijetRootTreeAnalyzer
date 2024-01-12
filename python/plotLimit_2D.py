@@ -37,7 +37,6 @@ def Acceptance(year, coupling, mass):
         elif (y==year and c==coupling and m==mass and cat=='All'):
             totalNorm = float(norm)
             break
-    print(totalNorm)
     totalNorm = float(totalNorm)/float(lumi(year))
     if (year!="fullRun2"): totalNorm = 0.85
     return totalNorm
@@ -64,7 +63,7 @@ def pvalue2D():
         coupname = str(coupnames[icoup])
         for mass in masses:
             in_filename = args.inputDir + "/results/finalResults_" + args.signame + "_" + coupname + "_" + str(int(mass)) + ".txt";
-            norm = Acceptance("fullRun2", coupname, mass)
+            norm = Acceptance("fullRun2", str(coupname), str(int(mass)))
             binx = h_zvalue.GetXaxis().FindBin(mass)
             biny = h_zvalue.GetYaxis().FindBin(coupling)
             binxy = h_zvalue.GetBin(binx,biny,0)
