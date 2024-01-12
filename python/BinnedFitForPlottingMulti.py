@@ -517,19 +517,19 @@ if __name__ == '__main__':
 
             if options.doSpectrumFit:
                 #sideband is Full if full is given to convertSideband
+                frs={}
                 for key, value in extDijetPdfs.iteritems():
-                    fr = binnedFit(value,dataHist,sideband,options.useWeight)
+                    frs[key] = binnedFit(value,dataHist,sideband,options.useWeight)
                     #fr = binnedFit(diphotonsPdf,dataHist,sideband,options.useWeight)
                     rootTools.Utils.importToWS(w,fr)
-                    fr.Print('v')
-                    fr.Print()
-                    fr.covarianceMatrix().Print('v')
-                    fr.correlationMatrix().Print('v')
-                    corrHist = fr.correlationHist('correlation_matrix')
+                    frs[key].Print('v')
+                    frs[key].Print()
+                    frs[key].covarianceMatrix().Print('v')
+                    frs[key].correlationMatrix().Print('v')
+                    corrHist = frs[key].correlationHist('correlation_matrix')
                     corrHist.Draw('colztext')
                     corrCanvas.Print(options.outDir+'/corrHist.pdf')
                     corrCanvas.Print(options.outDir+'/corrHist.C')
-                    print("Hello")
             else:
                 fr = rt.RooFitResult()
 
