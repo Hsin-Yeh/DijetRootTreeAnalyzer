@@ -7,7 +7,6 @@ import argparse
 from scipy.stats import norm
 
 parser = argparse.ArgumentParser(description='')
-parser.add_argument('--year','-y',default="2016",type=str,help='year')
 parser.add_argument('--signame','-s',default="grav",type=str,help='grav or heavyhiggs')
 parser.add_argument('--inputDir','-i',default="./ParallelForLimits/2024-01-11_heavyhiggs",type=str,help='input directory')
 parser.add_argument('--outputDir','-o',default="./output/plots/2Dplot",type=str,help='output directory')
@@ -94,7 +93,7 @@ def pvalue2D():
     cmsText.Draw();
     # extraText.Draw();
     lumiText.Draw();
-    c1.SaveAs("%s/pvalue.pdf"%(args.outputDir))
+    c1.SaveAs("%s/pvalue_%s.pdf"%(args.outputDir,args.signame))
 
     h_zvalue.SetTitle("")
     h_zvalue.GetXaxis().SetTitle("M_{X} [GeV]")
@@ -109,7 +108,7 @@ def pvalue2D():
     cmsText.Draw();
     # extraText.Draw();
     lumiText.Draw();
-    c1.SaveAs("%s/zvalue.pdf"%(args.outputDir))
+    c1.SaveAs("%s/zvalue_%s.pdf"%(args.outputDir,args.signame))
 
     h_obslimit.SetTitle("")
     h_obslimit.GetXaxis().SetTitle("M_{X} [GeV]")
@@ -123,7 +122,7 @@ def pvalue2D():
     cmsText.Draw();
     # extraText.Draw();
     lumiText.Draw();
-    c1.SaveAs("%s/observedlimit.pdf"%(args.outputDir))
+    c1.SaveAs("%s/observedlimit_%s.pdf"%(args.outputDir,args.signame))
 
     h_explimit.SetTitle("")
     h_explimit.GetXaxis().SetTitle("M_{X} [GeV]")
@@ -137,7 +136,7 @@ def pvalue2D():
     cmsText.Draw();
     # extraText.Draw();
     lumiText.Draw();
-    c1.SaveAs("%s/expectedlimit.pdf"%(args.outputDir))
+    c1.SaveAs("%s/expectedlimit_%s.pdf"%(args.outputDir,args.signame))
 
     ########## Set Range 600-2500GeV
     h_pvalue.SetTitle("")
@@ -153,7 +152,7 @@ def pvalue2D():
     cmsText.Draw();
     # extraText.Draw();
     lumiText.Draw();
-    c1.SaveAs("%s/pvalue_zoomin.pdf"%(args.outputDir))
+    c1.SaveAs("%s/pvalue_zoomin_%s.pdf"%(args.outputDir,args.signame))
 
     h_zvalue.SetTitle("")
     h_zvalue.GetXaxis().SetTitle("M_{X} [GeV]")
@@ -169,7 +168,7 @@ def pvalue2D():
     cmsText.Draw();
     # extraText.Draw();
     lumiText.Draw();
-    c1.SaveAs("%s/zvalue_zoomin.pdf"%(args.outputDir))
+    c1.SaveAs("%s/zvalue_zoomin_%s.pdf"%(args.outputDir,args.signame))
 
     h_obslimit.SetTitle("")
     h_obslimit.GetXaxis().SetTitle("M_{X} [GeV]")
@@ -184,7 +183,7 @@ def pvalue2D():
     cmsText.Draw();
     # extraText.Draw();
     lumiText.Draw();
-    c1.SaveAs("%s/observedlimit_zoomin.pdf"%(args.outputDir))
+    c1.SaveAs("%s/observedlimit_zoomin_%s.pdf"%(args.outputDir,args.signame))
 
     h_explimit.SetTitle("")
     h_explimit.GetXaxis().SetTitle("M_{X} [GeV]")
@@ -199,7 +198,7 @@ def pvalue2D():
     cmsText.Draw();
     # extraText.Draw();
     lumiText.Draw();
-    c1.SaveAs("%s/expectedlimit_zoomin.pdf"%(args.outputDir))
+    c1.SaveAs("%s/expectedlimit_zoomin_%s.pdf"%(args.outputDir,args.signame))
 
 
 if __name__ == "__main__":
