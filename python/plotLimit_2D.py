@@ -41,19 +41,22 @@ def pvalue2D():
             binx = h_zvalue.GetXaxis().FindBin(mass)
             biny = h_zvalue.GetYaxis().FindBin(coupling)
             binxy = h_zvalue.GetBin(binx,biny,0)
-            with open (in_filename,'r') as infile:
-                Lines = infile.readlines()
-                if (Lines==0 or len(Lines[1].split())==1):
-                    print("No limits for %f %f"%(coupling,mass))
-                else:
-                    mass, obs, expP2s, expP1s, exp, expM1s, expM2s = Lines[0].split()
-                    pvalue=Lines[1].split()[1]
-                    # zvalue=Lines[2].split()[1]
-                    zvalue = z_value_from_p_value(float(pvalue))
-                    h_obslimit.SetBinContent(binxy,float(obs))
-                    h_explimit.SetBinContent(binxy,float(exp))
-                    h_pvalue.SetBinContent(binxy,float(pvalue))
-                    h_zvalue.SetBinContent(binxy,float(zvalue))
+            try:
+                with open (in_filename,'r') as infile:
+                    Lines = infile.readlines()
+                    if (Lines==0 or len(Lines[1].split())==1):
+                        print("No limits for %f %f"%(coupling,mass))
+                    else:
+                        mass, obs, expP2s, expP1s, exp, expM1s, expM2s = Lines[0].split()
+                        pvalue=Lines[1].split()[1]
+                        # zvalue=Lines[2].split()[1]
+                        zvalue = z_value_from_p_value(float(pvalue))
+                        h_obslimit.SetBinContent(binxy,float(obs))
+                        h_explimit.SetBinContent(binxy,float(exp))
+                        h_pvalue.SetBinContent(binxy,float(pvalue))
+                        h_zvalue.SetBinContent(binxy,float(zvalue))
+            except IOError:
+                print("No finalResults file for %f %f"%(coupling,mass))
 
     cmsText=ROOT.TLatex(0.14,0.90, "CMS");
     cmsText.SetNDC(1);
