@@ -17,6 +17,13 @@ def z_value_from_p_value(p_value, two_tailed=False):
     z_value = norm.ppf(1 - alpha)
     return z_value
 
+def lumi(year):
+    if (year=="2016"): return 35.9
+    elif (year=="2017"): return 41.5
+    elif (year=="2018"): return 59.7
+    elif (year=="fullRun2"): return 138
+    else: return 0
+
 def Acceptance(year, coupling, mass):
     if (args.signame == "grav"): Acceptance_file = "/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/CMSDIJET/DijetRootTreeAnalyzer/SignalNorm_Splines_full_multiWidth.txt"
     elif (args.signame == "heavyhiggs"): Acceptance_file = "/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/CMSDIJET/DijetRootTreeAnalyzer/SignalNorm_Splines_genFiducial_multiWidth.txt"
