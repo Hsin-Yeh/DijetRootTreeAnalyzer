@@ -876,7 +876,7 @@ if __name__ == '__main__':
         #p0_b =  int_b/w.var('Ntot_%s_bkg'%box).getVal()
         if "dijet" == key:
             p0_b =  w.var('Ntot_%s_bkg'%(box)).getVal() / int_b
-            print(int_b,p0_b, w.var('Ntot_%s_bkg'%(box)).getVal() )
+            print(int_b,p0_b, w.var('Ntot_%s_bkg'%(box)).getVal(), w.var('Ntot_%s_bkg'%(box)).getErrorHi(), w.var('Ntot_%s_bkg'%(box)).getErrorLo() )
         else:
             p0_b =  w.var('Ntot_%s_bkg%s'%(box,key)).getVal() / int_b
             print(int_b,p0_b, w.var('Ntot_%s_bkg%s'%(box,key)).getVal() )
