@@ -42,7 +42,7 @@ def Acceptance(year, coupling, mass):
     return totalNorm
 
 
-def limit_1D(mass_array, exp_array, expM1s_array, expM2s_array, expP1s_array, expP2S_array, obs_array, coupling):
+def limit_1D(mass_array, exp_array, expM1s_array, expM2s_array, expP1s_array, expP2s_array, obs_array, coupling):
     expGraph_init      = ROOT.TGraphErrors(len(mass_array),mass_array,exp_array);
     exp1SGraph_init    = ROOT.TGraphErrors(len(mass_array),mass_array,expM1s_array);
     exp2SGraph_init    = ROOT.TGraphErrors(len(mass_array),mass_array,expM2s_array);
