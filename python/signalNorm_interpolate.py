@@ -60,7 +60,7 @@ def Write_interpolate_file():
     else: widths = [args.width]
     if (args.mass == -1):
         masses=[]
-        for mass in range(500,6000,10):
+        for mass in range(500,5100,10):
             masses.append(mass)
     else: masses = [args.mass]
     # Open the file in write mode and write the lines
