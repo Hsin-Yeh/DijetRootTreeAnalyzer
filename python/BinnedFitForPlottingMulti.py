@@ -529,6 +529,7 @@ if __name__ == '__main__':
                     corrHist.Draw('colztext')
                     corrCanvas.Print(options.outDir+'/corrHist.pdf')
                     corrCanvas.Print(options.outDir+'/corrHist.C')
+                    print("Hello")
             else:
                 fr = rt.RooFitResult()
 
@@ -884,7 +885,7 @@ if __name__ == '__main__':
             #print(int_b,p0_b, w.var('Ntot_%s_bkg'%box).getVal() )
             #print(int_b,p0_b, w.var('Ntot_%s_bkg%s'%(box,options.config.split("_")[-1].split(".")[-2])).getVal() )
             #print(background)
-
+        # print(fr.)
         backgrounds[key].SetParameter(0,p0_b)
 
     g_data = rt.TGraphAsymmErrors(myRebinnedTH1)
