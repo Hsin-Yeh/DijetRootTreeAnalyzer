@@ -17,6 +17,24 @@ def z_value_from_p_value(p_value, two_tailed=False):
     z_value = norm.ppf(1 - alpha)
     return z_value
 
+def Acceptance(year, coupling, mass):
+    if (args.signame == "grav"): Acceptance_file = "/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/CMSDIJET/DijetRootTreeAnalyzer/SignalNorm_Splines_full_multiWidth.txt"
+    elif (args.signame == "heavyhiggs"): Acceptance_file = "/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/CMSDIJET/DijetRootTreeAnalyzer/SignalNorm_Splines_genFiducial_multiWidth.txt"
+    with open(Acceptance_file) as infile:
+        Lines = infile.readlines()
+    totalNorm=0
+    for line in Lines:
+        y, c, m, cat, norm = line.split()
+        if (year=="fullRun2" and c==coupling and m==mass and cat=='All'):
+                totalNorm += float(norm)
+        elif (y==year and c==coupling and m==mass and cat=='All'):
+            totalNorm = float(norm)
+            break
+    totalNorm = float(totalNorm)/float(lumi(year))
+    if (year!="fullRun2"): totalNorm = 0.85
+    return totalNorm
+
+
 def pvalue2D():
     ROOT.gROOT.LoadMacro("~/rootlogon.C")
 
@@ -38,6 +56,7 @@ def pvalue2D():
         coupname = str(coupnames[icoup])
         for mass in masses:
             in_filename = args.inputDir + "/results/finalResults_" + args.signame + "_" + coupname + "_" + str(int(mass)) + ".txt";
+            norm = Acceptance("fullRun2", coupname, mass)
             binx = h_zvalue.GetXaxis().FindBin(mass)
             biny = h_zvalue.GetYaxis().FindBin(coupling)
             binxy = h_zvalue.GetBin(binx,biny,0)
@@ -51,8 +70,8 @@ def pvalue2D():
                         pvalue=Lines[1].split()[1]
                         # zvalue=Lines[2].split()[1]
                         zvalue = z_value_from_p_value(float(pvalue))
-                        h_obslimit.SetBinContent(binxy,float(obs))
-                        h_explimit.SetBinContent(binxy,float(exp))
+                        h_obslimit.SetBinContent(binxy,float(obs)/norm)
+                        h_explimit.SetBinContent(binxy,float(exp)/norm)
                         h_pvalue.SetBinContent(binxy,float(pvalue))
                         h_zvalue.SetBinContent(binxy,float(zvalue))
             except IOError:
