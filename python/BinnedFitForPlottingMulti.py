@@ -1539,6 +1539,10 @@ if __name__ == '__main__':
     backgrounds["expow1"].Write()
     backgrounds["invpow1"].Write()
     backgrounds["invpowlin1"].Write()
+    frs["dijet"].Write("fr_dijet")
+    frs["expow1"].Write("fr_expow1")
+    frs["invpow1"].Write("fr_invpow1")
+    frs["invpowlin1"].Write("fr_invpowlin1")
     rootFile.Close()
 
 
