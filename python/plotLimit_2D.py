@@ -42,6 +42,142 @@ def Acceptance(year, coupling, mass):
     return totalNorm
 
 
+def limit_1D(mass_array, exp_array, expM1s_array, expM2s_array, obs_array, coupling):
+    expGraph_init      = ROOT.TGraphErrors(len(mass_array),mass_array,exp_array);
+    exp1SGraph_init    = ROOT.TGraphErrors(len(mass_array),mass_array,expM1s_array);
+    exp2SGraph_init    = ROOT.TGraphErrors(len(mass_array),mass_array,expM2s_array);
+    obsGraph_init      = ROOT.TGraphErrors(len(mass_array),mass_array,obs_array);
+
+    # Add P1s to M1s graph
+    for ipoint in range(1, len(mass_array)+1):
+        exp1SGraph_init.SetPoint(len(mass_array)+ipoint-1,mass_array[-ipoint],expP1s_array[-ipoint]);
+        exp2SGraph_init.SetPoint(len(mass_array)+ipoint-1,mass_array[-ipoint],expP2s_array[-ipoint]);
+
+    expGraph = expGraph_init.Clone();
+    exp1SGraph = exp1SGraph_init.Clone();
+    exp2SGraph = exp2SGraph_init.Clone();
+    obsGraph = obsGraph_init.Clone();
+
+    canv = ROOT.TCanvas("canv","Title",800,600);
+    canv.SetLogy();
+    # canv.SetLogx();
+    canv.SetRightMargin(0.08);
+    canv.SetLeftMargin(0.15);
+
+    exp1SGraph.SetFillColor(3);
+    exp2SGraph.SetFillColor(5);
+    exp2SGraph.GetXaxis().SetTitleSize(0.045);
+    exp2SGraph.GetYaxis().SetTitleSize(0.045);
+
+    # exp2SGraph.GetYaxis().SetRangeUser(0.9,200);
+    exp2SGraph.GetYaxis().SetTitle("95% CL limit #sigma(pp#rightarrowG#rightarrow#gamma#gamma) (fb)" if args.signame == "grav" else "95% CL limit #sigma(pp#rightarrowS#rightarrow#gamma#gamma) (fb)" );
+    exp2SGraph.GetXaxis().SetTitle("m_{G} (GeV)" if args.signame == "grav" else "m_{S} (GeV)");
+    exp2SGraph.GetXaxis().SetTitleOffset(1.3);
+    exp2SGraph.GetXaxis().SetMoreLogLabels();
+    exp2SGraph.GetXaxis().SetRangeUser(600,5000)
+    exp2SGraph.SetTitle("")
+
+    exp2SGraph.Draw("AF");
+    exp1SGraph.Draw("F");
+    expGraph.SetLineColor(4);
+    expGraph.SetLineStyle(7);
+    expGraph.SetLineWidth(3);
+    expGraph.Draw("CL");
+
+    obsGraph.SetMarkerColor(1);
+    obsGraph.SetMarkerStyle(20);
+    obsGraph.SetMarkerSize(0.5);
+    obsGraph.SetLineWidth(2);
+    obsGraph.SetLineColor(1);
+    obsGraph.SetLineStyle(1);
+    obsGraph.Draw("PL");
+
+    if (args.signame == "grav"):
+        g_xs_TuneCP2.SetLineWidth(3);
+        g_xs_TuneCP2.SetLineColor(2);
+        g_xs_TuneCP2.SetLineStyle(9);
+        g_xs_TuneCP2.SetMarkerStyle(20);
+        g_xs_TuneCP2.Draw("Lsame");
+
+        # g_xs_TuneCUEP8M1.SetLineWidth(3);
+        # g_xs_TuneCUEP8M1.SetLineColor(8);
+        # g_xs_TuneCUEP8M1.SetLineStyle(9);
+        # g_xs_TuneCUEP8M1.SetMarkerStyle(20);
+        # g_xs_TuneCUEP8M1.Draw("Lsame");
+
+    # gr_2016  = ROOT.TGraph();
+    # if (args.coupling=="kMpl001"): gr_2016.SetPoint(0,2245, 0.1175);
+    # if (args.coupling=="kMpl01"): gr_2016.SetPoint(0,4100, 0.0924);
+    # if (args.coupling=="kMpl02"): gr_2016.SetPoint(0,4700, 0.0924);
+    # gr_2016.SetMarkerStyle(30);
+    # gr_2016.SetMarkerSize(4);
+    # gr_2016.SetMarkerColor(9);
+    # gr_2016.Draw("Psame");
+
+    leg = ROOT.TLegend(0.55,0.5,0.85,0.87,"brNDC");
+    leg.SetBorderSize(1);
+    leg.SetTextFont(62);
+    leg.SetLineColor(0);
+    leg.SetLineStyle(1);
+    leg.SetLineWidth(2);
+    leg.SetFillColor(0);
+    leg.SetFillStyle(1001);
+    leg.SetTextSize(0.04);
+
+    # if ( args.coupling == "kMpl001" ): plabel = "#tilde{k}=0.01,  J=2"
+    # elif ( args.coupling == "kMpl01" ): plabel = "#tilde{k}=0.1,  J=2"
+    # elif ( args.coupling == "kMpl02" ): plabel = "#tilde{k}=0.2,  J=2"
+    # elif ( args.coupling == "0p014"): plabel = "#frac{#Gamma}{m} = 1.4 #times 10^{-4}, J=0"
+    # elif ( args.coupling == "1p4"): plabel = "#frac{#Gamma}{m} = 1.4 #times 10^{-2}, J=0"
+    # elif ( args.coupling == "5p6"): plabel = "#frac{#Gamma}{m} = 5.6 #times 10^{-2}, J=0"
+
+    plabel=coupling
+    leg.SetHeader(plabel,"C");
+    if ( args.signame == "grav" ):
+        leg.AddEntry(g_xs_TuneCP2,"G_{RS}#rightarrow#gamma#gamma (LO)","l");
+        # leg.AddEntry(g_xs_TuneCUEP8M1,"G_{RS}#rightarrow#gamma#gamma (LO) CUEP8M1","l");
+        # leg.AddEntry(gr_2016,"Published 2016 Mass Limit","P");
+    leg.AddEntry(expGraph,"expected Limit","L"); #L_{int}=36.4/pb
+    leg.AddEntry(exp1SGraph,"#pm1#sigma","F");
+    leg.AddEntry(exp2SGraph,"#pm2#sigma","F");
+    leg.AddEntry(obsGraph,"observed Limit","L");
+    leg.Draw();
+
+    cmsText=ROOT.TLatex(0.17,0.90, "CMS");
+    cmsText.SetNDC(1);
+    cmsText.SetTextFont(61);
+    cmsText.SetLineColor(0);
+    cmsText.SetLineStyle(1);
+    cmsText.SetLineWidth(1);
+    cmsText.SetTextSize(0.04);
+    cmsText.Draw();
+
+    # extraText=ROOT.TLatex(0.23,0.90, "Preliminary");
+    # extraText.SetNDC(1);
+    # extraText.SetTextFont(52);
+    # extraText.SetLineColor(0);
+    # extraText.SetLineStyle(1);
+    # extraText.SetLineWidth(1);
+    # extraText.SetTextSize(0.04);
+    # extraText.Draw();
+
+    lumiText=ROOT.TLatex(0.72,0.90, "%d fb^{-1} (13 TeV)"%(lumi(args.year)) );
+    # lumiText=ROOT.TLatex(0.70,0.90, "%d fb^{-1} (13 TeV)"%(138));
+    lumiText.SetNDC(1);
+    lumiText.SetTextFont(42);
+    lumiText.SetLineColor(0);
+    lumiText.SetLineStyle(1);
+    lumiText.SetLineWidth(1);
+    lumiText.SetTextSize(0.04);
+    lumiText.Draw();
+
+    redrawBorder()
+
+    canv.SaveAs("test_%s.png"%coupling)
+    # canv.SaveAs( "./limitplot_%s_%s_%s_unblind.pdf"% (signame, coupling, args.year) );
+
+
+
 def pvalue2D():
     ROOT.gROOT.LoadMacro("~/rootlogon.C")
 
@@ -60,6 +196,7 @@ def pvalue2D():
     h_explimit = ROOT.TH2F("h_explimit","expected limit",len(masses)-1,masses,len(couplings)-1,couplings)
 
     for icoup, coupling in enumerate(couplings):
+        mass_array, obs_array, exp_array, expP1s_array, expP2s_array, expM1s_array, expM2s_array, exp1s_array, exp2s_array, mass_long_array = array('d'), array('d'), array('d'), array('d'), array('d'), array('d'), array('d'), array('d'), array('d'), array('d');
         coupname = str(coupnames[icoup])
         print(coupname)
         for mass in masses:
@@ -82,8 +219,17 @@ def pvalue2D():
                         h_explimit.SetBinContent(binxy,float(exp)/norm)
                         h_pvalue.SetBinContent(binxy,float(pvalue))
                         h_zvalue.SetBinContent(binxy,float(zvalue))
+                        mass_array.append(float(mass))
+                        obs_array.append(float(obs)/norm)
+                        exp_array.append(float(exp)/norm)
+                        expP1s_array.append(float(expP1s)/norm)
+                        expP2s_array.append(float(expP2s)/norm)
+                        expM1s_array.append(float(expM1s)/norm)
+                        expM2s_array.append(float(expM2s)/norm)
             except IOError:
                 print("%s not found"%(in_filename))
+        limit_1D(mass_array, exp_array, expM1s_array, expM2s_array, obs_array, coupname)
+
 
     cmsText=ROOT.TLatex(0.14,0.90, "CMS");
     cmsText.SetNDC(1);
