@@ -228,7 +228,7 @@ def pvalue2D():
                         expM2s_array.append(float(expM2s)/norm)
             except IOError:
                 print("%s not found"%(in_filename))
-        limit_1D(mass_array, exp_array, expM1s_array, expM2s_array, obs_array, coupname)
+        limit_1D(mass_array, exp_array, expM1s_array, expM2s_array, expP1s_array, expP2s_array, obs_array, coupname)
 
 
     cmsText=ROOT.TLatex(0.14,0.90, "CMS");
