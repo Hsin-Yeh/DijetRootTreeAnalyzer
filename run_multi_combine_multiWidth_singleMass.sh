@@ -71,8 +71,8 @@ done
 python ${DijetShapeInterpolator}/Merge_width_interpolation.py --mass ${mass} --width ${coupling}
 
 ############################## Signal Norm ##############################
-echo "########## Calculate Signal Norm... ##########"
-python ${DijetRootTreeAnalyzer}/python/signalNorm_interpolate.py -i ${SignalNormFile_input} --mass ${mass} --width ${coupling} -o ${SignalNormFile}
+# echo "########## Calculate Signal Norm... ##########"
+# python ${DijetRootTreeAnalyzer}/python/signalNorm_interpolate.py -i ${SignalNormFile_input} --mass ${mass} --width ${coupling} -o ${SignalNormFile}
 
 ############################## WriteDataCard.py grav ##############################
 # The yield was initially normalized to 1000/pb.
