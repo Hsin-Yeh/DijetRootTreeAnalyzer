@@ -17,6 +17,11 @@ def z_value_from_p_value(p_value, two_tailed=False):
     z_value = norm.ppf(1 - alpha)
     return z_value
 
+def redrawBorder():
+    # code from -> https://root-forum.cern.ch/t/how-to-redraw-axis-and-plot-borders/28252
+    ROOT.gPad.Update();
+    ROOT.gPad.RedrawAxis();
+
 def lumi(year):
     if (year=="2016"): return 35.9
     elif (year=="2017"): return 41.5
@@ -171,7 +176,7 @@ def limit_1D(mass_array, exp_array, expM1s_array, expM2s_array, expP1s_array, ex
     # lumiText.SetTextSize(0.04);
     # lumiText.Draw();
 
-    redrawBorder()
+    # redrawBorder()
 
     canv.SaveAs("test_%s.png"%coupling)
     # canv.SaveAs( "./limitplot_%s_%s_%s_unblind.pdf"% (signame, coupling, args.year) );
