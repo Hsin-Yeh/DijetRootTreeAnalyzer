@@ -104,28 +104,23 @@ if __name__ == '__main__':
         fwhmCut = 'mgg>%f && mgg<%f'%(massMin,massMax)
         genMassCut = 'mggGen>%f && mggGen<%f'%(mass*0.8, mass*1.2)
 
-
-        if options.method=="full":          allCuts = nomCut
-        elif options.method=="truncate":    allCuts = '(' + nomCut + ')*(' + fwhmCut + ')'
-        elif options.method=="genFiducial": allCuts = '(' + nomCut + ')*(' + genMassCut + ')'
-
+        # Cuts for nom and systematics
         if options.type=='nom':
-            project(thetree,h_mgg_ratio, "mgg/%f"%(float(mass)), allCuts )
-            # project(thetree,h_mgg_8GeVbin, "mgg", allCuts )
+            allCuts = nomCut
         elif options.sys in energySyslist:
-            project(thetree,h_mgg_ratio, "mgg*%s/%f"%(energySyslist[options.sys],float(mass)), allCuts )
-
+            allCuts = '(' + nomCut + ')*(' + energySyslist[options.sys] + ')'
         elif options.sys in SFSyslist:
             allCuts = '(' + acc[options.cat] + ')*(' + eff[year] + ')*(' + SFSyslist[options.sys] + ')*(' + EEPFSyslist["nom"] + ")*(" + PuSyslist["nom"] + ")*(weightAll)"
-            project(thetree,h_mgg_ratio, "mgg/%f"%(float(mass)), allCuts )
-
         elif options.sys in PuSyslist:
             allCuts = '(' + acc[options.cat] + ')*(' + eff[year] + ')*(' + SFSyslist["nom"] + ')*(' + EEPFSyslist["nom"] + ")*(" + PuSyslist[options.sys] + ")*(weightAll)"
-            project(thetree,h_mgg_ratio, "mgg/%f"%(float(mass)), allCuts )
-
         elif options.sys in EEPFSyslist:
             allCuts = '(' + acc[options.cat] + ')*(' + eff[year] + ')*(' + SFSyslist["nom"] + ')*(' + EEPFSyslist[options.sys] + ")*(" + PuSyslist["nom"] + ")*(weightAll)"
-            project(thetree,h_mgg_ratio, "mgg/%f"%(float(mass)), allCuts )
+
+        # Additional cuts
+        if options.method=="truncate":    allCuts = '(' + allCuts + ')*(' + fwhmCut + ')'
+        elif options.method=="genFiducial": allCuts = '(' + allCuts + ')*(' + genMassCut + ')'
+
+        project(thetree,h_mgg_ratio, "mgg/%f"%(float(mass)), allCuts )
 
         #h = tfileIn.Get('h_mjj_ratio_%s'%options.type)
         h_mgg_ratio.SetName('h_%s_M%i_%s'%(title,mass,year))
