@@ -3,8 +3,8 @@
 ########## Config ##########
 runMethod=$1 # create/send/merge
 signame="heavyhiggs" # grav/heavyhiggs
-Version="2024-01-11"
-versionDir="${Version}_${signame}"
+version="2024-01-11"
+versionDir="${version}_${signame}"
 masslist=($(seq 600 10 2000))
 # couplist=(4550)
 # masslist=(1300)
@@ -71,9 +71,9 @@ elif [[ ${runMethod} == "send" ]]; then
 elif [[ ${runMethod} == "merge" ]]; then
         for coupling in "${couplist[@]}"; do
                 echo ${coupling}
-                mkdir -p ${version}/results/${signame}/${coupling}
+                mkdir -p ${versionDir}/results/${signame}/${coupling}
                 for mass in "${masslist[@]}"; do
-                        mv ${version}/finalResults_${signame}_${coupling}_${mass}.txt ${version}/results/${signame}/${coupling}
+                        mv ${versionDir}/finalResults_${signame}_${coupling}_${mass}.txt ${versionDir}/results/${signame}/${coupling}
                 done
 
         done

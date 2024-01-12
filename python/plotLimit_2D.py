@@ -9,6 +9,7 @@ from scipy.stats import norm
 parser = argparse.ArgumentParser(description='')
 parser.add_argument('--year','-y',default="2016",type=str,help='year')
 parser.add_argument('--signame','-s',default="grav",type=str,help='grav or heavyhiggs')
+parser.add_argument('--inputDir','-i',default="./ParallelForLimits/2024-01-11_heavyhiggs",type=str,help='input directory')
 parser.add_argument('--outputDir','-o',default="./output/plots/2Dplot",type=str,help='output directory')
 args = parser.parse_args()
 
@@ -37,7 +38,7 @@ def pvalue2D():
     for icoup, coupling in enumerate(couplings):
         coupname = str(coupnames[icoup])
         for mass in masses:
-            in_filename = "ParallelForLimits/2023-10-25/results/grav/" + coupname + "/finalResults_" + args.signame + "_" + coupname + "_" + str(int(mass)) + ".txt";
+            in_filename = args.inputDir + "/results/finalResults_" + args.signame + "_" + coupname + "_" + str(int(mass)) + ".txt";
             binx = h_zvalue.GetXaxis().FindBin(mass)
             biny = h_zvalue.GetYaxis().FindBin(coupling)
             binxy = h_zvalue.GetBin(binx,biny,0)
