@@ -1539,7 +1539,7 @@ if __name__ == '__main__':
     backgrounds["expow1"].Write()
     backgrounds["invpow1"].Write()
     backgrounds["invpowlin1"].Write()
-    frs["dijet"].Print()
+    # frs["dijet"].Print()
     # frs["dijet"].Write("fr_dijet")
     # frs["expow1"].Write("fr_expow1")
     # frs["invpow1"].Write("fr_invpow1")
