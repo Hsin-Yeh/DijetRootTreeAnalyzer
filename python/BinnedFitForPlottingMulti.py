@@ -521,7 +521,7 @@ if __name__ == '__main__':
                 for key, value in extDijetPdfs.iteritems():
                     frs[key] = binnedFit(value,dataHist,sideband,options.useWeight)
                     #fr = binnedFit(diphotonsPdf,dataHist,sideband,options.useWeight)
-                    rootTools.Utils.importToWS(w,fr)
+                    rootTools.Utils.importToWS(w,frs[key])
                     frs[key].Print('v')
                     frs[key].Print()
                     frs[key].covarianceMatrix().Print('v')
@@ -887,6 +887,11 @@ if __name__ == '__main__':
             #print(background)
         # print(fr.)
         backgrounds[key].SetParameter(0,p0_b)
+        frs[key].Print('v')
+        frs[key].Print()
+        frs[key].covarianceMatrix().Print('v')
+        frs[key].correlationMatrix().Print('v')
+
 
     g_data = rt.TGraphAsymmErrors(myRebinnedTH1)
 
