@@ -3,13 +3,13 @@
 ########## Config ##########
 signame="heavyhiggs" # grav
 Version="2024-01-11"
+versionDir="${Version}_${signame}"
 masslist=($(seq 600 10 2000))
 # couplist=(4550)
 # masslist=(1300)
 couplist=(14 361 707 1054 1400 2450 3500 4550 5600)
 ############################
 
-versionDir="${Version}_${signame}"
 cd ${versionDir}
 
 echo "==========Sending Jobs=========="
