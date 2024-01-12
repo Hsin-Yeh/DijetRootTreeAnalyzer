@@ -64,6 +64,7 @@ def pvalue2D():
         for mass in masses:
             in_filename = args.inputDir + "/results/finalResults_" + args.signame + "_" + coupname + "_" + str(int(mass)) + ".txt";
             norm = Acceptance("fullRun2", coupname, mass)
+            print(norm)
             binx = h_zvalue.GetXaxis().FindBin(mass)
             biny = h_zvalue.GetYaxis().FindBin(coupling)
             binxy = h_zvalue.GetBin(binx,biny,0)
