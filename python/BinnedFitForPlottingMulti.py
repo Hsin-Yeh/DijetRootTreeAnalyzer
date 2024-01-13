@@ -45,7 +45,13 @@ def binnedFit(pdf, data, fitRange='Full',useWeight=False):
         if  stat != 0 :
             params_test.assignValueOnly(fr.randomizePars());
         ntries += 1
-        
+
+    # integral_bkg = pdf.createIntegral(x, NormSet(x), Range("signal"))
+    # backround_yield{"backround_yield", "backround_yield", {*integral_bkg, N_bkg}};
+    # integral_bkg_value = backround_yield.getVal();
+    # integral_bkg_value_error = backround_yield.getPropagatedError(*fit_result_data, x);
+    # cout << " Background Integral: " << integral_bkg_value << " +/- " << integral_bkg_value_error << endl;
+
     return fr
 
 def effFit(pdf, data, conditionalObs):    
