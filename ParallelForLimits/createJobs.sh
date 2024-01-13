@@ -69,13 +69,15 @@ elif [[ ${runMethod} == "send" ]]; then
 
 ########## MergeJobs ##########
 elif [[ ${runMethod} == "merge" ]]; then
-        for coupling in "${couplist[@]}"; do
-                echo ${coupling}
-                mkdir -p ${versionDir}/results/${signame}/${coupling}
-                for mass in "${masslist[@]}"; do
-                        mv ${versionDir}/finalResults_${signame}_${coupling}_${mass}.txt ${versionDir}/results/${signame}/${coupling}
-                done
+        cd ${versionDir}
+        mkdir results
+        mv final*.txt results
+        # for coupling in "${couplist[@]}"; do
+        #         echo ${coupling}
+        #         mkdir -p ${versionDir}/results/${signame}/${coupling}
+        #         for mass in "${masslist[@]}"; do
+        #                 mv ${versionDir}/finalResults_${signame}_${coupling}_${mass}.txt ${versionDir}/results/${signame}/${coupling}
+        #         done
 
-        done
-
+        # done
 fi
