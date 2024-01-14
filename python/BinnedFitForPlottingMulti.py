@@ -873,7 +873,7 @@ if __name__ == '__main__':
     for key, value in background_pdfs.iteritems():
         pdf_tests[key]=value
         if "dijet" == key:
-            backgrounds[key]= value.asTF(rt.RooArgList(w.var('mgg')),rt.RooArgList(w.var('Ntot_%s_bkg'%box), w.var('p1_%s'%box), w.var('p2_%s'%box)))
+            backgrounds[key]= value.asTF(rt.RooArgList(w.var('mgg')),rt.RooArgList(w.var('p0_%s'%box), w.var('p1_%s'%box), w.var('p2_%s'%box)))
             print(w.var('Ntot_%s_bkg'%(box)).getVal(), w.var('p0_%s'%box).getVal(), w.var('p1_%s'%box).getVal(), w.var('p2_%s'%box).getVal())
         if "expow1" == key:
             backgrounds[key]= value.asTF(rt.RooArgList(w.var('mgg')),rt.RooArgList(w.var('pex1_0_%s'%box), w.var('pex1_1_%s'%box), w.var('pex1_2_%s'%box)))
@@ -892,17 +892,19 @@ if __name__ == '__main__':
         print(w.var('mgg').getMin(),w.var('mgg').getMax())
         int_b = backgrounds[key].Integral(w.var('mgg').getMin(),w.var('mgg').getMax())
 
-        covMatrix = frs[key].covarianceMatrix();
-        covMatrix.Print();
-        integral=backgrounds[key].Integral(w.var('mgg').getMin(),w.var('mgg').getMax())
-        integralError=backgrounds[key].IntegralError(w.var('mgg').getMin(),w.var('mgg').getMax(),backgrounds[key].GetParameters(),covMatrix.GetMatrixArray())
-        print("test: integral: %f, error: %f, p0: %f"%(integral,integralError,backgrounds[key].GetParameters()[0]))
         #p0_b = w.var('Ntot_%s_bkg'%box).getVal() / (int_b * lumi)
 
         #p0_b =  int_b/w.var('Ntot_%s_bkg'%box).getVal()
         if "dijet" == key:
             p0_b =  w.var('Ntot_%s_bkg'%(box)).getVal() / int_b
             print(int_b,p0_b, w.var('Ntot_%s_bkg'%(box)).getVal(), w.var('Ntot_%s_bkg'%(box)).getErrorHi(), w.var('Ntot_%s_bkg'%(box)).getErrorLo() )
+
+            covMatrix = frs[key].covarianceMatrix();
+            covMatrix.Print();
+            backgrounds[key].SetParameter(0,w.var('Ntot_%s_bkg'%(box)).getVal())
+            integral=backgrounds[key].Integral(w.var('mgg').getMin(),w.var('mgg').getMax())
+            integralError=backgrounds[key].IntegralError(w.var('mgg').getMin(),w.var('mgg').getMax(),backgrounds[key].GetParameters(),covMatrix.GetMatrixArray())
+            print("test: integral: %f, error: %f, p0: %f"%(integral,integralError,backgrounds[key].GetParameters()[0]))
         else:
             p0_b =  w.var('Ntot_%s_bkg%s'%(box,key)).getVal() / int_b
             print(int_b,p0_b, w.var('Ntot_%s_bkg%s'%(box,key)).getVal() )
