@@ -895,7 +895,7 @@ if __name__ == '__main__':
         covMatrix = fr.covarianceMatrix();
         covMatrix.Print();
         integral=backgrounds[key].Integral(w.var('mgg').getMin(),w.var('mgg').getMax())
-        integralError=backgrounds[key].IntegralError(w.var('mgg').getMin(),w.var('mgg').getMax(),backgrounds[key]->GetParameters(),covMatrix.GetMatrixArray())
+        integralError=backgrounds[key].IntegralError(w.var('mgg').getMin(),w.var('mgg').getMax(),backgrounds[key].GetParameters(),covMatrix.GetMatrixArray())
         print("test: integral: %s, error: %s"%(integral,integralError))
         #p0_b = w.var('Ntot_%s_bkg'%box).getVal() / (int_b * lumi)
 
