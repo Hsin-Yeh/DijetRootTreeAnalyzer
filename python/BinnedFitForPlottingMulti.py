@@ -48,7 +48,7 @@ def binnedFit(pdf, data, fitRange='Full',useWeight=False):
 
     x = rt.RooRealVar("x", "x", 500, 6000)
     frame = x.frame()
-    pdf.plotOn(frame, VisualizeError=(fr, 1), FillColor="kOrange")
+    pdf.plotOn(frame, (fr, 1), "kOrange")
     c = rt.TCanvas("rf610_visualerror", "rf610_visualerror", 800, 800)
     frame.Draw()
     c.SaveAs("test.png")
