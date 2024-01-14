@@ -46,12 +46,12 @@ def binnedFit(pdf, data, fitRange='Full',useWeight=False):
             params_test.assignValueOnly(fr.randomizePars());
         ntries += 1
 
-    x = rt.RooRealVar("x", "x", 500, 6000)
-    frame = x.frame()
-    pdf.plotOn(frame, (fr, 1), "kOrange")
-    c = rt.TCanvas("rf610_visualerror", "rf610_visualerror", 800, 800)
-    frame.Draw()
-    c.SaveAs("test.png")
+    # x = rt.RooRealVar("x", "x", 500, 6000)
+    # frame = x.frame()
+    # pdf.plotOn(frame, (fr, 1), "kOrange")
+    # c = rt.TCanvas("rf610_visualerror", "rf610_visualerror", 800, 800)
+    # frame.Draw()
+    # c.SaveAs("test.png")
     # xset = rt.RooArgSet()
     # integral = pdf.createIntegral(xset, rt.RooFit.NormSet(xset), rt.RooFit.Range(fitRange))
     # integralValue = integral.getVal();
@@ -866,11 +866,12 @@ if __name__ == '__main__':
                         "invpowlin1"  : w.pdf('%s_bkginvpowlin1_unbin'%box) }
 
     backgrounds = {}
-
+    pdf_tests = {}
     #background_pdf = w.pdf('%s_bkg_unbin'%box)
     #print(background_pdf)
     #background= background_pdf.asTF(rt.RooArgList(w.var('th1x')),rt.RooArgList(w.var('p0_%s'%box)))
     for key, value in background_pdfs.iteritems():
+        pdf_tests[key]=value
         if "dijet" == key:
             backgrounds[key]= value.asTF(rt.RooArgList(w.var('mgg')),rt.RooArgList(w.var('p0_%s'%box), w.var('p1_%s'%box), w.var('p2_%s'%box)))
             print(w.var('Ntot_%s_bkg'%(box)).getVal(), w.var('p0_%s'%box).getVal(), w.var('p1_%s'%box).getVal(), w.var('p2_%s'%box).getVal())
@@ -1584,6 +1585,11 @@ if __name__ == '__main__':
     backgrounds["expow1"].Write()
     backgrounds["invpow1"].Write()
     backgrounds["invpowlin1"].Write()
+    pdf_tests["dijet"].Write()
+    pdf_tests["expow1"].Write()
+    pdf_tests["invpow1"].Write()
+    pdf_tests["invpowlin1"].Write()
+
     # outFile.Close()
     #w.Close()
     # del w
