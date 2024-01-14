@@ -52,11 +52,11 @@ def binnedFit(pdf, data, fitRange='Full',useWeight=False):
     # c = rt.TCanvas("rf610_visualerror", "rf610_visualerror", 800, 800)
     # frame.Draw()
     # c.SaveAs("test.png")
-    # xset = rt.RooArgSet()
-    # integral = pdf.createIntegral(xset, rt.RooFit.NormSet(xset), rt.RooFit.Range(fitRange))
-    # integralValue = integral.getVal();
-    # print("HiHi")
-    # print(integralValue)
+    xset = rt.RooArgSet()
+    integral = pdf.createIntegral(xset, rt.RooFit.NormSet(xset), rt.RooFit.Range(fitRange))
+    integralValue = integral.getVal();
+    print("HiHi")
+    print(integralValue)
 
     # integral_bkg = pdf.createIntegral(x, NormSet(x), Range("signal"))
     # backround_yield{"backround_yield", "backround_yield", {*integral_bkg, N_bkg}};
