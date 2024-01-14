@@ -57,7 +57,7 @@ def binnedFit(pdf, data, fitRange='Full',useWeight=False):
     integralValue = integral.getVal();
     integralError = integral.getPropagatedError(fr);
     print("HiHi")
-    print(integralValue)
+    print(integralValue, integralError)
 
     # integral_bkg = pdf.createIntegral(x, NormSet(x), Range("signal"))
     # backround_yield{"backround_yield", "backround_yield", {*integral_bkg, N_bkg}};
