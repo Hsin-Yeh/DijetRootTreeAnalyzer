@@ -18,7 +18,7 @@ def binnedFit(pdf, data, fitRange='Full',useWeight=False):
     MaxTries = 5
     ntries = 1
     stat = -1
-    print(pdf)
+    # print(pdf)
     params_test = pdf.getParameters(rt.RooArgSet())
     while ntries <= MaxTries and stat != 0:
         if useWeight:
@@ -46,11 +46,17 @@ def binnedFit(pdf, data, fitRange='Full',useWeight=False):
             params_test.assignValueOnly(fr.randomizePars());
         ntries += 1
 
-    xset = rt.RooArgSet()
-    integral = pdf.createIntegral(xset, rt.RooFit.NormSet(xset), rt.RooFit.Range(fitRange))
-    integralValue = integral.getVal();
-    print("HiHi")
-    print(integralValue)
+    x = ROOT.RooRealVar("x", "x", 500, 6000)
+    frame = x.frame(Bins=40, Title="P.d.f with visualized 1-sigma error band")
+    pdf.plotOn(frame, VisualizeError=(r, 1), FillColor="kOrange")
+    c = ROOT.TCanvas("rf610_visualerror", "rf610_visualerror", 800, 800)
+    frame.Draw()
+    c.SaveAs("test.png")
+    # xset = rt.RooArgSet()
+    # integral = pdf.createIntegral(xset, rt.RooFit.NormSet(xset), rt.RooFit.Range(fitRange))
+    # integralValue = integral.getVal();
+    # print("HiHi")
+    # print(integralValue)
 
     # integral_bkg = pdf.createIntegral(x, NormSet(x), Range("signal"))
     # backround_yield{"backround_yield", "backround_yield", {*integral_bkg, N_bkg}};
