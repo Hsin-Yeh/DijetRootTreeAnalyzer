@@ -892,7 +892,7 @@ if __name__ == '__main__':
         print(w.var('mgg').getMin(),w.var('mgg').getMax())
         int_b = backgrounds[key].Integral(w.var('mgg').getMin(),w.var('mgg').getMax())
 
-        covMatrix = fr.covarianceMatrix();
+        covMatrix = frs[key].covarianceMatrix();
         covMatrix.Print();
         integral=backgrounds[key].Integral(w.var('mgg').getMin(),w.var('mgg').getMax())
         integralError=backgrounds[key].IntegralError(w.var('mgg').getMin(),w.var('mgg').getMax(),backgrounds[key].GetParameters(),covMatrix.GetMatrixArray())
