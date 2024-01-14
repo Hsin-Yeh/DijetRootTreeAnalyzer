@@ -46,7 +46,7 @@ def binnedFit(pdf, data, fitRange='Full',useWeight=False):
             params_test.assignValueOnly(fr.randomizePars());
         ntries += 1
 
-    integral = pdf.createIntegral(rt.RooArgSet(pdf.var("mgg")), rt.RooFit.Range(fitRange))
+    integral = pdf.createIntegral(rt.RooArgSet(), rt.RooFit.Range(fitRange))
     integralValue = integral.getVal();
     print("HiHi")
     print(integralValue)
