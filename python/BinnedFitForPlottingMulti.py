@@ -55,6 +55,7 @@ def binnedFit(pdf, data, fitRange='Full',useWeight=False):
     xset = rt.RooArgSet()
     integral = pdf.createIntegral(xset, rt.RooFit.NormSet(xset), rt.RooFit.Range(fitRange))
     integralValue = integral.getVal();
+    integralError = integral.getPropagatedError(fr);
     print("HiHi")
     print(integralValue)
 
