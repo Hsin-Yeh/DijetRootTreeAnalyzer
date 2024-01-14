@@ -880,7 +880,7 @@ if __name__ == '__main__':
         int_b = backgrounds[key].Integral(w.var('mgg').getMin(),w.var('mgg').getMax())
 
         #p0_b = w.var('Ntot_%s_bkg'%box).getVal() / (int_b * lumi)
-        integral = value.createIntegral(x,rt.RooArgSet(w.var('mgg'));
+        integral = value.createIntegral(x,rt.RooArgSet(w.var('mgg')))
         integralValue = integral.getVal();
         print(integralValue)
 
