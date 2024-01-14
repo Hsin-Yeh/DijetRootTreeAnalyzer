@@ -881,7 +881,7 @@ if __name__ == '__main__':
 
         #p0_b = w.var('Ntot_%s_bkg'%box).getVal() / (int_b * lumi)
         integral = value.createIntegral(x,rt.RooArgList(w.var('mgg')),rt.RooArgList(w.var('p0_%s'%box), w.var('p1_%s'%box), w.var('p2_%s'%box)));
-        integralValue = integral->getVal();
+        integralValue = integral.getVal();
         print(integralValue)
 
         #p0_b =  int_b/w.var('Ntot_%s_bkg'%box).getVal()
