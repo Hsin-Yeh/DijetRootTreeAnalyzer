@@ -18,7 +18,7 @@ def binnedFit(pdf, data, fitRange='Full',useWeight=False):
     MaxTries = 5
     ntries = 1
     stat = -1
-    #print(pdf)
+    print(pdf)
     params_test = pdf.getParameters(rt.RooArgSet())
     while ntries <= MaxTries and stat != 0:
         if useWeight:
