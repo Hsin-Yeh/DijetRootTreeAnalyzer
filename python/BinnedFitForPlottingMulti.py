@@ -896,7 +896,7 @@ if __name__ == '__main__':
         covMatrix.Print();
         integral=backgrounds[key].Integral(w.var('mgg').getMin(),w.var('mgg').getMax())
         integralError=backgrounds[key].IntegralError(w.var('mgg').getMin(),w.var('mgg').getMax(),backgrounds[key].GetParameters(),covMatrix.GetMatrixArray())
-        print("test: integral: %s, error: %s"%(integral,integralError))
+        print("test: integral: %f, error: %f, p0: %f"%(integral,integralError,backgrounds[key].GetParameters()[0]))
         #p0_b = w.var('Ntot_%s_bkg'%box).getVal() / (int_b * lumi)
 
         #p0_b =  int_b/w.var('Ntot_%s_bkg'%box).getVal()
