@@ -46,6 +46,11 @@ def binnedFit(pdf, data, fitRange='Full',useWeight=False):
             params_test.assignValueOnly(fr.randomizePars());
         ntries += 1
 
+    integral = value.createIntegral(rt.RooArgSet(w.var('mgg'),rt.RooFit.Range("mgg")))
+    integralValue = integral.getVal();
+    print("HiHi")
+    print(integralValue)
+
     # integral_bkg = pdf.createIntegral(x, NormSet(x), Range("signal"))
     # backround_yield{"backround_yield", "backround_yield", {*integral_bkg, N_bkg}};
     # integral_bkg_value = backround_yield.getVal();
@@ -880,9 +885,6 @@ if __name__ == '__main__':
         int_b = backgrounds[key].Integral(w.var('mgg').getMin(),w.var('mgg').getMax())
 
         #p0_b = w.var('Ntot_%s_bkg'%box).getVal() / (int_b * lumi)
-        integral = value.createIntegral(rt.RooArgSet(w.var('mgg'),rt.RooFit.Range("mgg")))
-        integralValue = integral.getVal();
-        print(integralValue)
 
         #p0_b =  int_b/w.var('Ntot_%s_bkg'%box).getVal()
         if "dijet" == key:
