@@ -46,10 +46,10 @@ def binnedFit(pdf, data, fitRange='Full',useWeight=False):
             params_test.assignValueOnly(fr.randomizePars());
         ntries += 1
 
-    x = ROOT.RooRealVar("x", "x", 500, 6000)
+    x = rt.RooRealVar("x", "x", 500, 6000)
     frame = x.frame(Bins=40, Title="P.d.f with visualized 1-sigma error band")
     pdf.plotOn(frame, VisualizeError=(r, 1), FillColor="kOrange")
-    c = ROOT.TCanvas("rf610_visualerror", "rf610_visualerror", 800, 800)
+    c = rt.TCanvas("rf610_visualerror", "rf610_visualerror", 800, 800)
     frame.Draw()
     c.SaveAs("test.png")
     # xset = rt.RooArgSet()
