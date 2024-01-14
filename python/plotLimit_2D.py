@@ -30,8 +30,8 @@ def lumi(year):
     else: return 0
 
 def Acceptance(year, coupling, mass):
-    if (args.signame == "grav"): Acceptance_file = "/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/CMSDIJET/DijetRootTreeAnalyzer/SignalNorm_Splines_full_multiWidth.txt"
-    elif (args.signame == "heavyhiggs"): Acceptance_file = "/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/CMSDIJET/DijetRootTreeAnalyzer/SignalNorm_Splines_genFiducial_multiWidth.txt"
+    if (args.signame == "grav"): Acceptance_file = "/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/SignalNorm_Splines_full_multiWidth.txt"
+    elif (args.signame == "heavyhiggs"): Acceptance_file = "/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/SignalNorm_Splines_genFiducial_multiWidth.txt"
     with open(Acceptance_file) as infile:
         Lines = infile.readlines()
     totalNorm=0
