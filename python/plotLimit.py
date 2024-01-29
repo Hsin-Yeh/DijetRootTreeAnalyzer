@@ -214,7 +214,7 @@ if __name__ == "__main__":
     leg.AddEntry(obsGraph,"observed Limit","LP");
     leg.Draw();
 
-    cmsText=ROOT.TLatex(0.18,0.82, "CMS");
+    cmsText=ROOT.TLatex(0.19,0.82, "CMS");
     cmsText.SetNDC(1);
     cmsText.SetTextFont(61);
     cmsText.SetLineColor(0);
