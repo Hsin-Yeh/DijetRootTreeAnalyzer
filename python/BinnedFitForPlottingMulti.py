@@ -143,6 +143,10 @@ def convertFunctionToHisto(background_,name_,N_massBins_,massBins_):
         value = background_.Integral(xbinLow , xbinHigh) / binWidth_current
         background_hist_.SetBinContent(bin+1,value)
 
+        print("heyhey")
+        valueError = background_.IntegralError(xbinLow , xbinHigh , ) / binWidth_current
+
+
     return background_hist_
 
 def calculateChi2AndFillResiduals(data_obs_TGraph_,background_hist_,hist_fit_residual_vsMass_,workspace_,prinToScreen_=0,effFit_=False):
@@ -899,13 +903,12 @@ if __name__ == '__main__':
         if "dijet" == key:
             p0_b =  w.var('Ntot_%s_bkg'%(box)).getVal() / int_b
             print(int_b,p0_b, w.var('Ntot_%s_bkg'%(box)).getVal(), w.var('Ntot_%s_bkg'%(box)).getErrorHi(), w.var('Ntot_%s_bkg'%(box)).getErrorLo() )
-
-            covMatrix = frs[key].covarianceMatrix();
-            covMatrix.Print();
-            backgrounds[key].SetParameter(0,w.var('Ntot_%s_bkg'%(box)).getVal())
-            integral=backgrounds[key].Integral(w.var('mgg').getMin(),w.var('mgg').getMax())
-            integralError=backgrounds[key].IntegralError(w.var('mgg').getMin(),w.var('mgg').getMax(),backgrounds[key].GetParameters(),covMatrix.GetMatrixArray())
-            print("test: integral: %f, error: %f, p0: %f"%(integral,integralError,backgrounds[key].GetParameters()[0]))
+            # covMatrix = frs[key].covarianceMatrix();
+            # covMatrix.Print();
+            # backgrounds[key].SetParameter(0,w.var('Ntot_%s_bkg'%(box)).getVal())
+            # integral=backgrounds[key].Integral(w.var('mgg').getMin(),w.var('mgg').getMax())
+            # integralError=backgrounds[key].IntegralError(w.var('mgg').getMin(),w.var('mgg').getMax(),backgrounds[key].GetParameters(),covMatrix.GetMatrixArray())
+            # print("test: integral: %f, error: %f, p0: %f"%(integral,integralError,backgrounds[key].GetParameters()[0]))
         else:
             p0_b =  w.var('Ntot_%s_bkg%s'%(box,key)).getVal() / int_b
             print(int_b,p0_b, w.var('Ntot_%s_bkg%s'%(box,key)).getVal() )
@@ -1231,6 +1234,22 @@ if __name__ == '__main__':
     pave_sel.AddText("#chi^{{2}} / NDF = {0:.1f} / {1:d} = {2:.1f}".format(
                           list_chi2AndNdf_background[4], list_chi2AndNdf_background[5],
                           list_chi2AndNdf_background[4]/list_chi2AndNdf_background[5]))
+
+    EBText=ROOT.TLatex(0.2,0.25, "%s"%(options.cat));
+    EBText.SetNDC(1);
+    EBText.SetTextFont(61);
+    EBText.SetLineColor(0);
+    EBText.SetLineStyle(1);
+    EBText.SetLineWidth(1);
+    EBText.SetTextSize(0.06);
+
+    chiText=ROOT.TLatex(0.2,0.15, "#chi^{{2}} / NDF = {0:.1f} / {1:d} = {2:.1f}".format(list_chi2AndNdf_background[4], list_chi2AndNdf_background[5], list_chi2AndNdf_background[4]/list_chi2AndNdf_background[5]));
+    chiText.SetNDC(1);
+    chiText.SetTextFont(61);
+    chiText.SetLineColor(0);
+    chiText.SetLineStyle(1);
+    chiText.SetLineWidth(1);
+    chiText.SetTextSize(0.04);
 
     #if 'Calo' in box:
     if 'DiPhotons' in box:
