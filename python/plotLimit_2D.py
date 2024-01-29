@@ -292,11 +292,11 @@ def pvalue2D():
     c1.SaveAs("%s/zvalue_%s.pdf"%(args.outputDir,args.signame))
 
     h_obslimit.SetTitle("")
-    h_obslimit.GetXaxis().SetTitle("M_{X} [GeV]")
+    h_obslimit.GetXaxis().SetTitle("m_{G} (GeV)" if args.signame == "grav" else "m_{S} (GeV)");
     h_obslimit.GetXaxis().SetTitleSize(0.05)
-    h_obslimit.GetYaxis().SetTitle("#Gamma_{X}/M_{X} [%]")
+    h_obslimit.GetYaxis().SetTitle("#Gamma_{G}/M_{G} (%)" if args.signame == "grav" else "#Gamma_{S}/M_{S} (%)");
     h_obslimit.GetYaxis().SetTitleSize(0.05)
-    h_obslimit.GetZaxis().SetTitle("#sigmaB(X#rightarrow#gamma#gamma)_{95%CL} (fb)")
+    h_obslimit.GetYaxis().SetTitle("95% CL limit #sigma(pp#rightarrowG#rightarrow#gamma#gamma) (fb)" if args.signame == "grav" else "95% CL limit #sigma(pp#rightarrowS#rightarrow#gamma#gamma) (fb)" );
     h_obslimit.GetZaxis().SetTitleOffset(1.1)
     h_obslimit.GetZaxis().SetTitleSize(0.05)
     h_obslimit.Draw("colz")
@@ -306,11 +306,11 @@ def pvalue2D():
     c1.SaveAs("%s/observedlimit_%s.pdf"%(args.outputDir,args.signame))
 
     h_explimit.SetTitle("")
-    h_explimit.GetXaxis().SetTitle("M_{X} [GeV]")
+    h_explimit.GetXaxis().SetTitle("m_{G} (GeV)" if args.signame == "grav" else "m_{S} (GeV)");
     h_explimit.GetXaxis().SetTitleSize(0.05)
-    h_explimit.GetYaxis().SetTitle("#Gamma_{X}/M_{X} [%]")
+    h_explimit.GetYaxis().SetTitle("#Gamma_{G}/M_{G} (%)" if args.signame == "grav" else "#Gamma_{S}/M_{S} (%)");
     h_explimit.GetYaxis().SetTitleSize(0.05)
-    h_explimit.GetZaxis().SetTitle("#sigmaB(X#rightarrow#gamma#gamma)_{95%CL} (fb)")
+    h_explimit.GetYaxis().SetTitle("95% CL limit #sigma(pp#rightarrowG#rightarrow#gamma#gamma) (fb)" if args.signame == "grav" else "95% CL limit #sigma(pp#rightarrowS#rightarrow#gamma#gamma) (fb)" );
     h_explimit.GetZaxis().SetTitleOffset(1.1)
     h_explimit.GetZaxis().SetTitleSize(0.05)
     h_explimit.Draw("colz")
