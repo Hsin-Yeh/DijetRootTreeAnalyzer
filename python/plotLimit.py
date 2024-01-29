@@ -127,9 +127,11 @@ if __name__ == "__main__":
     exp1SGraph.SetFillColor(3);
     exp1SGraph.SetLineStyle(7);
     exp1SGraph.SetLineWidth(3);
+    exp1SGraph.SetLineColor(4);
     exp2SGraph.SetFillColor(5);
     exp2SGraph.SetLineStyle(7);
     exp2SGraph.SetLineWidth(3);
+    exp2SGraph.SetLineColor(4);
     exp2SGraph.GetXaxis().SetTitleSize(0.055);
     exp2SGraph.GetYaxis().SetTitleSize(0.055);
 
@@ -151,7 +153,7 @@ if __name__ == "__main__":
 
     obsGraph.SetMarkerColor(1);
     obsGraph.SetMarkerStyle(20);
-    obsGraph.SetMarkerSize(0.5);
+    obsGraph.SetMarkerSize(1);
     obsGraph.SetLineWidth(2);
     obsGraph.SetLineColor(1);
     obsGraph.SetLineStyle(1);
