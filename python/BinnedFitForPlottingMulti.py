@@ -1134,12 +1134,12 @@ if __name__ == '__main__':
     #l.DrawLatex(0.3,0.96,"Preliminary")
     # paper
     l.SetTextFont(62)
-    l.SetTextSize(0.065)
-    l.DrawLatex(0.22,0.85,"CMS")
-    # l.SetTextSize(0.05)
-    # l.DrawLatex(0.22,0.85,"CMS Supplementary")
-    l.SetTextFont(52)
-    l.SetTextSize(0.045)
+    if(options.year=="fullRun2"):
+        l.SetTextSize(0.065)
+        l.DrawLatex(0.22,0.85,"CMS")
+    else:
+        l.SetTextSize(0.05)
+        l.DrawLatex(0.22,0.85,"CMS Supplementary")
 
     if options.signalFileName!=None:
         if 'DiPhoton' in box:
@@ -1235,7 +1235,7 @@ if __name__ == '__main__':
                           list_chi2AndNdf_background[4], list_chi2AndNdf_background[5],
                           list_chi2AndNdf_background[4]/list_chi2AndNdf_background[5]))
 
-    EBText=ROOT.TLatex(0.2,0.25, "%s"%(options.cat));
+    EBText=rt.TLatex(0.2,0.25, "%s"%(options.cat));
     EBText.SetNDC(1);
     EBText.SetTextFont(61);
     EBText.SetLineColor(0);
@@ -1244,7 +1244,7 @@ if __name__ == '__main__':
     EBText.SetTextSize(0.06);
     EBText.Draw()
 
-    chiText=ROOT.TLatex(0.2,0.15, "#chi^{{2}} / NDF = {0:.1f} / {1:d} = {2:.1f}".format(list_chi2AndNdf_background[4], list_chi2AndNdf_background[5], list_chi2AndNdf_background[4]/list_chi2AndNdf_background[5]));
+    chiText=rt.TLatex(0.2,0.15, "#chi^{{2}} / NDF = {0:.1f} / {1:d} = {2:.1f}".format(list_chi2AndNdf_background[4], list_chi2AndNdf_background[5], list_chi2AndNdf_background[4]/list_chi2AndNdf_background[5]));
     chiText.SetNDC(1);
     chiText.SetTextFont(61);
     chiText.SetLineColor(0);
