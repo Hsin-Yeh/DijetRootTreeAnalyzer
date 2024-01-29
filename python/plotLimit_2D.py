@@ -346,13 +346,13 @@ def pvalue2D():
     h_pvalue.Draw("colz")
     cmsText.Draw();
     lumiText.Draw();
-    c1.SaveAs("%s/zvalue_%s.pdf"%(args.outputDir,args.signame))
+    c1.SaveAs("%s/pvalue_%s.pdf"%(args.outputDir,args.signame))
     ########## Set Range 600-2500GeV
     h_pvalue.GetXaxis().SetRangeUser(600,2500)
     h_pvalue.Draw("colz")
     cmsText.Draw();
     lumiText.Draw();
-    c1.SaveAs("%s/zvalue_zoomin_%s.pdf"%(args.outputDir,args.signame))
+    c1.SaveAs("%s/pvalue_zoomin_%s.pdf"%(args.outputDir,args.signame))
 
 
 
