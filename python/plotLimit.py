@@ -139,6 +139,7 @@ if __name__ == "__main__":
     exp2SGraph.GetYaxis().SetTitle("95% CL limit #sigma(pp#rightarrowG#rightarrow#gamma#gamma) (fb)" if args.signame == "grav" else "95% CL limit #sigma(pp#rightarrowS#rightarrow#gamma#gamma) (fb)" );
     exp2SGraph.GetXaxis().SetTitle("m_{G} (GeV)" if args.signame == "grav" else "m_{S} (GeV)");
     exp2SGraph.GetXaxis().SetTitleOffset(1.1);
+    exp2SGraph.GetYaxis().SetTitleOffset(1.1);
     exp2SGraph.GetXaxis().SetLabelSize(0.05);
     exp2SGraph.GetYaxis().SetLabelSize(0.05);
     exp2SGraph.GetXaxis().SetMoreLogLabels();
@@ -185,7 +186,7 @@ if __name__ == "__main__":
     # gr_2016.SetMarkerColor(9);
     # gr_2016.Draw("Psame");
 
-    leg = ROOT.TLegend(0.55,0.47,0.85,0.87,"brNDC");
+    leg = ROOT.TLegend(0.6,0.47,0.87,0.87,"brNDC");
     leg.SetBorderSize(1);
     leg.SetTextFont(62);
     leg.SetLineColor(0);
