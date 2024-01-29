@@ -244,6 +244,14 @@ def pvalue2D():
     cmsText.SetLineWidth(1);
     cmsText.SetTextSize(0.04);
 
+    supText=ROOT.TLatex(0.17,0.90, "Supplementary");
+    supText.SetNDC(1);
+    supText.SetTextFont(61);
+    supText.SetLineColor(0);
+    supText.SetLineStyle(1);
+    supText.SetLineWidth(1);
+    supText.SetTextSize(0.04);
+
     # extraText=ROOT.TLatex(0.23,0.90, "Preliminary");
     # extraText.SetNDC(1);
     # extraText.SetTextFont(52);
@@ -321,6 +329,7 @@ def pvalue2D():
     h_zvalue.GetXaxis().SetRangeUser(600,2500)
     h_zvalue.Draw("colz")
     cmsText.Draw();
+    supText.Draw();
     lumiText.Draw();
     c1.SaveAs("%s/zvalue_zoomin_%s.pdf"%(args.outputDir,args.signame))
 
