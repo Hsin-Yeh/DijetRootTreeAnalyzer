@@ -1233,7 +1233,7 @@ if __name__ == '__main__':
                           list_chi2AndNdf_background[4], list_chi2AndNdf_background[5],
                           list_chi2AndNdf_background[4]/list_chi2AndNdf_background[5]))
 
-    EBText=rt.TLatex(0.22,0.15, "%s"%(options.cat));
+    EBText=rt.TLatex(0.21,0.15, "%s"%(options.cat));
     EBText.SetNDC(1);
     EBText.SetTextFont(42);
     EBText.SetLineColor(0);
@@ -1242,7 +1242,7 @@ if __name__ == '__main__':
     EBText.SetTextSize(0.065);
     EBText.Draw()
 
-    chiText=rt.TLatex(0.22,0.07, "#chi^{{2}} / NDF = {0:.1f} / {1:d} = {2:.1f}".format(list_chi2AndNdf_background[4], list_chi2AndNdf_background[5], list_chi2AndNdf_background[4]/list_chi2AndNdf_background[5]));
+    chiText=rt.TLatex(0.21,0.07, "#chi^{{2}} / NDF = {0:.1f} / {1:d} = {2:.1f}".format(list_chi2AndNdf_background[4], list_chi2AndNdf_background[5], list_chi2AndNdf_background[4]/list_chi2AndNdf_background[5]));
     chiText.SetNDC(1);
     chiText.SetTextFont(42);
     chiText.SetLineColor(0);
