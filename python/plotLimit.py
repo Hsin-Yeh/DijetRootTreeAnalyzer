@@ -125,7 +125,9 @@ if __name__ == "__main__":
     canv.SetLeftMargin(0.15);
 
     exp1SGraph.SetFillColor(3);
+    exp1SGraph.SetLineStyle(7);
     exp2SGraph.SetFillColor(5);
+    exp2SGraph.SetLineStyle(7);
     exp2SGraph.GetXaxis().SetTitleSize(0.05);
     exp2SGraph.GetYaxis().SetTitleSize(0.05);
 
@@ -196,12 +198,12 @@ if __name__ == "__main__":
 
     leg.SetHeader(plabel,"C");
     if ( args.signame == "grav" ):
-        leg.AddEntry(g_xs_TuneCP2,"G_{RS}#rightarrow#gamma#gamma (LO)","l");
+        leg.AddEntry(g_xs_TuneCP2,"G_{RS}#rightarrow#gamma#gamma (LO)","lp");
         # leg.AddEntry(g_xs_TuneCUEP8M1,"G_{RS}#rightarrow#gamma#gamma (LO) CUEP8M1","l");
         # leg.AddEntry(gr_2016,"Published 2016 Mass Limit","P");
     leg.AddEntry(expGraph,"expected Limit","L"); #L_{int}=36.4/pb
-    leg.AddEntry(exp1SGraph,"#pm1#sigma","F");
-    leg.AddEntry(exp2SGraph,"#pm2#sigma","F");
+    leg.AddEntry(exp1SGraph,"expected #pm 1#sigma","LF");
+    leg.AddEntry(exp2SGraph,"expected #pm 2#sigma","LF");
     leg.AddEntry(obsGraph,"observed Limit","L");
     leg.Draw();
 
