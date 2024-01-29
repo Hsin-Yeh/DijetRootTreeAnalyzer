@@ -1248,7 +1248,7 @@ if __name__ == '__main__':
     chiText.SetLineColor(0);
     chiText.SetLineStyle(1);
     chiText.SetLineWidth(1);
-    chiText.SetTextSize(0.04);
+    chiText.SetTextSize(0.045);
     chiText.Draw()
 
     #if 'Calo' in box:
