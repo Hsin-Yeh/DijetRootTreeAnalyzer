@@ -139,6 +139,7 @@ if __name__ == "__main__":
     exp2SGraph.GetYaxis().SetTitle("95% CL limit #sigma(pp#rightarrowG#rightarrow#gamma#gamma) (fb)" if args.signame == "grav" else "95% CL limit #sigma(pp#rightarrowS#rightarrow#gamma#gamma) (fb)" );
     exp2SGraph.GetXaxis().SetTitle("m_{G} (GeV)" if args.signame == "grav" else "m_{S} (GeV)");
     exp2SGraph.GetXaxis().SetTitleOffset(1.1);
+    exp2SGraph.GetXaxis().Set(1.1);
     exp2SGraph.GetXaxis().SetMoreLogLabels();
     if (args.coupling=="kMpl01" or args.coupling=="kMpl02"): exp2SGraph.GetXaxis().SetRangeUser(600,7000)
     else: exp2SGraph.GetXaxis().SetRangeUser(600,5000)
@@ -154,7 +155,7 @@ if __name__ == "__main__":
     obsGraph.SetMarkerColor(1);
     obsGraph.SetMarkerStyle(20);
     obsGraph.SetMarkerSize(1);
-    obsGraph.SetLineWidth(2);
+    obsGraph.SetLineWidth(3);
     obsGraph.SetLineColor(1);
     obsGraph.SetLineStyle(1);
     if (args.unblind): obsGraph.Draw("L");
@@ -236,7 +237,7 @@ if __name__ == "__main__":
     lumiText.SetLineColor(0);
     lumiText.SetLineStyle(1);
     lumiText.SetLineWidth(1);
-    lumiText.SetTextSize(0.04);
+    lumiText.SetTextSize(0.05);
     lumiText.Draw();
 
     redrawBorder()
