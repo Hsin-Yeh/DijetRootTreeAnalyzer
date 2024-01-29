@@ -341,7 +341,7 @@ def pvalue2D():
     h_zvalue.GetXaxis().SetRangeUser(600,2500)
     h_zvalue.GetYaxis().SetTitle("#Gamma_{G}/M_{G} (%)" if args.signame == "grav" else "#Gamma_{S}/M_{S} (%)");
     h_zvalue.GetYaxis().SetTitleSize(0.05)
-    h_zvalue.GetZaxis().SetTitle("95% CL limit #sigma(pp#rightarrowG#rightarrow#gamma#gamma) (fb)" if args.signame == "grav" else "95% CL limit #sigma(pp#rightarrowS#rightarrow#gamma#gamma) (fb)" );
+    h_zvalue.GetZaxis().SetTitle("Z value (#sigma)")
     h_zvalue.GetZaxis().SetTitleOffset(1.1)
     h_zvalue.GetZaxis().SetTitleSize(0.05)
     h_zvalue.SetMinimum(-0.01)
