@@ -336,13 +336,13 @@ def pvalue2D():
     c1.SaveAs("%s/pvalue_zoomin_%s.pdf"%(args.outputDir,args.signame))
 
     h_zvalue.SetTitle("")
-    h_zvalue.GetXaxis().SetTitle("M_{X} [GeV]")
+    h_zvalue.GetXaxis().SetTitle("m_{G} (GeV)" if args.signame == "grav" else "m_{S} (GeV)");
     h_zvalue.GetXaxis().SetTitleSize(0.05)
     h_zvalue.GetXaxis().SetRangeUser(600,2500)
-    h_zvalue.GetYaxis().SetTitle("#Gamma_{X}/M_{X} [%]")
+    h_zvalue.GetYaxis().SetTitle("#Gamma_{G}/M_{G} (%)" if args.signame == "grav" else "#Gamma_{S}/M_{S} (%)");
     h_zvalue.GetYaxis().SetTitleSize(0.05)
-    h_zvalue.GetZaxis().SetTitle("Z value (#sigma)")
-    h_zvalue.GetZaxis().SetTitleOffset(0.9)
+    h_zvalue.GetYaxis().SetTitle("95% CL limit #sigma(pp#rightarrowG#rightarrow#gamma#gamma) (fb)" if args.signame == "grav" else "95% CL limit #sigma(pp#rightarrowS#rightarrow#gamma#gamma) (fb)" );
+    h_zvalue.GetZaxis().SetTitleOffset(1.1)
     h_zvalue.GetZaxis().SetTitleSize(0.05)
     h_zvalue.SetMinimum(-0.01)
     h_zvalue.Draw("colz")
