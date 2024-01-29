@@ -1241,7 +1241,7 @@ if __name__ == '__main__':
     EBText.SetLineColor(0);
     EBText.SetLineStyle(1);
     EBText.SetLineWidth(1);
-    EBText.SetTextSize(0.07);
+    EBText.SetTextSize(0.065);
     EBText.Draw()
 
     chiText=rt.TLatex(0.22,0.07, "#chi^{{2}} / NDF = {0:.1f} / {1:d} = {2:.1f}".format(list_chi2AndNdf_background[4], list_chi2AndNdf_background[5], list_chi2AndNdf_background[4]/list_chi2AndNdf_background[5]));
@@ -1250,7 +1250,7 @@ if __name__ == '__main__':
     chiText.SetLineColor(0);
     chiText.SetLineStyle(1);
     chiText.SetLineWidth(1);
-    chiText.SetTextSize(0.06);
+    chiText.SetTextSize(0.055);
     chiText.Draw()
 
     #if 'Calo' in box:
