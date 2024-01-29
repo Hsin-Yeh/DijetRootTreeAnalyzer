@@ -142,8 +142,8 @@ def convertFunctionToHisto(background_,name_,N_massBins_,massBins_):
         binWidth_current = xbinHigh - xbinLow
         value = background_.Integral(xbinLow , xbinHigh) / binWidth_current
         background_hist_.SetBinContent(bin+1,value)
-        valueError = background_.IntegralError(xbinLow , xbinHigh , ) / binWidth_current
-        print("{:.0f}GeV-{:.0f} : Integral={:.2f}, Divide_Bin_Width={:.2f} {:.2f}".format(xbinLow, xbinHigh, background_.Integral(xbinLow , xbinHigh), value, valueError))
+        # valueError = background_.IntegralError(xbinLow , xbinHigh , ) / binWidth_current
+        print("{:.0f}GeV-{:.0f} : Integral={:.2f}, Divide_Bin_Width={:.2f}".format(xbinLow, xbinHigh, background_.Integral(xbinLow , xbinHigh), value))
 
     return background_hist_
 
