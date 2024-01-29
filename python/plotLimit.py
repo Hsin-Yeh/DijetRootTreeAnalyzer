@@ -157,7 +157,7 @@ if __name__ == "__main__":
     obsGraph.SetLineWidth(2);
     obsGraph.SetLineColor(1);
     obsGraph.SetLineStyle(1);
-    if (args.unblind): obsGraph.Draw("PL");
+    if (args.unblind): obsGraph.Draw("L");
     # if (unblind) obsGraph.Draw("L");
     # obsGraph.Draw("LC");
 
