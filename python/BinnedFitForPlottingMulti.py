@@ -1242,6 +1242,7 @@ if __name__ == '__main__':
     EBText.SetLineStyle(1);
     EBText.SetLineWidth(1);
     EBText.SetTextSize(0.06);
+    EBText.Draw()
 
     chiText=ROOT.TLatex(0.2,0.15, "#chi^{{2}} / NDF = {0:.1f} / {1:d} = {2:.1f}".format(list_chi2AndNdf_background[4], list_chi2AndNdf_background[5], list_chi2AndNdf_background[4]/list_chi2AndNdf_background[5]));
     chiText.SetNDC(1);
@@ -1250,6 +1251,7 @@ if __name__ == '__main__':
     chiText.SetLineStyle(1);
     chiText.SetLineWidth(1);
     chiText.SetTextSize(0.04);
+    chiText.Draw()
 
     #if 'Calo' in box:
     if 'DiPhotons' in box:
@@ -1278,7 +1280,7 @@ if __name__ == '__main__':
         #pave_sel.AddText("%.1f < m_{jj} < %.1f TeV"%(w.var('mjj').getMin('Low')/1000.,w.var('mjj').getMax('High')/1000.))
         pave_sel.AddText("m_{jj} > %.2f TeV"%(w.var('mjj').getMin('Low')/1000.))
     #pave_sel.AddText("|#eta| < 2.5, |#Delta#eta| < 1.3")
-    pave_sel.Draw("SAME")
+    # pave_sel.Draw("SAME")
 
     '''
     list_parameter = [p0_b, p0_b*(w.var('Ntot_%s_bkg'%box).getErrorHi() - w.var('Ntot_%s_bkg'%box).getErrorLo())/(2.0*w.var('Ntot_%s_bkg'%box).getVal()),
