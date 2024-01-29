@@ -186,7 +186,7 @@ if __name__ == "__main__":
     # gr_2016.SetMarkerColor(9);
     # gr_2016.Draw("Psame");
 
-    leg = ROOT.TLegend(0.58,0.49,0.87,0.87,"brNDC");
+    leg = ROOT.TLegend(0.6,0.49,0.87,0.87,"brNDC");
     leg.SetBorderSize(1);
     leg.SetTextFont(62);
     leg.SetLineColor(0);
@@ -214,7 +214,7 @@ if __name__ == "__main__":
     leg.AddEntry(obsGraph,"observed Limit","LP");
     leg.Draw();
 
-    cmsText=ROOT.TLatex(0.2,0.82, "CMS");
+    cmsText=ROOT.TLatex(0.18,0.82, "CMS");
     cmsText.SetNDC(1);
     cmsText.SetTextFont(61);
     cmsText.SetLineColor(0);
