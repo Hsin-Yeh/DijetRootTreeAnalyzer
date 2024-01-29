@@ -214,7 +214,7 @@ if __name__ == "__main__":
     leg.AddEntry(obsGraph,"observed Limit","LP");
     leg.Draw();
 
-    cmsText=ROOT.TLatex(0.17,0.90, "CMS");
+    cmsText=ROOT.TLatex(0.2,0.85, "CMS");
     cmsText.SetNDC(1);
     cmsText.SetTextFont(61);
     cmsText.SetLineColor(0);
@@ -232,14 +232,14 @@ if __name__ == "__main__":
     # extraText.SetTextSize(0.04);
     # extraText.Draw();
 
-    lumiText=ROOT.TLatex(0.67,0.90, "%d fb^{-1} (13 TeV)"%(lumi(args.year)) );
+    lumiText=ROOT.TLatex(0.7,0.90, "%d fb^{-1} (13 TeV)"%(lumi(args.year)) );
     # lumiText=ROOT.TLatex(0.70,0.90, "%d fb^{-1} (13 TeV)"%(138));
     lumiText.SetNDC(1);
     lumiText.SetTextFont(42);
     lumiText.SetLineColor(0);
     lumiText.SetLineStyle(1);
     lumiText.SetLineWidth(1);
-    lumiText.SetTextSize(0.05);
+    lumiText.SetTextSize(0.045);
     lumiText.Draw();
 
     redrawBorder()
