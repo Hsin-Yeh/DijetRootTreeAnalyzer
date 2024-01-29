@@ -139,7 +139,8 @@ if __name__ == "__main__":
     exp2SGraph.GetYaxis().SetTitle("95% CL limit #sigma(pp#rightarrowG#rightarrow#gamma#gamma) (fb)" if args.signame == "grav" else "95% CL limit #sigma(pp#rightarrowS#rightarrow#gamma#gamma) (fb)" );
     exp2SGraph.GetXaxis().SetTitle("m_{G} (GeV)" if args.signame == "grav" else "m_{S} (GeV)");
     exp2SGraph.GetXaxis().SetTitleOffset(1.1);
-    exp2SGraph.GetXaxis().SetLabelSize(0.07);
+    exp2SGraph.GetXaxis().SetLabelSize(0.05);
+    exp2SGraph.GetYaxis().SetLabelSize(0.05);
     exp2SGraph.GetXaxis().SetMoreLogLabels();
     if (args.coupling=="kMpl01" or args.coupling=="kMpl02"): exp2SGraph.GetXaxis().SetRangeUser(600,7000)
     else: exp2SGraph.GetXaxis().SetRangeUser(600,5000)
@@ -230,7 +231,7 @@ if __name__ == "__main__":
     # extraText.SetTextSize(0.04);
     # extraText.Draw();
 
-    lumiText=ROOT.TLatex(0.6,0.90, "%d fb^{-1} (13 TeV)"%(lumi(args.year)) );
+    lumiText=ROOT.TLatex(0.65,0.90, "%d fb^{-1} (13 TeV)"%(lumi(args.year)) );
     # lumiText=ROOT.TLatex(0.70,0.90, "%d fb^{-1} (13 TeV)"%(138));
     lumiText.SetNDC(1);
     lumiText.SetTextFont(42);
