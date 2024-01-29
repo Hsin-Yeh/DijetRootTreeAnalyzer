@@ -244,13 +244,13 @@ def pvalue2D():
     cmsText.SetLineWidth(1);
     cmsText.SetTextSize(0.04);
 
-    supText=ROOT.TLatex(0.17,0.90, "Supplementary");
+    supText=ROOT.TLatex(0.14,0.90, "CMS Supplementary");
     supText.SetNDC(1);
     supText.SetTextFont(61);
     supText.SetLineColor(0);
     supText.SetLineStyle(1);
     supText.SetLineWidth(1);
-    supText.SetTextSize(0.04);
+    supText.SetTextSize(0.037);
 
     # extraText=ROOT.TLatex(0.23,0.90, "Preliminary");
     # extraText.SetNDC(1);
@@ -323,12 +323,12 @@ def pvalue2D():
     h_zvalue.SetMinimum(-0.01)
     h_zvalue.Draw("colz")
     cmsText.Draw();
+    supText.Draw()
     lumiText.Draw();
     c1.SaveAs("%s/zvalue_%s.pdf"%(args.outputDir,args.signame))
     ########## Set Range 600-2500GeV
     h_zvalue.GetXaxis().SetRangeUser(600,2500)
     h_zvalue.Draw("colz")
-    cmsText.Draw();
     supText.Draw();
     lumiText.Draw();
     c1.SaveAs("%s/zvalue_zoomin_%s.pdf"%(args.outputDir,args.signame))
@@ -344,13 +344,13 @@ def pvalue2D():
     h_pvalue.GetZaxis().SetTitleOffset(0.9)
     h_pvalue.GetZaxis().SetTitleSize(0.05)
     h_pvalue.Draw("colz")
-    cmsText.Draw();
+    supText.Draw();
     lumiText.Draw();
     c1.SaveAs("%s/pvalue_%s.pdf"%(args.outputDir,args.signame))
     ########## Set Range 600-2500GeV
     h_pvalue.GetXaxis().SetRangeUser(600,2500)
     h_pvalue.Draw("colz")
-    cmsText.Draw();
+    supText.Draw();
     lumiText.Draw();
     c1.SaveAs("%s/pvalue_zoomin_%s.pdf"%(args.outputDir,args.signame))
 
