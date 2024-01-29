@@ -126,15 +126,17 @@ if __name__ == "__main__":
 
     exp1SGraph.SetFillColor(3);
     exp1SGraph.SetLineStyle(7);
+    exp1SGraph.SetLineWidth(3);
     exp2SGraph.SetFillColor(5);
     exp2SGraph.SetLineStyle(7);
-    exp2SGraph.GetXaxis().SetTitleSize(0.05);
-    exp2SGraph.GetYaxis().SetTitleSize(0.05);
+    exp2SGraph.SetLineWidth(3);
+    exp2SGraph.GetXaxis().SetTitleSize(0.055);
+    exp2SGraph.GetYaxis().SetTitleSize(0.055);
 
     # exp2SGraph.GetYaxis().SetRangeUser(0.9,200);
     exp2SGraph.GetYaxis().SetTitle("95% CL limit #sigma(pp#rightarrowG#rightarrow#gamma#gamma) (fb)" if args.signame == "grav" else "95% CL limit #sigma(pp#rightarrowS#rightarrow#gamma#gamma) (fb)" );
     exp2SGraph.GetXaxis().SetTitle("m_{G} (GeV)" if args.signame == "grav" else "m_{S} (GeV)");
-    exp2SGraph.GetXaxis().SetTitleOffset(1.3);
+    exp2SGraph.GetXaxis().SetTitleOffset(1.2);
     exp2SGraph.GetXaxis().SetMoreLogLabels();
     if (args.coupling=="kMpl01" or args.coupling=="kMpl02"): exp2SGraph.GetXaxis().SetRangeUser(600,7000)
     else: exp2SGraph.GetXaxis().SetRangeUser(600,5000)
@@ -198,13 +200,13 @@ if __name__ == "__main__":
 
     leg.SetHeader(plabel,"C");
     if ( args.signame == "grav" ):
-        leg.AddEntry(g_xs_TuneCP2,"G_{RS}#rightarrow#gamma#gamma (LO)","lp");
+        leg.AddEntry(g_xs_TuneCP2,"G_{RS}#rightarrow#gamma#gamma (LO)","l");
         # leg.AddEntry(g_xs_TuneCUEP8M1,"G_{RS}#rightarrow#gamma#gamma (LO) CUEP8M1","l");
         # leg.AddEntry(gr_2016,"Published 2016 Mass Limit","P");
     leg.AddEntry(expGraph,"expected Limit","L"); #L_{int}=36.4/pb
     leg.AddEntry(exp1SGraph,"expected #pm 1#sigma","LF");
     leg.AddEntry(exp2SGraph,"expected #pm 2#sigma","LF");
-    leg.AddEntry(obsGraph,"observed Limit","L");
+    leg.AddEntry(obsGraph,"observed Limit","LP");
     leg.Draw();
 
     cmsText=ROOT.TLatex(0.17,0.90, "CMS");
@@ -213,7 +215,7 @@ if __name__ == "__main__":
     cmsText.SetLineColor(0);
     cmsText.SetLineStyle(1);
     cmsText.SetLineWidth(1);
-    cmsText.SetTextSize(0.04);
+    cmsText.SetTextSize(0.05);
     cmsText.Draw();
 
     # extraText=ROOT.TLatex(0.23,0.90, "Preliminary");
