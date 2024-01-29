@@ -340,7 +340,7 @@ def pvalue2D():
     h_pvalue.GetYaxis().SetTitle("#Gamma_{G}/M_{G} (%)" if args.signame == "grav" else "#Gamma_{S}/M_{S} (%)");
     h_pvalue.GetYaxis().SetTitleSize(0.05)
     h_pvalue.GetZaxis().SetTitle("p value")
-    h_pvalue.GetZaxis().SetLogz()
+    c1.SetLogz()
     h_pvalue.GetZaxis().SetTitleOffset(0.9)
     h_pvalue.GetZaxis().SetTitleSize(0.05)
     h_pvalue.Draw("colz")
