@@ -250,7 +250,7 @@ def pvalue2D():
     supText.SetLineColor(0);
     supText.SetLineStyle(1);
     supText.SetLineWidth(1);
-    supText.SetTextSize(0.037);
+    supText.SetTextSize(0.04);
 
     # extraText=ROOT.TLatex(0.23,0.90, "Preliminary");
     # extraText.SetNDC(1);
