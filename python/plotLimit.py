@@ -126,8 +126,8 @@ if __name__ == "__main__":
 
     exp1SGraph.SetFillColor(3);
     exp2SGraph.SetFillColor(5);
-    exp2SGraph.GetXaxis().SetTitleSize(0.045);
-    exp2SGraph.GetYaxis().SetTitleSize(0.045);
+    exp2SGraph.GetXaxis().SetTitleSize(0.05);
+    exp2SGraph.GetYaxis().SetTitleSize(0.05);
 
     # exp2SGraph.GetYaxis().SetRangeUser(0.9,200);
     exp2SGraph.GetYaxis().SetTitle("95% CL limit #sigma(pp#rightarrowG#rightarrow#gamma#gamma) (fb)" if args.signame == "grav" else "95% CL limit #sigma(pp#rightarrowS#rightarrow#gamma#gamma) (fb)" );
