@@ -135,7 +135,7 @@ def convertSideband(name,w,x):
 def convertFunctionToHisto(background_,name_,N_massBins_,massBins_):
 
     background_hist_ = rt.TH1D(name_,name_,N_massBins_,massBins_)
-
+    print(background_,name_)
     for bin in range (0,N_massBins_):
         xbinLow = massBins_[bin]
         xbinHigh = massBins_[bin+1]
