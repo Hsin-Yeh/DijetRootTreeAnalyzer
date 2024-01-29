@@ -262,24 +262,52 @@ def pvalue2D():
 
     c1 = ROOT.TCanvas("c1","c1",600,600)
     c1.SetRightMargin(0.2)
-    h_pvalue.SetTitle("")
-    h_pvalue.GetXaxis().SetTitle("M_{X} [GeV]")
-    h_pvalue.GetXaxis().SetTitleSize(0.05)
-    h_pvalue.GetYaxis().SetTitle("#Gamma_{X}/M_{X} [%]")
-    h_pvalue.GetYaxis().SetTitleSize(0.05)
-    h_pvalue.GetZaxis().SetTitle("p value")
-    h_pvalue.GetZaxis().SetTitleOffset(0.9)
-    h_pvalue.GetZaxis().SetTitleSize(0.05)
-    h_pvalue.Draw("colz")
-    cmsText.Draw();
-    # extraText.Draw();
-    lumiText.Draw();
-    c1.SaveAs("%s/pvalue_%s.pdf"%(args.outputDir,args.signame))
 
+    # Observed Limit
+    h_obslimit.SetTitle("")
+    h_obslimit.GetXaxis().SetTitle("m_{G} (GeV)" if args.signame == "grav" else "m_{S} (GeV)");
+    h_obslimit.GetXaxis().SetTitleSize(0.05)
+    h_obslimit.GetYaxis().SetTitle("#Gamma_{G}/M_{G} (%)" if args.signame == "grav" else "#Gamma_{S}/M_{S} (%)");
+    h_obslimit.GetYaxis().SetTitleSize(0.05)
+    h_obslimit.GetZaxis().SetTitle("95% CL limit #sigma(pp#rightarrowG#rightarrow#gamma#gamma) (fb)" if args.signame == "grav" else "95% CL limit #sigma(pp#rightarrowS#rightarrow#gamma#gamma) (fb)" );
+    h_obslimit.GetZaxis().SetTitleOffset(1.1)
+    h_obslimit.GetZaxis().SetTitleSize(0.05)
+    h_obslimit.Draw("colz")
+    cmsText.Draw();
+    lumiText.Draw();
+    c1.SaveAs("%s/observedlimit_%s.pdf"%(args.outputDir,args.signame))
+    ########## Set Range 600-2500GeV
+    h_obslimit.GetXaxis().SetRangeUser(600,2500)
+    h_obslimit.Draw("colz")
+    cmsText.Draw();
+    lumiText.Draw();
+    c1.SaveAs("%s/observedlimit_zoomin_%s.pdf"%(args.outputDir,args.signame))
+
+    # Expected Limit
+    h_explimit.SetTitle("")
+    h_explimit.GetXaxis().SetTitle("m_{G} (GeV)" if args.signame == "grav" else "m_{S} (GeV)");
+    h_explimit.GetXaxis().SetTitleSize(0.05)
+    h_explimit.GetYaxis().SetTitle("#Gamma_{G}/M_{G} (%)" if args.signame == "grav" else "#Gamma_{S}/M_{S} (%)");
+    h_explimit.GetYaxis().SetTitleSize(0.05)
+    h_explimit.GetZaxis().SetTitle("95% CL limit #sigma(pp#rightarrowG#rightarrow#gamma#gamma) (fb)" if args.signame == "grav" else "95% CL limit #sigma(pp#rightarrowS#rightarrow#gamma#gamma) (fb)" );
+    h_explimit.GetZaxis().SetTitleOffset(1.1)
+    h_explimit.GetZaxis().SetTitleSize(0.05)
+    h_explimit.Draw("colz")
+    cmsText.Draw();
+    lumiText.Draw();
+    c1.SaveAs("%s/expectedlimit_%s.pdf"%(args.outputDir,args.signame))
+    ########## Set Range 600-2500GeV
+    h_explimit.GetXaxis().SetRangeUser(600,2500)
+    h_explimit.Draw("colz")
+    cmsText.Draw();
+    lumiText.Draw();
+    c1.SaveAs("%s/expectedlimit_zoomin_%s.pdf"%(args.outputDir,args.signame))
+
+    # Zvalue
     h_zvalue.SetTitle("")
-    h_zvalue.GetXaxis().SetTitle("M_{X} [GeV]")
+    h_zvalue.GetXaxis().SetTitle("m_{G} (GeV)" if args.signame == "grav" else "m_{S} (GeV)");
     h_zvalue.GetXaxis().SetTitleSize(0.05)
-    h_zvalue.GetYaxis().SetTitle("#Gamma_{X}/M_{X} [%]")
+    h_zvalue.GetYaxis().SetTitle("#Gamma_{G}/M_{G} (%)" if args.signame == "grav" else "#Gamma_{S}/M_{S} (%)");
     h_zvalue.GetYaxis().SetTitleSize(0.05)
     h_zvalue.GetZaxis().SetTitle("Z value (#sigma)")
     h_zvalue.GetZaxis().SetTitleOffset(0.9)
@@ -287,99 +315,36 @@ def pvalue2D():
     h_zvalue.SetMinimum(-0.01)
     h_zvalue.Draw("colz")
     cmsText.Draw();
-    # extraText.Draw();
     lumiText.Draw();
     c1.SaveAs("%s/zvalue_%s.pdf"%(args.outputDir,args.signame))
-
-    h_obslimit.SetTitle("")
-    h_obslimit.GetXaxis().SetTitle("m_{G} (GeV)" if args.signame == "grav" else "m_{S} (GeV)");
-    h_obslimit.GetXaxis().SetTitleSize(0.05)
-    h_obslimit.GetYaxis().SetTitle("#Gamma_{G}/M_{G} (%)" if args.signame == "grav" else "#Gamma_{S}/M_{S} (%)");
-    h_obslimit.GetYaxis().SetTitleSize(0.05)
-    h_obslimit.GetZaxis().SetTitle("95% CL limit #sigma(pp#rightarrowG#rightarrow#gamma#gamma) (fb)" if args.signame == "grav" else "95% CL limit #sigma(pp#rightarrowS#rightarrow#gamma#gamma) (fb)" );
-    h_obslimit.GetZaxis().SetTitleOffset(1.1)
-    h_obslimit.GetZaxis().SetTitleSize(0.05)
-    h_obslimit.Draw("colz")
-    cmsText.Draw();
-    # extraText.Draw();
-    lumiText.Draw();
-    c1.SaveAs("%s/observedlimit_%s.pdf"%(args.outputDir,args.signame))
-
-    h_explimit.SetTitle("")
-    h_explimit.GetXaxis().SetTitle("m_{G} (GeV)" if args.signame == "grav" else "m_{S} (GeV)");
-    h_explimit.GetXaxis().SetTitleSize(0.05)
-    h_explimit.GetYaxis().SetTitle("#Gamma_{G}/M_{G} (%)" if args.signame == "grav" else "#Gamma_{S}/M_{S} (%)");
-    h_explimit.GetYaxis().SetTitleSize(0.05)
-    h_explimit.GetZaxis().SetTitle("95% CL limit #sigma(pp#rightarrowG#rightarrow#gamma#gamma) (fb)" if args.signame == "grav" else "95% CL limit #sigma(pp#rightarrowS#rightarrow#gamma#gamma) (fb)" );
-    h_explimit.GetZaxis().SetTitleOffset(1.1)
-    h_explimit.GetZaxis().SetTitleSize(0.05)
-    h_explimit.Draw("colz")
-    cmsText.Draw();
-    # extraText.Draw();
-    lumiText.Draw();
-    c1.SaveAs("%s/expectedlimit_%s.pdf"%(args.outputDir,args.signame))
-
     ########## Set Range 600-2500GeV
+    h_zvalue.GetXaxis().SetRangeUser(600,2500)
+    h_zvalue.Draw("colz")
+    cmsText.Draw();
+    lumiText.Draw();
+    c1.SaveAs("%s/zvalue_zoomin_%s.pdf"%(args.outputDir,args.signame))
+
+    # pvalue
     h_pvalue.SetTitle("")
-    h_pvalue.GetXaxis().SetTitle("M_{X} [GeV]")
+    h_pvalue.GetXaxis().SetTitle("m_{G} (GeV)" if args.signame == "grav" else "m_{S} (GeV)");
     h_pvalue.GetXaxis().SetTitleSize(0.05)
-    h_pvalue.GetXaxis().SetRangeUser(600,2500)
-    h_pvalue.GetYaxis().SetTitle("#Gamma_{X}/M_{X} [%]")
+    h_pvalue.GetYaxis().SetTitle("#Gamma_{G}/M_{G} (%)" if args.signame == "grav" else "#Gamma_{S}/M_{S} (%)");
     h_pvalue.GetYaxis().SetTitleSize(0.05)
     h_pvalue.GetZaxis().SetTitle("p value")
+    h_pvalue.GetZaxis().SetLogz()
     h_pvalue.GetZaxis().SetTitleOffset(0.9)
     h_pvalue.GetZaxis().SetTitleSize(0.05)
     h_pvalue.Draw("colz")
     cmsText.Draw();
-    # extraText.Draw();
     lumiText.Draw();
-    c1.SaveAs("%s/pvalue_zoomin_%s.pdf"%(args.outputDir,args.signame))
-
-    h_zvalue.SetTitle("")
-    h_zvalue.GetXaxis().SetTitle("m_{G} (GeV)" if args.signame == "grav" else "m_{S} (GeV)");
-    h_zvalue.GetXaxis().SetTitleSize(0.05)
-    h_zvalue.GetXaxis().SetRangeUser(600,2500)
-    h_zvalue.GetYaxis().SetTitle("#Gamma_{G}/M_{G} (%)" if args.signame == "grav" else "#Gamma_{S}/M_{S} (%)");
-    h_zvalue.GetYaxis().SetTitleSize(0.05)
-    h_zvalue.GetZaxis().SetTitle("Z value (#sigma)")
-    h_zvalue.GetZaxis().SetTitleOffset(1.1)
-    h_zvalue.GetZaxis().SetTitleSize(0.05)
-    h_zvalue.SetMinimum(-0.01)
-    h_zvalue.Draw("colz")
+    c1.SaveAs("%s/zvalue_%s.pdf"%(args.outputDir,args.signame))
+    ########## Set Range 600-2500GeV
+    h_pvalue.GetXaxis().SetRangeUser(600,2500)
+    h_pvalue.Draw("colz")
     cmsText.Draw();
-    # extraText.Draw();
     lumiText.Draw();
     c1.SaveAs("%s/zvalue_zoomin_%s.pdf"%(args.outputDir,args.signame))
 
-    h_obslimit.SetTitle("")
-    h_obslimit.GetXaxis().SetTitle("m_{G} (GeV)" if args.signame == "grav" else "m_{S} (GeV)");
-    h_obslimit.GetXaxis().SetTitleSize(0.05)
-    h_obslimit.GetXaxis().SetRangeUser(600,2500)
-    h_obslimit.GetYaxis().SetTitle("#Gamma_{G}/M_{G} (%)" if args.signame == "grav" else "#Gamma_{S}/M_{S} (%)");
-    h_obslimit.GetYaxis().SetTitleSize(0.05)
-    h_obslimit.GetZaxis().SetTitle("95% CL limit #sigma(pp#rightarrowG#rightarrow#gamma#gamma) (fb)" if args.signame == "grav" else "95% CL limit #sigma(pp#rightarrowS#rightarrow#gamma#gamma) (fb)" );
-    h_obslimit.GetZaxis().SetTitleOffset(1.1)
-    h_obslimit.GetZaxis().SetTitleSize(0.05)
-    h_obslimit.Draw("colz")
-    cmsText.Draw();
-    # extraText.Draw();
-    lumiText.Draw();
-    c1.SaveAs("%s/observedlimit_zoomin_%s.pdf"%(args.outputDir,args.signame))
-
-    h_explimit.SetTitle("")
-    h_explimit.GetXaxis().SetTitle("m_{G} (GeV)" if args.signame == "grav" else "m_{S} (GeV)");
-    h_explimit.GetXaxis().SetTitleSize(0.05)
-    h_explimit.GetXaxis().SetRangeUser(600,2500)
-    h_explimit.GetYaxis().SetTitle("#Gamma_{G}/M_{G} (%)" if args.signame == "grav" else "#Gamma_{S}/M_{S} (%)");
-    h_explimit.GetYaxis().SetTitleSize(0.05)
-    h_explimit.GetZaxis().SetTitle("95% CL limit #sigma(pp#rightarrowG#rightarrow#gamma#gamma) (fb)" if args.signame == "grav" else "95% CL limit #sigma(pp#rightarrowS#rightarrow#gamma#gamma) (fb)" );
-    h_explimit.GetZaxis().SetTitleOffset(1.1)
-    h_explimit.GetZaxis().SetTitleSize(0.05)
-    h_explimit.Draw("colz")
-    cmsText.Draw();
-    # extraText.Draw();
-    lumiText.Draw();
-    c1.SaveAs("%s/expectedlimit_zoomin_%s.pdf"%(args.outputDir,args.signame))
 
 
 if __name__ == "__main__":
