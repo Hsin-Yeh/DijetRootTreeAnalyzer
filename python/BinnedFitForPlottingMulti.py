@@ -1490,7 +1490,7 @@ if __name__ == '__main__':
         # PAS
         #h_fit_residual_vs_mass.GetXaxis().SetTitle('Dijet Mass [TeV]')
         # paper
-        h_fit_residual_vs_mass.GetXaxis().SetTitle('DiPhoton mass [TeV]')
+        h_fit_residual_vs_mass.GetXaxis().SetTitle('m_{#gamma#gamma} [TeV]')
         h_fit_residual_vs_mass.GetXaxis().SetLabelOffset(1000)
         #h_fit_residual_vs_mass.GetXaxis().SetNoExponent()
         #h_fit_residual_vs_mass.GetXaxis().SetMoreLogLabels()
