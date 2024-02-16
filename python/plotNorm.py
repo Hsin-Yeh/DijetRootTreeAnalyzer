@@ -130,7 +130,7 @@ if __name__ == "__main__":
     yearText.SetLineStyle(1);
     yearText.SetLineWidth(1);
     yearText.SetTextSize(0.04);
-    yearText.Draw();
+    # yearText.Draw();
 
     lumiText=ROOT.TLatex(0.8,0.90, "13 TeV");
     lumiText.SetNDC(1);
