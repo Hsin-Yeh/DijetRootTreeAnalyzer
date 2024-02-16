@@ -36,31 +36,52 @@ if __name__ == "__main__":
 
     l.SetBorderSize(0);
     l.SetFillStyle(0);
-    luminosity = {"2016":35.9, "2017":41.5, "2018":59.7}
+    luminosity = {"2016":35.9, "2017":41.5, "2018":59.7, "fullRun2":137.1}
     color=[[0,2,4], [0,2,4]]
     linestyle=[1,1,10]
     markerstyle=[24,26,28]
 
     EBEBnorm_1, EBEEnorm_1, Allnorm_1, mass_1 =  array('d'), array('d') , array('d'), array('d')
     EBEBnorm_2, EBEEnorm_2, Allnorm_2, mass_2 =  array('d'), array('d') , array('d'), array('d')
-    with open (args.in_filenames[0],'r') as infile:
-        Lines = infile.readlines()
-    for line in Lines:
-        if (line.split()[0]==args.year and line.split()[1]==args.coupling and float(line.split()[2])%100==0):
-            if (line.find("EBEB")!=-1): EBEBnorm_1.append(float(line.split(" ")[4])/luminosity[args.year])
-            elif (line.find("EBEE")!=-1): EBEEnorm_1.append(float(line.split(" ")[4])/luminosity[args.year])
-            elif (line.find("All")!=-1):
-                Allnorm_1.append(float(line.split(" ")[4])/luminosity[args.year])
-                mass_1.append(float(line.split(" ")[2]))
-    with open (args.in_filenames[1],'r') as infile:
-        Lines = infile.readlines()
-    for line in Lines:
-        if (line.split()[0]==args.year and line.split()[1]==hh_coupling and float(line.split()[2])%10==0):
-            if (line.find("EBEB")!=-1): EBEBnorm_2.append(float(line.split(" ")[4])/luminosity[args.year])
-            elif (line.find("EBEE")!=-1): EBEEnorm_2.append(float(line.split(" ")[4])/luminosity[args.year])
-            elif (line.find("All")!=-1):
-                Allnorm_2.append(float(line.split(" ")[4])/luminosity[args.year])
-                mass_2.append(float(line.split(" ")[2]))
+    if (args.year=="fullRun2"):
+        with open (args.in_filenames[0],'r') as infile:
+            Lines = infile.readlines()
+        # for line in Lines:
+        #     if (line.split()[1]==args.coupling and float(line.split()[2])%100==0):
+        #         if (line.find("EBEB")!=-1): EBEBnorm = EBEBnorm + float(line.split(" ")[4])
+        #         elif (line.find("EBEE")!=-1): EBEEnorm = EBEEnorm + float(line.split(" ")[4])
+        #         elif (line.find("All")!=-1):
+        #             Allnorm = Allnorm + (float(line.split(" ")[4]))
+        #             mass_1.append(float(line.split(" ")[2]))
+        #         EBEBnorm_1.append(EBEBnorm)
+        # with open (args.in_filenames[1],'r') as infile:
+        #     Lines = infile.readlines()
+        # for line in Lines:
+        #     if (line.split()[1]==args.coupling and float(line.split()[2])%100==0):
+        #         if (line.find("EBEB")!=-1): EBEBnorm_2.append(float(line.split(" ")[4]))
+        #         elif (line.find("EBEE")!=-1): EBEEnorm_2.append(float(line.split(" ")[4]))
+        #         elif (line.find("All")!=-1):
+        #             Allnorm_2.append(float(line.split(" ")[4]))
+        #             mass_2.append(float(line.split(" ")[2]))
+    else:
+        with open (args.in_filenames[0],'r') as infile:
+            Lines = infile.readlines()
+        for line in Lines:
+            if (line.split()[0]==args.year and line.split()[1]==args.coupling and float(line.split()[2])%100==0):
+                if (line.find("EBEB")!=-1): EBEBnorm_1.append(float(line.split(" ")[4])/luminosity[args.year])
+                elif (line.find("EBEE")!=-1): EBEEnorm_1.append(float(line.split(" ")[4])/luminosity[args.year])
+                elif (line.find("All")!=-1):
+                    Allnorm_1.append(float(line.split(" ")[4])/luminosity[args.year])
+                    mass_1.append(float(line.split(" ")[2]))
+        with open (args.in_filenames[1],'r') as infile:
+            Lines = infile.readlines()
+        for line in Lines:
+            if (line.split()[0]==args.year and line.split()[1]==hh_coupling and float(line.split()[2])%10==0):
+                if (line.find("EBEB")!=-1): EBEBnorm_2.append(float(line.split(" ")[4])/luminosity[args.year])
+                elif (line.find("EBEE")!=-1): EBEEnorm_2.append(float(line.split(" ")[4])/luminosity[args.year])
+                elif (line.find("All")!=-1):
+                    Allnorm_2.append(float(line.split(" ")[4])/luminosity[args.year])
+                    mass_2.append(float(line.split(" ")[2]))
 
     g_EBEB_1 = ROOT.TGraph(len(mass_1), mass_1, EBEBnorm_1)
     g_EBEE_1 = ROOT.TGraph(len(mass_1), mass_1, EBEEnorm_1)
