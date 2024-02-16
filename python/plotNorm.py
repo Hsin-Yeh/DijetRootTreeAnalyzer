@@ -75,16 +75,16 @@ if __name__ == "__main__":
     # g_All_1.GetXaxis().CenterTitle(1)
     # g_All_1.GetYaxis().CenterTitle(1)
     g_All_1.SetLineColor(1)
-    g_All_1.SetLineWidth(3)
+    g_All_1.SetLineWidth(2)
     g_All_1.SetLineStyle(7)
     g_All_1.Draw("AL")
     g_All_1.GetYaxis().SetRangeUser(0,1.15)
     g_EBEB_1.SetLineColor(2)
-    g_EBEB_1.SetLineWidth(3)
+    g_EBEB_1.SetLineWidth(2)
     g_EBEB_1.SetLineStyle(7)
     g_EBEB_1.Draw("LSame")
     g_EBEE_1.SetLineColor(4)
-    g_EBEE_1.SetLineWidth(3)
+    g_EBEE_1.SetLineWidth(2)
     g_EBEE_1.SetLineStyle(7)
     g_EBEE_1.Draw("LSame");
     g_All_2.SetLineColor(1)
@@ -105,7 +105,7 @@ if __name__ == "__main__":
     l.AddEntry(g_EBEE_2, "EBEE J=0", "l")
     l.Draw("same")
 
-    cmsText=ROOT.TLatex(0.17,0.80, "CMS");
+    cmsText=ROOT.TLatex(0.17,0.83, "CMS");
     cmsText.SetNDC(1);
     cmsText.SetTextFont(61);
     cmsText.SetLineColor(0);
@@ -114,7 +114,7 @@ if __name__ == "__main__":
     cmsText.SetTextSize(0.04);
     cmsText.Draw();
 
-    extraText=ROOT.TLatex(0.24,0.80, "Simulation");
+    extraText=ROOT.TLatex(0.24,0.83, "Simulation");
     extraText.SetNDC(1);
     extraText.SetTextFont(52);
     extraText.SetLineColor(0);
