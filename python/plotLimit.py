@@ -209,8 +209,8 @@ if __name__ == "__main__":
         # leg.AddEntry(g_xs_TuneCUEP8M1,"G_{RS}#rightarrow#gamma#gamma (LO) CUEP8M1","l");
         # leg.AddEntry(gr_2016,"Published 2016 Mass Limit","P");
     leg.AddEntry(expGraph,"Expected limit","L"); #L_{int}=36.4/pb
-    leg.AddEntry(exp1SGraph,"Expected #pm 1 std dev","LF");
-    leg.AddEntry(exp2SGraph,"Expected #pm 2 std dev","LF");
+    leg.AddEntry(exp1SGraph,"#pm 1 std dev","LF");
+    leg.AddEntry(exp2SGraph,"#pm 2 std dev","LF");
     leg.AddEntry(obsGraph,"Observed limit","LP");
     leg.Draw();
 
