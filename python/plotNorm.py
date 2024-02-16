@@ -105,7 +105,7 @@ if __name__ == "__main__":
     l.AddEntry(g_EBEE_2, "EBEE J=0", "l")
     l.Draw("same")
 
-    cmsText=ROOT.TLatex(0.17,0.90, "CMS");
+    cmsText=ROOT.TLatex(0.17,0.80, "CMS");
     cmsText.SetNDC(1);
     cmsText.SetTextFont(61);
     cmsText.SetLineColor(0);
@@ -114,7 +114,7 @@ if __name__ == "__main__":
     cmsText.SetTextSize(0.04);
     cmsText.Draw();
 
-    extraText=ROOT.TLatex(0.24,0.90, "Simulation");
+    extraText=ROOT.TLatex(0.24,0.80, "Simulation");
     extraText.SetNDC(1);
     extraText.SetTextFont(52);
     extraText.SetLineColor(0);
