@@ -1239,16 +1239,16 @@ if __name__ == '__main__':
     EBText.SetLineColor(0);
     EBText.SetLineStyle(1);
     EBText.SetLineWidth(1);
-    EBText.SetTextSize(0.065);
+    EBText.SetTextSize(0.062);
     EBText.Draw()
 
-    chiText=rt.TLatex(0.21,0.07, "#chi^{{2}} / dof = {0:.1f} / {1:d} = {2:.1f}".format(list_chi2AndNdf_background[4], list_chi2AndNdf_background[5], list_chi2AndNdf_background[4]/list_chi2AndNdf_background[5]));
+    chiText=rt.TLatex(0.21,0.06, "#chi^{{2}} / dof = {0:.1f} / {1:d} = {2:.1f}".format(list_chi2AndNdf_background[4], list_chi2AndNdf_background[5], list_chi2AndNdf_background[4]/list_chi2AndNdf_background[5]));
     chiText.SetNDC(1);
     chiText.SetTextFont(42);
     chiText.SetLineColor(0);
     chiText.SetLineStyle(1);
     chiText.SetLineWidth(1);
-    if options.year=="fullRun2": chiText.SetTextSize(0.065)
+    if options.year=="fullRun2": chiText.SetTextSize(0.062)
     else: chiText.SetTextSize(0.045);
     chiText.Draw()
 
