@@ -200,18 +200,18 @@ if __name__ == "__main__":
     elif ( args.coupling == "kMpl01" ): plabel = "#tilde{k}=0.1,  J=2"
     elif ( args.coupling == "kMpl02" ): plabel = "#tilde{k}=0.2,  J=2"
     elif ( args.coupling == "0p014"): plabel = "#frac{#Gamma}{m} = 1.4 #times 10^{-4}, J=0"
-    elif ( args.coupling == "1p4"): plabel = "#frac{#Gamma}{m} = 1.4 #times 10^{-2}, J=0"
-    elif ( args.coupling == "5p6"): plabel = "#frac{#Gamma}{m} = 5.6 #times 10^{-2}, J=0"
+    elif ( args.coupling == "1p4"): plabel = "#frac{#Gamma_{X}}{m_{X}} = 1.4 #times 10^{-2}, J=0"
+    elif ( args.coupling == "5p6"): plabel = "#frac{#Gamma_{X}}{m_{X}} = 5.6 #times 10^{-2}, J=0"
 
     leg.SetHeader(plabel,"C");
     if ( args.signame == "grav" ):
         leg.AddEntry(g_xs_TuneCP2,"G_{RS}#rightarrow#gamma#gamma (LO)","l");
         # leg.AddEntry(g_xs_TuneCUEP8M1,"G_{RS}#rightarrow#gamma#gamma (LO) CUEP8M1","l");
         # leg.AddEntry(gr_2016,"Published 2016 Mass Limit","P");
-    leg.AddEntry(expGraph,"expected Limit","L"); #L_{int}=36.4/pb
-    leg.AddEntry(exp1SGraph,"expected #pm 1#sigma","LF");
-    leg.AddEntry(exp2SGraph,"expected #pm 2#sigma","LF");
-    leg.AddEntry(obsGraph,"observed Limit","LP");
+    leg.AddEntry(expGraph,"Expected limit","L"); #L_{int}=36.4/pb
+    leg.AddEntry(exp1SGraph,"Expected #pm 1 std dev","LF");
+    leg.AddEntry(exp2SGraph,"Expected #pm 2 std dev","LF");
+    leg.AddEntry(obsGraph,"Observed limit","LP");
     leg.Draw();
 
     cmsText=ROOT.TLatex(0.19,0.82, "CMS");
