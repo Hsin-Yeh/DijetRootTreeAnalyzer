@@ -1229,7 +1229,7 @@ if __name__ == '__main__':
         theformname = "moddijet"
 
     #pave_sel.AddText("%s : %s" %(theformname, theform) )
-    pave_sel.AddText("#chi^{{2}} / NDF = {0:.1f} / {1:d} = {2:.1f}".format(
+    pave_sel.AddText("#chi^{{2}} / dof = {0:.1f} / {1:d} = {2:.1f}".format(
                           list_chi2AndNdf_background[4], list_chi2AndNdf_background[5],
                           list_chi2AndNdf_background[4]/list_chi2AndNdf_background[5]))
 
@@ -1242,7 +1242,7 @@ if __name__ == '__main__':
     EBText.SetTextSize(0.065);
     EBText.Draw()
 
-    chiText=rt.TLatex(0.21,0.07, "#chi^{{2}} / NDF = {0:.1f} / {1:d} = {2:.1f}".format(list_chi2AndNdf_background[4], list_chi2AndNdf_background[5], list_chi2AndNdf_background[4]/list_chi2AndNdf_background[5]));
+    chiText=rt.TLatex(0.21,0.07, "#chi^{{2}} / dof = {0:.1f} / {1:d} = {2:.1f}".format(list_chi2AndNdf_background[4], list_chi2AndNdf_background[5], list_chi2AndNdf_background[4]/list_chi2AndNdf_background[5]));
     chiText.SetNDC(1);
     chiText.SetTextFont(42);
     chiText.SetLineColor(0);
@@ -1440,7 +1440,7 @@ if __name__ == '__main__':
         #h_fit_residual_vs_mass.GetXaxis().SetTitle('Dijet Mass [TeV]')
         # paper
         #h_fit_residual_vs_mass.GetXaxis().SetTitle('Dijet mass [TeV]')
-        h_fit_residual_vs_mass.GetXaxis().SetTitle('DiPhoton mass [TeV]')
+        h_fit_residual_vs_mass.GetXaxis().SetTitle('m_{#gamma#gamma} [TeV]')
         h_fit_residual_vs_mass.GetXaxis().SetLabelOffset(1000)
         h_fit_residual_vs_mass.GetXaxis().SetNoExponent()
         h_fit_residual_vs_mass.GetXaxis().SetMoreLogLabels()
