@@ -1248,7 +1248,7 @@ if __name__ == '__main__':
     chiText.SetLineColor(0);
     chiText.SetLineStyle(1);
     chiText.SetLineWidth(1);
-    if args.year=="fullRun2": chiText.SetTextSize(0.065)
+    if options.year=="fullRun2": chiText.SetTextSize(0.065)
     else: chiText.SetTextSize(0.045);
     chiText.Draw()
 
