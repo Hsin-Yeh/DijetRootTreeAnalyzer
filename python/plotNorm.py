@@ -89,6 +89,12 @@ if __name__ == "__main__":
     g_EBEB_2 = ROOT.TGraph(len(mass_2), mass_2, EBEBnorm_2)
     g_EBEE_2 = ROOT.TGraph(len(mass_2), mass_2, EBEEnorm_2)
     g_All_2 = ROOT.TGraph(len(mass_2), mass_2, Allnorm_2)
+    g_EBEB_1.SetName("Spin-2_EBEB")
+    g_EBEE_1.SetName("Spin-2_EBEE")
+    g_All_1.SetName("Spin-2_Total")
+    g_EBEB_2.SetName("Spin-0_EBEB")
+    g_EBEE_2.SetName("Spin-0_EBEE")
+    g_All_2.SetName("Spin-0_Total")
 
     g_All_1.SetTitle("")
     g_All_1.GetYaxis().SetTitle("#varepsilon #times A")
@@ -164,3 +170,13 @@ if __name__ == "__main__":
 
     c1.SaveAs("%s/SignalNorm_%s_%s.png"%(args.outputDir,args.coupling,args.year))
     c1.SaveAs("%s/SignalNorm_%s_%s.pdf"%(args.outputDir,args.coupling,args.year))
+    c1.SaveAs("%s/SignalNorm_%s_%s.C"%(args.outputDir,args.coupling,args.year))
+
+    outfile = ROOT.TFile( "%s/SignalNorm_%s_%s.root"%(args.outputDir,args.coupling,args.year,"RECREATE"))
+    c1.Write()
+    g_EBEB_1.Write()
+    g_EBEE_1.Write()
+    g_All_1.Write()
+    g_EBEB_2.Write()
+    g_EBEE_2.Write()
+    g_All_2.Write()
