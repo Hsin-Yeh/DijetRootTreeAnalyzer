@@ -663,12 +663,12 @@ if __name__ == '__main__':
     rt.gStyle.SetOptTitle(0)
     c = rt.TCanvas('c','c',600,700)
     rootFile = rt.TFile.Open(options.outDir + '/' + 'Plots_%s'%box + '.root','recreate')
-    tdirectory = rootFile.GetDirectory(options.outDir)
-    if tdirectory==None:
-        print "making directory"
-        rootFile.mkdir(options.outDir)
-        tdirectory = rootFile.GetDirectory(options.outDir)
-        tdirectory.Print('v')
+    # tdirectory = rootFile.GetDirectory(options.outDir)
+    # if tdirectory==None:
+    #     print "making directory"
+    #     rootFile.mkdir(options.outDir)
+    #     tdirectory = rootFile.GetDirectory(options.outDir)
+    #     tdirectory.Print('v')
 
     boxLabel = "%s %s Fit" % (box,fitRegion)
     plotLabel = "%s Projection" % (plotRegion)
