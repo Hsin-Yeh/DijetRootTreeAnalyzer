@@ -662,7 +662,7 @@ if __name__ == '__main__':
     rt.gStyle.SetOptStat(0)
     rt.gStyle.SetOptTitle(0)
     c = rt.TCanvas('c','c',600,700)
-    rootFile = rt.TFile.Open(options.outDir + '/' + 'Plots_%s'%box + '.root','recreate')
+    rootFile = rt.TFile.Open(options.outDir + '/' + 'Plots_%s_%s'%(box,options.year) + '.root','recreate')
     # tdirectory = rootFile.GetDirectory(options.outDir)
     # if tdirectory==None:
     #     print "making directory"
