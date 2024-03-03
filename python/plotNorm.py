@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 #
-# for year in {"2016","2017","2018"}; do for coup in {"kMpl01","kMpl02","kMpl001"}; do python python/plotNorm.py ../../SignalNorm_Splines_full.txt ../../SignalNorm_Splines_genFiducial.txt -y ${year} -c ${coup}; done; done
+# for year in {"2016","2017","2018"}; do for coup in {"kMpl01","kMpl02","kMpl001"}; do python python/plotNorm.py ../../SignalNorm_Splines_full.txt ../../SignalNorm_Splines_genFiducial.txt -y ${year} -c ${coup} -o output/plots/sigNorm; done; done
 #
 import ROOT
 from array import array
