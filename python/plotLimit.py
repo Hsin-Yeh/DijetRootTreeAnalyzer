@@ -248,11 +248,11 @@ if __name__ == "__main__":
         canv.SaveAs( "./limitplot_%s_%s_%s_unblind.pdf"% (args.signame, args.coupling, args.year) );
         canv.SaveAs( "./limitplot_%s_%s_%s_unblind.png"% (args.signame, args.coupling, args.year) );
         canv.SaveAs( "./limitplot_%s_%s_%s_unblind.C"% (args.signame, args.coupling, args.year) );
-        canv.SaveAs( "./limitplot_%s_%s_%s_unblind.root"% (args.signame, args.coupling, args.year) );
-    else: canv.SaveAs( "./limitplot_%s_%s_%s.pdf"% (args.signame, args.coupling, args.year) );
+        outfile = ROOT.TFile( "./limitplot_%s_%s_%s_unblind.root"% (args.signame, args.coupling, args.year) , "RECREATE");
+    else:
+        canv.SaveAs( "./limitplot_%s_%s_%s_blind.pdf"% (args.signame, args.coupling, args.year) );
+        outfile = ROOT.TFile( "./limitplot_%s_%s_%s_blind.root"% (args.signame, args.coupling, args.year) , "RECREATE");
 
-
-    outfile = ROOT.TFile( "./limitplot_%s_%s_%s.root"% (args.signame, args.coupling, args.year) , "RECREATE");
     canv.Write();
     expGraph.SetName("expGraph");
     obsGraph.SetName("obsGraph");
