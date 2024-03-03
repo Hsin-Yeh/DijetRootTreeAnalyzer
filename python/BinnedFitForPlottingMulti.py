@@ -1023,7 +1023,7 @@ if __name__ == '__main__':
     pad_1.cd()
 
     myRebinnedDensityTH1 = myRebinnedTH1.Clone('data_obs_density')
-    myRebinnedDensityTH1.SetStats(kFalse)
+    myRebinnedDensityTH1.SetStats(0)
     for i in range(1,nBins+1):
         myRebinnedDensityTH1.SetBinContent(i, myRebinnedTH1.GetBinContent(i)/ myRebinnedTH1.GetBinWidth(i))
         myRebinnedDensityTH1.SetBinError(i, myRebinnedTH1.GetBinError(i)/ myRebinnedTH1.GetBinWidth(i))
