@@ -172,7 +172,7 @@ if __name__ == "__main__":
     c1.SaveAs("%s/SignalNorm_%s_%s.pdf"%(args.outputDir,args.coupling,args.year))
     c1.SaveAs("%s/SignalNorm_%s_%s.C"%(args.outputDir,args.coupling,args.year))
 
-    outfile = ROOT.TFile( "%s/SignalNorm_%s_%s.root"%(args.outputDir,args.coupling,args.year,"RECREATE"))
+    outfile = ROOT.TFile("%s/SignalNorm_%s_%s.root"%(args.outputDir,args.coupling,args.year,"RECREATE"))
     c1.Write()
     g_EBEB_1.Write()
     g_EBEE_1.Write()
@@ -180,3 +180,5 @@ if __name__ == "__main__":
     g_EBEB_2.Write()
     g_EBEE_2.Write()
     g_All_2.Write()
+    outfile.Write()
+    outfile.Close()
