@@ -290,6 +290,12 @@ def pvalue2D():
     cmsText.Draw();
     lumiText.Draw();
     c1.SaveAs("%s/observedlimit_zoomin_%s.pdf"%(args.outputDir,args.signame))
+    c1.SaveAs("%s/observedlimit_zoomin_%s.png"%(args.outputDir,args.signame))
+    c1.SaveAs("%s/observedlimit_zoomin_%s.C"%(args.outputDir,args.signame))
+    outfile_obs = ROOT.TFile("%s/observedlimit_zoomin_%s.root"%(args.outputDir,args.signame),"RECREATE")
+    c1.Write()
+    h_obslimit.Write()
+    outfile_obs.Close()
 
     # Expected Limit
     h_explimit.SetTitle("")
@@ -310,6 +316,12 @@ def pvalue2D():
     cmsText.Draw();
     lumiText.Draw();
     c1.SaveAs("%s/expectedlimit_zoomin_%s.pdf"%(args.outputDir,args.signame))
+    c1.SaveAs("%s/expectedlimit_zoomin_%s.png"%(args.outputDir,args.signame))
+    c1.SaveAs("%s/expectedlimit_zoomin_%s.C"%(args.outputDir,args.signame))
+    outfile_exp = ROOT.TFile("%s/expectedlimit_zoomin_%s.root"%(args.outputDir,args.signame),"RECREATE")
+    c1.Write()
+    h_explimit.Write()
+    outfile_exp.Close()
 
     # Zvalue
     h_zvalue.SetTitle("")
