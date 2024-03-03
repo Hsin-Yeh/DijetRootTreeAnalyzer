@@ -244,7 +244,11 @@ if __name__ == "__main__":
 
     redrawBorder()
 
-    if(args.unblind): canv.SaveAs( "./limitplot_%s_%s_%s_unblind.pdf"% (args.signame, args.coupling, args.year) );
+    if(args.unblind):
+        canv.SaveAs( "./limitplot_%s_%s_%s_unblind.pdf"% (args.signame, args.coupling, args.year) );
+        canv.SaveAs( "./limitplot_%s_%s_%s_unblind.png"% (args.signame, args.coupling, args.year) );
+        canv.SaveAs( "./limitplot_%s_%s_%s_unblind.C"% (args.signame, args.coupling, args.year) );
+        canv.SaveAs( "./limitplot_%s_%s_%s_unblind.root"% (args.signame, args.coupling, args.year) );
     else: canv.SaveAs( "./limitplot_%s_%s_%s.pdf"% (args.signame, args.coupling, args.year) );
 
 
