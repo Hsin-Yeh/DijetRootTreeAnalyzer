@@ -1598,6 +1598,7 @@ if __name__ == '__main__':
     # frs["expow1"].Write("fr_expow1")
     # frs["invpow1"].Write("fr_invpow1")
     # frs["invpowlin1"].Write("fr_invpowlin1")
+    rootFile.Write()
     rootFile.Close()
 
     outFileName = "FitResults_%s_%s.root"%(box,options.year)
