@@ -967,7 +967,7 @@ if __name__ == '__main__':
     #i have data
     #h_th1x.Scale(1.0/lumi)
     #h_background = convertToMjjHist(h_th1x,x)
-    h_fit_residual_vs_mass = rt.TH1D("h_fit_residual_vs_mass","h_fit_residual_vs_mass",len(x)-1,x)
+    h_fit_residual_vs_mass = rt.TH1D("h_fit_residual_vs_mass","",len(x)-1,x)
     #will only plot the residuals with respect to the nominal function
     list_chi2AndNdf_background = calculateChi2AndFillResiduals(g_data,h_backgrounds["dijet"],h_fit_residual_vs_mass,w,0)
 
