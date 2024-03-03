@@ -1023,6 +1023,7 @@ if __name__ == '__main__':
     pad_1.cd()
 
     myRebinnedDensityTH1 = myRebinnedTH1.Clone('data_obs_density')
+    myRebinnedDensityTH1.SetStats(kFalse)
     for i in range(1,nBins+1):
         myRebinnedDensityTH1.SetBinContent(i, myRebinnedTH1.GetBinContent(i)/ myRebinnedTH1.GetBinWidth(i))
         myRebinnedDensityTH1.SetBinError(i, myRebinnedTH1.GetBinError(i)/ myRebinnedTH1.GetBinWidth(i))
@@ -1059,14 +1060,14 @@ if __name__ == '__main__':
     myRebinnedDensityTH1.Draw("axis")
 
     if options.doTriggerFit or options.doSimultaneousFit or options.doSpectrumFit or options.noFit:
-        backgrounds["dijet"].SetLineColor(rt.kBlack)
-        backgrounds["dijet"].Draw("csame")
         backgrounds["expow1"].SetLineColor(rt.kRed)
         backgrounds["expow1"].Draw("csame")
         backgrounds["invpow1"].SetLineColor(rt.kGreen)
         backgrounds["invpow1"].Draw("csame")
         backgrounds["invpowlin1"].SetLineColor(rt.kBlue)
         backgrounds["invpowlin1"].Draw("csame")
+        backgrounds["dijet"].SetLineColor(rt.kBlack)
+        backgrounds["dijet"].Draw("csame")
     else:
         h_background.SetLineColor(rt.kRed)
         h_background.SetLineWidth(2)
@@ -1158,8 +1159,8 @@ if __name__ == '__main__':
     #               "expow1"     : "e^{p_{1} x} x^{p_{2}}",
     #               "invpow1"    : "(1+x*p_{1})^{p_{2}}",
     #               "invpowlin1" : "(1+x*p_{1})^{p_{2}+p_{3}*x}"}
-    modelforms = {"dijet"      : "f_{1}: x^{p_{1}+p_{2}*log(x)}",
-                  "expow1"     : "f_{2}: e^{p_{1} x} x^{p_{2}}",
+    modelforms = {"expow1"     : "f_{2}: e^{p_{1} x} x^{p_{2}}",
+                  "dijet"      : "f_{1}: x^{p_{1}+p_{2}*log(x)}",
                   "invpow1"    : "f_{3}: (1+x*p_{1})^{p_{2}}",
                   "invpowlin1" : "f_{4}: (1+x*p_{1})^{p_{2}+p_{3}*x}"}
     leg.AddEntry(backgrounds["dijet"],"%s"%(modelforms["dijet"]),"l")
