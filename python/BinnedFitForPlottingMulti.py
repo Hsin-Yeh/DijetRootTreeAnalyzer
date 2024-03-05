@@ -1073,42 +1073,42 @@ if __name__ == '__main__':
         h_background.SetLineWidth(2)
         h_background.Draw("histsame")
 
-    g_signals = []
-    for model, mass, xsec, signalFileName, sigHist, color, style in zip(models,masses,xsecs,signalFileNames,signalHistosRebin,colors,styles):
-        g_signal = rt.TGraphAsymmErrors(sigHist)
-        g_signal.SetLineColor(color)
-        g_signal.SetLineStyle(style)
-        g_signal.SetLineWidth(3)
+    # g_signals = []
+    # for model, mass, xsec, signalFileName, sigHist, color, style in zip(models,masses,xsecs,signalFileNames,signalHistosRebin,colors,styles):
+    #     g_signal = rt.TGraphAsymmErrors(sigHist)
+    #     g_signal.SetLineColor(color)
+    #     g_signal.SetLineStyle(style)
+    #     g_signal.SetLineWidth(3)
 
-        lastX = 0
-        lastY = 0
-        firstX = 0
-        firstY = 0
-        notSet = True
-        for i in range(0,g_signal.GetN()):
-            N = g_signal.GetY()[i]
-            binWidth = g_signal.GetEXlow()[i] + g_signal.GetEXhigh()[i]
-            if g_signal.GetX()[i]>float(mass)*0.75 and notSet:
-                firstX = g_signal.GetX()[i]
-                firstY = N/(binWidth * lumi)
-                notSet = False
+    #     lastX = 0
+    #     lastY = 0
+    #     firstX = 0
+    #     firstY = 0
+    #     notSet = True
+    #     for i in range(0,g_signal.GetN()):
+    #         N = g_signal.GetY()[i]
+    #         binWidth = g_signal.GetEXlow()[i] + g_signal.GetEXhigh()[i]
+    #         if g_signal.GetX()[i]>float(mass)*0.75 and notSet:
+    #             firstX = g_signal.GetX()[i]
+    #             firstY = N/(binWidth * lumi)
+    #             notSet = False
 
-        for i in range(0,g_signal.GetN()):
-            N = g_signal.GetY()[i]
-            binWidth = g_signal.GetEXlow()[i] + g_signal.GetEXhigh()[i]
-            if g_signal.GetX()[i]<=float(mass)*0.75:
-                g_signal.SetPoint(i,firstX,firstY)
-            else:
-                g_signal.SetPoint(i, g_signal.GetX()[i], N/(binWidth * lumi))
-            g_signal.SetPointEYlow(i, 0)
-            g_signal.SetPointEYhigh(i, 0)
-            if g_signal.GetX()[i]>float(mass)*1.25:
-                g_signal.SetPoint(i,lastX,lastY)
-            else:
-                lastX = g_signal.GetX()[i]
-                lastY = g_signal.GetY()[i]
-        g_signals.append(g_signal)
-        g_signal.Draw("cxsame")
+    #     for i in range(0,g_signal.GetN()):
+    #         N = g_signal.GetY()[i]
+    #         binWidth = g_signal.GetEXlow()[i] + g_signal.GetEXhigh()[i]
+    #         if g_signal.GetX()[i]<=float(mass)*0.75:
+    #             g_signal.SetPoint(i,firstX,firstY)
+    #         else:
+    #             g_signal.SetPoint(i, g_signal.GetX()[i], N/(binWidth * lumi))
+    #         g_signal.SetPointEYlow(i, 0)
+    #         g_signal.SetPointEYhigh(i, 0)
+    #         if g_signal.GetX()[i]>float(mass)*1.25:
+    #             g_signal.SetPoint(i,lastX,lastY)
+    #         else:
+    #             lastX = g_signal.GetX()[i]
+    #             lastY = g_signal.GetY()[i]
+    #     g_signals.append(g_signal)
+    #     g_signal.Draw("cxsame")
 
 
     rt.gPad.SetLogy()
@@ -1338,7 +1338,7 @@ if __name__ == '__main__':
     #     h_background.SetLineColor(rt.kRed)
     #     h_background.SetLineWidth(2)
     #     h_background.Draw("histsame")
-    # g_data_clone.Draw("zpsame")
+    g_data_clone.Draw("zpsame")
     g_data.Draw("zpsame")
 
 
