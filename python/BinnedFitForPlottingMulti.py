@@ -1324,21 +1324,21 @@ if __name__ == '__main__':
     #pave_param.Draw("SAME")
     '''
 
-    if options.doTriggerFit or options.doSimultaneousFit or options.doSpectrumFit or options.noFit:
-        backgrounds["expow1"].SetLineColor(rt.kRed)
-        backgrounds["expow1"].Draw("csame")
-        backgrounds["invpow1"].SetLineColor(rt.kGreen)
-        backgrounds["invpow1"].Draw("csame")
-        backgrounds["invpowlin1"].SetLineColor(rt.kBlue)
-        backgrounds["invpowlin1"].Draw("csame")
-        backgrounds["dijet"].SetLineColor(rt.kBlack)
-        backgrounds["dijet"].Draw("csame")
-        #background.Draw("csame")
-    else:
-        h_background.SetLineColor(rt.kRed)
-        h_background.SetLineWidth(2)
-        h_background.Draw("histsame")
-    g_data_clone.Draw("zpsame")
+    # if options.doTriggerFit or options.doSimultaneousFit or options.doSpectrumFit or options.noFit:
+    #     backgrounds["expow1"].SetLineColor(rt.kRed)
+    #     backgrounds["expow1"].Draw("csame")
+    #     backgrounds["invpow1"].SetLineColor(rt.kGreen)
+    #     backgrounds["invpow1"].Draw("csame")
+    #     backgrounds["invpowlin1"].SetLineColor(rt.kBlue)
+    #     backgrounds["invpowlin1"].Draw("csame")
+    #     backgrounds["dijet"].SetLineColor(rt.kBlack)
+    #     backgrounds["dijet"].Draw("csame")
+    #     #background.Draw("csame")
+    # else:
+    #     h_background.SetLineColor(rt.kRed)
+    #     h_background.SetLineWidth(2)
+    #     h_background.Draw("histsame")
+    # g_data_clone.Draw("zpsame")
     g_data.Draw("zpsame")
 
 
