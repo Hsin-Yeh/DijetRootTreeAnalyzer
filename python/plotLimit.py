@@ -117,6 +117,10 @@ if __name__ == "__main__":
     exp1SGraph = exp1SGraph_init.Clone();
     exp2SGraph = exp2SGraph_init.Clone();
     obsGraph = obsGraph_init.Clone();
+    expGraph.SetName("expGraph");
+    obsGraph.SetName("obsGraph");
+    exp1SGraph.SetName("exp1SGraph");
+    exp2SGraph.SetName("exp2SGraph");
 
     canv = ROOT.TCanvas("canv","Title",800,600);
     canv.SetLogy();
@@ -254,10 +258,6 @@ if __name__ == "__main__":
         outfile = ROOT.TFile( "./limitplot_%s_%s_%s_blind.root"% (args.signame, args.coupling, args.year) , "RECREATE");
 
     canv.Write();
-    expGraph.SetName("expGraph");
-    obsGraph.SetName("obsGraph");
-    exp1SGraph.SetName("exp1SGraph");
-    exp2SGraph.SetName("exp2SGraph");
     expGraph.Write();
     obsGraph.Write();
     exp1SGraph.Write();
