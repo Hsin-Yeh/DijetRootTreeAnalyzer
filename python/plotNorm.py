@@ -22,7 +22,7 @@ if __name__ == "__main__":
     ROOT.gROOT.LoadMacro("~/rootlogon.C")
 
     c1 = ROOT.TCanvas("c1","c1", 700, 600)
-    l = ROOT.TLegend(0.4, 0.25, 0.88, 0.45)
+    l = ROOT.TLegend(0.4, 0.35, 0.88, 0.55)
     l.SetNColumns(2);
     if (args.coupling=="kMpl001"):
         l.SetHeader("#tilde{k}=0.01              #frac{#Gamma_{X}}{m_{X}} = 1.4 #times 10^{-4}","C")
