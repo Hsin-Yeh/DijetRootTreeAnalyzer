@@ -105,7 +105,7 @@ if __name__ == "__main__":
     g_All_1.SetLineWidth(2)
     g_All_1.SetLineStyle(7)
     g_All_1.Draw("AL")
-    g_All_1.GetYaxis().SetRangeUser(0,1.15)
+    g_All_1.GetYaxis().SetRangeUser(0,0.8)
     g_EBEB_1.SetLineColor(2)
     g_EBEB_1.SetLineWidth(2)
     g_EBEB_1.SetLineStyle(7)
