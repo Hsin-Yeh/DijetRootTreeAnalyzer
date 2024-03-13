@@ -3,7 +3,7 @@
 ########## Config ##########
 runMethod=$1 # create/send/merge
 signame="heavyhiggs" # grav/heavyhiggs
-version="2024-01-14"
+version="2024-03-13"
 versionDir="${version}_${signame}"
 masslist=($(seq 600 10 5000))
 # couplist=(4550)
