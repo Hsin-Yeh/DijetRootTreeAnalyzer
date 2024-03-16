@@ -70,6 +70,8 @@ elif [[ ${runMethod} == "send" ]]; then
 ########## Check output status ##########
 elif [[ ${runMethod} == "status" ]]; then
         cd ${versionDir}
+        rm status.txt
+        touch status.txt
 
         echo "==========Checking output status=========="
         for coupling in "${couplist[@]}"; do
@@ -77,11 +79,11 @@ elif [[ ${runMethod} == "status" ]]; then
                 for mass in "${masslist[@]}"; do
                         resultfile="finalResults_heavyhiggs_${coupling}_${mass}.txt"
                         if [ ! -f ${resultfile} ]; then
-                                echo "${resultfile} does no exist"
+                                echo "${resultfile} does no exist" >> status.txt
                         elif [ -f ${resultfile} -a ! -s $resultfile ]; then
-                                echo "${resultfile} is empty"
+                                echo "${resultfile} is empty" >> status.txt
                         elif [ -f ${resultfile} -a -s $resultfile ]; then
-                                echo "${resultfile} finished"
+                                echo "${resultfile} finished" >> status.txt
                         fi
                 done
         done
