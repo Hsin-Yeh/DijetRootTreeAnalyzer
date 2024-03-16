@@ -131,7 +131,7 @@ if $writeDataCard_flag; then
                 --SFScaleDown    ${InterpolateShapePath}/ResonanceShapes_InputShapes_${signal_LongName}_${coupling}_${cat}_${year}_SFScaleDown_ratio.root         \
                 --PUScaleUp      ${InterpolateShapePath}/ResonanceShapes_InputShapes_${signal_LongName}_${coupling}_${cat}_${year}_PUScaleUp_ratio.root           \
                 --PUScaleDown    ${InterpolateShapePath}/ResonanceShapes_InputShapes_${signal_LongName}_${coupling}_${cat}_${year}_PUScaleDown_ratio.root         \
-                ${InterpolateShapePath}/ResonanceShapes_InputShapes_${signal_LongName}_${coupling}_${cat}_${year}.root;
+                ${InterpolateShapePath}/ResonanceShapes_InputShapes_${signal_LongName}_${coupling}_${cat}_${year}_ratio.root;
             mv diphoton_combine_${mass}_${box}.* ${datacardsDir}/${method}/${year}/${box}/.
         done
     done
