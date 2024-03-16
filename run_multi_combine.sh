@@ -1,6 +1,7 @@
 #!/bin/bash
 #
 # for year in {"2016","2017","2018","fullRun2"}; do for coup in {"kMpl001","kMpl01","kMpl02"}; do ./run_multi_combine.sh ${year} ${coup}; done; done;
+# for year in {"2016","2017","2018"}; do for coup in {"0p014","1p4","5p6"}; do ./run_multi_combine.sh ${year} ${coup}; done; done;
 # for year in {"2016","2017","2018","fullRun2"}; do ./run_multi_combine.sh ${year} kMpl001; done;
 # for coup in {"kMpl001","kMpl01","kMpl02"}; do ./run_multi_combine.sh fullRun2 ${coup}; done;
 # ./run_multi_combine.sh 2016 kMpl001
@@ -73,11 +74,11 @@ fi
 
 #################### Paths ####################
 export inputDataDir="/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/CMSDIJET/DijetRootTreeAnalyzer/output/InputShapes_data_backup"
-export InterpolateShapePath="/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/full_backup/width/"
+export InterpolateShapePath="/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/${method}/width/inputs/"
 export configFile="config/diphotons_500GeV.config"
 export bkgFitResultsPath="datacards/multi"
 export datacardsDir="/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/CMSDIJET/DijetRootTreeAnalyzer/datacards/multi/${version}"
-export SignalNormFile="/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/SignalNorm_Splines_full.txt"
+export SignalNormFile="/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/SignalNorm_Splines_${method}.txt"
 export datacard_configfile="config/diphotons_bias_${year}_pdf_index_wopip_wopil.config"
 
 #################### Run flags ####################
@@ -115,7 +116,7 @@ if $writeDataCard_flag; then
         for cat in "${catlist[@]}"; do
             box="DiPhotons_${coupling}_${cat}_${year}"
             echo ${box}
-            mkdir -p ${datacardsDir}/full/${year}/${box}
+            mkdir -p ${datacardsDir}/${method}/${year}/${box}
             python python/WriteDataCard.py --multi -m gg --mass ${mass} output/InputShapes_data_${cat}_${year}.root -i ${bkgFitResultsPath}/FitResults_${box}.root --lumi ${lumi} -c ${datacard_configfile} -b ${box} --year ${year} \
                 --SigNorm ${SignalNormFile} \
                 --eneScStatUp    ${InterpolateShapePath}/ResonanceShapes_InputShapes_${signal_LongName}_${coupling}_${cat}_${year}_energyScaleStatUp.root   \
@@ -131,7 +132,7 @@ if $writeDataCard_flag; then
                 --PUScaleUp      ${InterpolateShapePath}/ResonanceShapes_InputShapes_${signal_LongName}_${coupling}_${cat}_${year}_PUScaleUp.root           \
                 --PUScaleDown    ${InterpolateShapePath}/ResonanceShapes_InputShapes_${signal_LongName}_${coupling}_${cat}_${year}_PUScaleDown.root         \
                 ${InterpolateShapePath}/ResonanceShapes_InputShapes_${signal_LongName}_${coupling}_${cat}_${year}.root;
-            mv diphoton_combine_${mass}_${box}.* ${datacardsDir}/full/${year}/${box}/.
+            mv diphoton_combine_${mass}_${box}.* ${datacardsDir}/${method}/${year}/${box}/.
         done
     done
 fi
@@ -139,14 +140,14 @@ fi
 
 if $combineCard_flag; then
     echo ${year}
-    cd ${datacardsDir}/full/${year}
+    cd ${datacardsDir}/${method}/${year}
     scenario="DiPhotons_${coupling}"
     echo ${scenario}
     for mass in "${masslist[@]}"; do
         echo ${mass}
         combineCards.py \
-            ${datacardsDir}/full/${year}/${scenario}_EBEB_${year}/diphoton_combine_${mass}_${scenario}_EBEB_${year}.txt \
-            ${datacardsDir}/full/${year}/${scenario}_EBEE_${year}/diphoton_combine_${mass}_${scenario}_EBEE_${year}.txt \
+            ${datacardsDir}/${method}/${year}/${scenario}_EBEB_${year}/diphoton_combine_${mass}_${scenario}_EBEB_${year}.txt \
+            ${datacardsDir}/${method}/${year}/${scenario}_EBEE_${year}/diphoton_combine_${mass}_${scenario}_EBEE_${year}.txt \
             > diphoton_combine_${mass}_${scenario}_${year}.txt
     done
 fi
@@ -158,7 +159,7 @@ if $combineLimit_flag; then
     cd ${mainpath}/FinalResults
 
     # Calculate limits
-    ./loopAllMassPoints.sh ${year} ${signal} ${coupling} full ${datacardsDir} ${version}
+    ./loopAllMassPoints.sh ${year} ${signal} ${coupling} ${method} ${datacardsDir} ${version}
 
     # Limit Plot
     cd ${mainpath}/FinalResults/${version}
