@@ -67,6 +67,51 @@ elif [[ ${runMethod} == "send" ]]; then
                 done
         done
 
+########## Check output status ##########
+elif [[ ${runMethod} == "status" ]]; then
+        cd ${versionDir}
+
+        echo "==========Checking output status=========="
+        for coupling in "${couplist[@]}"; do
+                echo ${coupling}
+                for mass in "${masslist[@]}"; do
+                        resultfile="finalResults_heavyhiggs_${coupling}_${mass}.txt"
+                        if [ ! -f ${resultfile} ]; then
+                                echo "${resultfile} does no exist"
+                        elif [ -f ${resultfile} -a ! -s $resultfile ]; then
+                                echo "${resultfile} is empty"
+                        elif [ -f ${resultfile} -a -s $resultfile ]; then
+                                echo "${resultfile} finished"
+                        fi
+                done
+        done
+
+########## ResendJobs if output file size is 0 ##########
+elif [[ ${runMethod} == "resend" ]]; then
+        cd ${versionDir}
+
+        echo "==========Resending Jobs=========="
+        for coupling in "${couplist[@]}"; do
+                echo ${coupling}
+                for mass in "${masslist[@]}"; do
+                        resultfile="finalResults_heavyhiggs_${coupling}_${mass}.txt"
+                        if [ ! -f ${resultfile} ]; then
+                                echo "${resultfile} does no exist"
+                        elif [ -f ${resultfile} -a ! -s $resultfile ]; then
+                                echo "${resultfile} is empty"
+                                jobDir="${coupling}/${mass}"
+                                submitFile="${jobDir}/jobs/limit_${coupling}_${mass}.sub"
+                                #echo ${run}
+                                chmod 755 ${submitFile}
+
+                                echo "Resending ${submitFile}"
+                                condor_submit ${submitFile}
+                                # echo "condor_submit ${submitFile}"
+                        fi
+                done
+        done
+
+
 ########## MergeJobs ##########
 elif [[ ${runMethod} == "merge" ]]; then
         cd ${versionDir}
