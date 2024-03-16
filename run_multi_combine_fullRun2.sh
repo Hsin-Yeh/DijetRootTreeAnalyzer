@@ -46,7 +46,7 @@ if $combineCard_flag; then
     for mass in "${masslist[@]}"; do
         echo ${mass}
         combineCards.py ${datacardsDir}/${method}/2016/${scenario}_EBEB_2016/diphoton_combine_${mass}_${scenario}_EBEB_2016.txt \
-            # ${datacardsDir}/${method}/2016/${scenario}_EBEE_2016/diphoton_combine_${mass}_${scenario}_EBEE_2016.txt \
+            ${datacardsDir}/${method}/2016/${scenario}_EBEE_2016/diphoton_combine_${mass}_${scenario}_EBEE_2016.txt \
             ${datacardsDir}/${method}/2017/${scenario}_EBEB_2017/diphoton_combine_${mass}_${scenario}_EBEB_2017.txt \
             ${datacardsDir}/${method}/2017/${scenario}_EBEE_2017/diphoton_combine_${mass}_${scenario}_EBEE_2017.txt \
             ${datacardsDir}/${method}/2018/${scenario}_EBEB_2018/diphoton_combine_${mass}_${scenario}_EBEB_2018.txt \
