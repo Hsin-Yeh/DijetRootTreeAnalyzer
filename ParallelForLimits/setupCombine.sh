@@ -10,8 +10,8 @@ mass=${5}
 signame=${6}
 
 echo ${PWD}
-ls "/eos/cms/store/group/phys_exotica/diphoton/fullRun2/hsinyeh/2023-02-01/2016/mc/crab_RSGravToGG_kMpl-001_M-4000_TuneCUEP8M1_13TeV-pythia8__Summer16MiniAODv3-v2__MINIAODSIM/230201_161435/0000/out_RSGravToGG_kMpl-001_M-4000_TuneCUEP8M1_13TeV-pythia8_RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2_numEvent100_1.root"
-ls "/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/CMSDIJET/DijetRootTreeAnalyzer"
+ls /eos/cms/store/group/phys_exotica/diphoton/fullRun2/hsinyeh/2023-02-01/2016/mc/crab_RSGravToGG_kMpl-001_M-4000_TuneCUEP8M1_13TeV-pythia8__Summer16MiniAODv3-v2__MINIAODSIM/230201_161435/0000/out_RSGravToGG_kMpl-001_M-4000_TuneCUEP8M1_13TeV-pythia8_RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2_numEvent100_1.root
+ls /afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/CMSDIJET/DijetRootTreeAnalyzer
 
 # Initialize cmssw
 export mainpath="/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/CMSDIJET/DijetRootTreeAnalyzer"
