@@ -119,18 +119,18 @@ if $writeDataCard_flag; then
             mkdir -p ${datacardsDir}/${method}/${year}/${box}
             python python/WriteDataCard.py --multi -m gg --mass ${mass} output/InputShapes_data_${cat}_${year}.root -i ${bkgFitResultsPath}/FitResults_${box}.root --lumi ${lumi} -c ${datacard_configfile} -b ${box} --year ${year} \
                 --SigNorm ${SignalNormFile} \
-                --eneScStatUp    ${InterpolateShapePath}/ResonanceShapes_InputShapes_${signal_LongName}_${coupling}_${cat}_${year}_energyScaleStatUp.root   \
-                --eneScStatDown  ${InterpolateShapePath}/ResonanceShapes_InputShapes_${signal_LongName}_${coupling}_${cat}_${year}_energyScaleStatDown.root \
-                --eneScSystUp    ${InterpolateShapePath}/ResonanceShapes_InputShapes_${signal_LongName}_${coupling}_${cat}_${year}_energyScaleSystUp.root   \
-                --eneScSystDown  ${InterpolateShapePath}/ResonanceShapes_InputShapes_${signal_LongName}_${coupling}_${cat}_${year}_energyScaleSystDown.root \
-                --eneScGainUp    ${InterpolateShapePath}/ResonanceShapes_InputShapes_${signal_LongName}_${coupling}_${cat}_${year}_energyScaleGainUp.root   \
-                --eneScGainDown  ${InterpolateShapePath}/ResonanceShapes_InputShapes_${signal_LongName}_${coupling}_${cat}_${year}_energyScaleGainDown.root \
-                --eneScSigmaUp   ${InterpolateShapePath}/ResonanceShapes_InputShapes_${signal_LongName}_${coupling}_${cat}_${year}_energySigmaUp.root       \
-                --eneScSigmaDown ${InterpolateShapePath}/ResonanceShapes_InputShapes_${signal_LongName}_${coupling}_${cat}_${year}_energySigmaDown.root     \
-                --SFScaleUp      ${InterpolateShapePath}/ResonanceShapes_InputShapes_${signal_LongName}_${coupling}_${cat}_${year}_SFScaleUp.root           \
-                --SFScaleDown    ${InterpolateShapePath}/ResonanceShapes_InputShapes_${signal_LongName}_${coupling}_${cat}_${year}_SFScaleDown.root         \
-                --PUScaleUp      ${InterpolateShapePath}/ResonanceShapes_InputShapes_${signal_LongName}_${coupling}_${cat}_${year}_PUScaleUp.root           \
-                --PUScaleDown    ${InterpolateShapePath}/ResonanceShapes_InputShapes_${signal_LongName}_${coupling}_${cat}_${year}_PUScaleDown.root         \
+                --eneScStatUp    ${InterpolateShapePath}/ResonanceShapes_InputShapes_${signal_LongName}_${coupling}_${cat}_${year}_energyScaleStatUp_ratio.root   \
+                --eneScStatDown  ${InterpolateShapePath}/ResonanceShapes_InputShapes_${signal_LongName}_${coupling}_${cat}_${year}_energyScaleStatDown_ratio.root \
+                --eneScSystUp    ${InterpolateShapePath}/ResonanceShapes_InputShapes_${signal_LongName}_${coupling}_${cat}_${year}_energyScaleSystUp_ratio.root   \
+                --eneScSystDown  ${InterpolateShapePath}/ResonanceShapes_InputShapes_${signal_LongName}_${coupling}_${cat}_${year}_energyScaleSystDown_ratio.root \
+                --eneScGainUp    ${InterpolateShapePath}/ResonanceShapes_InputShapes_${signal_LongName}_${coupling}_${cat}_${year}_energyScaleGainUp_ratio.root   \
+                --eneScGainDown  ${InterpolateShapePath}/ResonanceShapes_InputShapes_${signal_LongName}_${coupling}_${cat}_${year}_energyScaleGainDown_ratio.root \
+                --eneScSigmaUp   ${InterpolateShapePath}/ResonanceShapes_InputShapes_${signal_LongName}_${coupling}_${cat}_${year}_energySigmaUp_ratio.root       \
+                --eneScSigmaDown ${InterpolateShapePath}/ResonanceShapes_InputShapes_${signal_LongName}_${coupling}_${cat}_${year}_energySigmaDown_ratio.root     \
+                --SFScaleUp      ${InterpolateShapePath}/ResonanceShapes_InputShapes_${signal_LongName}_${coupling}_${cat}_${year}_SFScaleUp_ratio.root           \
+                --SFScaleDown    ${InterpolateShapePath}/ResonanceShapes_InputShapes_${signal_LongName}_${coupling}_${cat}_${year}_SFScaleDown_ratio.root         \
+                --PUScaleUp      ${InterpolateShapePath}/ResonanceShapes_InputShapes_${signal_LongName}_${coupling}_${cat}_${year}_PUScaleUp_ratio.root           \
+                --PUScaleDown    ${InterpolateShapePath}/ResonanceShapes_InputShapes_${signal_LongName}_${coupling}_${cat}_${year}_PUScaleDown_ratio.root         \
                 ${InterpolateShapePath}/ResonanceShapes_InputShapes_${signal_LongName}_${coupling}_${cat}_${year}.root;
             mv diphoton_combine_${mass}_${box}.* ${datacardsDir}/${method}/${year}/${box}/.
         done
