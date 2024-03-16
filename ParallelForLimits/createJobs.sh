@@ -73,20 +73,28 @@ elif [[ ${runMethod} == "status" ]]; then
         rm status.txt
         touch status.txt
 
+        finish_count=0
+        empty_count=0
+        nonexist_count=0
+
         echo "==========Checking output status=========="
         for coupling in "${couplist[@]}"; do
                 echo ${coupling}
                 for mass in "${masslist[@]}"; do
                         resultfile="finalResults_heavyhiggs_${coupling}_${mass}.txt"
                         if [ ! -f ${resultfile} ]; then
-                                echo "${resultfile} does no exist" >> status.txt
+                                echo "${resultfile} does not exist" >> status.txt
+                                nonexist_count=$((nonexist_count+1))
                         elif [ -f ${resultfile} -a ! -s $resultfile ]; then
                                 echo "${resultfile} is empty" >> status.txt
+                                empty_count=$((empty_count+1))
                         elif [ -f ${resultfile} -a -s $resultfile ]; then
                                 echo "${resultfile} finished" >> status.txt
+                                finish_count=$((finish_count+1))
                         fi
                 done
         done
+        echo "Finish: ${finish_count}, Empty: ${empty_count}, Nonexist: ${nonexist_count}"
 
 ########## ResendJobs if output file size is 0 ##########
 elif [[ ${runMethod} == "resend" ]]; then
