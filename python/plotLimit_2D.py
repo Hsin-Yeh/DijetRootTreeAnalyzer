@@ -277,7 +277,7 @@ def pvalue2D():
     h_obslimit.GetXaxis().SetTitleSize(0.05)
     h_obslimit.GetYaxis().SetTitle("#Gamma_{G}/M_{G} (%)" if args.signame == "grav" else "#Gamma_{S}/M_{S} (%)");
     h_obslimit.GetYaxis().SetTitleSize(0.05)
-    h_obslimit.GetZaxis().SetTitle("95% CL obs limit #sigma(pp#rightarrowG#rightarrow#gamma#gamma) (fb)" if args.signame == "grav" else "95% CL limit #sigma(pp#rightarrowS#rightarrow#gamma#gamma) (fb)" );
+    h_obslimit.GetZaxis().SetTitle("95% CL obs limit #sigma(pp#rightarrowG#rightarrow#gamma#gamma) (fb)" if args.signame == "grav" else "95% CL obs limit #sigma(pp#rightarrowS#rightarrow#gamma#gamma) (fb)" );
     h_obslimit.GetZaxis().SetTitleOffset(1.1)
     h_obslimit.GetZaxis().SetTitleSize(0.05)
     h_obslimit.Draw("colz")
@@ -303,7 +303,7 @@ def pvalue2D():
     h_explimit.GetXaxis().SetTitleSize(0.05)
     h_explimit.GetYaxis().SetTitle("#Gamma_{G}/M_{G} (%)" if args.signame == "grav" else "#Gamma_{S}/M_{S} (%)");
     h_explimit.GetYaxis().SetTitleSize(0.05)
-    h_explimit.GetZaxis().SetTitle("95% CL exp limit #sigma(pp#rightarrowG#rightarrow#gamma#gamma) (fb)" if args.signame == "grav" else "95% CL limit #sigma(pp#rightarrowS#rightarrow#gamma#gamma) (fb)" );
+    h_explimit.GetZaxis().SetTitle("95% CL exp limit #sigma(pp#rightarrowG#rightarrow#gamma#gamma) (fb)" if args.signame == "grav" else "95% CL exp limit #sigma(pp#rightarrowS#rightarrow#gamma#gamma) (fb)" );
     h_explimit.GetZaxis().SetTitleOffset(1.1)
     h_explimit.GetZaxis().SetTitleSize(0.05)
     h_explimit.Draw("colz")
