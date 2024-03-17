@@ -99,6 +99,7 @@ elif [[ ${runMethod} == "status" ]]; then
 ########## ResendJobs if output file size is 0 ##########
 elif [[ ${runMethod} == "resend" ]]; then
         cd ${versionDir}
+        empty_count=0
 
         echo "==========Resending Jobs=========="
         for coupling in "${couplist[@]}"; do
@@ -109,12 +110,13 @@ elif [[ ${runMethod} == "resend" ]]; then
                                 echo "${resultfile} does no exist"
                         elif [ -f ${resultfile} -a ! -s $resultfile ]; then
                                 echo "${resultfile} is empty"
+                                empty_count=$((empty_count+1))
                                 jobDir="${coupling}/${mass}"
                                 submitFile="${jobDir}/jobs/limit_${coupling}_${mass}.sub"
                                 #echo ${run}
                                 chmod 755 ${submitFile}
 
-                                echo "Resending ${submitFile}"
+                                echo "Resending ${submitFile}, ${empty_count} jobs resended"
                                 condor_submit ${submitFile}
                                 # echo "condor_submit ${submitFile}"
                         fi
