@@ -9,7 +9,7 @@ versionDir="${version}_${signame}_${limitType}"
 echo ${versionDir}
 
 if [[ ${limitType} == "1D" ]]; then
-        couplist=(14 1400 5600)
+        couplist=("0p014" "1p4" "5p6")
 elif [[ ${limitType} == "2D" ]]; then
         couplist=(14 361 707 1054 1400 2450 3500 4550 5600)
 fi
