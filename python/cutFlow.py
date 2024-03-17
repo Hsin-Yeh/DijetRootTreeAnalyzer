@@ -13,7 +13,7 @@ def project(tree, h, var, cut):
 def main():
     for in_filename in args.in_filenames:
         tfileIn = ROOT.TFile.Open(in_filename)
-        basename=in_filename.rsplit("/",1)[1].split("_TuneCP2")[0]
+        basename=in_filename.rsplit("/",1)[1].split("_1.root")[0]
         fTree=tfileIn.Get("diphoton/fTree")
         # h_pt125=tfileIn.Get("diphoton/h_pt125")
         # h_photonID=tfileIn.Get("diphoton/h_photonID")
@@ -70,7 +70,7 @@ def main():
 def main_gen_level():
     for in_filename in args.in_filenames:
         tfileIn = ROOT.TFile.Open(in_filename)
-        basename=in_filename.rsplit("/",1)[1].split("_TuneCP2")[0]
+        basename=in_filename.rsplit("/",1)[1].split("_1.root")[0]
         fTree=tfileIn.Get("diphoton/fTree")
         h_pt125=ROOT.TH1F("h_pt125","h_pt125",1,0,2)
         h_eta=ROOT.TH1F("h_eta","h_eta",1,0,2)
@@ -78,7 +78,7 @@ def main_gen_level():
 
         project(fTree,h_pt125,"1","(GenPhoton1.pt>125 && GenPhoton2.pt>125)")
         project(fTree,h_eta,"1","(GenPhoton1.pt>125)*(GenPhoton2.pt>125)*( (abs(GenPhoton2.eta)>1.57 && abs(GenPhoton2.eta)<2.50 && abs(GenPhoton1.eta)<1.44) || (abs(GenPhoton1.eta)>1.57 && abs(GenPhoton1.eta)<2.50 && abs(GenPhoton2.eta)<1.44) )")
-        project(fTree,h_eta,"1","(GenPhoton1.pt>125)*(GenPhoton2.pt>125)*( (abs(GenPhoton2.eta)>1.57 && abs(GenPhoton2.eta)<2.50 && abs(GenPhoton1.eta)<1.44) || (abs(GenPhoton1.eta)>1.57 && abs(GenPhoton1.eta)<2.50 && abs(GenPhoton2.eta)<1.44) )*(GenDiphoton.Minv>500)")
+        project(fTree,h_mass,"1","(GenPhoton1.pt>125)*(GenPhoton2.pt>125)*( (abs(GenPhoton2.eta)>1.57 && abs(GenPhoton2.eta)<2.50 && abs(GenPhoton1.eta)<1.44) || (abs(GenPhoton1.eta)>1.57 && abs(GenPhoton1.eta)<2.50 && abs(GenPhoton2.eta)<1.44) )*(GenDiphoton.Minv>500)")
 
         h_cutflow = ROOT.TH1F("h_cutflow",basename,3,0,3)
         h_cutflow.GetXaxis().SetBinLabel(1,"pt125")
@@ -92,7 +92,7 @@ def main_gen_level():
 
         with open("cutFlow.txt", "a") as f:
             f.write(basename)
-            f.write(" %.3f"%((h_photonID.Integral()) /float(fTree.GetEntries())))
+            f.write(" %.3f"%((h_pt125.Integral()) /float(fTree.GetEntries())))
             f.write(" %.3f"%((h_eta.Integral())      /float(fTree.GetEntries())))
             f.write(" %.3f"%((h_mass.Integral())     /float(fTree.GetEntries())))
             f.write("\n")
