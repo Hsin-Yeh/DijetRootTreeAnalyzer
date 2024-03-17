@@ -1,73 +1,39 @@
 #!/bin/bash
 
-# for year in {"2016","2017","2018","fullRun2"}; do for coup in {"kMpl001","kMpl01","kMpl02"}; do ./run_multi_combine.sh ${year} ${coup}; done; done;
-# for year in {"2016","2017","2018"}; do for coup in {"0p014","1p4","5p6"}; do ./run_multi_combine.sh ${year} ${coup}; done; done;
-# for year in {"2016","2017","2018","fullRun2"}; do ./run_multi_combine.sh ${year} kMpl001; done;
-# for coup in {"kMpl001","kMpl01","kMpl02"}; do ./run_multi_combine.sh fullRun2 ${coup}; done;
-# ./run_multi_combine.sh 2016 kMpl001
-# ./run_multi_combine.sh 2016 kMpl01
-# ./run_multi_combine.sh 2016 kMpl02
-# ./run_multi_combine.sh 2017 kMpl001
-# ./run_multi_combine.sh 2017 kMpl01
-# ./run_multi_combine.sh 2017 kMpl02
-# ./run_multi_combine.sh 2018 kMpl001
-# ./run_multi_combine.sh 2018 kMpl01
-# ./run_multi_combine.sh 2018 kMpl02
-#
-# ./run_multi_combine.sh 2016 0p014
-# ./run_multi_combine.sh 2016 1p4
-# ./run_multi_combine.sh 2016 5p6
-# ./run_multi_combine.sh 2017 0p014
-# ./run_multi_combine.sh 2017 1p4
-# ./run_multi_combine.sh 2017 5p6
-# ./run_multi_combine.sh 2018 0p014
-# ./run_multi_combine.sh 2018 1p4
-# ./run_multi_combine.sh 2018 5p6
-
-export version="2024-03-17-heavyhiggs"
 export coupling=$1
 export mass=$2
-
+echo ""
+echo "########## Run Limit script for Heavyhiggs ${coupling} ${mass}GeV ##########"
+echo ""
+#################### Constants ##########EEEEEEEEEE
+yearlist=("2016" "2017" "2018")
+# Cats
+catlist=("EBEB" "EBEE")
+# method
+signame="heavyhiggs"
+signal_LongName="GluGluSpin0ToGammaGamma_W"
 
 #################### Constants ####################
 # Cats
 export catlist=("EBEB" "EBEE")
-# Lumi
-export lumi=35.9
-export lumi_1000=35900
-if [[ ${year} == "2017" ]]; then
-    export lumi=41.527
-    export lumi_1000=41527
-elif [[ ${year} == "2018" ]]; then
-    export lumi=59.670
-    export lumi_1000=59670
-elif [[ ${year} == "fullRun2" ]]; then
-    export lumi=137.600
-    export lumi_1000=137600
-fi
 
 # method
-export method="full"
-export signal="grav"
-export signal_LongName="RSGravitonToGammaGamma"
-if [[ ${coupling} == "0p014" || ${coupling} == "1p4" || ${coupling} == "5p6" ]]; then
-    export method="genFiducial"
-    export signal="heavyhiggs"
-    export signal_LongName="GluGluSpin0ToGammaGamma_W"
-fi
-# unblind
-export unblind=false
-if [[ ${year} == "2016" ]]; then
-    export unblind=false
-fi
+signame="heavyhiggs"
+signal_LongName="GluGluSpin0ToGammaGamma_W"
 
 #################### Paths ####################
-export inputDataDir="/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/CMSDIJET/DijetRootTreeAnalyzer/output/InputShapes_data_backup"
-export InterpolateShapePath="/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/${method}/"
-export configFile="config/diphotons_500GeV.config"
-export bkgFitResultsPath="datacards/multi"
-export datacardsDir="/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/CMSDIJET/DijetRootTreeAnalyzer/datacards/multi/${version}"
-export SignalNormFile="/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/SignalNorm_Splines_${method}.txt"
+DijetRootTreeAnalyzer="/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/CMSDIJET/DijetRootTreeAnalyzer/"
+DijetShapeInterpolator="/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/"
+diphoton="/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/"
+
+inputDataDir="${DijetRootTreeAnalyzer}/output/InputShapes_data_backup"
+configFile="${DijetRootTreeAnalyzer}/config/diphotons_500GeV.config"
+InterpolateShapePath="${DijetShapeInterpolator}/genFiducial/"
+bkgFitResultsPath="${DijetRootTreeAnalyzer}/datacards/multi"
+SignalNormFile="${diphoton}/SignalNorm_Splines_genFiducial.txt"
+datacardsDir="datacards/${signame}"
+# toysfile created by: combine -M GenerateOnly datacards/diphoton_combine_1300_DiPhotons_4550_fullRun2.txt -n _bkgOnly --toysFrequentist -t 10000 --saveToys --expectSignal=0
+toysfile="${DijetRootTreeAnalyzer}/ParallelForLimits/higgsCombine_Generate_bkgOnly.root"
 
 #################### Run flags ####################
 export binnedFit_flag=false
@@ -75,26 +41,6 @@ export writeDataCard_flag=true
 export combineCard_flag=true
 export combineLimit_flag=true
 
-# ############################## bkg model ##############################
-if $binnedFit_flag; then
-    mkdir ${bkgFitResultsPath}
-    mkdir ${bkgFitResultsPath}/blind
-    mkdir ${bkgFitResultsPath}/unblind
-    echo $coupling;
-    fitconfigFile="config/diphotons_dijet_${year}.config"
-    fitconfigFile_multi="config/diphotons_multiplot_500GeV.config"
-    for cat in "${catlist[@]}"; do
-        echo ${cat};
-        # blind
-        python python/BinnedFitForPlottingMulti.py -c ${fitconfigFile_multi} -l ${lumi_1000} -b DiPhotons_${coupling}_${cat} -d ${bkgFitResultsPath}/blind --fit-spectrum --plot-region Low --coup $coupling --cat $cat --year ${year} ${inputDataDir}/InputShapes_data_${cat}_${year}.root;
-        python python/BinnedFit.py -c ${fitconfigFile} -l ${lumi_1000} -b DiPhotons_${coupling}_${cat}_${year} -d ${bkgFitResultsPath}/blind --fit-spectrum --plot-region Low --coup $coupling --cat $cat --year ${year} ${inputDataDir}/InputShapes_data_${cat}_${year}.root;
-        # unblind
-        python python/BinnedFitForPlottingMulti.py -c ${fitconfigFile_multi} -l ${lumi_1000} -b DiPhotons_${coupling}_${cat} -d ${bkgFitResultsPath}/unblind --fit-spectrum --coup $coupling --cat $cat --year ${year} ${inputDataDir}/InputShapes_data_${cat}_${year}.root;
-        python python/BinnedFit.py -c ${fitconfigFile} -l ${lumi_1000} -b DiPhotons_${coupling}_${cat}_${year} -d ${bkgFitResultsPath}/unblind --fit-spectrum --coup $coupling --cat $cat --year ${year} ${inputDataDir}/InputShapes_data_${cat}_${year}.root;
-        # For datacards
-        python python/BinnedFit.py -c ${fitconfigFile} -l ${lumi_1000} -b DiPhotons_${coupling}_${cat}_${year} -d ${bkgFitResultsPath} --fit-spectrum --plot-region Low --coup $coupling --cat $cat --year ${year} ${inputDataDir}/InputShapes_data_${cat}_${year}.root;
-    done
-fi
 ############################## WriteDataCard.py grav ##############################
 # The yield was initially normalized to 1000/pb.
 echo "########## Write Datacards... ##########"
