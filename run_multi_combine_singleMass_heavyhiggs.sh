@@ -41,6 +41,10 @@ export writeDataCard_flag=true
 export combineCard_flag=true
 export combineLimit_flag=true
 
+#################### mkdirs ####################
+mkdir -p ${datacardsDir}
+mkdir -p FinalResults
+
 ############################## WriteDataCard.py grav ##############################
 # The yield was initially normalized to 1000/pb.
 echo "########## Write Datacards... ##########"
