@@ -1,14 +1,28 @@
 #!/bin/bash
 
 ########## Config ##########
-runMethod=$1 # create/send/merge
+runMethod=$1 # create/send/merge/status/resend
 signame="heavyhiggs" # grav/heavyhiggs
 version="2024-03-17"
-versionDir="${version}_${signame}"
-masslist=($(seq 600 10 5000))
+limitType="1D" # 2D
+versionDir="${version}_${signame}_${limitType}"
+
+if [[ ${limitType} == "1D" ]]; then
+        couplist=(14 1400 5600)
+        masslist=(600 700 800 900 1000 1100 1200 1300 1400 1500 1600 1700 1800 1900 2000 2100 2200 2300 2400 2500 2600 2700 2800 2900 3000 3100 3200 3300 3400 3500 3600 3700 3800 3900 4000 4100 4200 4300 4400 4500 4600 4700 4800 4900)
+        if [[ ${coupling} == "1p4" ]]; then
+                    masslist=(600 611 622 634 645 657 669 681 694 707 719 732 746 759 773 787 801 816 830 845 860 876 892 908 924 940 957 974 992 1009 1027 1046 1064 1083 1102 1122 1142 1162 1183 1204 1225 1247 1269 1291 1314 1337 1361 1385 1409 1434 1459 1485 1511 1537 1564 1592 1619 1648 1677 1706 1736 1766 1797 1828 1860 1893 1926 1959 1993 2028 2064 2099 2136 2173 2211 2249 2288 2328 2368 2410 2451 2494 2537 2581 2626 2671 2718 2765 2812 2861 2910 2961 3012 3064 3117 3171 3225 3281 3338 3395 3454 3513 3574 3636 3698 3762 3827 3893 3960 4028 4097 4167 4239 4312 4386 4462 4538 4616 4696 4776 4858 4942 5000)
+        elif [[ ${coupling} == "5p6" ]]; then
+                    masslist=(600 625 653 683 713 745 778 812 848 885 924 964 1005 1049 1094 1141 1190 1241 1293 1348 1405 1465 1527 1591 1658 1727 1800 1875 1953 2034 2119 2207 2298 2393 2492 2595 2702 2813 2929 3050 3175 3305 3440 3581 3728 3880 4038 4203 4374 4553 4738 4931 5000)
+        fi
+
+elif [[ ${limitType} == "2D" ]]; then
+        couplist=(14 361 707 1054 1400 2450 3500 4550 5600)
+        masslist=($(seq 600 10 5000))
+fi
+
 # couplist=(4550)
 # masslist=(1300)
-couplist=(14 361 707 1054 1400 2450 3500 4550 5600)
 ############################
 
 ########## CreateJobs ##########
@@ -109,8 +123,9 @@ elif [[ ${runMethod} == "resend" ]]; then
                         if [ ! -f ${resultfile} ]; then
                                 echo "${resultfile} does no exist"
                         elif [ -f ${resultfile} -a ! -s $resultfile ]; then
-                                echo "${resultfile} is empty"
                                 empty_count=$((empty_count+1))
+                                echo "${resultfile} is empty"
+                                rm ${resultfile}
                                 jobDir="${coupling}/${mass}"
                                 submitFile="${jobDir}/jobs/limit_${coupling}_${mass}.sub"
                                 #echo ${run}
