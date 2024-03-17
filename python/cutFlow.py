@@ -101,7 +101,7 @@ def main_gen_level():
         ROOT.gStyle.SetOptStat(0)
         c1 = ROOT.TCanvas()
         h_cutflow.Draw("HISTtext00")
-        h_cutflow.GetYaxis().SetRangeUser(0.3,1)
+        h_cutflow.GetYaxis().SetRangeUser(0.,1)
         h_cutflow.GetYaxis().SetTitle("Efficiency")
         c1.SaveAs("output/plots/cutFlow/cutFlow_%s_gen_level.png"%(basename))
         tfileIn.Close()
