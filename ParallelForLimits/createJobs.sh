@@ -48,6 +48,7 @@ if [[ ${runMethod} == "create" ]]; then
                         transferFile="finalResults_${signame}_${coupling}_${mass}.txt"
                         outDir="${jobDir}/output/"
 
+                        rm -rf ${transferFile}
 
                         echo '+JobFlavour = "tomorrow" ' > ${submitFile}
                         echo ' ' >> ${submitFile}
