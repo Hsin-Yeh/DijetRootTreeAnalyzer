@@ -56,19 +56,7 @@ def Acceptance(signame, year, coupling, mass):
     if (year!="fullRun2"): totalNorm = 0.85
     return totalNorm
 
-def main(in_filename):
-
-    # ROOT plot setting
-    ROOT.gROOT.LoadMacro("~/rootlogon.C")
-    m_gStyle = ROOT.TStyle();
-    m_gStyle.SetOptFit(0);
-
-    # Get info from filename
-    year = in_filename.rsplit("_",3)[1]
-    signame = in_filename.rsplit("_",2)[1]
-    coupling = in_filename.rsplit("_",1)[1]
-    print("%s %s %s"%(year, signame, coupling))
-
+def MC_Cross_section(coupling):
     # Cross sections for RS Graviton
     MC_masses, MC_crossSections = {}, {}
     MC_masses["kMpl001_TuneCP2"] = array('d',[750, 1000, 1250, 1500, 1750, 2000, 2250, 2500, 2750, 3000, 3250, 3500, 4000, 5000])
@@ -83,14 +71,20 @@ def main(in_filename):
     MC_crossSections["kMpl001_TuneCUEP8M1"] = array('d',[0.3405, 0.05437, 0.05274, 0.05088, 0.04915, 0.04782, 0.04589, 0.04465, 0.01208, 0.003731, 0.001357, 0.0005499, 0.0002422, 0.0001135, 5.604e-05, 2.859e-05, 1.501e-05, 8.03e-06, 4.384e-06, 2.443e-06, 1.365e-06, 4.371e-07, 1.425e-07, 4.675e-08, 1.556e-08, 5.193e-09, 1.784e-09])
     MC_crossSections["kMpl01_TuneCUEP8M1"] = array('d',[34.43, 5.392, 5.192, 5.092, 4.886, 4.741, 4.585, 4.428, 1.206, 0.3716, 0.1348, 0.0548, 0.02407, 0.01129, 0.005536, 0.002836, 0.001492, 0.0004361, 0.0001361, 4.354e-05, 1.439e-05, 4.807e-06, 1.617e-06, 5.545e-07, 1.991e-07])
     MC_crossSections["kMpl02_TuneCUEP8M1"] = array('d',[142.6, 21.32, 20.55, 20.62, 19.33, 18.74, 18.18, 17.58, 4.829, 0.5326, 0.09455, 0.005803, 0.000536, 5.879e-05, 7.185e-06, 1.03e-06])
+    CP2 = coupling + "_TuneCP2"
+    CUEP8M1 = coupling + "_TuneCUEP8M1"
+    MC_crossSection_TuneCP2_fb = array('d',np.multiply(MC_crossSections[CP2],1000))
+    g_xs_TuneCP2 = ROOT.TGraph(len(MC_masses[CP2]),MC_masses[CP2],MC_crossSection_TuneCP2_fb)
+    MC_crossSection_TuneCUEP8M1_fb = array('d',np.multiply(MC_crossSections[CUEP8M1],1000))
+    g_xs_TuneCUEP8M1 = ROOT.TGraph(len(MC_masses[CUEP8M1]),MC_masses[CUEP8M1],MC_crossSection_TuneCUEP8M1_fb)
+    return g_xs_TuneCUEP8M1, g_xs_TuneCP2
 
-    if (signame == "grav"):
-        CP2 = coupling + "_TuneCP2"
-        CUEP8M1 = coupling + "_TuneCUEP8M1"
-        MC_crossSection_TuneCP2_fb = array('d',np.multiply(MC_crossSections[CP2],1000))
-        g_xs_TuneCP2 = ROOT.TGraph(len(MC_masses[CP2]),MC_masses[CP2],MC_crossSection_TuneCP2_fb)
-        MC_crossSection_TuneCUEP8M1_fb = array('d',np.multiply(MC_crossSections[CUEP8M1],1000))
-        g_xs_TuneCUEP8M1 = ROOT.TGraph(len(MC_masses[CUEP8M1]),MC_masses[CUEP8M1],MC_crossSection_TuneCUEP8M1_fb)
+def main(in_filename):
+    # Get info from filename
+    year = in_filename.rsplit("_",3)[1]
+    signame = in_filename.rsplit("_",2)[1]
+    coupling = in_filename.rsplit("_",1)[1]
+    print("\nProcessing: %s %s %s"%(year, signame, coupling))
 
     # Read finalResults file
     mass_array, obs_array, exp_array, expP1s_array, expP2s_array, expM1s_array, expM2s_array, exp1s_array, exp2s_array, mass_long_array = array('d'), array('d'), array('d'), array('d'), array('d'), array('d'), array('d'), array('d'), array('d'), array('d');
@@ -170,11 +164,12 @@ def main(in_filename):
     obsGraph.SetLineWidth(3);
     obsGraph.SetLineColor(1);
     obsGraph.SetLineStyle(1);
-    if (args.unblind): obsGraph.Draw("L");
+    if (args.unblind): obsGraph.Draw("LC");
     # if (unblind) obsGraph.Draw("L");
     # obsGraph.Draw("LC");
 
     if (signame == "grav"):
+        g_xs_TuneCUEP8M1, g_xs_TuneCP2 = MC_Cross_section(coupling)
         g_xs_TuneCP2.SetLineWidth(3);
         g_xs_TuneCP2.SetLineColor(2);
         g_xs_TuneCP2.SetLineStyle(9);
@@ -255,13 +250,13 @@ def main(in_filename):
     redrawBorder()
 
     if(args.unblind):
-        canv.SaveAs( "./limitplot_%s_%s_%s_unblind.pdf"% (signame, coupling, year) );
-        canv.SaveAs( "./limitplot_%s_%s_%s_unblind.png"% (signame, coupling, year) );
-        canv.SaveAs( "./limitplot_%s_%s_%s_unblind.C"% (signame, coupling, year) );
-        outfile = ROOT.TFile( "./limitplot_%s_%s_%s_unblind.root"% (signame, coupling, year) , "RECREATE");
+        canv.SaveAs( "%s/limitplot_%s_%s_%s_unblind.pdf"% (args.outputDir, signame, coupling, year) );
+        canv.SaveAs( "%s/limitplot_%s_%s_%s_unblind.png"% (args.outputDir, signame, coupling, year) );
+        canv.SaveAs( "%s/limitplot_%s_%s_%s_unblind.C"% (args.outputDir, signame, coupling, year) );
+        outfile = ROOT.TFile( "%s/limitplot_%s_%s_%s_unblind.root"% (args.outputDir, signame, coupling, year) , "RECREATE");
     else:
-        canv.SaveAs( "./limitplot_%s_%s_%s_blind.pdf"% (signame, coupling, year) );
-        outfile = ROOT.TFile( "./limitplot_%s_%s_%s_blind.root"% (signame, coupling, year) , "RECREATE");
+        canv.SaveAs( "%s/limitplot_%s_%s_%s_blind.pdf"% (args.outputDir, signame, coupling, year) );
+        outfile = ROOT.TFile( "%s/limitplot_%s_%s_%s_blind.root"% (args.outputDir, signame, coupling, year) , "RECREATE");
 
     canv.Write();
     expGraph.Write();
@@ -274,5 +269,11 @@ def main(in_filename):
 
 
 if __name__ == "__main__":
+
+    # ROOT plot setting
+    ROOT.gROOT.LoadMacro("~/rootlogon.C")
+    m_gStyle = ROOT.TStyle();
+    m_gStyle.SetOptFit(0);
+
     for in_filename in args.in_filenames:
         main(in_filename)
