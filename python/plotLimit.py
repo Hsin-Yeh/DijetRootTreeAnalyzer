@@ -19,11 +19,8 @@ import numpy as np
 import argparse
 
 parser = argparse.ArgumentParser(description='')
-parser.add_argument('--year','-y',default="2016",type=str,help='year')
-parser.add_argument('--coupling','-c',default="kMpl001",type=str,help='coupling')
-parser.add_argument('--signame','-s',default="grav",type=str,help='grav or heavyhiggs')
-parser.add_argument('--outputDir','-o',default="./",type=str,help='output directory')
-parser.add_argument('--debug','-d',action="store_true",help='debug mode')
+parser.add_argument('in_filenames',nargs="+",help='input filenames')
+parser.add_argument('--outputDir','-o',default="./output/plots/1Dlimits/",type=str,help='output directory')
 parser.add_argument('--unblind',action="store_true",help='debug mode')
 args = parser.parse_args()
 
