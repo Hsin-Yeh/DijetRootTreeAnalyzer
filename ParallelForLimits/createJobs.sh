@@ -7,6 +7,7 @@ version="2024-03-17"
 limitType="1D" # 2D
 versionDir="${version}_${signame}_${limitType}"
 
+echo ''
 echo "Condor directory: ${versionDir}"
 echo ''
 
@@ -186,9 +187,11 @@ elif [[ ${runMethod} == "resend" ]]; then
 elif [[ ${runMethod} == "merge" ]]; then
         cd ${versionDir}
         mkdir results
+        echo "========== Merging =========="
         for coupling in "${couplist[@]}"; do
                 echo ${coupling}
                 mergeFile="results/finalResults_fullRun2_${signame}_${coupling}";
+                rm ${mergeFile}
                 touch ${mergeFile}
                 # Masslist
                 masslist=($(seq 600 10 5000))
