@@ -54,7 +54,9 @@ def Acceptance(signame, year, coupling, mass):
 
     # If any rows are found, return the norm value from the first row
     if not filtered_df.empty:
-        return filtered_df.iloc[0]["norm"]
+        value = float(filtered_df.iloc[0]["norm"])
+        print (value)
+        return value
     else:
         return None
 
