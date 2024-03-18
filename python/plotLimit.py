@@ -42,19 +42,30 @@ def redrawBorder():
 def Acceptance(signame, year, coupling, mass):
     if (signame == "grav"): Acceptance_file = "/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/SignalNorm_Splines_full.txt"
     elif (signame == "heavyhiggs"): Acceptance_file = "/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/SignalNorm_Splines_genFiducial.txt"
-    with open(Acceptance_file) as infile:
-        Lines = infile.readlines()
-    totalNorm=0
-    for line in Lines:
-        y, c, m, cat, norm = line.split()
-        if (year=="fullRun2" and c==coupling and m==mass and cat=='All'):
-                totalNorm += float(norm)
-        elif (y==year and c==coupling and m==mass and cat=='All'):
-            totalNorm = float(norm)
-            break
-    totalNorm = float(totalNorm)/float(lumi(year))
-    if (year!="fullRun2"): totalNorm = 0.85
-    return totalNorm
+    # Read the file into a DataFrame
+    df = pd.read_csv(Acceptance_file, sep=" ", header=None)
+    df.columns = ["year", "coupling", "mass", "category", "norm"]
+
+    value = df[(df["year"] == year) & (df["coupling"] == coupling) & (df["mass"] == mass) & (df["category"] == "All")]["norm"].values
+    if len(value) > 0:
+        return value[0]
+    else:
+        return None
+
+    print("Value:", value)
+    #     with open(Acceptance_file) as infile:
+    #     Lines = infile.readlines()
+    # totalNorm=0
+    # for line in Lines:
+    #     y, c, m, cat, norm = line.split()
+    #     if (year=="fullRun2" and c==coupling and m==mass and cat=='All'):
+    #             totalNorm += float(norm)
+    #     elif (y==year and c==coupling and m==mass and cat=='All'):
+    #         totalNorm = float(norm)
+    #         break
+    # totalNorm = float(totalNorm)/float(lumi(year))
+    # if (year!="fullRun2"): totalNorm = 0.85
+    return value
 
 def MC_Cross_section(coupling):
     # Cross sections for RS Graviton
