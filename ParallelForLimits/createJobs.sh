@@ -6,7 +6,9 @@ signame="heavyhiggs" # grav/heavyhiggs
 version="2024-03-17"
 limitType="1D" # 2D
 versionDir="${version}_${signame}_${limitType}"
-echo ${versionDir}
+
+echo "Condor directory: ${versionDir}"
+echo ''
 
 if [[ ${limitType} == "1D" ]]; then
         couplist=("0p014" "1p4" "5p6")

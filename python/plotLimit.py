@@ -43,8 +43,8 @@ def redrawBorder():
     # l.DrawLine(ROOT.gPad.GetUxmax(), ROOT.gPad.GetUymin(), ROOT.gPad.GetUxmax(), ROOT.gPad.GetUymax());
 
 def Acceptance(year, coupling, mass):
-    if (args.signame == "grav"): Acceptance_file = "/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/SignalNorm_Splines_full.txt"
-    elif (args.signame == "heavyhiggs"): Acceptance_file = "/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/SignalNorm_Splines_genFiducial.txt"
+    if (signame == "grav"): Acceptance_file = "/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/SignalNorm_Splines_full.txt"
+    elif (signame == "heavyhiggs"): Acceptance_file = "/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/SignalNorm_Splines_genFiducial.txt"
     with open(Acceptance_file) as infile:
         Lines = infile.readlines()
     totalNorm=0
@@ -59,10 +59,19 @@ def Acceptance(year, coupling, mass):
     if (year!="fullRun2"): totalNorm = 0.85
     return totalNorm
 
-if __name__ == "__main__":
+def main(in_filename):
 
+    # ROOT plot setting
     ROOT.gROOT.LoadMacro("~/rootlogon.C")
+    m_gStyle = ROOT.TStyle();
+    m_gStyle.SetOptFit(0);
 
+    # Get info from filename
+    year = in_filename.split("_")[1]
+    signame = in_filename.split("_")[2]
+    coupling = in_filename.split("_")[3]
+
+    # Cross sections for RS Graviton
     MC_masses, MC_crossSections = {}, {}
     MC_masses["kMpl001_TuneCP2"] = array('d',[750, 1000, 1250, 1500, 1750, 2000, 2250, 2500, 2750, 3000, 3250, 3500, 4000, 5000])
     MC_masses["kMpl01_TuneCP2"] = array('d',[750, 1000, 1250, 1500, 1750, 2000, 2250, 2500, 3000, 3500, 4000, 4250, 4500, 4750, 5000, 5250, 5500, 5750, 6000, 6500, 7000, 8000])
@@ -77,24 +86,23 @@ if __name__ == "__main__":
     MC_crossSections["kMpl01_TuneCUEP8M1"] = array('d',[34.43, 5.392, 5.192, 5.092, 4.886, 4.741, 4.585, 4.428, 1.206, 0.3716, 0.1348, 0.0548, 0.02407, 0.01129, 0.005536, 0.002836, 0.001492, 0.0004361, 0.0001361, 4.354e-05, 1.439e-05, 4.807e-06, 1.617e-06, 5.545e-07, 1.991e-07])
     MC_crossSections["kMpl02_TuneCUEP8M1"] = array('d',[142.6, 21.32, 20.55, 20.62, 19.33, 18.74, 18.18, 17.58, 4.829, 0.5326, 0.09455, 0.005803, 0.000536, 5.879e-05, 7.185e-06, 1.03e-06])
 
-    if (args.signame == "grav"):
-        CP2 = args.coupling + "_TuneCP2"
-        CUEP8M1 = args.coupling + "_TuneCUEP8M1"
+    if (signame == "grav"):
+        CP2 = coupling + "_TuneCP2"
+        CUEP8M1 = coupling + "_TuneCUEP8M1"
         MC_crossSection_TuneCP2_fb = array('d',np.multiply(MC_crossSections[CP2],1000))
         g_xs_TuneCP2 = ROOT.TGraph(len(MC_masses[CP2]),MC_masses[CP2],MC_crossSection_TuneCP2_fb)
         MC_crossSection_TuneCUEP8M1_fb = array('d',np.multiply(MC_crossSections[CUEP8M1],1000))
         g_xs_TuneCUEP8M1 = ROOT.TGraph(len(MC_masses[CUEP8M1]),MC_masses[CUEP8M1],MC_crossSection_TuneCUEP8M1_fb)
 
-    m_gStyle = ROOT.TStyle();
-    m_gStyle.SetOptFit(0);
-
-    in_filename = "finalResults_" + args.year + "_" + args.signame + "_" + args.coupling;
+    # Read finalResults file
     mass_array, obs_array, exp_array, expP1s_array, expP2s_array, expM1s_array, expM2s_array, exp1s_array, exp2s_array, mass_long_array = array('d'), array('d'), array('d'), array('d'), array('d'), array('d'), array('d'), array('d'), array('d'), array('d');
     with open (in_filename,'r') as infile:
         Lines = infile.readlines()
-    for line in Lines:
-        mass, obs, expP2s, expP1s, exp, expM1s, expM2s = line.split()
-        norm = Acceptance(args.year, args.coupling, mass)
+    for i, line in enumerate(Lines):
+        if (i%4==0): mass, obs, expP2s, expP1s, exp, expM1s, expM2s = line.split()
+        elif (i%4==1): pvalue=line.split()[1]
+        elif (i%4==2): zvalue=line.split()[1]
+        norm = Acceptance(year, coupling, mass)
         mass_array.append(float(mass))
         obs_array.append(float(obs)/norm)
         exp_array.append(float(exp)/norm)
@@ -140,14 +148,14 @@ if __name__ == "__main__":
     exp2SGraph.GetYaxis().SetTitleSize(0.055);
 
     # exp2SGraph.GetYaxis().SetRangeUser(0.9,200);
-    exp2SGraph.GetYaxis().SetTitle("95% CL limit #sigma(pp#rightarrowG#rightarrow#gamma#gamma) (fb)" if args.signame == "grav" else "95% CL limit #sigma(pp#rightarrowS#rightarrow#gamma#gamma) (fb)" );
-    exp2SGraph.GetXaxis().SetTitle("m_{G} (GeV)" if args.signame == "grav" else "m_{S} (GeV)");
+    exp2SGraph.GetYaxis().SetTitle("95% CL limit #sigma(pp#rightarrowG#rightarrow#gamma#gamma) (fb)" if signame == "grav" else "95% CL limit #sigma(pp#rightarrowS#rightarrow#gamma#gamma) (fb)" );
+    exp2SGraph.GetXaxis().SetTitle("m_{G} (GeV)" if signame == "grav" else "m_{S} (GeV)");
     exp2SGraph.GetXaxis().SetTitleOffset(1.1);
     exp2SGraph.GetYaxis().SetTitleOffset(1.1);
     exp2SGraph.GetXaxis().SetLabelSize(0.05);
     exp2SGraph.GetYaxis().SetLabelSize(0.05);
     exp2SGraph.GetXaxis().SetMoreLogLabels();
-    if (args.coupling=="kMpl01" or args.coupling=="kMpl02"): exp2SGraph.GetXaxis().SetRangeUser(600,7000)
+    if (coupling=="kMpl01" or coupling=="kMpl02"): exp2SGraph.GetXaxis().SetRangeUser(600,7000)
     else: exp2SGraph.GetXaxis().SetRangeUser(600,5000)
     exp2SGraph.SetTitle("")
 
@@ -168,19 +176,19 @@ if __name__ == "__main__":
     # if (unblind) obsGraph.Draw("L");
     # obsGraph.Draw("LC");
 
-    if (args.signame == "grav"):
+    if (signame == "grav"):
         g_xs_TuneCP2.SetLineWidth(3);
         g_xs_TuneCP2.SetLineColor(2);
         g_xs_TuneCP2.SetLineStyle(9);
         g_xs_TuneCP2.SetMarkerStyle(20);
         g_xs_TuneCP2.Draw("Lsame");
-
         # g_xs_TuneCUEP8M1.SetLineWidth(3);
         # g_xs_TuneCUEP8M1.SetLineColor(8);
         # g_xs_TuneCUEP8M1.SetLineStyle(9);
         # g_xs_TuneCUEP8M1.SetMarkerStyle(20);
         # g_xs_TuneCUEP8M1.Draw("Lsame");
 
+    # CMS 2016 paper limits
     # gr_2016  = ROOT.TGraph();
     # if (args.coupling=="kMpl001"): gr_2016.SetPoint(0,2245, 0.1175);
     # if (args.coupling=="kMpl01"): gr_2016.SetPoint(0,4100, 0.0924);
@@ -200,15 +208,15 @@ if __name__ == "__main__":
     leg.SetFillStyle(1001);
     leg.SetTextSize(0.04);
 
-    if ( args.coupling == "kMpl001" ): plabel = "#tilde{k}=0.01,  J=2"
-    elif ( args.coupling == "kMpl01" ): plabel = "#tilde{k}=0.1,  J=2"
-    elif ( args.coupling == "kMpl02" ): plabel = "#tilde{k}=0.2,  J=2"
-    elif ( args.coupling == "0p014"): plabel = "#frac{#Gamma}{m} = 1.4 #times 10^{-4}, J=0"
-    elif ( args.coupling == "1p4"): plabel = "#frac{#Gamma_{X}}{m_{X}} = 1.4 #times 10^{-2}, J=0"
-    elif ( args.coupling == "5p6"): plabel = "#frac{#Gamma_{X}}{m_{X}} = 5.6 #times 10^{-2}, J=0"
+    if ( coupling == "kMpl001" ): plabel = "#tilde{k}=0.01,  J=2"
+    elif ( coupling == "kMpl01" ): plabel = "#tilde{k}=0.1,  J=2"
+    elif ( coupling == "kMpl02" ): plabel = "#tilde{k}=0.2,  J=2"
+    elif ( coupling == "0p014"): plabel = "#frac{#Gamma}{m} = 1.4 #times 10^{-4}, J=0"
+    elif ( coupling == "1p4"): plabel = "#frac{#Gamma_{X}}{m_{X}} = 1.4 #times 10^{-2}, J=0"
+    elif ( coupling == "5p6"): plabel = "#frac{#Gamma_{X}}{m_{X}} = 5.6 #times 10^{-2}, J=0"
 
     leg.SetHeader(plabel,"C");
-    if ( args.signame == "grav" ):
+    if ( signame == "grav" ):
         leg.AddEntry(g_xs_TuneCP2,"G_{RS}#rightarrow#gamma#gamma (LO)","l");
         # leg.AddEntry(g_xs_TuneCUEP8M1,"G_{RS}#rightarrow#gamma#gamma (LO) CUEP8M1","l");
         # leg.AddEntry(gr_2016,"Published 2016 Mass Limit","P");
@@ -236,7 +244,7 @@ if __name__ == "__main__":
     # extraText.SetTextSize(0.04);
     # extraText.Draw();
 
-    lumiText=ROOT.TLatex(0.7,0.90, "%d fb^{-1} (13 TeV)"%(lumi(args.year)) );
+    lumiText=ROOT.TLatex(0.7,0.90, "%d fb^{-1} (13 TeV)"%(lumi(year)) );
     # lumiText=ROOT.TLatex(0.70,0.90, "%d fb^{-1} (13 TeV)"%(138));
     lumiText.SetNDC(1);
     lumiText.SetTextFont(42);
@@ -249,13 +257,13 @@ if __name__ == "__main__":
     redrawBorder()
 
     if(args.unblind):
-        canv.SaveAs( "./limitplot_%s_%s_%s_unblind.pdf"% (args.signame, args.coupling, args.year) );
-        canv.SaveAs( "./limitplot_%s_%s_%s_unblind.png"% (args.signame, args.coupling, args.year) );
-        canv.SaveAs( "./limitplot_%s_%s_%s_unblind.C"% (args.signame, args.coupling, args.year) );
-        outfile = ROOT.TFile( "./limitplot_%s_%s_%s_unblind.root"% (args.signame, args.coupling, args.year) , "RECREATE");
+        canv.SaveAs( "./limitplot_%s_%s_%s_unblind.pdf"% (signame, coupling, year) );
+        canv.SaveAs( "./limitplot_%s_%s_%s_unblind.png"% (signame, coupling, year) );
+        canv.SaveAs( "./limitplot_%s_%s_%s_unblind.C"% (signame, coupling, year) );
+        outfile = ROOT.TFile( "./limitplot_%s_%s_%s_unblind.root"% (signame, coupling, year) , "RECREATE");
     else:
-        canv.SaveAs( "./limitplot_%s_%s_%s_blind.pdf"% (args.signame, args.coupling, args.year) );
-        outfile = ROOT.TFile( "./limitplot_%s_%s_%s_blind.root"% (args.signame, args.coupling, args.year) , "RECREATE");
+        canv.SaveAs( "./limitplot_%s_%s_%s_blind.pdf"% (signame, coupling, year) );
+        outfile = ROOT.TFile( "./limitplot_%s_%s_%s_blind.root"% (signame, coupling, year) , "RECREATE");
 
     canv.Write();
     expGraph.Write();
@@ -265,3 +273,8 @@ if __name__ == "__main__":
 
     outfile.Write();
     outfile.Close();
+
+
+if __name__ == "__main__":
+    for in_filename in args.in_filenames:
+        main(in_filename)
