@@ -47,13 +47,18 @@ def Acceptance(signame, year, coupling, mass):
     df = pd.read_csv(Acceptance_file, sep=" ", header=None)
     df.columns = ["year", "coupling", "mass", "category", "norm"]
 
-    value = df[(df["year"] == year) & (df["coupling"] == coupling) & (df["mass"] == mass) & (df["category"] == "All")]["norm"].values
-    if len(value) > 0:
-        return value[0]
+    filtered_df = df[(df["year"].astype(str) == year) &
+                     (df["coupling"].astype(str) == coupling) &
+                     (df["mass"].astype(str) == mass) &
+                     (df["category"].astype(str) == "All")]
+
+    # If any rows are found, return the norm value from the first row
+    if not filtered_df.empty:
+        return filtered_df.iloc[0]["norm"]
     else:
         return None
 
-    print("Value:", value)
+    # print("Value:", value)
     #     with open(Acceptance_file) as infile:
     #     Lines = infile.readlines()
     # totalNorm=0
@@ -66,7 +71,7 @@ def Acceptance(signame, year, coupling, mass):
     #         break
     # totalNorm = float(totalNorm)/float(lumi(year))
     # if (year!="fullRun2"): totalNorm = 0.85
-    return value
+    # return value
 
 def MC_Cross_section(coupling):
     # Cross sections for RS Graviton
