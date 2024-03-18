@@ -39,7 +39,7 @@ def redrawBorder():
     # l.DrawLine(ROOT.gPad.GetUxmin(), ROOT.gPad.GetUymax(), ROOT.gPad.GetUxmax(), ROOT.gPad.GetUymax());
     # l.DrawLine(ROOT.gPad.GetUxmax(), ROOT.gPad.GetUymin(), ROOT.gPad.GetUxmax(), ROOT.gPad.GetUymax());
 
-def Acceptance(year, coupling, mass):
+def Acceptance(signame, year, coupling, mass):
     if (signame == "grav"): Acceptance_file = "/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/SignalNorm_Splines_full.txt"
     elif (signame == "heavyhiggs"): Acceptance_file = "/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/SignalNorm_Splines_genFiducial.txt"
     with open(Acceptance_file) as infile:
@@ -99,7 +99,7 @@ def main(in_filename):
         if (i%4==0): mass, obs, expP2s, expP1s, exp, expM1s, expM2s = line.split()
         elif (i%4==1): pvalue=line.split()[1]
         elif (i%4==2): zvalue=line.split()[1]
-        norm = Acceptance(year, coupling, mass)
+        norm = Acceptance(signame, year, coupling, mass)
         mass_array.append(float(mass))
         obs_array.append(float(obs)/norm)
         exp_array.append(float(exp)/norm)
