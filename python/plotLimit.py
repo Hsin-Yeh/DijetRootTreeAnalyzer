@@ -64,9 +64,9 @@ def main(in_filename):
     m_gStyle.SetOptFit(0);
 
     # Get info from filename
-    year = in_filename.split("_")[1]
-    signame = in_filename.split("_")[2]
-    coupling = in_filename.split("_")[3]
+    year = in_filename.rsplit("_",3)[1]
+    signame = in_filename.rsplit("_",2)[1]
+    coupling = in_filename.rsplit("_",1)[1]
     print("%s %s %s"%(year, signame, coupling))
 
     # Cross sections for RS Graviton
