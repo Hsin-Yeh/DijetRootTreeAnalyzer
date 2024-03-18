@@ -67,6 +67,7 @@ def main(in_filename):
     year = in_filename.split("_")[1]
     signame = in_filename.split("_")[2]
     coupling = in_filename.split("_")[3]
+    print("%s %s %s"%(year, signame, coupling))
 
     # Cross sections for RS Graviton
     MC_masses, MC_crossSections = {}, {}
