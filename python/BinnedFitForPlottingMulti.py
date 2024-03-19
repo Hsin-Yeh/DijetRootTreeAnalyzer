@@ -1061,13 +1061,13 @@ if __name__ == '__main__':
 
     if options.doTriggerFit or options.doSimultaneousFit or options.doSpectrumFit or options.noFit:
         gStyle->SetPalette(90)
-        backgrounds["expow1"].SetLineColor(1)
+        # backgrounds["expow1"].SetLineColor(1)
         backgrounds["expow1"].Draw("csame")
-        backgrounds["invpow1"].SetLineColor(2)
+        # backgrounds["invpow1"].SetLineColor(2)
         backgrounds["invpow1"].Draw("csame")
-        backgrounds["invpowlin1"].SetLineColor(3)
+        # backgrounds["invpowlin1"].SetLineColor(3)
         backgrounds["invpowlin1"].Draw("csame")
-        backgrounds["dijet"].SetLineColor(4)
+        # backgrounds["dijet"].SetLineColor(4)
         backgrounds["dijet"].Draw("csame")
     else:
         h_background.SetLineColor(rt.kRed)
