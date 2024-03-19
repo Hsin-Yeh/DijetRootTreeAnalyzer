@@ -1036,7 +1036,7 @@ if __name__ == '__main__':
     # myRebinnedDensityTH1.GetXaxis().SetRangeUser(w.var('mgg').getMin(),w.var('mgg').getMax())
     myRebinnedDensityTH1.GetXaxis().SetRangeUser(500,4000)
     # paper:
-    myRebinnedDensityTH1.GetYaxis().SetTitle('dN/dM_{gg}')
+    myRebinnedDensityTH1.GetYaxis().SetTitle('dN/dM_{gg} [TeV^{-1}]')
     # PAS:
     #myRebinnedDensityTH1.GetYaxis().SetTitle('d#sigma / dm_{jj} [pb / GeV]')
     myRebinnedDensityTH1.GetYaxis().SetTitleOffset(1)
@@ -1160,9 +1160,9 @@ if __name__ == '__main__':
     #               "invpow1"    : "(1+x*p_{1})^{p_{2}}",
     #               "invpowlin1" : "(1+x*p_{1})^{p_{2}+p_{3}*x}"}
     modelforms = {"expow1"     : "f_{2}: e^{p_{1} x} x^{p_{2}}",
-                  "dijet"      : "f_{1}: x^{p_{1}+p_{2}*log(x)}",
-                  "invpow1"    : "f_{3}: (1+x*p_{1})^{p_{2}}",
-                  "invpowlin1" : "f_{4}: (1+x*p_{1})^{p_{2}+p_{3}*x}"}
+                  "dijet"      : "f_{1}: x^{p_{1}+p_{2} log(x)}",
+                  "invpow1"    : "f_{3}: (1+p_{1} x)^{p_{2}}",
+                  "invpowlin1" : "f_{4}: (1+p_{1} x)^{p_{2}+p_{3} x}"}
     leg.AddEntry(backgrounds["dijet"],"%s"%(modelforms["dijet"]),"l")
     leg.AddEntry(backgrounds["expow1"],"%s"%(modelforms["expow1"]),"l")
     leg.AddEntry(backgrounds["invpow1"],"%s"%(modelforms["invpow1"]),"l")
@@ -1386,7 +1386,7 @@ if __name__ == '__main__':
     #if 'Calo' in box:
     if 'DiPhotons' in box:
         # paper
-        myRebinnedDensityTH1.GetYaxis().SetTitle('dN/dm_{#gamma#gamma}')
+        myRebinnedDensityTH1.GetYaxis().SetTitle('dN/dm_{#gamma#gamma} [TeV^{-1}]')
         # PAS
         #myRebinnedDensityTH1.GetYaxis().SetTitle('d#sigma / dm_{jj} [pb / TeV]')
         # myRebinnedDensityTH1.GetYaxis().SetLabelOffset(1000)
@@ -1478,8 +1478,8 @@ if __name__ == '__main__':
         abot = rt.TGaxis(500, -3.5, 4000, -3.5, "f_h2_log10_x_axis", 509,"UBS", 0.0);
         atop = rt.TGaxis(500, 3.5, 4000, 3.5,  "f_h2_log10_x_axis", 509,"-UBS", 0.0);
 
-	abot.Draw()
-	atop.Draw()
+	# abot.Draw()
+	# atop.Draw()
 
         rt.gPad.RedrawAxis()
         rt.gPad.Modified()
