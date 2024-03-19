@@ -1182,10 +1182,9 @@ if __name__ == '__main__':
     #         else:
     #             leg.AddEntry(g_signal,"%s (%.2f TeV)"%(model,float(mass)/1000.),"l")
     #         #leg.AddEntry(None,"%.1f pb"%(float(xsec)),"")
-    # leg.Draw()
+    leg.Draw()
     #background.Draw("csame")
     #g_data.Draw("pezsame")
-    rt.gPad.BuildLegend()
     pave_sel = rt.TPaveText(0.2,0.03,0.5,0.25,"NDC")
     #pave_sel = rt.TPaveText(0.2,0.03,0.5,0.22,"NDC")
     pave_sel.SetFillColor(0)
@@ -1283,62 +1282,6 @@ if __name__ == '__main__':
     #pave_sel.AddText("|#eta| < 2.5, |#Delta#eta| < 1.3")
     # pave_sel.Draw("SAME")
 
-    '''
-    list_parameter = [p0_b, p0_b*(w.var('Ntot_%s_bkg'%box).getErrorHi() - w.var('Ntot_%s_bkg'%box).getErrorLo())/(2.0*w.var('Ntot_%s_bkg'%box).getVal()),
-                      w.var('p1_%s'%box).getVal(), (w.var('p1_%s'%box).getErrorHi() - w.var('p1_%s'%box).getErrorLo())/2.0,
-                      w.var('p2_%s'%box).getVal(), (w.var('p2_%s'%box).getErrorHi() - w.var('p2_%s'%box).getErrorLo())/2.0
-                      #w.var('p3_%s'%box).getVal(), (w.var('p3_%s'%box).getErrorHi() - w.var('p3_%s'%box).getErrorLo())/2.0,
-                      #w.var('meff_%s'%box).getVal(), (w.var('meff_%s'%box).getErrorHi() - w.var('meff_%s'%box).getErrorLo())/2.0,
-                      #w.var('seff_%s'%box).getVal(), (w.var('seff_%s'%box).getErrorHi() - w.var('seff_%s'%box).getErrorLo())/2.0
-    ]
-
-    pave_param = rt.TPaveText(0.55,0.03,0.9,0.25,"NDC")
-    pave_param.SetTextFont(42)
-    pave_param.SetFillColor(0)
-    pave_param.SetBorderSize(0)
-    pave_param.SetFillStyle(0)
-    pave_param.SetTextAlign(11)
-    pave_param.SetTextSize(0.045)
-    pave_param.AddText("p_{0}"+" = {0:.2g} #pm {1:.2g}".format(list_parameter[0], list_parameter[1]))
-    pave_param.AddText("p_{1}"+" = {0:.2f} #pm {1:.2f}".format(list_parameter[2], list_parameter[3]))
-    pave_param.AddText("p_{2}"+" = {0:.2f} #pm {1:.2f}".format(list_parameter[4], list_parameter[5]))
-    #pave_param.AddText("p_{3}"+" = {0:.2f} #pm {1:.2f}".format(list_parameter[6], list_parameter[7]))
-    if w.var('meff_%s'%box).getVal()>0 and w.var('seff_%s'%box).getVal()>0 and (options.doTriggerFit or options.doSimultaneousFit):
-        pave_param.AddText("m_{eff}"+" = {0:.2f} #pm {1:.2f}".format(list_parameter[8], list_parameter[9]))
-        pave_param.AddText("#sigma_{eff}"+" = {0:.2f} #pm {1:.2f}".format(list_parameter[10], list_parameter[11]))
-    elif w.var('eff_bin%02d'%(0)) != None:
-        effValList = []
-        effErrHiList = []
-        effErrLoList = []
-        for i in range(0,len(x)-1):
-            if not w.var('eff_bin%02d'%(i)).isConstant():
-                effValList.append(w.var('eff_bin%02d'%(i)).getVal())
-                effErrHiList.append(w.var('eff_bin%02d'%(i)).getErrorHi())
-                effErrLoList.append(w.var('eff_bin%02d'%(i)).getErrorLo())
-
-        valString = ",".join(["%.3f"%(effVal) for effVal in effValList])
-        errString = ",".join(["^{%+.1e}_{%+.1e}"%(effErrHi,effErrLo) for effErrHi,effErrLo in zip(effErrHiList,effErrLoList)])
-        pave_param.SetTextSize(0.025)
-        pave_param.AddText("#epsilon = %s"%valString)
-        pave_param.AddText("#delta#epsilon = %s"%errString)
-
-    #pave_param.Draw("SAME")
-    '''
-
-    # if options.doTriggerFit or options.doSimultaneousFit or options.doSpectrumFit or options.noFit:
-    #     backgrounds["expow1"].SetLineColor(rt.kRed)
-    #     backgrounds["expow1"].Draw("csame")
-    #     backgrounds["invpow1"].SetLineColor(rt.kGreen)
-    #     backgrounds["invpow1"].Draw("csame")
-    #     backgrounds["invpowlin1"].SetLineColor(rt.kBlue)
-    #     backgrounds["invpowlin1"].Draw("csame")
-    #     backgrounds["dijet"].SetLineColor(rt.kBlack)
-    #     backgrounds["dijet"].Draw("csame")
-    #     #background.Draw("csame")
-    # else:
-    #     h_background.SetLineColor(rt.kRed)
-    #     h_background.SetLineWidth(2)
-    #     h_background.Draw("histsame")
     g_data_clone.Draw("zpsame")
     g_data.Draw("zpsame")
 
@@ -1377,8 +1320,8 @@ if __name__ == '__main__':
 	                 myRebinnedDensityTH1.GetXaxis().GetXmax(), 20,  "f_h2_log10_x_axis", 509,"-UBS", 0.0);
         bbot.SetTickSize(myRebinnedDensityTH1.GetTickLength("X"))
         btop.SetTickSize(myRebinnedDensityTH1.GetTickLength("X"))
-	bbot.Draw()
-	btop.Draw()
+	# bbot.Draw()
+	# btop.Draw()
 
 
         rt.gPad.Modified()
@@ -1436,55 +1379,6 @@ if __name__ == '__main__':
     # line = rt.TLine(h_fit_residual_vs_mass.GetXaxis().GetXmin(),0,h_fit_residual_vs_mass.GetXaxis().GetXmax(),0)
     line = rt.TLine(h_fit_residual_vs_mass.GetXaxis().GetXmin(),0,4000,0)
     line.Draw("same")
-
-    if 'PF' in box or w.var('mgg').getMax() > 2037:
-        # PAS
-        #h_fit_residual_vs_mass.GetXaxis().SetTitle('Dijet Mass [TeV]')
-        # paper
-        #h_fit_residual_vs_mass.GetXaxis().SetTitle('Dijet mass [TeV]')
-        h_fit_residual_vs_mass.GetXaxis().SetTitle('m_{#gamma#gamma} [TeV]')
-        h_fit_residual_vs_mass.GetXaxis().SetLabelOffset(1000)
-        h_fit_residual_vs_mass.GetXaxis().SetNoExponent()
-        h_fit_residual_vs_mass.GetXaxis().SetMoreLogLabels()
-        #if not options.linearX:
-	    #h_fit_residual_vs_mass.GetXaxis().SetNdivisions(512,rt.kFALSE)
-        xLab = rt.TLatex()
-        xLab.SetTextAlign(22)
-        xLab.SetTextFont(42)
-        xLab.SetTextSize(2*0.05)
-        if w.var('mgg').getMin() < 1000:
-            xLab.DrawLatex(500, -4, "0.5")
-            xLab.DrawLatex(1000, -4, "1")
-        xLab.DrawLatex(2000, -4, "2")
-        xLab.DrawLatex(3000, -4, "3")
-        xLab.DrawLatex(4000, -4, "4")
-        # xLab.DrawLatex(5000, -4, "5")
-        # xLab.DrawLatex(6000, -4, "6")
-        #xLab.DrawLatex(7000, -4, "7")
-        #xLab.DrawLatex(8000, -4, "8")
-
-        f_h2_log10_x_axis = rt.TF1("f_h2_log10_x_axis", "log10(x)", h_fit_residual_vs_mass.GetXaxis().GetXmin(), h_fit_residual_vs_mass.GetXaxis().GetXmax())
-        #a = rt.TGaxis(h_fit_residual_vs_mass.GetXaxis().GetXmin(), -3.5,
-        #              h_fit_residual_vs_mass.GetXaxis().GetXmax(), -3.5, "f_h2_log10_x_axis", 509, "BS", 0.0)
-        #a.SetTickSize(h_fit_residual_vs_mass.GetTickLength("X"))
-        #a.SetMoreLogLabels()
-        #a.SetLabelOffset(1000)
-        #a.Draw()
-        #abot = rt.TGaxis(h_fit_residual_vs_mass.GetXaxis().GetXmin(),-3.5,h_fit_residual_vs_mass.GetXaxis().GetXmax(), -3.5,0.001,10000,509,"UG");
-        #atop = rt.TGaxis(h_fit_residual_vs_mass.GetXaxis().GetXmin(),3.5,h_fit_residual_vs_mass.GetXaxis().GetXmax(), 3.5,0.001,10000,509,"-UG");
-        # abot = rt.TGaxis(myRebinnedDensityTH1.GetXaxis().GetXmin(), -3.5,
-	    #              myRebinnedDensityTH1.GetXaxis().GetXmax(), -3.5, "f_h2_log10_x_axis", 509,"UBS", 0.0);
-        # atop = rt.TGaxis(myRebinnedDensityTH1.GetXaxis().GetXmin(), 3.5,
-	    #              myRebinnedDensityTH1.GetXaxis().GetXmax(), 3.5,  "f_h2_log10_x_axis", 509,"-UBS", 0.0);
-        abot = rt.TGaxis(500, -3.5, 4000, -3.5, "f_h2_log10_x_axis", 509,"UBS", 0.0);
-        atop = rt.TGaxis(500, 3.5, 4000, 3.5,  "f_h2_log10_x_axis", 509,"-UBS", 0.0);
-
-	# abot.Draw()
-	# atop.Draw()
-
-        rt.gPad.RedrawAxis()
-        rt.gPad.Modified()
-        rt.gPad.Update()
 
     if 'DiPhoton' in box:
     #if 'Calo' in box:
