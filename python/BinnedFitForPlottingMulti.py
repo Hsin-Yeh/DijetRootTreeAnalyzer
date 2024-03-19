@@ -1142,13 +1142,13 @@ if __name__ == '__main__':
         l.DrawLatex(0.22,0.85,"CMS Supplementary")
 
     leg = rt.TLegend(0.56,0.45,0.88,0.89)
-    # leg.SetTextFont(42)
-    # leg.SetTextSize(0.06)
-    # leg.SetFillColor(rt.kWhite)
-    # leg.SetFillStyle(0)
-    # leg.SetLineWidth(0)
-    # leg.SetLineColor(rt.kWhite)
-    leg.AddEntry(g_data,"Data","pe")
+    leg.SetTextFont(42)
+    leg.SetTextSize(0.06)
+    leg.SetFillColor(rt.kWhite)
+    leg.SetFillStyle(0)
+    leg.SetLineWidth(0)
+    leg.SetLineColor(rt.kWhite)
+    # leg.AddEntry(g_data,"Data","pe")
     # modelforms = {"dijet"      : "x^{p_{1}+p_{2}*log(x)}",
     #               "expow1"     : "e^{p_{1} x} x^{p_{2}}",
     #               "invpow1"    : "(1+x*p_{1})^{p_{2}}",
@@ -1157,10 +1157,10 @@ if __name__ == '__main__':
                   "dijet"      : "f_{1}: x^{p_{1}+p_{2} log(x)}",
                   "invpow1"    : "f_{3}: (1+p_{1} x)^{p_{2}}",
                   "invpowlin1" : "f_{4}: (1+p_{1} x)^{p_{2}+p_{3} x}"}
-    leg.AddEntry(backgrounds["dijet"],"%s"%(modelforms["dijet"]),"l")
-    leg.AddEntry(backgrounds["expow1"],"%s"%(modelforms["expow1"]),"l")
-    leg.AddEntry(backgrounds["invpow1"],"%s"%(modelforms["invpow1"]),"l")
-    leg.AddEntry(backgrounds["invpowlin1"],"%s"%(modelforms["invpowlin1"]),"l")
+    leg.AddEntry(backgrounds["dijet"],"%s"%(modelforms["dijet"]),"lp")
+    leg.AddEntry(backgrounds["expow1"],"%s"%(modelforms["expow1"]),"lpf")
+    leg.AddEntry(backgrounds["invpow1"],"%s"%(modelforms["invpow1"]),"lpf")
+    leg.AddEntry(backgrounds["invpowlin1"],"%s"%(modelforms["invpowlin1"]),"lpf")
 
     # for key, value in backgrounds.iteritems():
         # leg.AddEntry(value,"%s: %s "%(key, modelforms[key]),"l")
