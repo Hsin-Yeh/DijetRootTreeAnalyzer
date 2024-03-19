@@ -1059,36 +1059,59 @@ if __name__ == '__main__':
             myRebinnedDensityTH1.SetMinimum(2e-5)
     myRebinnedDensityTH1.Draw("axis")
 
-
-    rt.gStyle.SetPalette(rt.kSolar)
-    leg = rt.TLegend(0.56,0.45,0.88,0.89)
-    leg.SetTextFont(42)
-    leg.SetTextSize(0.06)
-    leg.SetFillColor(rt.kWhite)
-    leg.SetFillStyle(0)
-    leg.SetLineWidth(0)
-    leg.SetLineColor(rt.kWhite)
-    leg.AddEntry(g_data,"Data","pe")
-    modelforms = {"dijet"      : "f_{1}: x^{p_{1}+p_{2}log(x)}",
-                  "expow1"     : "f_{2}: e^{p_{1}x}x^{p_{2}}",
-                  "invpow1"    : "f_{3}: (1+p_{1}x)^{p_{2}}",
-                  "invpowlin1" : "f_{4}: (1+p_{1}x)^{p_{2}+p_{3}x}"}
-
     if options.doTriggerFit or options.doSimultaneousFit or options.doSpectrumFit or options.noFit:
-        backgrounds["expow1"].Draw("csame PLC")
-        leg.AddEntry(backgrounds["expow1"],"%s"%(modelforms["expow1"]),"l")
-        backgrounds["invpow1"].Draw("csame PLC")
-        leg.AddEntry(backgrounds["invpow1"],"%s"%(modelforms["invpow1"]),"l")
-        backgrounds["invpowlin1"].Draw("csame PLC")
-        leg.AddEntry(backgrounds["invpowlin1"],"%s"%(modelforms["invpowlin1"]),"l")
-        backgrounds["dijet"].Draw("csame PLC")
-        leg.AddEntry(backgrounds["dijet"],"%s"%(modelforms["dijet"]),"l")
+        rt.gStyle.SetPalette(90)
+        # backgrounds["expow1"].SetLineColor(1)
+        backgrounds["expow1"].Draw("csame")
+        # backgrounds["invpow1"].SetLineColor(2)
+        backgrounds["invpow1"].Draw("csame")
+        # backgrounds["invpowlin1"].SetLineColor(3)
+        backgrounds["invpowlin1"].Draw("csame")
+        # backgrounds["dijet"].SetLineColor(4)
+        backgrounds["dijet"].Draw("csame")
     else:
-        # h_background.SetLineColor(rt.kRed)
+        h_background.SetLineColor(rt.kRed)
         h_background.SetLineWidth(2)
-        # h_background.Draw("histsame")
+        h_background.Draw("histsame")
 
-    leg.Draw()
+    # g_signals = []
+    # for model, mass, xsec, signalFileName, sigHist, color, style in zip(models,masses,xsecs,signalFileNames,signalHistosRebin,colors,styles):
+    #     g_signal = rt.TGraphAsymmErrors(sigHist)
+    #     g_signal.SetLineColor(color)
+    #     g_signal.SetLineStyle(style)
+    #     g_signal.SetLineWidth(3)
+
+    #     lastX = 0
+    #     lastY = 0
+    #     firstX = 0
+    #     firstY = 0
+    #     notSet = True
+    #     for i in range(0,g_signal.GetN()):
+    #         N = g_signal.GetY()[i]
+    #         binWidth = g_signal.GetEXlow()[i] + g_signal.GetEXhigh()[i]
+    #         if g_signal.GetX()[i]>float(mass)*0.75 and notSet:
+    #             firstX = g_signal.GetX()[i]
+    #             firstY = N/(binWidth * lumi)
+    #             notSet = False
+
+    #     for i in range(0,g_signal.GetN()):
+    #         N = g_signal.GetY()[i]
+    #         binWidth = g_signal.GetEXlow()[i] + g_signal.GetEXhigh()[i]
+    #         if g_signal.GetX()[i]<=float(mass)*0.75:
+    #             g_signal.SetPoint(i,firstX,firstY)
+    #         else:
+    #             g_signal.SetPoint(i, g_signal.GetX()[i], N/(binWidth * lumi))
+    #         g_signal.SetPointEYlow(i, 0)
+    #         g_signal.SetPointEYhigh(i, 0)
+    #         if g_signal.GetX()[i]>float(mass)*1.25:
+    #             g_signal.SetPoint(i,lastX,lastY)
+    #         else:
+    #             lastX = g_signal.GetX()[i]
+    #             lastY = g_signal.GetY()[i]
+    #     g_signals.append(g_signal)
+    #     g_signal.Draw("cxsame")
+
+
     rt.gPad.SetLogy()
 
     l = rt.TLatex()
@@ -1096,10 +1119,19 @@ if __name__ == '__main__':
     l.SetTextSize(0.055)
     l.SetTextFont(42)
     l.SetNDC()
+    #l.DrawLatex(0.7,0.96,"%i pb^{-1} (%i TeV)"%(lumi,w.var('sqrts').getVal()/1000.))
+    # l.DrawLatex(0.64,0.94,"%.1f fb^{-1} (13 TeV)"%(lumi/1000.))
     if(options.year=="2016"): l.DrawLatex(0.68,0.94,"36.3 fb^{-1} (13 TeV)")
     elif(options.year=="2017"): l.DrawLatex(0.68,0.94,"41.5 fb^{-1} (13 TeV)")
     elif(options.year=="2018"): l.DrawLatex(0.68,0.94,"59.7 fb^{-1} (13 TeV)")
     elif(options.year=="fullRun2"): l.DrawLatex(0.68,0.94,"138 fb^{-1} (13 TeV)")
+    # PAS
+    #l.SetTextFont(62)
+    #l.SetTextSize(0.055)
+    #l.DrawLatex(0.2,0.96,"CMS")
+    #l.SetTextFont(52)
+    #l.SetTextSize(0.045)
+    #l.DrawLatex(0.3,0.96,"Preliminary")
     # paper
     l.SetTextFont(62)
     if(options.year=="fullRun2"):
@@ -1109,9 +1141,48 @@ if __name__ == '__main__':
         l.SetTextSize(0.05)
         l.DrawLatex(0.22,0.85,"CMS Supplementary")
 
+    if options.signalFileName!=None:
+        if 'DiPhoton' in box:
+            leg = rt.TLegend(0.5,0.38,0.88,0.87)
+        else:
+            leg = rt.TLegend(0.58,0.55,0.85,0.87)
+    else:
+        # leg = rt.TLegend(0.6,0.6,0.89,0.89)
+        leg = rt.TLegend(0.56,0.45,0.88,0.89)
+    leg.SetTextFont(42)
+    leg.SetTextSize(0.06)
+    leg.SetFillColor(rt.kWhite)
+    leg.SetFillStyle(0)
+    leg.SetLineWidth(0)
+    leg.SetLineColor(rt.kWhite)
+    leg.AddEntry(g_data,"Data","pe")
+    # modelforms = {"dijet"      : "x^{p_{1}+p_{2}*log(x)}",
+    #               "expow1"     : "e^{p_{1} x} x^{p_{2}}",
+    #               "invpow1"    : "(1+x*p_{1})^{p_{2}}",
+    #               "invpowlin1" : "(1+x*p_{1})^{p_{2}+p_{3}*x}"}
+    modelforms = {"expow1"     : "f_{2}: e^{p_{1} x} x^{p_{2}}",
+                  "dijet"      : "f_{1}: x^{p_{1}+p_{2} log(x)}",
+                  "invpow1"    : "f_{3}: (1+p_{1} x)^{p_{2}}",
+                  "invpowlin1" : "f_{4}: (1+p_{1} x)^{p_{2}+p_{3} x}"}
+    leg.AddEntry(backgrounds["dijet"],"%s"%(modelforms["dijet"]),"l")
+    leg.AddEntry(backgrounds["expow1"],"%s"%(modelforms["expow1"]),"l")
+    leg.AddEntry(backgrounds["invpow1"],"%s"%(modelforms["invpow1"]),"l")
+    leg.AddEntry(backgrounds["invpowlin1"],"%s"%(modelforms["invpowlin1"]),"l")
+
     # for key, value in backgrounds.iteritems():
         # leg.AddEntry(value,"%s: %s "%(key, modelforms[key]),"l")
 
+    # for model, mass, xsec, signalFileName, g_signal in zip(models,masses,xsecs,signalFileNames, g_signals):
+    #     if 'PF' in box:
+    #         leg.AddEntry(g_signal,"%s (%.1f TeV)"%(model,float(mass)/1000.),"l")
+    #     #elif 'Calo' in box:
+    #     elif 'DiPhotons' in box:
+    #         if w.var('mgg').getMax() > 2037:
+    #             leg.AddEntry(g_signal,"%s (%.1f TeV)"%(model,float(mass)/1000.),"l")
+    #         else:
+    #             leg.AddEntry(g_signal,"%s (%.2f TeV)"%(model,float(mass)/1000.),"l")
+    #         #leg.AddEntry(None,"%.1f pb"%(float(xsec)),"")
+    leg.Draw()
     #background.Draw("csame")
     #g_data.Draw("pezsame")
 
@@ -1341,8 +1412,8 @@ if __name__ == '__main__':
     h_fit_residual_vs_mass.GetYaxis().SetRangeUser(-3.5,3.5)
     #h_fit_residual_vs_mass.GetYaxis().SetNdivisions(210,True)
     h_fit_residual_vs_mass.SetLineWidth(1)
-    # h_fit_residual_vs_mass.SetFillColor(rt.kRed)
-    # h_fit_residual_vs_mass.SetLineColor(rt.kBlack)
+    h_fit_residual_vs_mass.SetFillColor(rt.kRed)
+    h_fit_residual_vs_mass.SetLineColor(rt.kBlack)
 
     h_fit_residual_vs_mass.GetYaxis().SetTitleSize(2*0.06)
     h_fit_residual_vs_mass.GetYaxis().SetLabelSize(2*0.05)
@@ -1361,7 +1432,7 @@ if __name__ == '__main__':
     # paper
     h_fit_residual_vs_mass.GetXaxis().SetTitle('Dijet mass [GeV]')
 
-    h_fit_residual_vs_mass.Draw("histsame PLC PFC")
+    h_fit_residual_vs_mass.Draw("histsame")
     # line = rt.TLine(h_fit_residual_vs_mass.GetXaxis().GetXmin(),0,h_fit_residual_vs_mass.GetXaxis().GetXmax(),0)
     line = rt.TLine(h_fit_residual_vs_mass.GetXaxis().GetXmin(),0,4000,0)
     line.Draw("same")
