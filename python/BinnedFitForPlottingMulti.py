@@ -1164,10 +1164,10 @@ if __name__ == '__main__':
                   "dijet"      : "f_{1}: x^{p_{1}+p_{2} log(x)}",
                   "invpow1"    : "f_{3}: (1+p_{1} x)^{p_{2}}",
                   "invpowlin1" : "f_{4}: (1+p_{1} x)^{p_{2}+p_{3} x}"}
-    leg.AddEntry(backgrounds["dijet"],"%s"%(modelforms["dijet"]),"l")
-    leg.AddEntry(backgrounds["expow1"],"%s"%(modelforms["expow1"]),"l")
-    leg.AddEntry(backgrounds["invpow1"],"%s"%(modelforms["invpow1"]),"l")
-    leg.AddEntry(backgrounds["invpowlin1"],"%s"%(modelforms["invpowlin1"]),"l")
+    leg.AddEntry(backgrounds["dijet"],"%s"%(modelforms["dijet"]),"l PLC")
+    leg.AddEntry(backgrounds["expow1"],"%s"%(modelforms["expow1"]),"l PLC")
+    leg.AddEntry(backgrounds["invpow1"],"%s"%(modelforms["invpow1"]),"l PLC")
+    leg.AddEntry(backgrounds["invpowlin1"],"%s"%(modelforms["invpowlin1"]),"l PLC")
 
     # for key, value in backgrounds.iteritems():
         # leg.AddEntry(value,"%s: %s "%(key, modelforms[key]),"l")
