@@ -1059,7 +1059,7 @@ if __name__ == '__main__':
             myRebinnedDensityTH1.SetMinimum(2e-5)
     myRebinnedDensityTH1.Draw("axis")
 
-    leg = rt.TLegend(0.5,0.38,0.88,0.87)
+    leg = rt.TLegend(0.56,0.45,0.88,0.89)
     leg.SetTextFont(42)
     leg.SetTextSize(0.06)
     leg.SetFillColor(rt.kWhite)
