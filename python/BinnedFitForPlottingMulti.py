@@ -302,6 +302,7 @@ if __name__ == '__main__':
  
     rt.RooMsgService.instance().setGlobalKillBelow(rt.RooFit.FATAL)
     rt.gStyle.SetPaintTextFormat('+.2f')
+    rt.gStyle.SetPalette(rt.kSolar)
 
     (options,args) = parser.parse_args()
     
@@ -1060,7 +1061,6 @@ if __name__ == '__main__':
     myRebinnedDensityTH1.Draw("axis")
 
     if options.doTriggerFit or options.doSimultaneousFit or options.doSpectrumFit or options.noFit:
-        rt.gStyle.SetPalette(90)
         # backgrounds["expow1"].SetLineColor(1)
         backgrounds["expow1"].Draw("csame PLC")
         # backgrounds["invpow1"].SetLineColor(2)
