@@ -1074,43 +1074,8 @@ if __name__ == '__main__':
         h_background.SetLineWidth(2)
         h_background.Draw("histsame")
 
-    # g_signals = []
-    # for model, mass, xsec, signalFileName, sigHist, color, style in zip(models,masses,xsecs,signalFileNames,signalHistosRebin,colors,styles):
-    #     g_signal = rt.TGraphAsymmErrors(sigHist)
-    #     g_signal.SetLineColor(color)
-    #     g_signal.SetLineStyle(style)
-    #     g_signal.SetLineWidth(3)
-
-    #     lastX = 0
-    #     lastY = 0
-    #     firstX = 0
-    #     firstY = 0
-    #     notSet = True
-    #     for i in range(0,g_signal.GetN()):
-    #         N = g_signal.GetY()[i]
-    #         binWidth = g_signal.GetEXlow()[i] + g_signal.GetEXhigh()[i]
-    #         if g_signal.GetX()[i]>float(mass)*0.75 and notSet:
-    #             firstX = g_signal.GetX()[i]
-    #             firstY = N/(binWidth * lumi)
-    #             notSet = False
-
-    #     for i in range(0,g_signal.GetN()):
-    #         N = g_signal.GetY()[i]
-    #         binWidth = g_signal.GetEXlow()[i] + g_signal.GetEXhigh()[i]
-    #         if g_signal.GetX()[i]<=float(mass)*0.75:
-    #             g_signal.SetPoint(i,firstX,firstY)
-    #         else:
-    #             g_signal.SetPoint(i, g_signal.GetX()[i], N/(binWidth * lumi))
-    #         g_signal.SetPointEYlow(i, 0)
-    #         g_signal.SetPointEYhigh(i, 0)
-    #         if g_signal.GetX()[i]>float(mass)*1.25:
-    #             g_signal.SetPoint(i,lastX,lastY)
-    #         else:
-    #             lastX = g_signal.GetX()[i]
-    #             lastY = g_signal.GetY()[i]
-    #     g_signals.append(g_signal)
-    #     g_signal.Draw("cxsame")
-
+    g_data_clone.Draw("zpsame")
+    g_data.Draw("zpsame")
 
     rt.gPad.SetLogy()
 
@@ -1125,13 +1090,6 @@ if __name__ == '__main__':
     elif(options.year=="2017"): l.DrawLatex(0.68,0.94,"41.5 fb^{-1} (13 TeV)")
     elif(options.year=="2018"): l.DrawLatex(0.68,0.94,"59.7 fb^{-1} (13 TeV)")
     elif(options.year=="fullRun2"): l.DrawLatex(0.68,0.94,"138 fb^{-1} (13 TeV)")
-    # PAS
-    #l.SetTextFont(62)
-    #l.SetTextSize(0.055)
-    #l.DrawLatex(0.2,0.96,"CMS")
-    #l.SetTextFont(52)
-    #l.SetTextSize(0.045)
-    #l.DrawLatex(0.3,0.96,"Preliminary")
     # paper
     l.SetTextFont(62)
     if(options.year=="fullRun2"):
@@ -1156,37 +1114,20 @@ if __name__ == '__main__':
     leg.SetLineWidth(0)
     leg.SetLineColor(rt.kWhite)
     leg.AddEntry(g_data,"Data","pe")
-    # modelforms = {"dijet"      : "x^{p_{1}+p_{2}*log(x)}",
-    #               "expow1"     : "e^{p_{1} x} x^{p_{2}}",
-    #               "invpow1"    : "(1+x*p_{1})^{p_{2}}",
-    #               "invpowlin1" : "(1+x*p_{1})^{p_{2}+p_{3}*x}"}
     modelforms = {"expow1"     : "f_{2}: e^{p_{1} x} x^{p_{2}}",
                   "dijet"      : "f_{1}: x^{p_{1}+p_{2} log(x)}",
                   "invpow1"    : "f_{3}: (1+p_{1} x)^{p_{2}}",
                   "invpowlin1" : "f_{4}: (1+p_{1} x)^{p_{2}+p_{3} x}"}
-    leg.AddEntry(backgrounds["dijet"],"%s"%(modelforms["dijet"]),"l PLC")
-    leg.AddEntry(backgrounds["expow1"],"%s"%(modelforms["expow1"]),"l PLC")
-    leg.AddEntry(backgrounds["invpow1"],"%s"%(modelforms["invpow1"]),"l PLC")
-    leg.AddEntry(backgrounds["invpowlin1"],"%s"%(modelforms["invpowlin1"]),"l PLC")
+    # leg.AddEntry(backgrounds["dijet"],"%s"%(modelforms["dijet"]),"l PLC")
+    # leg.AddEntry(backgrounds["expow1"],"%s"%(modelforms["expow1"]),"l PLC")
+    # leg.AddEntry(backgrounds["invpow1"],"%s"%(modelforms["invpow1"]),"l PLC")
+    # leg.AddEntry(backgrounds["invpowlin1"],"%s"%(modelforms["invpowlin1"]),"l PLC")
 
-    # for key, value in backgrounds.iteritems():
-        # leg.AddEntry(value,"%s: %s "%(key, modelforms[key]),"l")
+    for key, value in backgrounds.iteritems():
+        leg.AddEntry(value,"%s: %s "%(key, modelforms[key]),"l")
 
-    # for model, mass, xsec, signalFileName, g_signal in zip(models,masses,xsecs,signalFileNames, g_signals):
-    #     if 'PF' in box:
-    #         leg.AddEntry(g_signal,"%s (%.1f TeV)"%(model,float(mass)/1000.),"l")
-    #     #elif 'Calo' in box:
-    #     elif 'DiPhotons' in box:
-    #         if w.var('mgg').getMax() > 2037:
-    #             leg.AddEntry(g_signal,"%s (%.1f TeV)"%(model,float(mass)/1000.),"l")
-    #         else:
-    #             leg.AddEntry(g_signal,"%s (%.2f TeV)"%(model,float(mass)/1000.),"l")
-    #         #leg.AddEntry(None,"%.1f pb"%(float(xsec)),"")
     leg.Draw()
-    #background.Draw("csame")
-    #g_data.Draw("pezsame")
     pave_sel = rt.TPaveText(0.2,0.03,0.5,0.25,"NDC")
-    #pave_sel = rt.TPaveText(0.2,0.03,0.5,0.22,"NDC")
     pave_sel.SetFillColor(0)
     pave_sel.SetBorderSize(0)
     pave_sel.SetFillStyle(0)
@@ -1197,39 +1138,6 @@ if __name__ == '__main__':
     thealtmodel = options.config.split("_")[-1].split(".")[-2]
     theformname = ""
     theform = ""
-    # if thealtmodel == "dijet":
-    #     theform = "x^{p_{1}+p_{2}*log(x)}"
-    #     theformname = "dijet"
-    # if thealtmodel == "expow1":
-    #     theform = "e^{p_{1} x} x^{p_{2}}"
-    #     theformname = "expow"
-    # elif thealtmodel == "invpow1":
-    #     theform = "(1+x*p_{1})^{p_{2}}"
-    #     theformname = "invpow"
-    # elif thealtmodel == "invpowlin1":
-    #     theform = "(1+x*p_{1})^{p_{2}+p_{3}*x}"
-    #     theformname = "invpowlin"
-    # elif thealtmodel == "moddijet1":
-    #     theform = "x^{p_{1}+p_{2}*log(x)}*(1.-x*p_{3})^{p_{4}}"
-    #     theformname = "moddijet"
-
-    if thealtmodel == "dijet":
-        theform = ""
-        theformname = "f1"
-    if thealtmodel == "expow1":
-        theform = ""
-        theformname = "f2"
-    elif thealtmodel == "invpow1":
-        theform = ""
-        theformname = "f3"
-    elif thealtmodel == "invpowlin1":
-        theform = ""
-        theformname = "f4"
-    elif thealtmodel == "moddijet1":
-        theform = "x^{p_{1}+p_{2}*log(x)}*(1.-x*p_{3})^{p_{4}}"
-        theformname = "moddijet"
-
-    #pave_sel.AddText("%s : %s" %(theformname, theform) )
     pave_sel.AddText("#chi^{{2}} / dof = {0:.1f} / {1:d} = {2:.1f}".format(
                           list_chi2AndNdf_background[4], list_chi2AndNdf_background[5],
                           list_chi2AndNdf_background[4]/list_chi2AndNdf_background[5]))
@@ -1253,105 +1161,21 @@ if __name__ == '__main__':
     else: chiText.SetTextSize(0.045);
     chiText.Draw()
 
-    #if 'Calo' in box:
-    if 'DiPhotons' in box:
-        #pave_sel.AddText("Wide Calo-jets")
-        plabel = " "
-        if options.coup == "kMpl001" or options.coup == "0p014":
-            plabel = "#frac{#Gamma}{m} = 1.4 #times 10^{-4}"
-        elif options.coup == "kMpl01" or options.coup == "1p4":
-            plabel = "#frac{#Gamma}{m} = 1.4 #times 10^{-2}"
-        elif options.coup == "kMpl02" or options.coup == "5p6":
-            plabel = "#frac{#Gamma}{m} = 5.6 #times 10^{-2}"
-
-        #pave_sel.AddText("DiPhotons")
-        #pave_sel.AddText(plabel)
-        # if w.var('mgg').getMax() > 2037:
-            #pave_sel.AddText("%.1f < m_{jj} < %.1f TeV"%(w.var('mjj').getMin('Low')/1000.,w.var('mjj').getMax('High')/1000.))
-            #BLIND
-            # pave_sel.AddText("m_{#gamma#gamma} > %.2f TeV"%(w.var('mgg').getMin('Low')/1000.))
-            #UNBLIND
-            # pave_sel.AddText(" %.2f TeV < m_{#gamma#gamma} < %.2f TeV "%(w.var('mgg').getMin('Low')/1000., w.var('mgg').getMax('Low')/1000.))
-        # else:
-            # pave_sel.AddText("%.2f < m_{#gamma#gamma} < %.2f TeV"%(w.var('mgg').getMin('Low')/1000.,w.var('mgg').getMax('High')/1000.))
-            #pave_sel.AddText("%i < m_{jj} < %i GeV"%(w.var('mjj').getMin('Low'),w.var('mjj').getMax('High')))
-    elif 'PF' in box:
-        pave_sel.AddText("Wide PF-jets")
-        #pave_sel.AddText("%.1f < m_{jj} < %.1f TeV"%(w.var('mjj').getMin('Low')/1000.,w.var('mjj').getMax('High')/1000.))
-        pave_sel.AddText("m_{jj} > %.2f TeV"%(w.var('mjj').getMin('Low')/1000.))
-    #pave_sel.AddText("|#eta| < 2.5, |#Delta#eta| < 1.3")
-    # pave_sel.Draw("SAME")
+    plabel = " "
+    if options.coup == "kMpl001" or options.coup == "0p014":
+        plabel = "#frac{#Gamma}{m} = 1.4 #times 10^{-4}"
+    elif options.coup == "kMpl01" or options.coup == "1p4":
+        plabel = "#frac{#Gamma}{m} = 1.4 #times 10^{-2}"
+    elif options.coup == "kMpl02" or options.coup == "5p6":
+        plabel = "#frac{#Gamma}{m} = 5.6 #times 10^{-2}"
 
     g_data_clone.Draw("zpsame")
     g_data.Draw("zpsame")
 
 
-
-    if 'PF' in box:
-        # paper
-        myRebinnedDensityTH1.GetYaxis().SetTitle('d#sigma/dm_{jj} [pb/TeV]')
-        # PAS
-        #myRebinnedDensityTH1.GetYaxis().SetTitle('d#sigma / dm_{jj} [pb / TeV]')
-        myRebinnedDensityTH1.GetYaxis().SetLabelOffset(1000)
-        yLab = rt.TLatex()
-        yLab.SetTextAlign(32)
-        yLab.SetTextSize(0.05)
-        yLab.SetTextFont(42)
-        xM = 1200
-        yLab.DrawLatex(xM, 10, "10^{4}")
-        yLab.DrawLatex(xM, 1, "10^{3}")
-        yLab.DrawLatex(xM, 0.1, "10^{2}")
-        yLab.DrawLatex(xM, 0.01, "10")
-        yLab.DrawLatex(xM, 0.001, "1")
-        yLab.DrawLatex(xM, 0.0001, "10^{#minus1}")
-        yLab.DrawLatex(xM, 0.00001, "10^{#minus2}")
-        yLab.DrawLatex(xM, 0.000001, "10^{#minus3}")
-        yLab.DrawLatex(xM, 0.0000001, "10^{#minus4}")
-
-
-        f_h2_log10_x_axis = rt.TF1("f_h2_log10_x_axis", "log10(x)", myRebinnedDensityTH1.GetXaxis().GetXmin(), myRebinnedDensityTH1.GetXaxis().GetXmax())
-        #b = rt.TGaxis(myRebinnedDensityTH1.GetXaxis().GetXmin(), 2e-8,
-        #              myRebinnedDensityTH1.GetXaxis().GetXmax(), 2e-8, "f_h2_log10_x_axis", 509, "BS", 0.0)
-        #b.SetTickSize(myRebinnedDensityTH1.GetTickLength("X"))
-        #b.SetMoreLogLabels()
-        bbot = rt.TGaxis(myRebinnedDensityTH1.GetXaxis().GetXmin(), 2e-8,
-	                 myRebinnedDensityTH1.GetXaxis().GetXmax(), 2e-8, "f_h2_log10_x_axis", 509,"UBS", 0.0);
-        btop = rt.TGaxis(myRebinnedDensityTH1.GetXaxis().GetXmin(),20,
-	                 myRebinnedDensityTH1.GetXaxis().GetXmax(), 20,  "f_h2_log10_x_axis", 509,"-UBS", 0.0);
-        bbot.SetTickSize(myRebinnedDensityTH1.GetTickLength("X"))
-        btop.SetTickSize(myRebinnedDensityTH1.GetTickLength("X"))
-	# bbot.Draw()
-	# btop.Draw()
-
-
-        rt.gPad.Modified()
-        rt.gPad.Update()
-
-    #if 'Calo' in box:
-    if 'DiPhotons' in box:
-        # paper
-        myRebinnedDensityTH1.GetYaxis().SetTitle('dN/dm_{#gamma#gamma} [TeV^{-1}]')
-        # PAS
-        #myRebinnedDensityTH1.GetYaxis().SetTitle('d#sigma / dm_{jj} [pb / TeV]')
-        # myRebinnedDensityTH1.GetYaxis().SetLabelOffset(1000)
-        # yLab = rt.TLatex()
-        # yLab.SetTextAlign(32)
-        # yLab.SetTextSize(0.05)
-        # yLab.SetTextFont(42)
-        # xM = 470
-        # yLab.DrawLatex(xM, 1000, "10^{3}")
-        # yLab.DrawLatex(xM, 100, "10^{2}")
-        # yLab.DrawLatex(xM, 10, "10")
-        # yLab.DrawLatex(xM, 1, "1")
-        # yLab.DrawLatex(xM, 0.0001, "10^{#minus1}")
-
-
-    #pad_1.Update()
-
     pad_2.cd()
 
-    # h_fit_residual_vs_mass.GetXaxis().SetRangeUser(w.var('mgg').getMin(),w.var('mgg').getMax())
-    h_fit_residual_vs_mass.GetXaxis().SetRangeUser(500,4000)
+    # h_fit_residual_vs_mass.GetXaxis().SetRangeUser(500,4000)
     h_fit_residual_vs_mass.GetYaxis().SetRangeUser(-3.5,3.5)
     #h_fit_residual_vs_mass.GetYaxis().SetNdivisions(210,True)
     h_fit_residual_vs_mass.SetLineWidth(1)
@@ -1360,12 +1184,8 @@ if __name__ == '__main__':
 
     h_fit_residual_vs_mass.GetYaxis().SetTitleSize(2*0.06)
     h_fit_residual_vs_mass.GetYaxis().SetLabelSize(2*0.05)
-    # PAS
-    #h_fit_residual_vs_mass.GetYaxis().SetTitleOffset(0.5)
-    #h_fit_residual_vs_mass.GetYaxis().SetTitle('#frac{(Data-Fit)}{#sigma_{Data}}')
     # paper
     h_fit_residual_vs_mass.GetYaxis().SetTitleOffset(0.6)
-    h_fit_residual_vs_mass.GetYaxis().SetTitle('#frac{(Data-Fit)}{Uncertainty}')
 
     h_fit_residual_vs_mass.GetXaxis().SetTitleSize(2*0.06)
     h_fit_residual_vs_mass.GetXaxis().SetLabelSize(2*0.05)
@@ -1380,30 +1200,28 @@ if __name__ == '__main__':
     line = rt.TLine(h_fit_residual_vs_mass.GetXaxis().GetXmin(),0,4000,0)
     line.Draw("same")
 
-    if 'DiPhoton' in box:
-    #if 'Calo' in box:
-        # PAS
-        #h_fit_residual_vs_mass.GetXaxis().SetTitle('Dijet Mass [TeV]')
-        # paper
-        h_fit_residual_vs_mass.GetXaxis().SetTitle('m_{#gamma#gamma} [TeV]')
-        h_fit_residual_vs_mass.GetXaxis().SetLabelOffset(1000)
-        #h_fit_residual_vs_mass.GetXaxis().SetNoExponent()
-        #h_fit_residual_vs_mass.GetXaxis().SetMoreLogLabels()
-        xLab = rt.TLatex()
-        xLab.SetTextAlign(22)
-        xLab.SetTextFont(42)
-        xLab.SetTextSize(2*0.05)
-        #xLab.DrawLatex(600, -4, "0.6")
-        #xLab.DrawLatex(800, -4, "0.8")
-        xLab.DrawLatex(1000, -4, "1")
-        #xLab.DrawLatex(1200, -4, "1.2")
-        xLab.DrawLatex(1500, -4, "1.5")
-        #xLab.DrawLatex(1400, -4, "1.4")
-        #xLab.DrawLatex(1600, -4, "1.6")
-        #xLab.DrawLatex(1800, -4, "1.8")
-        xLab.DrawLatex(2000, -4, "2")
-        #rt.gPad.RedrawAxis()
-        #rt.gPad.Update()
+    # paper
+    myRebinnedDensityTH1.GetYaxis().SetTitle('dN/dm_{#gamma#gamma} [TeV^{-1}]')
+    h_fit_residual_vs_mass.GetXaxis().SetTitle('m_{#gamma#gamma} [TeV]')
+    h_fit_residual_vs_mass.GetYaxis().SetTitle('#frac{(Data-Fit)}{Uncertainty}')
+    h_fit_residual_vs_mass.GetXaxis().SetLabelOffset(1000)
+    #h_fit_residual_vs_mass.GetXaxis().SetNoExponent()
+    #h_fit_residual_vs_mass.GetXaxis().SetMoreLogLabels()
+    xLab = rt.TLatex()
+    xLab.SetTextAlign(22)
+    xLab.SetTextFont(42)
+    xLab.SetTextSize(2*0.05)
+    #xLab.DrawLatex(600, -4, "0.6")
+    #xLab.DrawLatex(800, -4, "0.8")
+    xLab.DrawLatex(1000, -4, "1")
+    #xLab.DrawLatex(1200, -4, "1.2")
+    xLab.DrawLatex(1500, -4, "1.5")
+    #xLab.DrawLatex(1400, -4, "1.4")
+    #xLab.DrawLatex(1600, -4, "1.6")
+    #xLab.DrawLatex(1800, -4, "1.8")
+    xLab.DrawLatex(2000, -4, "2")
+    #rt.gPad.RedrawAxis()
+    #rt.gPad.Update()
 
     sigHistResiduals = []
     g_signal_residuals = []
