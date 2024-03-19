@@ -1059,6 +1059,8 @@ if __name__ == '__main__':
             myRebinnedDensityTH1.SetMinimum(2e-5)
     myRebinnedDensityTH1.Draw("axis")
 
+
+    rt.gStyle.SetPalette(rt.kSolar)
     leg = rt.TLegend(0.56,0.45,0.88,0.89)
     leg.SetTextFont(42)
     leg.SetTextSize(0.06)
@@ -1067,23 +1069,18 @@ if __name__ == '__main__':
     leg.SetLineWidth(0)
     leg.SetLineColor(rt.kWhite)
     leg.AddEntry(g_data,"Data","pe")
-    modelforms = {"dijet"      : "f_{1}: x^{p_{1}+p_{2} log(x)}",
-                  "expow1"     : "f_{2}: e^{p_{1} x} x^{p_{2}}",
-                  "invpow1"    : "f_{3}: (1+p_{1} x)^{p_{2}}",
-                  "invpowlin1" : "f_{4}: (1+p_{1} x)^{p_{2}+p_{3} x}"}
+    modelforms = {"dijet"      : "f_{1}: x^{p_{1}+p_{2}log(x)}",
+                  "expow1"     : "f_{2}: e^{p_{1}x}x^{p_{2}}",
+                  "invpow1"    : "f_{3}: (1+p_{1}x)^{p_{2}}",
+                  "invpowlin1" : "f_{4}: (1+p_{1}x)^{p_{2}+p_{3}x}"}
 
     if options.doTriggerFit or options.doSimultaneousFit or options.doSpectrumFit or options.noFit:
-        rt.gStyle.SetPalette(rt.kSolar)
-        backgrounds["expow1"].SetLineColor(1)
         backgrounds["expow1"].Draw("csame PLC")
         leg.AddEntry(backgrounds["expow1"],"%s"%(modelforms["expow1"]),"l")
-        backgrounds["invpow1"].SetLineColor(2)
         backgrounds["invpow1"].Draw("csame PLC")
         leg.AddEntry(backgrounds["invpow1"],"%s"%(modelforms["invpow1"]),"l")
-        backgrounds["invpowlin1"].SetLineColor(3)
         backgrounds["invpowlin1"].Draw("csame PLC")
         leg.AddEntry(backgrounds["invpowlin1"],"%s"%(modelforms["invpowlin1"]),"l")
-        backgrounds["dijet"].SetLineColor(4)
         backgrounds["dijet"].Draw("csame PLC")
         leg.AddEntry(backgrounds["dijet"],"%s"%(modelforms["dijet"]),"l")
     else:
