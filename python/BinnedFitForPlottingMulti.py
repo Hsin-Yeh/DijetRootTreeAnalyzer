@@ -1111,7 +1111,6 @@ if __name__ == '__main__':
     # for key, value in backgrounds.iteritems():
         # leg.AddEntry(value,"%s: %s "%(key, modelforms[key]),"l")
 
-    leg.Draw()
     #background.Draw("csame")
     #g_data.Draw("pezsame")
 
@@ -1341,8 +1340,8 @@ if __name__ == '__main__':
     h_fit_residual_vs_mass.GetYaxis().SetRangeUser(-3.5,3.5)
     #h_fit_residual_vs_mass.GetYaxis().SetNdivisions(210,True)
     h_fit_residual_vs_mass.SetLineWidth(1)
-    h_fit_residual_vs_mass.SetFillColor(rt.kRed)
-    h_fit_residual_vs_mass.SetLineColor(rt.kBlack)
+    # h_fit_residual_vs_mass.SetFillColor(rt.kRed)
+    # h_fit_residual_vs_mass.SetLineColor(rt.kBlack)
 
     h_fit_residual_vs_mass.GetYaxis().SetTitleSize(2*0.06)
     h_fit_residual_vs_mass.GetYaxis().SetLabelSize(2*0.05)
