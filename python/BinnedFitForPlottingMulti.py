@@ -1141,20 +1141,13 @@ if __name__ == '__main__':
         l.SetTextSize(0.05)
         l.DrawLatex(0.22,0.85,"CMS Supplementary")
 
-    if options.signalFileName!=None:
-        if 'DiPhoton' in box:
-            leg = rt.TLegend(0.5,0.38,0.88,0.87)
-        else:
-            leg = rt.TLegend(0.58,0.55,0.85,0.87)
-    else:
-        # leg = rt.TLegend(0.6,0.6,0.89,0.89)
-        leg = rt.TLegend(0.56,0.45,0.88,0.89)
-    leg.SetTextFont(42)
-    leg.SetTextSize(0.06)
-    leg.SetFillColor(rt.kWhite)
-    leg.SetFillStyle(0)
-    leg.SetLineWidth(0)
-    leg.SetLineColor(rt.kWhite)
+    leg = rt.TLegend(0.56,0.45,0.88,0.89)
+    # leg.SetTextFont(42)
+    # leg.SetTextSize(0.06)
+    # leg.SetFillColor(rt.kWhite)
+    # leg.SetFillStyle(0)
+    # leg.SetLineWidth(0)
+    # leg.SetLineColor(rt.kWhite)
     leg.AddEntry(g_data,"Data","pe")
     # modelforms = {"dijet"      : "x^{p_{1}+p_{2}*log(x)}",
     #               "expow1"     : "e^{p_{1} x} x^{p_{2}}",
