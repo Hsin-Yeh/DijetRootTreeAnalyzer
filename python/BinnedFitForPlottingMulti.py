@@ -1062,17 +1062,17 @@ if __name__ == '__main__':
     if options.doTriggerFit or options.doSimultaneousFit or options.doSpectrumFit or options.noFit:
         rt.gStyle.SetPalette(90)
         # backgrounds["expow1"].SetLineColor(1)
-        backgrounds["expow1"].Draw("csame PLC")
+        backgrounds["expow1"].Draw("csame PLC PFC")
         # backgrounds["invpow1"].SetLineColor(2)
-        backgrounds["invpow1"].Draw("csame PLC")
+        backgrounds["invpow1"].Draw("csame PLC PFC")
         # backgrounds["invpowlin1"].SetLineColor(3)
-        backgrounds["invpowlin1"].Draw("csame PLC")
+        backgrounds["invpowlin1"].Draw("csame PLC PFC")
         # backgrounds["dijet"].SetLineColor(4)
-        backgrounds["dijet"].Draw("csame PLC")
+        backgrounds["dijet"].Draw("csame PLC PFC")
     else:
-        h_background.SetLineColor(rt.kRed)
+        # h_background.SetLineColor(rt.kRed)
         h_background.SetLineWidth(2)
-        h_background.Draw("histsame")
+        # h_background.Draw("histsame")
 
     # g_signals = []
     # for model, mass, xsec, signalFileName, sigHist, color, style in zip(models,masses,xsecs,signalFileNames,signalHistosRebin,colors,styles):
