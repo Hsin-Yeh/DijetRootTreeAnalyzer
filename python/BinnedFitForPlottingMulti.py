@@ -1060,7 +1060,7 @@ if __name__ == '__main__':
     myRebinnedDensityTH1.Draw("axis")
 
     if options.doTriggerFit or options.doSimultaneousFit or options.doSpectrumFit or options.noFit:
-        gStyle->SetPalette(90)
+        rt.gStyle.SetPalette(90)
         # backgrounds["expow1"].SetLineColor(1)
         backgrounds["expow1"].Draw("csame")
         # backgrounds["invpow1"].SetLineColor(2)
