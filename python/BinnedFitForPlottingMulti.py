@@ -1088,6 +1088,7 @@ if __name__ == '__main__':
         h_background.SetLineWidth(2)
         # h_background.Draw("histsame")
 
+    leg.Draw()
     rt.gPad.SetLogy()
 
     l = rt.TLatex()
