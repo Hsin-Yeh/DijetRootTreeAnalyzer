@@ -1074,16 +1074,16 @@ if __name__ == '__main__':
 
     if options.doTriggerFit or options.doSimultaneousFit or options.doSpectrumFit or options.noFit:
         rt.gStyle.SetPalette(rt.kSolar)
-        # backgrounds["expow1"].SetLineColor(1)
+        backgrounds["expow1"].SetLineColor(1)
         backgrounds["expow1"].Draw("csame PLC")
         leg.AddEntry(backgrounds["expow1"],"%s"%(modelforms["expow1"]),"l")
-        # backgrounds["invpow1"].SetLineColor(2)
+        backgrounds["invpow1"].SetLineColor(2)
         backgrounds["invpow1"].Draw("csame PLC")
         leg.AddEntry(backgrounds["invpow1"],"%s"%(modelforms["invpow1"]),"l")
-        # backgrounds["invpowlin1"].SetLineColor(3)
+        backgrounds["invpowlin1"].SetLineColor(3)
         backgrounds["invpowlin1"].Draw("csame PLC")
         leg.AddEntry(backgrounds["invpowlin1"],"%s"%(modelforms["invpowlin1"]),"l")
-        # backgrounds["dijet"].SetLineColor(4)
+        backgrounds["dijet"].SetLineColor(4)
         backgrounds["dijet"].Draw("csame PLC")
         leg.AddEntry(backgrounds["dijet"],"%s"%(modelforms["dijet"]),"l")
     else:
