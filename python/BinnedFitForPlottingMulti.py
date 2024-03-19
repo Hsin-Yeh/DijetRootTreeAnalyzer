@@ -1182,10 +1182,10 @@ if __name__ == '__main__':
     #         else:
     #             leg.AddEntry(g_signal,"%s (%.2f TeV)"%(model,float(mass)/1000.),"l")
     #         #leg.AddEntry(None,"%.1f pb"%(float(xsec)),"")
-    leg.Draw()
+    # leg.Draw()
     #background.Draw("csame")
     #g_data.Draw("pezsame")
-
+    rt.gPad.BuildLegend()
     pave_sel = rt.TPaveText(0.2,0.03,0.5,0.25,"NDC")
     #pave_sel = rt.TPaveText(0.2,0.03,0.5,0.22,"NDC")
     pave_sel.SetFillColor(0)
