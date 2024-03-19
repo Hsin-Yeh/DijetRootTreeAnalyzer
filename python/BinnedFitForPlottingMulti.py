@@ -1061,14 +1061,17 @@ if __name__ == '__main__':
 
     if options.doTriggerFit or options.doSimultaneousFit or options.doSpectrumFit or options.noFit:
         rt.gStyle.SetPalette(90)
-        ci = rt.TColor.GetColor("#abec3b");
+        ci = rt.TColor.GetColor("#954a2c");
         backgrounds["expow1"].SetLineColor(ci)
         backgrounds["expow1"].Draw("csame")
-        backgrounds["invpow1"].SetLineColor(2)
+        ci = rt.TColor.GetColor("#a0333f");
+        backgrounds["invpow1"].SetLineColor(ci)
         backgrounds["invpow1"].Draw("csame")
-        backgrounds["invpowlin1"].SetLineColor(3)
+        ci = rt.TColor.GetColor("#b006b0");
+        backgrounds["invpowlin1"].SetLineColor(ci)
         backgrounds["invpowlin1"].Draw("csame")
-        backgrounds["dijet"].SetLineColor(4)
+        ci = rt.TColor.GetColor("#abec3b");
+        backgrounds["dijet"].SetLineColor(ci)
         backgrounds["dijet"].Draw("csame")
     else:
         h_background.SetLineColor(rt.kRed)
