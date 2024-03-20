@@ -1074,7 +1074,7 @@ if __name__ == '__main__':
         backgrounds["invpow1"].SetLineColor(ci)
         backgrounds["invpow1"].Draw("csame")
         # ci = rt.TColor.GetColor("#e100e6"); # Cool
-        ci = rt.TColor.GetColor("#abec3b"); # Neon
+        ci = rt.TColor.GetColor("##b006b0"); # Neon
         # ci = rt.TColor.GetColor("#a71808"); # Solar
         # ci = rt.TColor.GetColor("#352a86"); # Bird
         backgrounds["invpowlin1"].SetLineColor(ci)
