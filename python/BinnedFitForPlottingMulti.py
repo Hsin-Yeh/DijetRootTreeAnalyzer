@@ -1063,26 +1063,29 @@ if __name__ == '__main__':
         rt.gStyle.SetPalette(90)
         # ci = rt.TColor.GetColor("#21ffff"); # Cool
         # ci = rt.TColor.GetColor("#e5ab17"); # Solar
-        ci = rt.TColor.GetColor("#b006b0"); # Neon
+        # ci = rt.TColor.GetColor("#b006b0"); # Neon
         # ci = rt.TColor.GetColor("#a0bd6c"); # Bird
+        ci = rt.TColor.GetColor("#0a97cd"); # Bird
         backgrounds["expow1"].SetLineColor(ci)
         backgrounds["expow1"].Draw("csame")
         # ci = rt.TColor.GetColor("#5658d0"); # Cool
-        ci = rt.TColor.GetColor("#9a352a"); # Neon
+        # ci = rt.TColor.GetColor("#9a352a"); # Neon
         # ci = rt.TColor.GetColor("#c55f0f"); # Solar
         # ci = rt.TColor.GetColor("#0a98cd"); # Bird
+        ci = rt.TColor.GetColor("#9bbd6e"); # Bird
         backgrounds["invpow1"].SetLineColor(ci)
         backgrounds["invpow1"].Draw("csame")
         # ci = rt.TColor.GetColor("#e100e6"); # Cool
-        ci = rt.TColor.GetColor("#abec3b"); # Neon
+        # ci = rt.TColor.GetColor("#abec3b"); # Neon
         # ci = rt.TColor.GetColor("#a71808"); # Solar
-        # ci = rt.TColor.GetColor("#352a86"); # Bird
+        ci = rt.TColor.GetColor("#ebc242"); # Bird
         backgrounds["invpowlin1"].SetLineColor(ci)
         backgrounds["invpowlin1"].Draw("csame")
         # ci = rt.TColor.GetColor("#954a2c"); # Neon
         # ci = rt.TColor.GetColor("#630005"); # Solar
         # ci = rt.TColor.GetColor("#f9f90e"); # Bird
-        backgrounds["dijet"].SetLineColor(1)
+        ci = rt.TColor.GetColor("#352a86"); # Bird
+        # backgrounds["dijet"].SetLineColor(1)
         backgrounds["dijet"].Draw("csame")
     else:
         h_background.SetLineColor(rt.kRed)
