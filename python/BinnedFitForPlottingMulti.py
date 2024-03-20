@@ -1078,8 +1078,8 @@ if __name__ == '__main__':
         backgrounds["invpowlin1"].Draw("csame")
         # ci = rt.TColor.GetColor("#abec3b"); # Neon
         # ci = rt.TColor.GetColor("#630005"); # Solar
-        ci = rt.TColor.GetColor("#f9f90e"); # Bird
-        backgrounds["dijet"].SetLineColor(ci)
+        # ci = rt.TColor.GetColor("#f9f90e"); # Bird
+        backgrounds["dijet"].SetLineColor(1)
         backgrounds["dijet"].Draw("csame")
     else:
         h_background.SetLineColor(rt.kRed)
