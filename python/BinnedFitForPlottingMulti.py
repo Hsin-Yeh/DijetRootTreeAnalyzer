@@ -1036,7 +1036,7 @@ if __name__ == '__main__':
     # myRebinnedDensityTH1.GetXaxis().SetRangeUser(w.var('mgg').getMin(),w.var('mgg').getMax())
     myRebinnedDensityTH1.GetXaxis().SetRangeUser(500,4000)
     # paper:
-    myRebinnedDensityTH1.GetYaxis().SetTitle('dN/dM_{gg} [TeV^{-1}]')
+    myRebinnedDensityTH1.GetYaxis().SetTitle('dN/dM_{gg} (TeV^{-1})')
     # PAS:
     #myRebinnedDensityTH1.GetYaxis().SetTitle('d#sigma / dm_{jj} [pb / GeV]')
     myRebinnedDensityTH1.GetYaxis().SetTitleOffset(1)
@@ -1062,8 +1062,8 @@ if __name__ == '__main__':
     if options.doTriggerFit or options.doSimultaneousFit or options.doSpectrumFit or options.noFit:
         rt.gStyle.SetPalette(90)
         # ci = rt.TColor.GetColor("#21ffff"); # Cool
-        ci = rt.TColor.GetColor("#abec3b"); # Neon
         # ci = rt.TColor.GetColor("#e5ab17"); # Solar
+        ci = rt.TColor.GetColor("#b006b0"); # Neon
         # ci = rt.TColor.GetColor("#a0bd6c"); # Bird
         backgrounds["expow1"].SetLineColor(ci)
         backgrounds["expow1"].Draw("csame")
@@ -1074,7 +1074,7 @@ if __name__ == '__main__':
         backgrounds["invpow1"].SetLineColor(ci)
         backgrounds["invpow1"].Draw("csame")
         # ci = rt.TColor.GetColor("#e100e6"); # Cool
-        ci = rt.TColor.GetColor("#b006b0"); # Neon
+        ci = rt.TColor.GetColor("#abec3b"); # Neon
         # ci = rt.TColor.GetColor("#a71808"); # Solar
         # ci = rt.TColor.GetColor("#352a86"); # Bird
         backgrounds["invpowlin1"].SetLineColor(ci)
@@ -1402,7 +1402,7 @@ if __name__ == '__main__':
     #if 'Calo' in box:
     if 'DiPhotons' in box:
         # paper
-        myRebinnedDensityTH1.GetYaxis().SetTitle('dN/dm_{#gamma#gamma} [TeV^{-1}]')
+        myRebinnedDensityTH1.GetYaxis().SetTitle('dN/dm_{#gamma#gamma} (TeV^{-1})')
         # PAS
         #myRebinnedDensityTH1.GetYaxis().SetTitle('d#sigma / dm_{jj} [pb / TeV]')
         # myRebinnedDensityTH1.GetYaxis().SetLabelOffset(1000)
