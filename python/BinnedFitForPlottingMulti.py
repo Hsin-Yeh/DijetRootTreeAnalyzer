@@ -1085,7 +1085,7 @@ if __name__ == '__main__':
         # ci = rt.TColor.GetColor("#630005"); # Solar
         # ci = rt.TColor.GetColor("#f9f90e"); # Bird
         ci = rt.TColor.GetColor("#352a86"); # Bird
-        # backgrounds["dijet"].SetLineColor(1)
+        backgrounds["dijet"].SetLineColor(ci)
         backgrounds["dijet"].Draw("csame")
     else:
         h_background.SetLineColor(rt.kRed)
