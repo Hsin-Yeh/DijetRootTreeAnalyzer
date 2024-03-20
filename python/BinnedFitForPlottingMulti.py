@@ -1061,17 +1061,20 @@ if __name__ == '__main__':
 
     if options.doTriggerFit or options.doSimultaneousFit or options.doSpectrumFit or options.noFit:
         rt.gStyle.SetPalette(90)
-        ci = rt.TColor.GetColor("#954a2c"); # Neon
+        ci = rt.TColor.GetColor("#21ffff"); # Cool
+        # ci = rt.TColor.GetColor("#954a2c"); # Neon
         # ci = rt.TColor.GetColor("#e5ab17"); # Solar
         # ci = rt.TColor.GetColor("#a0bd6c"); # Bird
         backgrounds["expow1"].SetLineColor(ci)
         backgrounds["expow1"].Draw("csame")
-        ci = rt.TColor.GetColor("#a0333f"); # Neon
+        ci = rt.TColor.GetColor("#5658d0"); # Cool
+        # ci = rt.TColor.GetColor("#a0333f"); # Neon
         # ci = rt.TColor.GetColor("#c55f0f"); # Solar
         # ci = rt.TColor.GetColor("#0a98cd"); # Bird
         backgrounds["invpow1"].SetLineColor(ci)
         backgrounds["invpow1"].Draw("csame")
-        ci = rt.TColor.GetColor("#b006b0"); # Neon
+        ci = rt.TColor.GetColor("#e100e6"); # Cool
+        # ci = rt.TColor.GetColor("#b006b0"); # Neon
         # ci = rt.TColor.GetColor("#a71808"); # Solar
         # ci = rt.TColor.GetColor("#352a86"); # Bird
         backgrounds["invpowlin1"].SetLineColor(ci)
