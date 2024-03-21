@@ -1153,13 +1153,11 @@ if __name__ == '__main__':
     # paper
     l.SetTextFont(62)
     if(options.year=="fullRun2"):
-        # l.SetTextSize(0.065)
-        # l.DrawLatex(0.22,0.85,"CMS")
-        # PAS
         l.SetTextSize(0.065)
         l.DrawLatex(0.22,0.85,"CMS")
+        # PAS
         l.SetTextFont(52)
-        l.SetTextSize(0.045)
+        l.SetTextSize(0.055)
         l.DrawLatex(0.32,0.85,"Preliminary")
     else:
         l.SetTextSize(0.05)
