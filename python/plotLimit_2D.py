@@ -244,7 +244,7 @@ def pvalue2D():
     cmsText.SetLineWidth(1);
     cmsText.SetTextSize(0.04);
 
-    extraText=ROOT.TLatex(0.22,0.90, "Preliminary");
+    extraText=ROOT.TLatex(0.23,0.90, "Preliminary");
     extraText.SetNDC(1);
     extraText.SetTextFont(52);
     extraText.SetLineColor(0);
