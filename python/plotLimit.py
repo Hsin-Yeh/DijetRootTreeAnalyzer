@@ -247,14 +247,14 @@ def main(in_filename):
     cmsText.SetTextSize(0.05);
     cmsText.Draw();
 
-    # extraText=ROOT.TLatex(0.23,0.90, "Preliminary");
-    # extraText.SetNDC(1);
-    # extraText.SetTextFont(52);
-    # extraText.SetLineColor(0);
-    # extraText.SetLineStyle(1);
-    # extraText.SetLineWidth(1);
-    # extraText.SetTextSize(0.04);
-    # extraText.Draw();
+    extraText=ROOT.TLatex(0.23,0.90, "Preliminary");
+    extraText.SetNDC(1);
+    extraText.SetTextFont(52);
+    extraText.SetLineColor(0);
+    extraText.SetLineStyle(1);
+    extraText.SetLineWidth(1);
+    extraText.SetTextSize(0.04);
+    extraText.Draw();
 
     lumiText=ROOT.TLatex(0.7,0.90, "%d fb^{-1} (13 TeV)"%(lumi(year)) );
     # lumiText=ROOT.TLatex(0.70,0.90, "%d fb^{-1} (13 TeV)"%(138));

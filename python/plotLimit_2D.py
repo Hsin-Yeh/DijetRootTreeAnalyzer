@@ -244,6 +244,15 @@ def pvalue2D():
     cmsText.SetLineWidth(1);
     cmsText.SetTextSize(0.04);
 
+    extraText=ROOT.TLatex(0.23,0.90, "Preliminary");
+    extraText.SetNDC(1);
+    extraText.SetTextFont(52);
+    extraText.SetLineColor(0);
+    extraText.SetLineStyle(1);
+    extraText.SetLineWidth(1);
+    extraText.SetTextSize(0.04);
+    extraText.Draw();
+
     supText=ROOT.TLatex(0.14,0.90, "CMS Supplementary");
     supText.SetNDC(1);
     supText.SetTextFont(61);
@@ -282,12 +291,14 @@ def pvalue2D():
     h_obslimit.GetZaxis().SetTitleSize(0.05)
     h_obslimit.Draw("colz")
     cmsText.Draw();
+    extraText.Draw(); # PAS
     lumiText.Draw();
     c1.SaveAs("%s/observedlimit_%s.pdf"%(args.outputDir,args.signame))
     ########## Set Range 600-2500GeV
     h_obslimit.GetXaxis().SetRangeUser(600,2500)
     h_obslimit.Draw("colz")
     cmsText.Draw();
+    extraText.Draw(); # PAS
     lumiText.Draw();
     c1.SaveAs("%s/observedlimit_zoomin_%s.pdf"%(args.outputDir,args.signame))
     c1.SaveAs("%s/observedlimit_zoomin_%s.png"%(args.outputDir,args.signame))
@@ -308,12 +319,14 @@ def pvalue2D():
     h_explimit.GetZaxis().SetTitleSize(0.05)
     h_explimit.Draw("colz")
     cmsText.Draw();
+    extraText.Draw(); # PAS
     lumiText.Draw();
     c1.SaveAs("%s/expectedlimit_%s.pdf"%(args.outputDir,args.signame))
     ########## Set Range 600-2500GeV
     h_explimit.GetXaxis().SetRangeUser(600,2500)
     h_explimit.Draw("colz")
     cmsText.Draw();
+    extraText.Draw(); # PAS
     lumiText.Draw();
     c1.SaveAs("%s/expectedlimit_zoomin_%s.pdf"%(args.outputDir,args.signame))
     c1.SaveAs("%s/expectedlimit_zoomin_%s.png"%(args.outputDir,args.signame))
