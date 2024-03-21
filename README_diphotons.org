@@ -87,54 +87,77 @@ basicplots.exe barrel 2018
 In this step we skim the ntuples generated from the ExoDiphotonAnalyzer, and pick the variables relevant to the resonant search.
 ** prepare trees
 - Lxplus kills the process if we run all the samples at once (chain too many samples)
-- command syntax: prepareTrees.exe [data/grav/heavyhiggs] [BB/BE] [2016/2017/2018] [coupling] [OutputDir]
-- Currently the event selections in the code are commented out. The event selection is now done in the "Add Samples" step in the DijetRootTreeAnalyzer repo.
-- If one wants to process the "Parametric signal model" then the event selections should be added back
+- command syntax: prepareTrees.exe [data/grav/heavyhiggs] [BB/BE] [2016/2017/2018] [coupling] [cutFlag=True/False] [OutputDir]
+- The default cutFlag is with no cuts, because the event selection is now done in the "Add Samples" step in the DijetRootTreeAnalyzer repo.
+- If one wants to process the "Parametric signal model" then the event selections should be added back ( Set cutFlag to "True" )
 - There may be core-dump errors after the program finishes: such as
   Error in `prepareTrees.exe': double free or corruption (!prev): 0x0000000005dfb440
-  This is annoying but it is fine. FIXME
+  This is annoying but it is fine.
 
 #+begin_src bash
 # Example
 cd ${ggBaseDir}
 mkdir input
 
-# RS
+########## With no cuts ##########
 for year in {2016,2017,2018}; do
     for coup in {"kMpl001","kMpl01","kMpl02"}; do
-        echo "RS" ${year} ${coup}
-        prepareTrees.exe grav BB ${year} ${coup} "${ggBaseDir}/input/trees"
+        echo "grav" ${year} ${coup}
+        prepareTrees.exe grav BB ${year} ${coup} "False" "${ggBaseDir}/test/prepare_samples" # BB does nothing, it is just a null variable here
     done
 done
-
 # HeavyHiggs
 for year in {2016,2017,2018}; do
     for coup in {"0p014","1p4","5p6"}; do
         echo "heavyhiggs" ${year} ${coup}
-        prepareTrees.exe heavyhiggs BB ${year} ${coup} "${ggBaseDir}/input/trees"
+        prepareTrees.exe heavyhiggs BB ${year} ${coup} "False" "${ggBaseDir}/input/trees"
     done
 done
-
 # Data
 for year in {2016,2017,2018}; do
     echo "data" ${year}
-    prepareTrees.exe data BB ${year} all "${ggBaseDir}/input/trees"
+    prepareTrees.exe data BB ${year} all "False" "${ggBaseDir}/test/prepare_samples"
 done
 
-# Example for 1 year
+########## With cuts ##########
+# RS
+for year in {2016,2017,2018}; do
+    for coup in {"kMpl001","kMpl01","kMpl02"}; do
+        for cat in {"BB","BE"}; do
+            echo "grav" ${year} ${coup} ${cat}
+            prepareTrees.exe grav ${cat} ${year} ${coup} "True" "${ggBaseDir}/input"
+        done
+    done
+done
+# HeavyHiggs
+for year in {2016,2017,2018}; do
+    for coup in {"0p014","1p4","5p6"}; do
+        for cat in {"BB","BE"}; do
+            echo "heavyhiggs" ${year} ${coup}
+            prepareTrees.exe heavyhiggs BB ${year} ${coup} "True" "${ggBaseDir}/input"
+        done
+    done
+done
+    # Data
+for year in {2016,2017,2018}; do
+    for cat in {"BB","BE"}; do
+        echo "data" ${year}
+        prepareTrees.exe data BB ${year} all "True" "${ggBaseDir}/input"
+    done
+done
+    # Example for 1 year
 #+end_src
-
 ** Merge files
 Merge EBEB and EBEE files.
-No need to do this step now
+Do this step only if you want to proceed in the parametric signal modeling code
 #+begin_src bash
-cd input
-./haddsamples.sh
+cd ${ggBaseDir}/input
+./haddsamples.sh # This will merge the files in the previous steps to ${ggBaseDir}/input/trees
 # If storage is limited, the pre-merged files can be deleted
 rm *.root
 #+end_src
 
-* Parametric signal model
+* Parametric signal model (Previous Method)
 This is the old method for getting the signal shapes. We fit the input gen & response
 shapes with Double Crystal function and get the parametrization of the signal
 shapes for all masses. We now use it for binning only
