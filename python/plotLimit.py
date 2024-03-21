@@ -43,37 +43,19 @@ def redrawBorder():
 def Acceptance(signame, year, coupling, mass):
     if (signame == "grav"): Acceptance_file = "/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/SignalNorm_Splines_full.txt"
     elif (signame == "heavyhiggs"): Acceptance_file = "/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/SignalNorm_Splines_genFiducial.txt"
-    # Read the file into a DataFrame
-    df = pd.read_csv(Acceptance_file, sep=" ", header=None)
-    df.columns = ["year", "coupling", "mass", "category", "norm"]
-
-    filtered_df = df[(df["year"].astype(str) == year) &
-                     (df["coupling"].astype(str) == coupling) &
-                     (df["mass"].astype(str) == mass) &
-                     (df["category"].astype(str) == "All")]
-
-    # If any rows are found, return the norm value from the first row
-    if not filtered_df.empty:
-        value = float(filtered_df.iloc[0]["norm"])
-        print (value)
-        return value
-    else:
-        return None
-
-    # print("Value:", value)
-    #     with open(Acceptance_file) as infile:
-    #     Lines = infile.readlines()
-    # totalNorm=0
-    # for line in Lines:
-    #     y, c, m, cat, norm = line.split()
-    #     if (year=="fullRun2" and c==coupling and m==mass and cat=='All'):
-    #             totalNorm += float(norm)
-    #     elif (y==year and c==coupling and m==mass and cat=='All'):
-    #         totalNorm = float(norm)
-    #         break
-    # totalNorm = float(totalNorm)/float(lumi(year))
-    # if (year!="fullRun2"): totalNorm = 0.85
-    # return value
+    with open(Acceptance_file) as infile:
+        Lines = infile.readlines()
+    totalNorm=0
+    for line in Lines:
+        y, c, m, cat, norm = line.split()
+        if (year=="fullRun2" and c==coupling and m==mass and cat=='All'):
+                totalNorm += float(norm)
+        elif (y==year and c==coupling and m==mass and cat=='All'):
+            totalNorm = float(norm)
+            break
+    totalNorm = float(totalNorm)/float(lumi(year))
+    if (year!="fullRun2"): totalNorm = 0.85
+    return totalNorm
 
 def MC_Cross_section(coupling):
     # Cross sections for RS Graviton
