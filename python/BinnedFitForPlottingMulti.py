@@ -1144,17 +1144,21 @@ if __name__ == '__main__':
     elif(options.year=="2018"): l.DrawLatex(0.68,0.94,"59.7 fb^{-1} (13 TeV)")
     elif(options.year=="fullRun2"): l.DrawLatex(0.68,0.94,"138 fb^{-1} (13 TeV)")
     # PAS
-    #l.SetTextFont(62)
-    #l.SetTextSize(0.055)
-    #l.DrawLatex(0.2,0.96,"CMS")
-    #l.SetTextFont(52)
-    #l.SetTextSize(0.045)
-    #l.DrawLatex(0.3,0.96,"Preliminary")
+    # l.SetTextFont(62)
+    # l.SetTextSize(0.055)
+    # l.DrawLatex(0.2,0.96,"CMS")
+    # l.SetTextFont(52)
+    # l.SetTextSize(0.045)
+    # l.DrawLatex(0.3,0.96,"Preliminary")
     # paper
     l.SetTextFont(62)
     if(options.year=="fullRun2"):
         l.SetTextSize(0.065)
         l.DrawLatex(0.22,0.85,"CMS")
+        # PAS
+        l.SetTextFont(52)
+        l.SetTextSize(0.045)
+        l.DrawLatex(0.32,0.85,"Preliminary")
     else:
         l.SetTextSize(0.05)
         l.DrawLatex(0.22,0.85,"CMS Supplementary")
