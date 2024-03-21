@@ -229,7 +229,7 @@ def main(in_filename):
     cmsText.SetTextSize(0.05);
     cmsText.Draw();
 
-    extraText=ROOT.TLatex(0.23,0.90, "Preliminary");
+    extraText=ROOT.TLatex(0.23,0.82, "Preliminary");
     extraText.SetNDC(1);
     extraText.SetTextFont(52);
     extraText.SetLineColor(0);
