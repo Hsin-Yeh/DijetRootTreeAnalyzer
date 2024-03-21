@@ -141,16 +141,7 @@ if __name__ == "__main__":
     cmsText.SetTextSize(0.04);
     cmsText.Draw();
 
-    extraText=ROOT.TLatex(0.24,0.83, "Simulation");
-    extraText.SetNDC(1);
-    extraText.SetTextFont(52);
-    extraText.SetLineColor(0);
-    extraText.SetLineStyle(1);
-    extraText.SetLineWidth(1);
-    extraText.SetTextSize(0.04);
-    extraText.Draw();
-
-    extraText=ROOT.TLatex(0.34,0.83, "Preliminary");
+    extraText=ROOT.TLatex(0.24,0.83, "Simulation Preliminary");
     extraText.SetNDC(1);
     extraText.SetTextFont(52);
     extraText.SetLineColor(0);
