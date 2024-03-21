@@ -95,6 +95,7 @@ def main(in_filename):
         if (i%4==0): mass, obs, expP2s, expP1s, exp, expM1s, expM2s = line.split()
         elif (i%4==1): pvalue=line.split()[1]
         elif (i%4==2): zvalue=line.split()[1]
+        # mass, obs, expP2s, expP1s, exp, expM1s, expM2s = line.split()
         norm = Acceptance(signame, year, coupling, mass)
         mass_array.append(float(mass))
         obs_array.append(float(obs)/norm)
@@ -229,7 +230,7 @@ def main(in_filename):
     cmsText.SetTextSize(0.05);
     cmsText.Draw();
 
-    extraText=ROOT.TLatex(0.23,0.82, "Preliminary");
+    extraText=ROOT.TLatex(0.26,0.82, "Preliminary");
     extraText.SetNDC(1);
     extraText.SetTextFont(52);
     extraText.SetLineColor(0);
