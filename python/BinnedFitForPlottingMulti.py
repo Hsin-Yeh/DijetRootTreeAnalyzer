@@ -299,7 +299,7 @@ if __name__ == '__main__':
                   help="category")
     parser.add_option('--year',dest="year",default="2017",type="string",
                   help="year")
-    parser.add_option('--PAS',dest="PAS", default=True,action='store_true',
+    parser.add_option('--PAS',dest="PAS", default=False, action='store_true',
                   help="Paper or PAS")
 
     rt.RooMsgService.instance().setGlobalKillBelow(rt.RooFit.FATAL)
