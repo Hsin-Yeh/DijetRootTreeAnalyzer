@@ -23,8 +23,8 @@ if __name__ == "__main__":
     ROOT.gROOT.LoadMacro("~/rootlogon.C")
 
     c1 = ROOT.TCanvas("c1","c1", 700, 600)
-    leg1 = ROOT.TLegend(0.5, 0.33, 0.75, 0.53)
-    leg2 = ROOT.TLegend(0.65, 0.33, 0.9, 0.53)
+    leg1 = ROOT.TLegend(0.48, 0.33, 0.73, 0.53)
+    leg2 = ROOT.TLegend(0.63, 0.33, 0.88, 0.53)
     leg1.SetBorderSize(0);
     leg1.SetFillStyle(0);
     leg2.SetBorderSize(0);
