@@ -22,20 +22,23 @@ if __name__ == "__main__":
     ROOT.gROOT.LoadMacro("~/rootlogon.C")
 
     c1 = ROOT.TCanvas("c1","c1", 700, 600)
-    l = ROOT.TLegend(0.4, 0.35, 0.88, 0.55)
-    l.SetNColumns(2);
+    leg1 = ROOT.TLegend(0.6, 0.35, 0.88, 0.55)
+    leg2 = ROOT.TLegend(0.4, 0.35, 0.6, 0.55)
+    leg1.SetBorderSize(0);
+    leg1.SetFillStyle(0);
+    leg2.SetBorderSize(0);
+    leg2.SetFillStyle(0);
+
     if (args.coupling=="kMpl001"):
-        l.SetHeader("#tilde{k}=0.01              #frac{#Gamma_{X}}{m_{X}} = 1.4 #times 10^{-4}","C")
+        # l.SetHeader("#tilde{k}=0.01              #frac{#Gamma_{X}}{m_{X}} = 1.4 #times 10^{-4}","C")
         hh_coupling="0p014"
     elif (args.coupling=="kMpl01"):
-        l.SetHeader("#tilde{k}=0.1               #frac{#Gamma_{X}}{m_{X}} = 1.4 #times 10^{-2}","C")
+        # l.SetHeader("#tilde{k}=0.1               #frac{#Gamma_{X}}{m_{X}} = 1.4 #times 10^{-2}","C")
         hh_coupling="1p4"
     elif (args.coupling=="kMpl02"):
-        l.SetHeader("#tilde{k}=0.2               #frac{#Gamma_{X}}{m_{X}} = 5.6 #times 10^{-2}","C")
+        # l.SetHeader("#tilde{k}=0.2               #frac{#Gamma_{X}}{m_{X}} = 5.6 #times 10^{-2}","C")
         hh_coupling="5p6"
 
-    l.SetBorderSize(0);
-    l.SetFillStyle(0);
     luminosity = {"2016":35.9, "2017":41.5, "2018":59.7, "fullRun2":137.1}
     color=[[0,2,4], [0,2,4]]
     linestyle=[1,1,10]
@@ -124,13 +127,15 @@ if __name__ == "__main__":
     g_EBEE_2.SetLineWidth(3)
     g_EBEE_2.Draw("LSame");
 
-    l.AddEntry(g_All_1, "Total J=2", "l")
-    l.AddEntry(g_All_2, "Total J=0", "l")
-    l.AddEntry(g_EBEB_1, "EBEB J=2", "l")
-    l.AddEntry(g_EBEB_2, "EBEB J=0", "l")
-    l.AddEntry(g_EBEE_1, "EBEE J=2", "l")
-    l.AddEntry(g_EBEE_2, "EBEE J=0", "l")
-    l.Draw("same")
+    leg1.AddEntry(g_All_2, "J=0", "l")
+    leg1.AddEntry(g_All_1, "J=2", "l")
+    leg2.AddEntry(g_All_2, "Total", "l")
+    leg2.AddEntry(g_EBEB_2, "EBEB", "l")
+    leg2.AddEntry(g_EBEE_2, "EBEE", "l")
+    # l.AddEntry(g_EBEE_1, "EBEE J=2", "l")
+    leg1.Draw("same")
+    leg2.Draw("same")
+
 
     cmsText=ROOT.TLatex(0.17,0.83, "CMS");
     cmsText.SetNDC(1);
