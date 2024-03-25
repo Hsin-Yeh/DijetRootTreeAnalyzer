@@ -24,7 +24,7 @@ if __name__ == "__main__":
 
     c1 = ROOT.TCanvas("c1","c1", 700, 600)
     leg1 = ROOT.TLegend(0.45, 0.33, 0.7, 0.53)
-    leg2 = ROOT.TLegend(0.65, 0.33, 0.85, 0.53)
+    leg2 = ROOT.TLegend(0.6, 0.33, 0.85, 0.53)
     leg1.SetBorderSize(0);
     leg1.SetFillStyle(0);
     leg2.SetBorderSize(0);
