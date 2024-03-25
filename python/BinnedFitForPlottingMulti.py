@@ -1059,6 +1059,10 @@ if __name__ == '__main__':
             myRebinnedDensityTH1.SetMinimum(2e-5)
     myRebinnedDensityTH1.Draw("axis")
 
+    # Draw data
+    g_data_clone.Draw("zpsame")
+    g_data.Draw("zpsame")
+    # Draw fit function
     if options.doTriggerFit or options.doSimultaneousFit or options.doSpectrumFit or options.noFit:
         rt.gStyle.SetPalette(90)
         # ci = rt.TColor.GetColor("#21ffff"); # Cool
@@ -1361,9 +1365,6 @@ if __name__ == '__main__':
     #     h_background.SetLineColor(rt.kRed)
     #     h_background.SetLineWidth(2)
     #     h_background.Draw("histsame")
-    g_data_clone.Draw("zpsame")
-    g_data.Draw("zpsame")
-
 
 
     if 'PF' in box:
