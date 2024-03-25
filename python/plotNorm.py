@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 #
 # for year in {"2016","2017","2018"}; do for coup in {"kMpl01","kMpl02","kMpl001"}; do python python/plotNorm.py ../../SignalNorm_Splines_full.txt ../../SignalNorm_Splines_genFiducial.txt -y ${year} -c ${coup} -o output/plots/sigNorm; done; done
+# python python/plotNorm.py ../../SignalNorm_Splines_full.txt ../../SignalNorm_Splines_genFiducial.txt -y 2016 -c kMpl001 -o output/plots/sigNorm
 #
 import ROOT
 from array import array
@@ -22,8 +23,8 @@ if __name__ == "__main__":
     ROOT.gROOT.LoadMacro("~/rootlogon.C")
 
     c1 = ROOT.TCanvas("c1","c1", 700, 600)
-    leg1 = ROOT.TLegend(0.6, 0.35, 0.88, 0.55)
-    leg2 = ROOT.TLegend(0.4, 0.35, 0.6, 0.55)
+    leg1 = ROOT.TLegend(0.4, 0.35, 0.6, 0.55)
+    leg2 = ROOT.TLegend(0.6, 0.35, 0.88, 0.55)
     leg1.SetBorderSize(0);
     leg1.SetFillStyle(0);
     leg2.SetBorderSize(0);
@@ -129,9 +130,13 @@ if __name__ == "__main__":
 
     leg1.AddEntry(g_All_2, "J=0", "l")
     leg1.AddEntry(g_All_1, "J=2", "l")
-    leg2.AddEntry(g_All_2, "Total", "l")
-    leg2.AddEntry(g_EBEB_2, "EBEB", "l")
-    leg2.AddEntry(g_EBEE_2, "EBEE", "l")
+    l_total = leg2.AddEntry(g_All_2, "Total", "l")
+    l_EBEB = leg2.AddEntry(g_EBEB_2, "EBEB", "l")
+    l_EBEE = leg2.AddEntry(g_EBEE_2, "EBEE", "l")
+    l_total.SetTextColor(1)
+    l_EBEB.SetTextColor(2)
+    l_EBEE.SetTextColor(4)
+
     # l.AddEntry(g_EBEE_1, "EBEE J=2", "l")
     leg1.Draw("same")
     leg2.Draw("same")
