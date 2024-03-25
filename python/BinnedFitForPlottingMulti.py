@@ -299,7 +299,9 @@ if __name__ == '__main__':
                   help="category")
     parser.add_option('--year',dest="year",default="2017",type="string",
                   help="year")
- 
+    parser.add_option('--PAS',dest="PAS", default=True,action='store_true',
+                  help="Paper or PAS")
+
     rt.RooMsgService.instance().setGlobalKillBelow(rt.RooFit.FATAL)
     rt.gStyle.SetPaintTextFormat('+.2f')
 
@@ -1162,7 +1164,7 @@ if __name__ == '__main__':
         # PAS
         l.SetTextFont(52)
         l.SetTextSize(0.055)
-        l.DrawLatex(0.32,0.85,"Preliminary")
+        if (options.PAS): l.DrawLatex(0.32,0.85,"Preliminary")
     else:
         l.SetTextSize(0.05)
         l.DrawLatex(0.22,0.85,"CMS Supplementary")
