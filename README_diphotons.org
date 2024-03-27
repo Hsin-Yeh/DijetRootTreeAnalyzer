@@ -175,7 +175,8 @@ prepareWorkspaces.exe 2016 "${mainpath}/input/trees" "${mainpath}/input" all
 prepareWorkspaces.exe 2017 "${mainpath}/input/trees" "${mainpath}/input" all
 prepareWorkspaces.exe 2018 "${mainpath}/input/trees" "${mainpath}/input" all
 
-#To speed up things, study the scripts, change to your username and path and only then run them
+# To speed up things, study the scripts, change to your username and path and only then run them
+# This will run condor jobs
 cd ParallelForSignal
 #Create the jobs
 ./createSignalJobs.csh
