@@ -96,13 +96,13 @@ def main(in_filename):
         Lines = infile.readlines()
     print(len(Lines))
     for i, line in enumerate(Lines):
-        if (signame=="heavyhiggs"):
-            if (i%4==0): mass, obs, expP2s, expP1s, exp, expM1s, expM2s = line.split()
-            else: continue;
-            # elif (i%4==1): continue # pvalue=line.split()[1]
-            # elif (i%4==2): continue # zvalue=line.split()[1]
-        else:
-            mass, obs, expP2s, expP1s, exp, expM1s, expM2s = line.split()
+        # if (signame=="heavyhiggs"):
+        #     if (i%4==0): mass, obs, expP2s, expP1s, exp, expM1s, expM2s = line.split()
+        #     else: continue;
+        #     # elif (i%4==1): continue # pvalue=line.split()[1]
+        #     # elif (i%4==2): continue # zvalue=line.split()[1]
+        # else:
+        mass, obs, expP2s, expP1s, exp, expM1s, expM2s = line.split()
         print(i, mass)
         norm = Acceptance(signame, year, coupling, mass)
         mass_array.append(float(mass))
