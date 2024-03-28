@@ -1,5 +1,8 @@
 #!/usr/bin/env python
 
+# python python/plotLimit_2D.py -s grav -i ParallelForLimits/2023-10-25/
+# python python/plotLimit_2D.py -s heavyhiggs -i ParallelForLimits/2024-03-17_heavyhiggs/
+
 import ROOT
 from array import array
 import numpy as np
