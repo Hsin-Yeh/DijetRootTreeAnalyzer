@@ -237,7 +237,7 @@ def main(in_filename):
     extraText.SetLineStyle(1);
     extraText.SetLineWidth(1);
     extraText.SetTextSize(0.04);
-    extraText.Draw();
+    # extraText.Draw();
 
     lumiText=ROOT.TLatex(0.7,0.90, "%d fb^{-1} (13 TeV)"%(lumi(year)) );
     # lumiText=ROOT.TLatex(0.70,0.90, "%d fb^{-1} (13 TeV)"%(138));

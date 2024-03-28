@@ -251,7 +251,7 @@ def pvalue2D():
     extraText.SetLineStyle(1);
     extraText.SetLineWidth(1);
     extraText.SetTextSize(0.035);
-    extraText.Draw();
+    # extraText.Draw();
 
     supText=ROOT.TLatex(0.14,0.90, "CMS Supplementary");
     supText.SetNDC(1);
