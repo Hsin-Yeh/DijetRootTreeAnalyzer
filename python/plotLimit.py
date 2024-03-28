@@ -94,6 +94,7 @@ def main(in_filename):
     mass_array, obs_array, exp_array, expP1s_array, expP2s_array, expM1s_array, expM2s_array, exp1s_array, exp2s_array, mass_long_array = array('d'), array('d'), array('d'), array('d'), array('d'), array('d'), array('d'), array('d'), array('d'), array('d');
     with open (in_filename,'r') as infile:
         Lines = infile.readlines()
+    print(len(Lines))
     for i, line in enumerate(Lines):
         if (signame=="heavyhiggs"):
             if (i%4==0): mass, obs, expP2s, expP1s, exp, expM1s, expM2s = line.split()
@@ -102,6 +103,7 @@ def main(in_filename):
             # elif (i%4==2): continue # zvalue=line.split()[1]
         else:
             mass, obs, expP2s, expP1s, exp, expM1s, expM2s = line.split()
+        print(i, mass)
         norm = Acceptance(signame, year, coupling, mass)
         mass_array.append(float(mass))
         obs_array.append(float(obs)/norm)
