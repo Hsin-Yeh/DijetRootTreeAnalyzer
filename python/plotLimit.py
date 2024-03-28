@@ -13,6 +13,9 @@
 # for coupling in {"kMpl001","kMpl01","kMpl02"}; do python ../../python/plotLimit.py -y fullRun2 -c ${coupling} -s grav --unblind; done;
 # for coupling in {"0p014","1p4","5p6"}; do python ../../python/plotLimit.py -y fullRun2 -c ${coupling} -s heavyhiggs --unblind; done;
 
+# python python/plotLimit.py FinalResults/2023-07-01-1-grav/finalResults_fullRun2_grav_kMpl0* --unblind
+# python python/plotLimit.py ParallelForLimits/2024-03-17_heavyhiggs_1D/results/finalResults_fullRun2_heavyhiggs_* --unblind
+
 import ROOT
 from array import array
 import numpy as np
