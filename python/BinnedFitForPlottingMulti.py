@@ -136,6 +136,7 @@ def convertFunctionToHisto(background_,name_,N_massBins_,massBins_):
 
     background_hist_ = rt.TH1D(name_,name_,N_massBins_,massBins_)
     print(background_,name_)
+    total = 0
     for bin in range (0,N_massBins_):
         xbinLow = massBins_[bin]
         xbinHigh = massBins_[bin+1]
@@ -144,7 +145,8 @@ def convertFunctionToHisto(background_,name_,N_massBins_,massBins_):
         background_hist_.SetBinContent(bin+1,value)
         # valueError = background_.IntegralError(xbinLow , xbinHigh , ) / binWidth_current
         print("{:.0f}GeV-{:.0f}GeV : Integral={:.1f}, Divide_Bin_Width={:.1f}".format(xbinLow, xbinHigh, background_.Integral(xbinLow , xbinHigh), value))
-
+        total += background_.Integral(xbinLow , xbinHigh)
+    print("hihihihihihihi : %f"%total)
     return background_hist_
 
 def calculateChi2AndFillResiduals(data_obs_TGraph_,background_hist_,hist_fit_residual_vsMass_,workspace_,prinToScreen_=0,effFit_=False):
