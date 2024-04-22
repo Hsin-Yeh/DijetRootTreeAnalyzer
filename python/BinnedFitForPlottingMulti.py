@@ -219,7 +219,7 @@ def calculateChi2AndFillResiduals(data_obs_TGraph_,background_hist_,hist_fit_res
         checkInRegions = [xbinCenter>workspace_.var('mgg').getMin(reg) and xbinCenter<workspace_.var('mgg').getMax(reg) for reg in plotRegions]
         if effFit_: checkInRegions = [xbinCenter>workspace_.var('mgg').getMin('Eff') and xbinCenter<workspace_.var('mgg').getMax('Eff')]
         if any(checkInRegions):
-            #print '%i: obs %.0f, exp %.2f, chi2 %.2f'%(bin, value_data* binWidth_current * lumi, value_fit* binWidth_current * lumi, pow(fit_residual,2))
+            print '%i: obs %.0f, exp %.2f, chi2 %.2f'%(bin, value_data* binWidth_current * lumi, value_fit* binWidth_current * lumi, pow(fit_residual,2))
             chi2_PlotRangeAll += pow(fit_residual,2)
             N_PlotRangeAll += 1
             if (value_data > 0):
