@@ -225,12 +225,14 @@ def calculateChi2AndFillResiduals(data_obs_TGraph_,background_hist_,hist_fit_res
             chi2_PlotRangeAll += pow(fit_residual,2)
             N_PlotRangeAll += 1
             if (value_data > 0):
-                print '%i: obs %.0f, exp %.2f, chi2 %.2f'%(bin, value_data* binWidth_current * lumi, value_fit* binWidth_current * lumi, pow(fit_residual,2))
                 chi2_PlotRangeNonZero += pow(fit_residual,2)
                 N_PlotRangeNonZero += 1
                 if(value_data * binWidth_current * lumi > MinNumEvents):
                     chi2_PlotRangeMinNumEvents += pow(fit_residual,2)
                     N_PlotRangeMinNumEvents += 1
+            else:
+                print '%i: obs %.0f, exp %.2f, chi2 %.2f'%(bin, value_data* binWidth_current * lumi, value_fit* binWidth_current * lumi, pow(fit_residual,2))
+
     
     #==================
     # Calculate chi2/ndf
