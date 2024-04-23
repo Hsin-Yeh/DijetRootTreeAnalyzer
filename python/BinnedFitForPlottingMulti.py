@@ -289,9 +289,9 @@ def addSignalHisto(h_bkg,data_obs_TGraph_,N_massBins_,massBins_,cat):
         xbinHigh = data_obs_TGraph_.GetX()[bin]+data_obs_TGraph_.GetEXhigh()[bin]
         binWidth_current = xbinHigh - xbinLow
         value = sighist_1320_clone.GetBinContent(bin+1)
-        # print(value_data,err_low_data,err_high_data)
-        # print(xbinCenter,xbinLow,xbinHigh,binWidth_current)
-        # print(value)
+        print(value_data,err_low_data,err_high_data)
+        print(xbinCenter,xbinLow,xbinHigh,binWidth_current)
+        print(value)
 
         ## Fit residuals
         err_tot_data = 0
