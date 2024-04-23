@@ -213,7 +213,7 @@ def pvalue2D():
     h_zvalue.GetZaxis().SetTitleSize(0.05)
     h_zvalue.SetMinimum(-0.01)
     h_zvalue.Draw("colz")
-    cmsText.Draw();
+    # cmsText.Draw();
     supText.Draw()
     lumiText.Draw();
     c1.SaveAs("%s/zvalue_%s.pdf"%(args.outputDir,args.signame))
