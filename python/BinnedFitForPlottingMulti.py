@@ -281,6 +281,7 @@ def addSignalHisto(h_bkg,data_obs_TGraph_,N_massBins_,massBins_,cat):
 
     sighist_1320_clone.Add(h_bkg)
     h_residual = rt.TH1D("h_residual","h_residual",N_massBins_,massBins_)
+    h_residual.SetDirectory(0)
     for bin in range (0,N_massBins_):
         ## Values and errors
         value_data = data_obs_TGraph_.GetY()[bin]
