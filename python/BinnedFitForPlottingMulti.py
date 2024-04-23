@@ -252,10 +252,10 @@ def calculateChi2AndFillResiduals(data_obs_TGraph_,background_hist_,hist_fit_res
 def addSignalHisto(h_bkg,N_massBins_,massBins_):
     sigfile = rt.TFile("/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/full/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_kMpl001_EBEB_2016.root")
     sighist = rt.TH1D("sighist","sighist",N_massBins_,massBins_)
-    sighist = sigfile.Get("h_gg_1313")
+    sighist = sigfile.Get("h_gg_1000")
     sighist.SetDirectory(0)
-    sighist.Scale(1000)
-    sighist.Add(h_bkg)
+    sighist.Scale(100)
+    # sighist.Add(h_bkg)
     return sighist
 
 if __name__ == '__main__':
