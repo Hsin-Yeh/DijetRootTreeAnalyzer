@@ -256,11 +256,9 @@ def addSignalHisto(h_bkg,N_massBins_,massBins_):
     sighist_1000.SetDirectory(0)
     h_bkg.SetFillColor(0)
     ci = rt.TColor.GetColor("#1068da"); # Bird
-    ci.SetAlpha(0.01);
-    sighist_1000.SetFillColor(ci)
+    sighist_1000.SetFillColorAlpha(ci,0.01)
     ci = rt.TColor.GetColor("#2cb6a5"); # Bird
-    ci.SetAlpha(0.01);
-    sighist_3000.SetFillColor(ci)
+    sighist_3000.SetFillColorAlpha(ci,0.01)
     hstack.Add(h_bkg)
     hstack.Add(sighist_1000)
     hstack.Add(sighist_3000)
@@ -1179,8 +1177,8 @@ if __name__ == '__main__':
     leg.AddEntry(backgrounds["expow1"],"%s"%(modelforms["expow1"]),"l")
     leg.AddEntry(backgrounds["invpow1"],"%s"%(modelforms["invpow1"]),"l")
     leg.AddEntry(backgrounds["invpowlin1"],"%s"%(modelforms["invpowlin1"]),"l")
-    leg.AddEntry(sighist_1000,"signal","f")
-    leg.AddEntry(sighist_3000,"signal","f")
+    leg.AddEntry(sighist_1000,"1TeV narrow RSG","f")
+    leg.AddEntry(sighist_3000,"3TeV narrow RSG","f")
 
     # for key, value in backgrounds.iteritems():
         # leg.AddEntry(value,"%s: %s "%(key, modelforms[key]),"l")
