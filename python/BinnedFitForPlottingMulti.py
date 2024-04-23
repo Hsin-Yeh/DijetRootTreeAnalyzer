@@ -259,7 +259,7 @@ def addSignalHisto(h_bkg,N_massBins_,massBins_):
     ci = rt.TColor.GetColor("#1068da"); # Bird
     sighist_1000.SetFillColorAlpha(ci,0.5)
     ci = rt.TColor.GetColor("#2cb6a5"); # Bird
-    sighist_3000.SetFillColorAlpha(ci,0.01)
+    sighist_3000.SetFillColorAlpha(ci,0.5)
     hstack_1000.Add(h_bkg)
     hstack_1000.Add(sighist_1000)
     hstack_3000.Add(h_bkg)
@@ -1045,8 +1045,8 @@ if __name__ == '__main__':
     # Draw data
     hstack_1000.GetXaxis().SetRangeUser(400,1500)
     hstack_1000.Draw("HISTsame")
-    # hstack_3000.GetXaxis().SetRangeUser(400,1500)
-    # hstack_3000.Draw("HISTsame")
+    hstack_3000.GetXaxis().SetRangeUser(400,1500)
+    hstack_3000.Draw("HISTsame")
     g_data_clone.Draw("zpsame")
     g_data.Draw("zpsame")
     # Draw fit function
@@ -1181,8 +1181,16 @@ if __name__ == '__main__':
     leg.AddEntry(backgrounds["expow1"],"%s"%(modelforms["expow1"]),"l")
     leg.AddEntry(backgrounds["invpow1"],"%s"%(modelforms["invpow1"]),"l")
     leg.AddEntry(backgrounds["invpowlin1"],"%s"%(modelforms["invpowlin1"]),"l")
-    leg.AddEntry(sighist_1000,"1TeV narrow RSG","f")
-    # leg.AddEntry(sighist_3000,"3TeV narrow RSG","f")
+
+    legsig = rt.TLegend(0.28,0.38,0.5,0.87)
+    legsig.SetTextFont(42)
+    legsig.SetTextSize(0.06)
+    legsig.SetFillColor(rt.kWhite)
+    legsig.SetFillStyle(0)
+    legsig.SetLineWidth(0)
+    legsig.SetLineColor(rt.kWhite)
+    legsig.AddEntry(sighist_1000,"1TeV narrow RSG","f")
+    legsig.AddEntry(sighist_3000,"3TeV narrow RSG","f")
 
     # for key, value in backgrounds.iteritems():
         # leg.AddEntry(value,"%s: %s "%(key, modelforms[key]),"l")
@@ -1198,6 +1206,7 @@ if __name__ == '__main__':
     #             leg.AddEntry(g_signal,"%s (%.2f TeV)"%(model,float(mass)/1000.),"l")
     #         #leg.AddEntry(None,"%.1f pb"%(float(xsec)),"")
     leg.Draw()
+    legsig.Draw()
     #background.Draw("csame")
     #g_data.Draw("pezsame")
 
