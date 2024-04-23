@@ -72,8 +72,12 @@ if __name__ == "__main__":
             Lines = infile.readlines()
         for line in Lines:
             if (line.split()[0]==args.year and line.split()[1]==args.coupling and float(line.split()[2])%100==0):
-                if (line.find("EBEB")!=-1): EBEBnorm_1.append(float(line.split(" ")[4])/luminosity[args.year])
-                elif (line.find("EBEE")!=-1): EBEEnorm_1.append(float(line.split(" ")[4])/luminosity[args.year])
+                if (line.find("EBEB")!=-1):
+                    EBEBnorm_1.append(float(line.split(" ")[4])/luminosity[args.year])
+                    print("EBEB %f %f"%(float(line.split(" ")[2]),float(line.split(" ")[4])/luminosity[args.year]))
+                elif (line.find("EBEE")!=-1):
+                    EBEEnorm_1.append(float(line.split(" ")[4])/luminosity[args.year])
+                    print("EBEE %f %f"%(float(line.split(" ")[2]),float(line.split(" ")[4])/luminosity[args.year]))
                 elif (line.find("All")!=-1):
                     Allnorm_1.append(float(line.split(" ")[4])/luminosity[args.year])
                     mass_1.append(float(line.split(" ")[2]))
