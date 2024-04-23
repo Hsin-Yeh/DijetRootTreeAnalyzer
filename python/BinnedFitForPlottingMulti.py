@@ -1182,7 +1182,7 @@ if __name__ == '__main__':
 
     legsig = rt.TLegend(0.23,0.73,0.5,0.88)
     legsig.SetTextFont(42)
-    legsig.SetTextSize(0.06)
+    legsig.SetTextSize(0.055)
     legsig.SetFillColor(rt.kWhite)
     legsig.SetFillStyle(0)
     legsig.SetLineWidth(0)
