@@ -314,7 +314,7 @@ def addSignalHisto(h_bkg,data_obs_TGraph_,N_massBins_,massBins_,cat):
     ctest = rt.TCanvas()
     h_residual.Draw("HIST")
     ctest.SetLogy()
-    ctest.SaveAs("test.png")
+    ctest.SaveAs("test1.png")
 
     return hstack_1320, sighist_1320, hstack_2200, sighist_2200, h_residual
 
