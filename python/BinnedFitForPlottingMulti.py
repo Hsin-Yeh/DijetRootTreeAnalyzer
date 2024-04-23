@@ -304,6 +304,7 @@ def addSignalHisto(h_bkg,data_obs_TGraph_,N_massBins_,massBins_,cat):
             err_tot_data = err_high_data
         else:
             err_tot_data = err_low_data
+
         fit_residual = (value_data - value) / err_tot_data
         err_fit_residual = 1
 
@@ -315,6 +316,7 @@ def addSignalHisto(h_bkg,data_obs_TGraph_,N_massBins_,massBins_,cat):
 
     ctest = rt.TCanvas()
     h_residual.Draw("HIST")
+    h_residual.GetXaxis().SetRangeUser(1290,1350)
     ctest.SaveAs("test1.png")
 
     return hstack_1320, sighist_1320, hstack_2200, sighist_2200, h_residual
