@@ -1496,7 +1496,7 @@ if __name__ == '__main__':
         # paper
         h_fit_residual_vs_mass.GetXaxis().SetTitle('m_{#gamma#gamma} (TeV)')
         h_fit_residual_vs_mass.GetXaxis().SetLabelOffset(1000)
-        h_fit_residual_vs_mass.GetXaxis().SetTickSize(0.5)
+        h_fit_residual_vs_mass.GetXaxis().SetTickSize(0.2)
         #h_fit_residual_vs_mass.GetXaxis().SetNoExponent()
         #h_fit_residual_vs_mass.GetXaxis().SetMoreLogLabels()
         xLab = rt.TLatex()
