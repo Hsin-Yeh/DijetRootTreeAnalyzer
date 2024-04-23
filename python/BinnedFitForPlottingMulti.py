@@ -256,6 +256,7 @@ def addSignalHisto(h_bkg):
     # h_sig.Add(h_bkg)
     ctest = rt.TCanvas()
     h_bkg.Draw("HIST")
+    ctest.SetLogy()
     ctest.SaveAs("test.png")
     return h_sig
 
