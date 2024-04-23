@@ -276,40 +276,33 @@ def addSignalHisto(h_bkg,cat):
     hstack_2200.Add(sighist_2200)
     # sighist_1320.Add(data)
 
-    # for bin in range (0,N_massBins_):
-    #     ## Values and errors
-    #     value_data = data_obs_TGraph_.GetY()[bin]
-    #     err_low_data = data_obs_TGraph_.GetEYlow()[bin]
-    #     err_high_data = data_obs_TGraph_.GetEYhigh()[bin]
-    #     xbinCenter = data_obs_TGraph_.GetX()[bin]
-    #     xbinLow = data_obs_TGraph_.GetX()[bin]-data_obs_TGraph_.GetEXlow()[bin]
-    #     xbinHigh = data_obs_TGraph_.GetX()[bin]+data_obs_TGraph_.GetEXhigh()[bin]
-    #     binWidth_current = xbinHigh - xbinLow
-    #     value = sighist_1320.GetBinContent(bin+1)
-    #     # print(value_data,err_low_data,err_high_data)
-    #     # print(xbinCenter,xbinLow,xbinHigh,binWidth_current)
-    #     # print(value)
+    for bin in range (0,N_massBins_):
+        ## Values and errors
+        value_data = data_obs_TGraph_.GetY()[bin]
+        err_low_data = data_obs_TGraph_.GetEYlow()[bin]
+        err_high_data = data_obs_TGraph_.GetEYhigh()[bin]
+        xbinCenter = data_obs_TGraph_.GetX()[bin]
+        xbinLow = data_obs_TGraph_.GetX()[bin]-data_obs_TGraph_.GetEXlow()[bin]
+        xbinHigh = data_obs_TGraph_.GetX()[bin]+data_obs_TGraph_.GetEXhigh()[bin]
+        binWidth_current = xbinHigh - xbinLow
+        value = sighist_1320.GetBinContent(bin+1)
+        # print(value_data,err_low_data,err_high_data)
+        # print(xbinCenter,xbinLow,xbinHigh,binWidth_current)
+        # print(value)
 
-    #     ## Fit residuals
-    #     err_tot_data = 0
-    #     if (value > value_data):
-    #         err_tot_data = err_high_data
-    #     else:
-    #         err_tot_data = err_low_data
-    #     plotRegions = plotRegion.split(',')
-    #     checkInRegions = [xbinCenter>workspace_.var('mgg').getMin(reg) and xbinCenter<workspace_.var('mgg').getMax(reg) for reg in plotRegions]
-    #     if effFit_: checkInRegions = [xbinCenter>workspace_.var('mgg').getMin('Eff') and xbinCenter<workspace_.var('mgg').getMax('Eff')]
-    #     if any(checkInRegions):
-    #         fit_residual = (value_data - value) / err_tot_data
-    #         err_fit_residual = 1
-    #     else:
-    #         fit_residual = 0
-    #         err_fit_residual = 0
+        ## Fit residuals
+        err_tot_data = 0
+        if (value > value_data):
+            err_tot_data = err_high_data
+        else:
+            err_tot_data = err_low_data
+        fit_residual = (value_data - value) / err_tot_data
+        err_fit_residual = 1
 
-    #     ## Fill histo with residuals
+        ## Fill histo with residuals
 
-    #     hist_fit_residual_vsMass_.SetBinContent(bin+1,fit_residual)
-    #     hist_fit_residual_vsMass_.SetBinError(bin+1,err_fit_residual)
+        hist_fit_residual_vsMass_.SetBinContent(bin+1,fit_residual)
+        hist_fit_residual_vsMass_.SetBinError(bin+1,err_fit_residual)
 
 
     return hstack_1320, sighist_1320, hstack_2200, sighist_2200
@@ -1204,7 +1197,7 @@ if __name__ == '__main__':
         l.SetTextSize(0.05)
         l.DrawLatex(0.22,0.85,"CMS Supplementary")
 
-    leg = rt.TLegend(0.21,0.05,0.43,0.55)
+    leg = rt.TLegend(0.21,0.05,0.45,0.5)
     # leg = rt.TLegend(0.6,0.4,0.88,0.88)
     leg.SetTextFont(42)
     leg.SetTextSize(0.06)
@@ -1227,15 +1220,15 @@ if __name__ == '__main__':
     leg.AddEntry(backgrounds["invpowlin1"],"%s"%(modelforms["invpowlin1"]),"l")
 
     # legsig = rt.TLegend(0.21,0.15,0.4,0.4)
-    legsig = rt.TLegend(0.55,0.6,0.88,0.88)
+    legsig = rt.TLegend(0.55,0.65,0.88,0.88)
     legsig.SetTextFont(42)
     legsig.SetTextSize(0.045)
     legsig.SetFillColor(rt.kWhite)
     legsig.SetFillStyle(0)
     legsig.SetLineWidth(0)
     legsig.SetLineColor(rt.kWhite)
-    legsig.AddEntry(sighist_1320,"#tilde{k}=0.01, M_{G}=1320GeV","f")
-    legsig.AddEntry(sighist_2200,"#tilde{k}=0.01, M_{G}=2200GeV","f")
+    legsig.AddEntry(sighist_1320,"#tilde{k}=0.01, M_{G}=1.3TeV","f")
+    legsig.AddEntry(sighist_2200,"#tilde{k}=0.01, M_{G}=2.2TeV","f")
 
     # for key, value in backgrounds.iteritems():
         # leg.AddEntry(value,"%s: %s "%(key, modelforms[key]),"l")
@@ -1319,7 +1312,7 @@ if __name__ == '__main__':
     chiText.SetLineColor(0);
     chiText.SetLineStyle(1);
     chiText.SetLineWidth(1);
-    if options.year=="fullRun2": chiText.SetTextSize(0.05)
+    if options.year=="fullRun2": chiText.SetTextSize(0.04)
     else: chiText.SetTextSize(0.045);
     chiText.Draw()
 

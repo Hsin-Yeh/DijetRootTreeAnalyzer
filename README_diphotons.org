@@ -534,7 +534,7 @@ for file in ${filesToExtractGluGlu}; do
     coup=`echo ${file} | cut -d'_' -f 4`;
     echo $coup;
     filename=`echo ${file} | cut -d'.' -f 1`;
-    ../getResonanceShapes.py -i inputs/${filename}.py -c ${coup} -f gg -o ResonanceShapes_${filename}.root;
+    ../getResonanceShapes.py -i inputs/${filename}.py -c ${coup} -f gg --massrange 1000 2500 10 -o ResonanceShapes_${filename}.root;
     # Not specifying mass range -> Use the predined mass settings.
     # If want to specify mass range -> --massrange 500 5000 10 || --masslist
 done;
