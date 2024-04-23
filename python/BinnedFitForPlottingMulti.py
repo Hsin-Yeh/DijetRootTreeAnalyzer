@@ -254,14 +254,16 @@ def addSignalHisto(h_bkg,data_obs_TGraph_,N_massBins_,massBins_,cat):
     hstack_2200 = rt.THStack("hstack_2200","")
     sighist_1320 = sigfile.Get("h_gg_1320")
     sighist_2200 = sigfile.Get("h_gg_2200")
+    sighist_1320.SetDirectory(0)
+    sighist_2200.SetDirectory(0)
+    sighist_1320_clone = sighist_1320.Clone()
+    sighist_2200_clone = sighist_1320.Clone()
     if(cat=="EBEB"):
         sighist_1320.Scale(31.9*0.386773)
         sighist_2200.Scale(9.1*0.483016)
     elif(cat=="EBEE"):
         sighist_1320.Scale(31.9*0.190722)
         sighist_2200.Scale(9.1*0.137251)
-    sighist_1320.SetDirectory(0)
-    sighist_2200.SetDirectory(0)
     h_bkg.SetFillColorAlpha(0,0)
     h_bkg.SetLineColorAlpha(0,0)
     ci = rt.TColor.GetColor("#1068da"); # Bird
@@ -274,8 +276,8 @@ def addSignalHisto(h_bkg,data_obs_TGraph_,N_massBins_,massBins_,cat):
     hstack_1320.Add(sighist_1320)
     hstack_2200.Add(h_bkg)
     hstack_2200.Add(sighist_2200)
-    # sighist_1320.Add(h_bkg)
 
+    sighist_1320_clone.Add(h_bkg)
     h_residual = rt.TH1D("h_residual","h_residual",N_massBins_,massBins_)
     for bin in range (0,N_massBins_):
         ## Values and errors
@@ -286,7 +288,7 @@ def addSignalHisto(h_bkg,data_obs_TGraph_,N_massBins_,massBins_,cat):
         xbinLow = data_obs_TGraph_.GetX()[bin]-data_obs_TGraph_.GetEXlow()[bin]
         xbinHigh = data_obs_TGraph_.GetX()[bin]+data_obs_TGraph_.GetEXhigh()[bin]
         binWidth_current = xbinHigh - xbinLow
-        value = sighist_1320.GetBinContent(bin+1)
+        value = sighist_1320_clone.GetBinContent(bin+1)
         # print(value_data,err_low_data,err_high_data)
         # print(xbinCenter,xbinLow,xbinHigh,binWidth_current)
         # print(value)
@@ -985,8 +987,7 @@ if __name__ == '__main__':
         h_backgrounds[key] = convertFunctionToHisto(value,"h_background",len(x)-1,x)
     hstack_1320, sighist_1320, hstack_2200, sighist_2200, h_residual = addSignalHisto(h_backgrounds["dijet"],g_data,len(x)-1,x,options.cat)
     ctest = rt.TCanvas()
-    hstack_1320.Draw("HIST")
-    hstack_2200.Draw("HISTsame")
+    h_residual.Draw("HIST")
     ctest.SetLogy()
     ctest.SaveAs("test.png")
 
