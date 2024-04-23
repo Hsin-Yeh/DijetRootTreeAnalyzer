@@ -254,6 +254,7 @@ def addSignalHisto(h_bkg,N_massBins_,massBins_):
     sighist_1000 = sigfile.Get("h_gg_1000")
     sighist_600 = sigfile.Get("h_gg_600")
     sighist_1000.Scale(100)
+    sighist_600.Scale(100)
     sighist_1000.SetDirectory(0)
     sighist_600.SetDirectory(0)
     h_bkg.SetFillColor(0)
@@ -1049,7 +1050,7 @@ if __name__ == '__main__':
     # Draw data
     hstack_1000.GetXaxis().SetRangeUser(400,1500)
     hstack_1000.Draw("HISTsame")
-    hstack_600.GetXaxis().SetRangeUser(400,3500)
+    hstack_600.GetXaxis().SetRangeUser(400,800)
     hstack_600.Draw("HISTsame")
     g_data_clone.Draw("zpsame")
     g_data.Draw("zpsame")
