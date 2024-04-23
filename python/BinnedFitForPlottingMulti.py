@@ -1090,7 +1090,7 @@ if __name__ == '__main__':
     elif 'DiPhoton' in box:
         myRebinnedDensityTH1.SetMaximum(2e3)
         if w.var('mgg').getMax() > 2037:
-            myRebinnedDensityTH1.SetMaximum(1e2)
+            myRebinnedDensityTH1.SetMaximum(8e1)
             myRebinnedDensityTH1.SetMinimum(2e-3)
         else:
             myRebinnedDensityTH1.SetMinimum(2e-5)
@@ -1200,7 +1200,7 @@ if __name__ == '__main__':
     l.SetTextFont(62)
     if(options.year=="fullRun2"):
         l.SetTextSize(0.065)
-        l.DrawLatex(0.21,0.85,"CMS")
+        l.DrawLatex(0.31,0.85,"CMS")
         # PAS
         l.SetTextFont(52)
         l.SetTextSize(0.055)
@@ -1232,9 +1232,9 @@ if __name__ == '__main__':
     leg.AddEntry(backgrounds["invpowlin1"],"%s"%(modelforms["invpowlin1"]),"l")
 
     # legsig = rt.TLegend(0.21,0.15,0.4,0.4)
-    legsig = rt.TLegend(0.5,0.7,0.85,0.9)
+    legsig = rt.TLegend(0.55,0.7,0.85,0.9)
     legsig.SetTextFont(42)
-    legsig.SetTextSize(0.05)
+    legsig.SetTextSize(0.045)
     legsig.SetFillColor(rt.kWhite)
     legsig.SetFillStyle(0)
     legsig.SetLineWidth(0)
@@ -1309,7 +1309,7 @@ if __name__ == '__main__':
                           list_chi2AndNdf_background[4], list_chi2AndNdf_background[5],
                           list_chi2AndNdf_background[4]/list_chi2AndNdf_background[5]))
 
-    EBText=rt.TLatex(0.35,0.85, "%s"%(options.cat));
+    EBText=rt.TLatex(0.45,0.85, "%s"%(options.cat));
     EBText.SetNDC(1);
     EBText.SetTextFont(42);
     EBText.SetLineColor(0);
