@@ -249,12 +249,14 @@ def calculateChi2AndFillResiduals(data_obs_TGraph_,background_hist_,hist_fit_res
 
 def addSignalHisto(h_bkg,N_massBins_,massBins_):
     sigfile = rt.TFile("/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/full/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_kMpl001_EBEB_2017.root")
-    sighist = rt.TH1D("sighist","sighist",N_massBins_,massBins_)
+    hstack = rt.THStack("sighist","")
     sighist = sigfile.Get("h_gg_1000")
-    sighist.SetDirectory(0)
     sighist.Scale(100)
-    sighist.Add(h_bkg)
-    return sighist
+    sighist.SetDirectory(0)
+    hstack.Add(h_bkg)
+    hstack.Add(sighist)
+    h_bkg.SetFillColor(0)
+    return hstack
 
 if __name__ == '__main__':
     parser = OptionParser()
@@ -1026,7 +1028,7 @@ if __name__ == '__main__':
     elif 'DiPhoton' in box:
         myRebinnedDensityTH1.SetMaximum(2e3)
         if w.var('mgg').getMax() > 2037:
-            myRebinnedDensityTH1.SetMaximum(5e2)
+            myRebinnedDensityTH1.SetMaximum(8e2)
             myRebinnedDensityTH1.SetMinimum(2e-3)
         else:
             myRebinnedDensityTH1.SetMinimum(2e-5)
@@ -1038,7 +1040,7 @@ if __name__ == '__main__':
     h_sig.SetLineWidth(1)
     h_sig.SetLineStyle(7)
     h_sig.GetXaxis().SetRangeUser(400,1500)
-    h_sig.Draw("HISTsame")
+    h_sig.Draw("Fsame")
     # Draw fit function
     if options.doTriggerFit or options.doSimultaneousFit or options.doSpectrumFit or options.noFit:
         rt.gStyle.SetPalette(90)
@@ -1171,6 +1173,7 @@ if __name__ == '__main__':
     leg.AddEntry(backgrounds["expow1"],"%s"%(modelforms["expow1"]),"l")
     leg.AddEntry(backgrounds["invpow1"],"%s"%(modelforms["invpow1"]),"l")
     leg.AddEntry(backgrounds["invpowlin1"],"%s"%(modelforms["invpowlin1"]),"l")
+    leg.AddEntry(h_sig,"","f")
 
     # for key, value in backgrounds.iteritems():
         # leg.AddEntry(value,"%s: %s "%(key, modelforms[key]),"l")
