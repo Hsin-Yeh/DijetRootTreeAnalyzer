@@ -256,7 +256,6 @@ def addSignalHisto(h_bkg,N_massBins_,massBins_):
     sighist.SetDirectory(0)
     sighist.Scale(100)
     sighist.Add(h_bkg)
-    sighist.SetBinContent(0,1000)
     return sighist
 
 if __name__ == '__main__':
@@ -1038,7 +1037,8 @@ if __name__ == '__main__':
     # Draw data
     g_data_clone.Draw("zpsame")
     g_data.Draw("zpsame")
-    h_sig.SetLineWidth(5)
+    h_sig.SetLineWidth(2)
+    h_sig.SetLineStyle(9)
     h_sig.GetXaxis().SetRangeUser(400,1500)
     h_sig.Draw("HISTsame")
     # Draw fit function
