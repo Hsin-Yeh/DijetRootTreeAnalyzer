@@ -274,7 +274,7 @@ def addSignalHisto(h_bkg,cat):
     hstack_1320.Add(sighist_1320)
     hstack_2200.Add(h_bkg)
     hstack_2200.Add(sighist_2200)
-    sighist_1320.Add(data)
+    # sighist_1320.Add(data)
 
     # for bin in range (0,N_massBins_):
     #     ## Values and errors
