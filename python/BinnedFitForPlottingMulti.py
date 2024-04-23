@@ -256,10 +256,6 @@ def addSignalHisto(h_bkg,data_obs_TGraph_,N_massBins_,massBins_,cat):
     sighist_2200 = sigfile.Get("h_gg_2200")
     sighist_1320.SetDirectory(0)
     sighist_2200.SetDirectory(0)
-    sighist_1320_clone = sighist_1320.Clone()
-    sighist_2200_clone = sighist_1320.Clone()
-    sighist_1320_clone.SetDirectory(0)
-    sighist_2200_clone.SetDirectory(0)
     if(cat=="EBEB"):
         sighist_1320.Scale(31.9*0.386773)
         sighist_2200.Scale(9.1*0.483016)
@@ -279,7 +275,6 @@ def addSignalHisto(h_bkg,data_obs_TGraph_,N_massBins_,massBins_,cat):
     hstack_2200.Add(h_bkg)
     hstack_2200.Add(sighist_2200)
 
-    sighist_1320_clone.Add(h_bkg)
     h_residual = rt.TH1D("h_residual","h_residual",N_massBins_,massBins_)
     ci = rt.TColor.GetColor("#1068da"); # Bird
     h_residual.SetFillColorAlpha(ci,0.5)
@@ -293,7 +288,7 @@ def addSignalHisto(h_bkg,data_obs_TGraph_,N_massBins_,massBins_,cat):
         xbinLow = data_obs_TGraph_.GetX()[bin]-data_obs_TGraph_.GetEXlow()[bin]
         xbinHigh = data_obs_TGraph_.GetX()[bin]+data_obs_TGraph_.GetEXhigh()[bin]
         binWidth_current = xbinHigh - xbinLow
-        value = sighist_1320_clone.GetBinContent(bin+1)
+        value = sighist_1320.GetBinContent(bin+1)+h_bkg.GetBinContent(bin+1)
         print("hihi %f %f %f"%(xbinCenter,value,value_data))
         # print(value_data,err_low_data,err_high_data)
         # print(xbinCenter,xbinLow,xbinHigh,binWidth_current)
