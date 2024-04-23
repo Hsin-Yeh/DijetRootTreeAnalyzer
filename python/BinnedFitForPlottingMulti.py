@@ -250,14 +250,21 @@ def calculateChi2AndFillResiduals(data_obs_TGraph_,background_hist_,hist_fit_res
 def addSignalHisto(h_bkg,N_massBins_,massBins_):
     sigfile = rt.TFile("/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/full/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_kMpl001_EBEB_2017.root")
     hstack = rt.THStack("sighist","")
-    sighist = sigfile.Get("h_gg_1000")
-    sighist.Scale(100)
-    sighist.SetDirectory(0)
+    sighist_1000 = sigfile.Get("h_gg_1000")
+    sighist_3000 = sigfile.Get("h_gg_3000")
+    sighist_1000.Scale(100)
+    sighist_1000.SetDirectory(0)
     h_bkg.SetFillColor(0)
-    sighist.SetFillColor(2)
+    ci = rt.TColor.GetColor("#1068da"); # Bird
+    ci.SetAlpha(0.01);
+    sighist_1000.SetFillColor(ci)
+    ci = rt.TColor.GetColor("#2cb6a5"); # Bird
+    ci.SetAlpha(0.01);
+    sighist_3000.SetFillColor(ci)
     hstack.Add(h_bkg)
-    hstack.Add(sighist)
-    return hstack, sighist
+    hstack.Add(sighist_1000)
+    hstack.Add(sighist_3000)
+    return hstack, sighist_1000, sighist_3000
 
 if __name__ == '__main__':
     parser = OptionParser()
@@ -934,7 +941,7 @@ if __name__ == '__main__':
     h_backgrounds = {}
     for key, value in backgrounds.iteritems():
         h_backgrounds[key] = convertFunctionToHisto(value,"h_background",len(x)-1,x)
-    hstack, sighist = addSignalHisto(h_backgrounds["dijet"],len(x)-1,x)
+    hstack, sighist_1000, sighist_3000 = addSignalHisto(h_backgrounds["dijet"],len(x)-1,x)
     ctest = rt.TCanvas()
     hstack.Draw("HIST")
     ctest.SetLogy()
@@ -1172,7 +1179,8 @@ if __name__ == '__main__':
     leg.AddEntry(backgrounds["expow1"],"%s"%(modelforms["expow1"]),"l")
     leg.AddEntry(backgrounds["invpow1"],"%s"%(modelforms["invpow1"]),"l")
     leg.AddEntry(backgrounds["invpowlin1"],"%s"%(modelforms["invpowlin1"]),"l")
-    leg.AddEntry(sighist,"signal","f")
+    leg.AddEntry(sighist_1000,"signal","f")
+    leg.AddEntry(sighist_3000,"signal","f")
 
     # for key, value in backgrounds.iteritems():
         # leg.AddEntry(value,"%s: %s "%(key, modelforms[key]),"l")
