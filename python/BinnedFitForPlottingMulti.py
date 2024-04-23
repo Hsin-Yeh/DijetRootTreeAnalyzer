@@ -254,8 +254,12 @@ def addSignalHisto(h_bkg,data_obs_TGraph_,cat):
     hstack_2200 = rt.THStack("hstack_2200","")
     sighist_1320 = sigfile.Get("h_gg_1320")
     sighist_2200 = sigfile.Get("h_gg_2200")
-    sighist_1320.Scale(31.9)
-    sighist_2200.Scale(9.1)
+    if(cat=="EBEB"):
+        sighist_1320.Scale(31.9*0.386773)
+        sighist_2200.Scale(9.1*0.483016)
+    elif(cat=="EBEE"):
+        sighist_1320.Scale(31.9*0.190722)
+        sighist_2200.Scale(9.1*0.137251)
     sighist_1320.SetDirectory(0)
     sighist_2200.SetDirectory(0)
     h_bkg.SetFillColorAlpha(0,0)
