@@ -256,10 +256,10 @@ def addSignalHisto(h_bkg,data_obs_TGraph_,N_massBins_,massBins_,cat):
     sighist_2200 = sigfile.Get("h_gg_2200")
     sighist_1320.SetDirectory(0)
     sighist_2200.SetDirectory(0)
-    # sighist_1320_clone = sighist_1320.Clone()
-    # sighist_2200_clone = sighist_1320.Clone()
-    # sighist_1320_clone.SetDirectory(0)
-    # sighist_2200_clone.SetDirectory(0)
+    sighist_1320_clone = sighist_1320.Clone()
+    sighist_2200_clone = sighist_1320.Clone()
+    sighist_1320_clone.SetDirectory(0)
+    sighist_2200_clone.SetDirectory(0)
     if(cat=="EBEB"):
         sighist_1320.Scale(31.9*0.386773)
         sighist_2200.Scale(9.1*0.483016)
@@ -279,42 +279,42 @@ def addSignalHisto(h_bkg,data_obs_TGraph_,N_massBins_,massBins_,cat):
     hstack_2200.Add(h_bkg)
     hstack_2200.Add(sighist_2200)
 
-    # sighist_1320_clone.Add(h_bkg)
+    sighist_1320_clone.Add(h_bkg)
     h_residual = rt.TH1D("h_residual","h_residual",N_massBins_,massBins_)
     h_residual.SetDirectory(0)
-    # for bin in range (0,N_massBins_):
-    #     ## Values and errors
-    #     value_data = data_obs_TGraph_.GetY()[bin]
-    #     err_low_data = data_obs_TGraph_.GetEYlow()[bin]
-    #     err_high_data = data_obs_TGraph_.GetEYhigh()[bin]
-    #     xbinCenter = data_obs_TGraph_.GetX()[bin]
-    #     xbinLow = data_obs_TGraph_.GetX()[bin]-data_obs_TGraph_.GetEXlow()[bin]
-    #     xbinHigh = data_obs_TGraph_.GetX()[bin]+data_obs_TGraph_.GetEXhigh()[bin]
-    #     binWidth_current = xbinHigh - xbinLow
-    #     value = sighist_1320_clone.GetBinContent(bin+1)
-    #     print(value_data,err_low_data,err_high_data)
-    #     print(xbinCenter,xbinLow,xbinHigh,binWidth_current)
-    #     print(value)
+    for bin in range (0,N_massBins_):
+        ## Values and errors
+        value_data = data_obs_TGraph_.GetY()[bin]
+        err_low_data = data_obs_TGraph_.GetEYlow()[bin]
+        err_high_data = data_obs_TGraph_.GetEYhigh()[bin]
+        xbinCenter = data_obs_TGraph_.GetX()[bin]
+        xbinLow = data_obs_TGraph_.GetX()[bin]-data_obs_TGraph_.GetEXlow()[bin]
+        xbinHigh = data_obs_TGraph_.GetX()[bin]+data_obs_TGraph_.GetEXhigh()[bin]
+        binWidth_current = xbinHigh - xbinLow
+        value = sighist_1320_clone.GetBinContent(bin+1)
+        print(value_data,err_low_data,err_high_data)
+        print(xbinCenter,xbinLow,xbinHigh,binWidth_current)
+        print(value)
 
-    #     ## Fit residuals
-    #     err_tot_data = 0
-    #     if (value > value_data):
-    #         err_tot_data = err_high_data
-    #     else:
-    #         err_tot_data = err_low_data
-    #     fit_residual = (value_data - value) / err_tot_data
-    #     err_fit_residual = 1
+        ## Fit residuals
+        err_tot_data = 0
+        if (value > value_data):
+            err_tot_data = err_high_data
+        else:
+            err_tot_data = err_low_data
+        fit_residual = (value_data - value) / err_tot_data
+        err_fit_residual = 1
 
-    #     ## Fill histo with residuals
+        ## Fill histo with residuals
 
-    #     h_residual.SetBinContent(bin+1,fit_residual)
-    #     h_residual.SetBinError(bin+1,err_fit_residual)
+        h_residual.SetBinContent(bin+1,fit_residual)
+        h_residual.SetBinError(bin+1,err_fit_residual)
 
 
-    # ctest = rt.TCanvas()
-    # h_residual.Draw("HIST")
-    # ctest.SetLogy()
-    # ctest.SaveAs("test.png")
+    ctest = rt.TCanvas()
+    h_residual.Draw("HIST")
+    ctest.SetLogy()
+    ctest.SaveAs("test.png")
 
     return hstack_1320, sighist_1320, hstack_2200, sighist_2200, h_residual
 
