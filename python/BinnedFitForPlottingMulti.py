@@ -1231,7 +1231,7 @@ if __name__ == '__main__':
     l.SetTextFont(62)
     if(options.year=="fullRun2"):
         l.SetTextSize(0.065)
-        l.DrawLatex(0.38,0.83,"CMS")
+        l.DrawLatex(0.3,0.83,"CMS")
         # PAS
         l.SetTextFont(52)
         l.SetTextSize(0.055)
@@ -1340,7 +1340,7 @@ if __name__ == '__main__':
                           list_chi2AndNdf_background[4], list_chi2AndNdf_background[5],
                           list_chi2AndNdf_background[4]/list_chi2AndNdf_background[5]))
 
-    EBText=rt.TLatex(0.38,0.75, "%s"%(options.cat));
+    EBText=rt.TLatex(0.4,0.83, "%s"%(options.cat));
     EBText.SetNDC(1);
     EBText.SetTextFont(42);
     EBText.SetLineColor(0);
