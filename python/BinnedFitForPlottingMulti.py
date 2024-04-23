@@ -1045,8 +1045,8 @@ if __name__ == '__main__':
     # Draw data
     hstack_1000.GetXaxis().SetRangeUser(400,1500)
     hstack_1000.Draw("HISTsame")
-    hstack_3000.GetXaxis().SetRangeUser(400,1500)
-    hstack_3000.Draw("HISTsame")
+    # hstack_3000.GetXaxis().SetRangeUser(400,1500)
+    # hstack_3000.Draw("HISTsame")
     g_data_clone.Draw("zpsame")
     g_data.Draw("zpsame")
     # Draw fit function
@@ -1182,7 +1182,7 @@ if __name__ == '__main__':
     leg.AddEntry(backgrounds["invpow1"],"%s"%(modelforms["invpow1"]),"l")
     leg.AddEntry(backgrounds["invpowlin1"],"%s"%(modelforms["invpowlin1"]),"l")
     leg.AddEntry(sighist_1000,"1TeV narrow RSG","f")
-    leg.AddEntry(sighist_3000,"3TeV narrow RSG","f")
+    # leg.AddEntry(sighist_3000,"3TeV narrow RSG","f")
 
     # for key, value in backgrounds.iteritems():
         # leg.AddEntry(value,"%s: %s "%(key, modelforms[key]),"l")
