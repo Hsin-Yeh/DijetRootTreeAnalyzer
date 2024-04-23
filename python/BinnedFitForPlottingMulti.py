@@ -253,9 +253,10 @@ def addSignalHisto(h_bkg,N_massBins_,massBins_):
     sighist = sigfile.Get("h_gg_1000")
     sighist.Scale(100)
     sighist.SetDirectory(0)
+    h_bkg.SetFillColor(0)
+    sighist.SetFillColor(2)
     hstack.Add(h_bkg)
     hstack.Add(sighist)
-    h_bkg.SetFillColor(0)
     return hstack
 
 if __name__ == '__main__':
