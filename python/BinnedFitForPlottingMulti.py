@@ -274,7 +274,7 @@ def addSignalHisto(h_bkg,data_obs_TGraph_,N_massBins_,massBins_,cat):
     hstack_1320.Add(sighist_1320)
     hstack_2200.Add(h_bkg)
     hstack_2200.Add(sighist_2200)
-    sighist_1320.Add(h_bkg)
+    # sighist_1320.Add(h_bkg)
 
     h_residual = rt.TH1D("h_residual","h_residual",N_massBins_,massBins_)
     for bin in range (0,N_massBins_):
@@ -1223,7 +1223,7 @@ if __name__ == '__main__':
     # legsig = rt.TLegend(0.21,0.15,0.4,0.4)
     legsig = rt.TLegend(0.55,0.65,0.88,0.88)
     legsig.SetTextFont(42)
-    legsig.SetTextSize(0.045)
+    legsig.SetTextSize(0.05)
     legsig.SetFillColor(rt.kWhite)
     legsig.SetFillStyle(0)
     legsig.SetLineWidth(0)
@@ -1298,7 +1298,7 @@ if __name__ == '__main__':
                           list_chi2AndNdf_background[4], list_chi2AndNdf_background[5],
                           list_chi2AndNdf_background[4]/list_chi2AndNdf_background[5]))
 
-    EBText=rt.TLatex(0.4,0.85, "%s"%(options.cat));
+    EBText=rt.TLatex(0.35,0.85, "%s"%(options.cat));
     EBText.SetNDC(1);
     EBText.SetTextFont(42);
     EBText.SetLineColor(0);
