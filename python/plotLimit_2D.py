@@ -157,7 +157,7 @@ def limit_1D(mass_array, exp_array, expM1s_array, expM2s_array, expP1s_array, ex
     cmsText.SetLineColor(0);
     cmsText.SetLineStyle(1);
     cmsText.SetLineWidth(1);
-    cmsText.SetTextSize(0.04);
+    cmsText.SetTextSize(0.05);
     cmsText.Draw();
 
     # extraText=ROOT.TLatex(0.23,0.90, "Preliminary");
