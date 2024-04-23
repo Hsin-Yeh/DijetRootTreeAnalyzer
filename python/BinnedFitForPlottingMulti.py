@@ -80,8 +80,6 @@ def effFit(pdf, data, conditionalObs):
     fr = m2.save()
     return fr
 
-
-
 def simFit(pdf, data, fitRange, effPdf, effData, conditionalObs):
     
     effNll = effPdf.createNLL(effData,rt.RooFit.Range('Eff'),rt.RooFit.Offset(True),rt.RooFit.ConditionalObservables(conditionalObs))
@@ -1382,8 +1380,8 @@ if __name__ == '__main__':
         # print(myRebinnedDensityTH1.GetTickLength("X"))
         bbot.SetTickSize(0.5)
         btop.SetTickSize(0.5)
-	bbot.Draw()
-	btop.Draw()
+	# bbot.Draw()
+	# btop.Draw()
 
 
         rt.gPad.Modified()
