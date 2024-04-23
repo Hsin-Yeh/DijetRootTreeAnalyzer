@@ -984,7 +984,7 @@ if __name__ == '__main__':
     #PAS
     #pad_1.SetPad(0.01,0.36,0.99,0.98)
     #paper
-    pad_1.SetPad(0.01,0.37,0.99,0.98)
+    pad_1.SetPad(0.01,0.34,0.99,0.98)
     pad_1.SetLogy()
     if 'PF' in box or w.var('mgg').getMax() > 2037:
         if not options.linearX:
@@ -1001,7 +1001,7 @@ if __name__ == '__main__':
     pad_2.SetTickx()
     pad_2.SetTicky()
     pad_2.SetLeftMargin(0.175)
-    pad_2.SetPad(0.01,0.02,0.99,0.36)
+    pad_2.SetPad(0.01,0.017,0.99,0.36)
     pad_2.SetBottomMargin(0.25)
     pad_2.SetRightMargin(0.05)
     #pad_2.SetGridx()
