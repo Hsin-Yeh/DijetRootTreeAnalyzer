@@ -256,6 +256,7 @@ def addSignalHisto(h_bkg,N_massBins_,massBins_):
     sighist.SetDirectory(0)
     sighist.Scale(100)
     sighist.Add(h_bkg)
+    sighist.SetBinContent(0,1000)
     return sighist
 
 if __name__ == '__main__':
