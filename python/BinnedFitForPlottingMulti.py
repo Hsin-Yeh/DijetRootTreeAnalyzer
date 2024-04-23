@@ -249,7 +249,8 @@ def calculateChi2AndFillResiduals(data_obs_TGraph_,background_hist_,hist_fit_res
 
 def addSignalHisto(h_bkg,N_massBins_,massBins_):
     sigfile = rt.TFile("/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/full/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_kMpl001_EBEB_2017.root")
-    hstack = rt.THStack("sighist","")
+    hstack_1000 = rt.THStack("hstack_1000","")
+    hstack_3000 = rt.THStack("hstack_3000","")
     sighist_1000 = sigfile.Get("h_gg_1000")
     sighist_3000 = sigfile.Get("h_gg_3000")
     sighist_1000.Scale(100)
@@ -259,10 +260,11 @@ def addSignalHisto(h_bkg,N_massBins_,massBins_):
     sighist_1000.SetFillColorAlpha(ci,0.01)
     ci = rt.TColor.GetColor("#2cb6a5"); # Bird
     sighist_3000.SetFillColorAlpha(ci,0.01)
-    hstack.Add(h_bkg)
-    hstack.Add(sighist_1000)
-    hstack.Add(sighist_3000)
-    return hstack, sighist_1000, sighist_3000
+    hstack_1000.Add(h_bkg)
+    hstack_1000.Add(sighist_1000)
+    hstack_3000.Add(h_bkg)
+    hstack_3000.Add(sighist_3000)
+    return hstack_1000, sighist_1000, hstack_3000, sighist_3000
 
 if __name__ == '__main__':
     parser = OptionParser()
@@ -939,9 +941,9 @@ if __name__ == '__main__':
     h_backgrounds = {}
     for key, value in backgrounds.iteritems():
         h_backgrounds[key] = convertFunctionToHisto(value,"h_background",len(x)-1,x)
-    hstack, sighist_1000, sighist_3000 = addSignalHisto(h_backgrounds["dijet"],len(x)-1,x)
+    hstack_1000, sighist_1000, hstack_3000, sighist_3000 = addSignalHisto(h_backgrounds["dijet"],len(x)-1,x)
     ctest = rt.TCanvas()
-    hstack.Draw("HIST")
+    hstack_1000.Draw("HIST")
     ctest.SetLogy()
     ctest.SaveAs("test.png")
 
@@ -1041,8 +1043,10 @@ if __name__ == '__main__':
     myRebinnedDensityTH1.Draw("axis")
 
     # Draw data
-    hstack.GetXaxis().SetRangeUser(400,1500)
-    hstack.Draw("HISTsame")
+    hstack_1000.GetXaxis().SetRangeUser(400,1500)
+    hstack_1000.Draw("HISTsame")
+    hstack_3000.GetXaxis().SetRangeUser(400,1500)
+    hstack_3000.Draw("HISTsame")
     g_data_clone.Draw("zpsame")
     g_data.Draw("zpsame")
     # Draw fit function
