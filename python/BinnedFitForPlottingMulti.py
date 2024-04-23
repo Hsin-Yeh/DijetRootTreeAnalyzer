@@ -1041,7 +1041,7 @@ if __name__ == '__main__':
     elif 'DiPhoton' in box:
         myRebinnedDensityTH1.SetMaximum(2e3)
         if w.var('mgg').getMax() > 2037:
-            myRebinnedDensityTH1.SetMaximum(9e2)
+            myRebinnedDensityTH1.SetMaximum(2e3)
             myRebinnedDensityTH1.SetMinimum(2e-3)
         else:
             myRebinnedDensityTH1.SetMinimum(2e-5)
@@ -1150,7 +1150,7 @@ if __name__ == '__main__':
     l.SetTextFont(62)
     if(options.year=="fullRun2"):
         l.SetTextSize(0.065)
-        l.DrawLatex(0.21,0.3,"CMS")
+        l.DrawLatex(0.21,0.25,"CMS")
         # PAS
         l.SetTextFont(52)
         l.SetTextSize(0.055)
@@ -1180,7 +1180,7 @@ if __name__ == '__main__':
     leg.AddEntry(backgrounds["invpow1"],"%s"%(modelforms["invpow1"]),"l")
     leg.AddEntry(backgrounds["invpowlin1"],"%s"%(modelforms["invpowlin1"]),"l")
 
-    legsig = rt.TLegend(0.2,0.6,0.4,0.88)
+    legsig = rt.TLegend(0.3,0.7,0.5,0.88)
     legsig.SetTextFont(42)
     legsig.SetTextSize(0.05)
     legsig.SetFillColor(rt.kWhite)
