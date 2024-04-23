@@ -257,7 +257,7 @@ def addSignalHisto(h_bkg,N_massBins_,massBins_):
     sighist.SetFillColor(2)
     hstack.Add(h_bkg)
     hstack.Add(sighist)
-    return hstack
+    return hstack, sighist
 
 if __name__ == '__main__':
     parser = OptionParser()
@@ -934,9 +934,9 @@ if __name__ == '__main__':
     h_backgrounds = {}
     for key, value in backgrounds.iteritems():
         h_backgrounds[key] = convertFunctionToHisto(value,"h_background",len(x)-1,x)
-    h_sig = addSignalHisto(h_backgrounds["dijet"],len(x)-1,x)
+    hstack, sighist = addSignalHisto(h_backgrounds["dijet"],len(x)-1,x)
     ctest = rt.TCanvas()
-    h_sig.Draw("HIST")
+    hstack.Draw("HIST")
     ctest.SetLogy()
     ctest.SaveAs("test.png")
 
@@ -1036,12 +1036,10 @@ if __name__ == '__main__':
     myRebinnedDensityTH1.Draw("axis")
 
     # Draw data
-    h_sig.GetXaxis().SetRangeUser(400,1500)
-    h_sig.Draw("same")
+    hstack.GetXaxis().SetRangeUser(400,1500)
+    hstack.Draw("same")
     g_data_clone.Draw("zpsame")
     g_data.Draw("zpsame")
-    # h_sig.SetLineWidth(1)
-    # h_sig.SetLineStyle(7)
     # Draw fit function
     if options.doTriggerFit or options.doSimultaneousFit or options.doSpectrumFit or options.noFit:
         rt.gStyle.SetPalette(90)
@@ -1174,7 +1172,7 @@ if __name__ == '__main__':
     leg.AddEntry(backgrounds["expow1"],"%s"%(modelforms["expow1"]),"l")
     leg.AddEntry(backgrounds["invpow1"],"%s"%(modelforms["invpow1"]),"l")
     leg.AddEntry(backgrounds["invpowlin1"],"%s"%(modelforms["invpowlin1"]),"l")
-    leg.AddEntry(h_sig,"","f")
+    leg.AddEntry(sighist,"signal","f")
 
     # for key, value in backgrounds.iteritems():
         # leg.AddEntry(value,"%s: %s "%(key, modelforms[key]),"l")
