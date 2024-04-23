@@ -254,6 +254,9 @@ def addSignalHisto(h_bkg):
     h_sig = sigfile.Get("h_gg_1313")
     # h_sig.Scale(1000)
     h_sig.Add(h_bkg)
+    ctest = rt.TCanvas()
+    h_sig.Draw("HIST")
+    ctest.SaveAs("test.png")
     return h_sig
 
 if __name__ == '__main__':
