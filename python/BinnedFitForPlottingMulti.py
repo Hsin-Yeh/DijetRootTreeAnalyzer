@@ -1036,12 +1036,12 @@ if __name__ == '__main__':
     myRebinnedDensityTH1.Draw("axis")
 
     # Draw data
+    h_sig.GetXaxis().SetRangeUser(400,1500)
+    h_sig.Draw("same")
     g_data_clone.Draw("zpsame")
     g_data.Draw("zpsame")
     # h_sig.SetLineWidth(1)
     # h_sig.SetLineStyle(7)
-    h_sig.GetXaxis().SetRangeUser(400,1500)
-    h_sig.Draw("Fsame")
     # Draw fit function
     if options.doTriggerFit or options.doSimultaneousFit or options.doSpectrumFit or options.noFit:
         rt.gStyle.SetPalette(90)
