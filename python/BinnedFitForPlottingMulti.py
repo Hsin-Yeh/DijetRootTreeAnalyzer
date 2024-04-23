@@ -281,6 +281,8 @@ def addSignalHisto(h_bkg,data_obs_TGraph_,N_massBins_,massBins_,cat):
 
     sighist_1320_clone.Add(h_bkg)
     h_residual = rt.TH1D("h_residual","h_residual",N_massBins_,massBins_)
+    ci = rt.TColor.GetColor("#1068da"); # Bird
+    h_residual.SetFillColorAlpha(c1,0.5)
     h_residual.SetDirectory(0)
     for bin in range (0,N_massBins_):
         ## Values and errors
@@ -996,6 +998,7 @@ if __name__ == '__main__':
     ctest = rt.TCanvas()
     hstack_1320.Draw("HIST")
     hstack_2200.Draw("HISTsame")
+    h_residual.Draw("HISTsame")
     ctest.SetLogy()
     ctest.SaveAs("test.png")
 
@@ -1505,6 +1508,8 @@ if __name__ == '__main__':
     h_fit_residual_vs_mass.GetXaxis().SetTitle('Dijet mass [GeV]')
 
     h_fit_residual_vs_mass.Draw("histsame")
+    h_residual.Draw("HISTSame")
+
     # line = rt.TLine(h_fit_residual_vs_mass.GetXaxis().GetXmin(),0,h_fit_residual_vs_mass.GetXaxis().GetXmax(),0)
     line = rt.TLine(h_fit_residual_vs_mass.GetXaxis().GetXmin(),0,4000,0)
     line.Draw("same")
