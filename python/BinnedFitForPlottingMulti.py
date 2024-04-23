@@ -258,6 +258,8 @@ def addSignalHisto(h_bkg,data_obs_TGraph_,N_massBins_,massBins_,cat):
     sighist_2200.SetDirectory(0)
     sighist_1320_clone = sighist_1320.Clone()
     sighist_2200_clone = sighist_1320.Clone()
+    sighist_1320_clone.SetDirectory(0)
+    sighist_2200_clone.SetDirectory(0)
     if(cat=="EBEB"):
         sighist_1320.Scale(31.9*0.386773)
         sighist_2200.Scale(9.1*0.483016)
