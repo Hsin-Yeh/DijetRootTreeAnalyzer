@@ -1180,7 +1180,7 @@ if __name__ == '__main__':
     leg.AddEntry(backgrounds["invpow1"],"%s"%(modelforms["invpow1"]),"l")
     leg.AddEntry(backgrounds["invpowlin1"],"%s"%(modelforms["invpowlin1"]),"l")
 
-    legsig = rt.TLegend(0.33,0.73,0.58,0.88)
+    legsig = rt.TLegend(0.2,0.3,0.5,0.5)
     legsig.SetTextFont(42)
     legsig.SetTextSize(0.05)
     legsig.SetFillColor(rt.kWhite)
