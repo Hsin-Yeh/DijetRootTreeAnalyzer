@@ -1039,7 +1039,7 @@ if __name__ == '__main__':
         myRebinnedDensityTH1.SetMinimum(2e-8)
     #elif 'Calo' in box:
     elif 'DiPhoton' in box:
-        myRebinnedDensityTH1.SetMaximum(9e3)
+        myRebinnedDensityTH1.SetMaximum(2e3)
         if w.var('mgg').getMax() > 2037:
             myRebinnedDensityTH1.SetMaximum(8e2)
             myRebinnedDensityTH1.SetMinimum(2e-3)
@@ -1180,15 +1180,15 @@ if __name__ == '__main__':
     leg.AddEntry(backgrounds["invpow1"],"%s"%(modelforms["invpow1"]),"l")
     leg.AddEntry(backgrounds["invpowlin1"],"%s"%(modelforms["invpowlin1"]),"l")
 
-    legsig = rt.TLegend(0.2,0.3,0.5,0.5)
+    legsig = rt.TLegend(0.2,0.2,0.4,0.5)
     legsig.SetTextFont(42)
     legsig.SetTextSize(0.05)
     legsig.SetFillColor(rt.kWhite)
     legsig.SetFillStyle(0)
     legsig.SetLineWidth(0)
     legsig.SetLineColor(rt.kWhite)
-    legsig.AddEntry(sighist_600,"#tilde{k}=0.01, 0.6TeV","f")
-    legsig.AddEntry(sighist_1000,"#tilde{k}=0.01, 1TeV","f")
+    legsig.AddEntry(sighist_600,"#tilde{k}=0.01, J=2, 0.6TeV","f")
+    legsig.AddEntry(sighist_1000,"#tilde{k}=0.01, J=2, 1TeV","f")
 
     # for key, value in backgrounds.iteritems():
         # leg.AddEntry(value,"%s: %s "%(key, modelforms[key]),"l")
