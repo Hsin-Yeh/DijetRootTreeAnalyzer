@@ -214,7 +214,7 @@ def main(in_filename):
     if ( coupling == "kMpl001" ): plabel = "#tilde{k}=0.01,  J=2"
     elif ( coupling == "kMpl01" ): plabel = "#tilde{k}=0.1,  J=2"
     elif ( coupling == "kMpl02" ): plabel = "#tilde{k}=0.2,  J=2"
-    elif ( coupling == "0p014"): plabel = "#frac{#Gamma}{m} = 1.4 #times 10^{-4}, J=0"
+    elif ( coupling == "0p014"): plabel = "#frac{#Gamma_{X}}{m_{X}} = 1.4 #times 10^{-4}, J=0"
     elif ( coupling == "1p4"): plabel = "#frac{#Gamma_{X}}{m_{X}} = 1.4 #times 10^{-2}, J=0"
     elif ( coupling == "5p6"): plabel = "#frac{#Gamma_{X}}{m_{X}} = 5.6 #times 10^{-2}, J=0"
 
