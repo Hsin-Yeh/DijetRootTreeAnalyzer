@@ -1001,7 +1001,7 @@ if __name__ == '__main__':
     pad_2.SetTickx()
     pad_2.SetTicky()
     pad_2.SetLeftMargin(0.175)
-    pad_2.SetPad(0.01,0.017,0.99,0.36)
+    pad_2.SetPad(0.01,0.02,0.99,0.33)
     pad_2.SetBottomMargin(0.25)
     pad_2.SetRightMargin(0.05)
     #pad_2.SetGridx()
