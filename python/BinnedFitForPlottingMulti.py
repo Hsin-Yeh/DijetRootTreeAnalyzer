@@ -1037,8 +1037,8 @@ if __name__ == '__main__':
     # Draw data
     g_data_clone.Draw("zpsame")
     g_data.Draw("zpsame")
-    h_sig.SetLineWidth(2)
-    h_sig.SetLineStyle(9)
+    h_sig.SetLineWidth(1)
+    h_sig.SetLineStyle(7)
     h_sig.GetXaxis().SetRangeUser(400,1500)
     h_sig.Draw("HISTsame")
     # Draw fit function
