@@ -1103,7 +1103,7 @@ if __name__ == '__main__':
     #     g_signal.Draw("cxsame")
 
 
-    # rt.gPad.SetLogy()
+    rt.gPad.SetLogy()
 
     l = rt.TLatex()
     l.SetTextAlign(11)
