@@ -1161,7 +1161,7 @@ if __name__ == '__main__':
 
     if options.signalFileName!=None:
         if 'DiPhoton' in box:
-            leg = rt.TLegend(0.5,0.38,0.88,0.87)
+            leg = rt.TLegend(0.6,0.35,0.88,0.87)
         else:
             leg = rt.TLegend(0.58,0.55,0.85,0.87)
     else:
@@ -1187,7 +1187,7 @@ if __name__ == '__main__':
     leg.AddEntry(backgrounds["invpow1"],"%s"%(modelforms["invpow1"]),"l")
     leg.AddEntry(backgrounds["invpowlin1"],"%s"%(modelforms["invpowlin1"]),"l")
 
-    legsig = rt.TLegend(0.28,0.6,0.5,0.87)
+    legsig = rt.TLegend(0.4,0.65,0.6,0.87)
     legsig.SetTextFont(42)
     legsig.SetTextSize(0.04)
     legsig.SetFillColor(rt.kWhite)
@@ -1210,8 +1210,8 @@ if __name__ == '__main__':
     #         else:
     #             leg.AddEntry(g_signal,"%s (%.2f TeV)"%(model,float(mass)/1000.),"l")
     #         #leg.AddEntry(None,"%.1f pb"%(float(xsec)),"")
+    leg.Draw()
     legsig.Draw()
-    # legsig.Draw()
     #background.Draw("csame")
     #g_data.Draw("pezsame")
 
