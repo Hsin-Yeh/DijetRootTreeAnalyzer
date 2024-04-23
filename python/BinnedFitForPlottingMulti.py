@@ -256,7 +256,7 @@ def addSignalHisto(h_bkg,N_massBins_,massBins_):
     sighist.SetDirectory(0)
     sighist.Scale(1000)
     sighist.Add(h_bkg)
-    return h_sig
+    return sighist
 
 if __name__ == '__main__':
     parser = OptionParser()
