@@ -1187,15 +1187,15 @@ if __name__ == '__main__':
     leg.AddEntry(backgrounds["invpow1"],"%s"%(modelforms["invpow1"]),"l")
     leg.AddEntry(backgrounds["invpowlin1"],"%s"%(modelforms["invpowlin1"]),"l")
 
-    # legsig = rt.TLegend(0.28,0.38,0.5,0.87)
-    # legsig.SetTextFont(42)
-    # legsig.SetTextSize(0.06)
-    # legsig.SetFillColor(rt.kWhite)
-    # legsig.SetFillStyle(0)
-    # legsig.SetLineWidth(0)
-    # legsig.SetLineColor(rt.kWhite)
-    leg.AddEntry(sighist_1000,"1TeV NW RSG","f")
-    leg.AddEntry(sighist_600,"3TeV NW RSG","f")
+    legsig = rt.TLegend(0.28,0.6,0.5,0.87)
+    legsig.SetTextFont(42)
+    legsig.SetTextSize(0.04)
+    legsig.SetFillColor(rt.kWhite)
+    legsig.SetFillStyle(0)
+    legsig.SetLineWidth(0)
+    legsig.SetLineColor(rt.kWhite)
+    legsig.AddEntry(sighist_1000,"#tilde{k}=0.01,J=2,1TeV","f")
+    legsig.AddEntry(sighist_600,"#tilde{k}=0.01,J=2,3TeV","f")
 
     # for key, value in backgrounds.iteritems():
         # leg.AddEntry(value,"%s: %s "%(key, modelforms[key]),"l")
@@ -1210,7 +1210,7 @@ if __name__ == '__main__':
     #         else:
     #             leg.AddEntry(g_signal,"%s (%.2f TeV)"%(model,float(mass)/1000.),"l")
     #         #leg.AddEntry(None,"%.1f pb"%(float(xsec)),"")
-    leg.Draw()
+    legsig.Draw()
     # legsig.Draw()
     #background.Draw("csame")
     #g_data.Draw("pezsame")
