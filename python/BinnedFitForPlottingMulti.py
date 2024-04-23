@@ -1037,7 +1037,7 @@ if __name__ == '__main__':
 
     # Draw data
     hstack.GetXaxis().SetRangeUser(400,1500)
-    hstack.Draw("same")
+    hstack.Draw("HISTsame")
     g_data_clone.Draw("zpsame")
     g_data.Draw("zpsame")
     # Draw fit function
