@@ -1199,10 +1199,10 @@ if __name__ == '__main__':
     l.SetNDC()
     #l.DrawLatex(0.7,0.96,"%i pb^{-1} (%i TeV)"%(lumi,w.var('sqrts').getVal()/1000.))
     # l.DrawLatex(0.64,0.94,"%.1f fb^{-1} (13 TeV)"%(lumi/1000.))
-    if(options.year=="2016"): l.DrawLatex(0.68,0.94,"36.3 fb^{-1} (13 TeV)")
-    elif(options.year=="2017"): l.DrawLatex(0.68,0.94,"41.5 fb^{-1} (13 TeV)")
-    elif(options.year=="2018"): l.DrawLatex(0.68,0.94,"59.7 fb^{-1} (13 TeV)")
-    elif(options.year=="fullRun2"): l.DrawLatex(0.68,0.94,"138 fb^{-1} (13 TeV)")
+    if(options.year=="2016"): l.DrawLatex(0.67,0.94,"36.3 fb^{-1} (13 TeV)")
+    elif(options.year=="2017"): l.DrawLatex(0.67,0.94,"41.5 fb^{-1} (13 TeV)")
+    elif(options.year=="2018"): l.DrawLatex(0.67,0.94,"59.7 fb^{-1} (13 TeV)")
+    elif(options.year=="fullRun2"): l.DrawLatex(0.67,0.94,"138 fb^{-1} (13 TeV)")
     # PAS
     # l.SetTextFont(62)
     # l.SetTextSize(0.055)
@@ -1223,7 +1223,7 @@ if __name__ == '__main__':
         l.SetTextSize(0.05)
         l.DrawLatex(0.22,0.85,"CMS Supplementary")
 
-    leg = rt.TLegend(0.2,0.12,0.47,0.54)
+    leg = rt.TLegend(0.2,0.12,0.49,0.54)
     # leg = rt.TLegend(0.6,0.4,0.88,0.88)
     leg.SetTextFont(42)
     leg.SetTextSize(0.058)
