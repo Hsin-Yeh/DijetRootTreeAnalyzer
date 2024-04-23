@@ -250,22 +250,24 @@ def calculateChi2AndFillResiduals(data_obs_TGraph_,background_hist_,hist_fit_res
 def addSignalHisto(h_bkg,N_massBins_,massBins_):
     sigfile = rt.TFile("/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/full/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_kMpl001_EBEB_2017.root")
     hstack_1000 = rt.THStack("hstack_1000","")
-    hstack_3000 = rt.THStack("hstack_3000","")
+    hstack_600 = rt.THStack("hstack_600","")
     sighist_1000 = sigfile.Get("h_gg_1000")
-    sighist_3000 = sigfile.Get("h_gg_3000")
+    sighist_600 = sigfile.Get("h_gg_600")
     sighist_1000.Scale(100)
     sighist_1000.SetDirectory(0)
-    sighist_3000.SetDirectory(0)
+    sighist_600.SetDirectory(0)
     h_bkg.SetFillColor(0)
     ci = rt.TColor.GetColor("#1068da"); # Bird
     sighist_1000.SetFillColorAlpha(ci,0.5)
+    sighist_1000.SetLineColor(ci)
     ci = rt.TColor.GetColor("#2cb6a5"); # Bird
-    sighist_3000.SetFillColorAlpha(ci,0.5)
+    sighist_600.SetFillColorAlpha(ci,0.5)
+    sighist_600.SetLineColor(ci)
     hstack_1000.Add(h_bkg)
     hstack_1000.Add(sighist_1000)
-    hstack_3000.Add(h_bkg)
-    hstack_3000.Add(sighist_3000)
-    return hstack_1000, sighist_1000, hstack_3000, sighist_3000
+    hstack_600.Add(h_bkg)
+    hstack_600.Add(sighist_600)
+    return hstack_1000, sighist_1000, hstack_600, sighist_600
 
 if __name__ == '__main__':
     parser = OptionParser()
@@ -942,10 +944,10 @@ if __name__ == '__main__':
     h_backgrounds = {}
     for key, value in backgrounds.iteritems():
         h_backgrounds[key] = convertFunctionToHisto(value,"h_background",len(x)-1,x)
-    hstack_1000, sighist_1000, hstack_3000, sighist_3000 = addSignalHisto(h_backgrounds["dijet"],len(x)-1,x)
+    hstack_1000, sighist_1000, hstack_600, sighist_600 = addSignalHisto(h_backgrounds["dijet"],len(x)-1,x)
     ctest = rt.TCanvas()
     hstack_1000.Draw("HIST")
-    hstack_3000.Draw("HISTsame")
+    hstack_600.Draw("HISTsame")
     ctest.SetLogy()
     ctest.SaveAs("test.png")
 
@@ -1047,8 +1049,8 @@ if __name__ == '__main__':
     # Draw data
     hstack_1000.GetXaxis().SetRangeUser(400,1500)
     hstack_1000.Draw("HISTsame")
-    hstack_3000.GetXaxis().SetRangeUser(400,3500)
-    hstack_3000.Draw("HISTsame")
+    hstack_600.GetXaxis().SetRangeUser(400,3500)
+    hstack_600.Draw("HISTsame")
     g_data_clone.Draw("zpsame")
     g_data.Draw("zpsame")
     # Draw fit function
@@ -1163,7 +1165,7 @@ if __name__ == '__main__':
             leg = rt.TLegend(0.58,0.55,0.85,0.87)
     else:
         # leg = rt.TLegend(0.6,0.6,0.89,0.89)
-        leg = rt.TLegend(0.56,0.45,0.88,0.89)
+        leg = rt.TLegend(0.56,0.35,0.88,0.89)
     leg.SetTextFont(42)
     leg.SetTextSize(0.06)
     leg.SetFillColor(rt.kWhite)
@@ -1184,15 +1186,15 @@ if __name__ == '__main__':
     leg.AddEntry(backgrounds["invpow1"],"%s"%(modelforms["invpow1"]),"l")
     leg.AddEntry(backgrounds["invpowlin1"],"%s"%(modelforms["invpowlin1"]),"l")
 
-    legsig = rt.TLegend(0.28,0.38,0.5,0.87)
-    legsig.SetTextFont(42)
-    legsig.SetTextSize(0.06)
-    legsig.SetFillColor(rt.kWhite)
-    legsig.SetFillStyle(0)
-    legsig.SetLineWidth(0)
-    legsig.SetLineColor(rt.kWhite)
-    legsig.AddEntry(sighist_1000,"1TeV narrow RSG","f")
-    legsig.AddEntry(sighist_3000,"3TeV narrow RSG","f")
+    # legsig = rt.TLegend(0.28,0.38,0.5,0.87)
+    # legsig.SetTextFont(42)
+    # legsig.SetTextSize(0.06)
+    # legsig.SetFillColor(rt.kWhite)
+    # legsig.SetFillStyle(0)
+    # legsig.SetLineWidth(0)
+    # legsig.SetLineColor(rt.kWhite)
+    leg.AddEntry(sighist_1000,"1TeV narrow RSG","f")
+    leg.AddEntry(sighist_600,"3TeV narrow RSG","f")
 
     # for key, value in backgrounds.iteritems():
         # leg.AddEntry(value,"%s: %s "%(key, modelforms[key]),"l")
@@ -1208,7 +1210,7 @@ if __name__ == '__main__':
     #             leg.AddEntry(g_signal,"%s (%.2f TeV)"%(model,float(mass)/1000.),"l")
     #         #leg.AddEntry(None,"%.1f pb"%(float(xsec)),"")
     leg.Draw()
-    legsig.Draw()
+    # legsig.Draw()
     #background.Draw("csame")
     #g_data.Draw("pezsame")
 
