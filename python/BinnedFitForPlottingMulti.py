@@ -943,10 +943,10 @@ if __name__ == '__main__':
     for key, value in backgrounds.iteritems():
         h_backgrounds[key] = convertFunctionToHisto(value,"h_background",len(x)-1,x)
     hstack_1000, sighist_1000, hstack_3000, sighist_3000 = addSignalHisto(h_backgrounds["dijet"],len(x)-1,x)
-    ctest = rt.TCanvas()
-    hstack_3000.Draw("HIST")
-    ctest.SetLogy()
-    ctest.SaveAs("test.png")
+    # ctest = rt.TCanvas()
+    # hstack_3000.Draw("HIST")
+    # ctest.SetLogy()
+    # ctest.SaveAs("test.png")
 
     #i have data
     #h_th1x.Scale(1.0/lumi)
@@ -1046,7 +1046,7 @@ if __name__ == '__main__':
     # Draw data
     hstack_1000.GetXaxis().SetRangeUser(400,1500)
     hstack_1000.Draw("HISTsame")
-    hstack_3000.GetXaxis().SetRangeUser(400,1500)
+    hstack_3000.GetXaxis().SetRangeUser(400,3500)
     hstack_3000.Draw("HISTsame")
     g_data_clone.Draw("zpsame")
     g_data.Draw("zpsame")
