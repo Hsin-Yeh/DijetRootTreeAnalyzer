@@ -294,9 +294,10 @@ def addSignalHisto(h_bkg,data_obs_TGraph_,N_massBins_,massBins_,cat):
         xbinHigh = data_obs_TGraph_.GetX()[bin]+data_obs_TGraph_.GetEXhigh()[bin]
         binWidth_current = xbinHigh - xbinLow
         value = sighist_1320_clone.GetBinContent(bin+1)
-        print(value_data,err_low_data,err_high_data)
-        print(xbinCenter,xbinLow,xbinHigh,binWidth_current)
-        print(value)
+        print("hihi %f %f %f"%(xbinCenter,value,value_data))
+        # print(value_data,err_low_data,err_high_data)
+        # print(xbinCenter,xbinLow,xbinHigh,binWidth_current)
+        # print(value)
 
         ## Fit residuals
         err_tot_data = 0
@@ -1093,7 +1094,7 @@ if __name__ == '__main__':
     elif 'DiPhoton' in box:
         myRebinnedDensityTH1.SetMaximum(2e3)
         if w.var('mgg').getMax() > 2037:
-            myRebinnedDensityTH1.SetMaximum(2e2)
+            myRebinnedDensityTH1.SetMaximum(1e2)
             myRebinnedDensityTH1.SetMinimum(2e-3)
         else:
             myRebinnedDensityTH1.SetMinimum(2e-5)
