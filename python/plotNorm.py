@@ -71,7 +71,7 @@ if __name__ == "__main__":
         with open (args.in_filenames[0],'r') as infile:
             Lines = infile.readlines()
         for line in Lines:
-            if (line.split()[0]==args.year and line.split()[1]==args.coupling and float(line.split()[2])%100==0):
+            if (line.split()[0]==args.year and line.split()[1]==args.coupling and float(line.split()[2])%10==0):
                 if (line.find("EBEB")!=-1):
                     EBEBnorm_1.append(float(line.split(" ")[4])/luminosity[args.year])
                     print("EBEB %f %f"%(float(line.split(" ")[2]),float(line.split(" ")[4])/luminosity[args.year]))
