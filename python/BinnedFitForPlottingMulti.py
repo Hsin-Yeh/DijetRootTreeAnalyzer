@@ -1208,7 +1208,7 @@ if __name__ == '__main__':
         l.SetTextSize(0.05)
         l.DrawLatex(0.22,0.85,"CMS Supplementary")
 
-    leg = rt.TLegend(0.2,0.12,0.45,0.52)
+    leg = rt.TLegend(0.2,0.12,0.47,0.52)
     # leg = rt.TLegend(0.6,0.4,0.88,0.88)
     leg.SetTextFont(42)
     leg.SetTextSize(0.06)
@@ -1231,7 +1231,7 @@ if __name__ == '__main__':
     leg.AddEntry(backgrounds["invpowlin1"],"%s"%(modelforms["invpowlin1"]),"l")
 
     # legsig = rt.TLegend(0.21,0.15,0.4,0.4)
-    legsig = rt.TLegend(0.55,0.65,0.88,0.88)
+    legsig = rt.TLegend(0.5,0.65,0.85,0.88)
     legsig.SetTextFont(42)
     legsig.SetTextSize(0.05)
     legsig.SetFillColor(rt.kWhite)
@@ -1323,7 +1323,7 @@ if __name__ == '__main__':
     chiText.SetLineColor(0);
     chiText.SetLineStyle(1);
     chiText.SetLineWidth(1);
-    if options.year=="fullRun2": chiText.SetTextSize(0.055)
+    if options.year=="fullRun2": chiText.SetTextSize(0.05)
     else: chiText.SetTextSize(0.045);
     chiText.Draw()
 
