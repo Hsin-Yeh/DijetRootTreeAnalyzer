@@ -250,25 +250,25 @@ def calculateChi2AndFillResiduals(data_obs_TGraph_,background_hist_,hist_fit_res
 def addSignalHisto(h_bkg,N_massBins_,massBins_):
     sigfile = rt.TFile("/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/full/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_kMpl001_EBEB_2017.root")
     hstack_1000 = rt.THStack("hstack_1000","")
-    hstack_600 = rt.THStack("hstack_600","")
+    hstack_800 = rt.THStack("hstack_800","")
     sighist_1000 = sigfile.Get("h_gg_1000")
-    sighist_600 = sigfile.Get("h_gg_600")
+    sighist_800 = sigfile.Get("h_gg_800")
     sighist_1000.Scale(57.408)
-    sighist_600.Scale(138)
+    sighist_800.Scale(138)
     sighist_1000.SetDirectory(0)
-    sighist_600.SetDirectory(0)
+    sighist_800.SetDirectory(0)
     h_bkg.SetFillColor(0)
     ci = rt.TColor.GetColor("#1068da"); # Bird
     sighist_1000.SetFillColorAlpha(ci,0.5)
     sighist_1000.SetLineColor(0)
     ci = rt.TColor.GetColor("#2cb6a5"); # Bird
-    sighist_600.SetFillColorAlpha(ci,0.5)
-    sighist_600.SetLineColor(0)
+    sighist_800.SetFillColorAlpha(ci,0.5)
+    sighist_800.SetLineColor(0)
     hstack_1000.Add(h_bkg)
     hstack_1000.Add(sighist_1000)
-    hstack_600.Add(h_bkg)
-    hstack_600.Add(sighist_600)
-    return hstack_1000, sighist_1000, hstack_600, sighist_600
+    hstack_800.Add(h_bkg)
+    hstack_800.Add(sighist_800)
+    return hstack_1000, sighist_1000, hstack_800, sighist_800
 
 if __name__ == '__main__':
     parser = OptionParser()
@@ -945,10 +945,10 @@ if __name__ == '__main__':
     h_backgrounds = {}
     for key, value in backgrounds.iteritems():
         h_backgrounds[key] = convertFunctionToHisto(value,"h_background",len(x)-1,x)
-    hstack_1000, sighist_1000, hstack_600, sighist_600 = addSignalHisto(h_backgrounds["dijet"],len(x)-1,x)
+    hstack_1000, sighist_1000, hstack_800, sighist_800 = addSignalHisto(h_backgrounds["dijet"],len(x)-1,x)
     ctest = rt.TCanvas()
     hstack_1000.Draw("HIST")
-    hstack_600.Draw("HISTsame")
+    hstack_800.Draw("HISTsame")
     ctest.SetLogy()
     ctest.SaveAs("test.png")
 
@@ -1041,7 +1041,7 @@ if __name__ == '__main__':
     elif 'DiPhoton' in box:
         myRebinnedDensityTH1.SetMaximum(2e3)
         if w.var('mgg').getMax() > 2037:
-            myRebinnedDensityTH1.SetMaximum(3e2)
+            myRebinnedDensityTH1.SetMaximum(2e2)
             myRebinnedDensityTH1.SetMinimum(2e-3)
         else:
             myRebinnedDensityTH1.SetMinimum(2e-5)
@@ -1050,8 +1050,8 @@ if __name__ == '__main__':
     # Draw data
     hstack_1000.GetXaxis().SetRangeUser(400,1500)
     hstack_1000.Draw("HISTsame")
-    hstack_600.GetXaxis().SetRangeUser(400,800)
-    hstack_600.Draw("HISTsame")
+    hstack_800.GetXaxis().SetRangeUser(400,800)
+    hstack_800.Draw("HISTsame")
     g_data_clone.Draw("zpsame")
     g_data.Draw("zpsame")
     # Draw fit function
@@ -1188,7 +1188,7 @@ if __name__ == '__main__':
     legsig.SetLineWidth(0)
     legsig.SetLineColor(rt.kWhite)
     legsig.AddEntry(sighist_1000,"NW signal at 1TeV","f")
-    legsig.AddEntry(sighist_600,"NW signal at 0.6TeV","f")
+    legsig.AddEntry(sighist_800,"NW signal at 0.8TeV","f")
 
     # for key, value in backgrounds.iteritems():
         # leg.AddEntry(value,"%s: %s "%(key, modelforms[key]),"l")
