@@ -146,7 +146,7 @@ def convertFunctionToHisto(background_,name_,N_massBins_,massBins_):
         # valueError = background_.IntegralError(xbinLow , xbinHigh , ) / binWidth_current
         print("{:.0f}GeV-{:.0f}GeV : Integral={:.1f}, Divide_Bin_Width={:.1f}".format(xbinLow, xbinHigh, background_.Integral(xbinLow , xbinHigh), value))
         total += background_.Integral(xbinLow , xbinHigh)
-    print("hihihihihihihi : %f"%total)
+    print("Integral bin content : %f"%total)
     return background_hist_
 
 def calculateChi2AndFillResiduals(data_obs_TGraph_,background_hist_,hist_fit_residual_vsMass_,workspace_,prinToScreen_=0,effFit_=False):
@@ -230,8 +230,6 @@ def calculateChi2AndFillResiduals(data_obs_TGraph_,background_hist_,hist_fit_res
                 if(value_data * binWidth_current * lumi > MinNumEvents):
                     chi2_PlotRangeMinNumEvents += pow(fit_residual,2)
                     N_PlotRangeMinNumEvents += 1
-            else:
-                print '%i: obs %.0f, exp %.2f, chi2 %.2f'%(bin, value_data* binWidth_current * lumi, value_fit* binWidth_current * lumi, pow(fit_residual,2))
 
     
     #==================
@@ -251,6 +249,12 @@ def calculateChi2AndFillResiduals(data_obs_TGraph_,background_hist_,hist_fit_res
 
     return [chi2_FullRangeAll, ndf_FullRangeAll, chi2_PlotRangeAll, ndf_PlotRangeAll, chi2_PlotRangeNonZero, ndf_PlotRangeNonZero, chi2_PlotRangeMinNumEvents, ndf_PlotRangeMinNumEvents]
 
+def addSignalHisto(h_bkg):
+    sigfile = rt.TFile("/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/full_backup/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_kMpl001_EBEB_2016.root")
+    h_sig = sigfile.Get("h_gg_1313")
+    h_sig.Scale(1000)
+    h_sig.Add(h_bkg)
+    return h_sig
 
 if __name__ == '__main__':
     parser = OptionParser()
@@ -967,10 +971,9 @@ if __name__ == '__main__':
 
 
     h_backgrounds = {}
-
     for key, value in backgrounds.iteritems():
         h_backgrounds[key] = convertFunctionToHisto(value,"h_background",len(x)-1,x)
-
+    h_sig = addSignalHisto(h_backgrounds["dijet"])
     #i have data
     #h_th1x.Scale(1.0/lumi)
     #h_background = convertToMjjHist(h_th1x,x)
@@ -1069,6 +1072,7 @@ if __name__ == '__main__':
     # Draw data
     g_data_clone.Draw("zpsame")
     g_data.Draw("zpsame")
+    h_sig.Draw("HISTsame")
     # Draw fit function
     if options.doTriggerFit or options.doSimultaneousFit or options.doSpectrumFit or options.noFit:
         rt.gStyle.SetPalette(90)
@@ -1405,8 +1409,11 @@ if __name__ == '__main__':
 	                 myRebinnedDensityTH1.GetXaxis().GetXmax(), 2e-8, "f_h2_log10_x_axis", 509,"UBS", 0.0);
         btop = rt.TGaxis(myRebinnedDensityTH1.GetXaxis().GetXmin(),20,
 	                 myRebinnedDensityTH1.GetXaxis().GetXmax(), 20,  "f_h2_log10_x_axis", 509,"-UBS", 0.0);
-        bbot.SetTickSize(myRebinnedDensityTH1.GetTickLength("X"))
-        btop.SetTickSize(myRebinnedDensityTH1.GetTickLength("X"))
+        # bbot.SetTickSize(myrebinneddensityth1.getticklength("x"))
+        # btop.SetTickSize(myRebinnedDensityTH1.GetTickLength("X"))
+        print(myRebinnedDensityTH1.GetTickLength("X"))
+        bbot.SetTickSize(0.5)
+        btop.SetTickSize(0.5)
 	bbot.Draw()
 	btop.Draw()
 
@@ -1452,7 +1459,7 @@ if __name__ == '__main__':
     #h_fit_residual_vs_mass.GetYaxis().SetTitle('#frac{(Data-Fit)}{#sigma_{Data}}')
     # paper
     h_fit_residual_vs_mass.GetYaxis().SetTitleOffset(0.6)
-    h_fit_residual_vs_mass.GetYaxis().SetTitle('#frac{(Data-Fit)}{Uncertainty}')
+    h_fit_residual_vs_mass.GetYaxis().SetTitle('#frac{Data-Fit}{Uncertainty}')
 
     h_fit_residual_vs_mass.GetXaxis().SetTitleSize(2*0.06)
     h_fit_residual_vs_mass.GetXaxis().SetLabelSize(2*0.05)
