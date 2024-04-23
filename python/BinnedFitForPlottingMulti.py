@@ -313,7 +313,6 @@ def addSignalHisto(h_bkg,data_obs_TGraph_,N_massBins_,massBins_,cat):
 
     ctest = rt.TCanvas()
     h_residual.Draw("HIST")
-    ctest.SetLogy()
     ctest.SaveAs("test1.png")
 
     return hstack_1320, sighist_1320, hstack_2200, sighist_2200, h_residual
@@ -1208,7 +1207,7 @@ if __name__ == '__main__':
         l.SetTextSize(0.05)
         l.DrawLatex(0.22,0.85,"CMS Supplementary")
 
-    leg = rt.TLegend(0.2,0.12,0.47,0.52)
+    leg = rt.TLegend(0.2,0.12,0.47,0.54)
     # leg = rt.TLegend(0.6,0.4,0.88,0.88)
     leg.SetTextFont(42)
     leg.SetTextSize(0.06)
