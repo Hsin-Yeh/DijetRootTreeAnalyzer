@@ -144,7 +144,7 @@ def convertFunctionToHisto(background_,name_,N_massBins_,massBins_):
         value = background_.Integral(xbinLow , xbinHigh) / binWidth_current
         background_hist_.SetBinContent(bin+1,value)
         # valueError = background_.IntegralError(xbinLow , xbinHigh , ) / binWidth_current
-        print("{:.0f}GeV-{:.0f}GeV : Integral={:.1f}, Divide_Bin_Width={:.1f}".format(xbinLow, xbinHigh, background_.Integral(xbinLow , xbinHigh), value))
+        # print("{:.0f}GeV-{:.0f}GeV : Integral={:.1f}, Divide_Bin_Width={:.1f}".format(xbinLow, xbinHigh, background_.Integral(xbinLow , xbinHigh), value))
         total += background_.Integral(xbinLow , xbinHigh)
     print("Integral bin content : %f"%total)
     return background_hist_
@@ -624,48 +624,6 @@ if __name__ == '__main__':
 
                     d_th1x = convertToTh1xHist(d_rebin)
                     signalHistos.append(d_th1x)
-
-    '''
-    asimov = extDijetPdf.generateBinned(rt.RooArgSet(th1x),rt.RooFit.Name('central'),rt.RooFit.Asimov())
-    print(asimov)
-
-    opt = [rt.RooFit.CutRange(myRange) for myRange in plotband.split(',')]
-    print(opt[0])
-    asimov_reduce = asimov.reduce(opt[0])
-    dataHist_reduce = dataHist.reduce(opt[0])
-    for iOpt in range(1,len(opt)):
-        print(opt[iOpt])
-        asimov_reduce.add(asimov.reduce(opt[iOpt]))
-        dataHist_reduce.add(dataHist.reduce(opt[iOpt]))
-
-    rss = 0
-    for i in range(0,len(x)-1):
-        th1x.setVal(i+0.5)
-        predYield = asimov.weight(rt.RooArgSet(th1x))
-        dataYield = dataHist_reduce.weight(rt.RooArgSet(th1x))
-        rss += float(predYield-dataYield) * float(predYield-dataYield)
-        print "%i <= mgg < %i; prediction: %.2f; data %i"  % (x[i],x[i+1],predYield,dataYield)
-    print "RSS = ", rss
-
-    rt.TH1D.SetDefaultSumw2()
-
-    # start writing output
-    rt.gStyle.SetOptStat(0)
-    rt.gStyle.SetOptTitle(0)
-    c = rt.TCanvas('c','c',600,700)
-    rootFile = rt.TFile.Open(options.outDir + '/' + 'Plots_%s'%box + '.root','recreate')
-    tdirectory = rootFile.GetDirectory(options.outDir)
-    if tdirectory==None:
-        print "making directory"
-        rootFile.mkdir(options.outDir)
-        tdirectory = rootFile.GetDirectory(options.outDir)
-        tdirectory.Print('v')
-
-    h_th1x = asimov.createHistogram('h_th1x',th1x)
-
-    h_data_th1x = dataHist_reduce.createHistogram('h_data_th1x',th1x)
-    print(h_data_th1x.GetEntries())
-    '''
 
     rt.TH1D.SetDefaultSumw2()
 
