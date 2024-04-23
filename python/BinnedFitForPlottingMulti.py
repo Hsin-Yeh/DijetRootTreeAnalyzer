@@ -311,6 +311,11 @@ def addSignalHisto(h_bkg,data_obs_TGraph_,N_massBins_,massBins_,cat):
         h_residual.SetBinError(bin+1,err_fit_residual)
 
 
+    ctest = rt.TCanvas()
+    h_residual.Draw("HIST")
+    ctest.SetLogy()
+    ctest.SaveAs("test.png")
+
     return hstack_1320, sighist_1320, hstack_2200, sighist_2200, h_residual
 
 if __name__ == '__main__':
@@ -989,7 +994,7 @@ if __name__ == '__main__':
     for key, value in backgrounds.iteritems():
         h_backgrounds[key] = convertFunctionToHisto(value,"h_background",len(x)-1,x)
     hstack_1320, sighist_1320, hstack_2200, sighist_2200, h_residual = addSignalHisto(h_backgrounds["dijet"],g_data,len(x)-1,x,options.cat)
-    ctest = rt.TCanvas()
+    # ctest = rt.TCanvas()
     # h_residual.Draw("HIST")
     # ctest.SetLogy()
     # ctest.SaveAs("test.png")
