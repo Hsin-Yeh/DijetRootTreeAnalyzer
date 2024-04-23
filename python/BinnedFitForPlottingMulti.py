@@ -1053,6 +1053,7 @@ if __name__ == '__main__':
     hstack_1000.Draw("HISTsame")
     hstack_600.GetXaxis().SetRangeUser(400,800)
     hstack_600.Draw("HISTsame")
+    myRebinnedDensityTH1.Draw("axissame")
     g_data_clone.Draw("zpsame")
     g_data.Draw("zpsame")
     # Draw fit function
