@@ -1332,7 +1332,7 @@ if __name__ == '__main__':
     EBText.SetTextSize(0.062);
     EBText.Draw()
 
-    chiText=rt.TLatex(0.22,0.03, "#chi^{{2}} / dof = {0:.1f} / {1:d} = {2:.1f}".format(list_chi2AndNdf_background[4], list_chi2AndNdf_background[5], list_chi2AndNdf_background[4]/list_chi2AndNdf_background[5]));
+    chiText=rt.TLatex(0.22,0.04, "#chi^{{2}} / dof = {0:.1f} / {1:d} = {2:.1f}".format(list_chi2AndNdf_background[4], list_chi2AndNdf_background[5], list_chi2AndNdf_background[4]/list_chi2AndNdf_background[5]));
     chiText.SetNDC(1);
     chiText.SetTextFont(42);
     chiText.SetLineColor(0);
