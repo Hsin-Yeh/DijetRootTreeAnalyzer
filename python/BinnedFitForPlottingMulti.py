@@ -1506,7 +1506,7 @@ if __name__ == '__main__':
     h_fit_residual_vs_mass.GetXaxis().SetTitle('Dijet mass [GeV]')
 
     h_fit_residual_vs_mass.Draw("histsame")
-    h_residual.GetXaxis().SetRangeUser(1280,1400)
+    h_residual.GetXaxis().SetRangeUser(1290,1400)
     h_residual.Draw("HISTSame")
 
     # line = rt.TLine(h_fit_residual_vs_mass.GetXaxis().GetXmin(),0,h_fit_residual_vs_mass.GetXaxis().GetXmax(),0)
