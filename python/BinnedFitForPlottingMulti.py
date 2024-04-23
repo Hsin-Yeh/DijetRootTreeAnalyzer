@@ -1223,7 +1223,7 @@ if __name__ == '__main__':
         l.SetTextSize(0.05)
         l.DrawLatex(0.22,0.85,"CMS Supplementary")
 
-    leg = rt.TLegend(0.2,0.09,0.47,0.53)
+    leg = rt.TLegend(0.2,0.12,0.47,0.54)
     # leg = rt.TLegend(0.6,0.4,0.88,0.88)
     leg.SetTextFont(42)
     leg.SetTextSize(0.06)
@@ -1248,7 +1248,7 @@ if __name__ == '__main__':
     # legsig = rt.TLegend(0.21,0.15,0.4,0.4)
     legsig = rt.TLegend(0.55,0.7,0.85,0.9)
     legsig.SetTextFont(42)
-    legsig.SetTextSize(0.045)
+    legsig.SetTextSize(0.047)
     legsig.SetFillColor(rt.kWhite)
     legsig.SetFillStyle(0)
     legsig.SetLineWidth(0)
@@ -1323,7 +1323,7 @@ if __name__ == '__main__':
                           list_chi2AndNdf_background[4], list_chi2AndNdf_background[5],
                           list_chi2AndNdf_background[4]/list_chi2AndNdf_background[5]))
 
-    EBText=rt.TLatex(0.41,0.83, "%s"%(options.cat));
+    EBText=rt.TLatex(0.4,0.83, "%s"%(options.cat));
     EBText.SetNDC(1);
     EBText.SetTextFont(42);
     EBText.SetLineColor(0);
@@ -1338,7 +1338,7 @@ if __name__ == '__main__':
     chiText.SetLineColor(0);
     chiText.SetLineStyle(1);
     chiText.SetLineWidth(1);
-    if options.year=="fullRun2": chiText.SetTextSize(0.05)
+    if options.year=="fullRun2": chiText.SetTextSize(0.048)
     else: chiText.SetTextSize(0.045);
     chiText.Draw()
 
@@ -1509,6 +1509,7 @@ if __name__ == '__main__':
     #h_fit_residual_vs_mass.GetYaxis().SetTitleOffset(0.5)
     #h_fit_residual_vs_mass.GetYaxis().SetTitle('#frac{(Data-Fit)}{#sigma_{Data}}')
     # paper
+    h_fit_residual_vs_mass.GetYaxis().CenterTitle(1);
     h_fit_residual_vs_mass.GetYaxis().SetTitleOffset(0.6)
     h_fit_residual_vs_mass.GetYaxis().SetTitle('#frac{Data-Fit}{Uncertainty}')
 
