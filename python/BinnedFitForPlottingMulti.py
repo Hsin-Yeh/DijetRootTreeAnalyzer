@@ -275,10 +275,14 @@ def addSignalHisto(h_bkg,data_obs_TGraph_,N_massBins_,massBins_,cat):
     hstack_2200.Add(h_bkg)
     hstack_2200.Add(sighist_2200)
 
-    h_residual = rt.TH1D("h_residual","h_residual",N_massBins_,massBins_)
+    h_residual_1320 = rt.TH1D("h_residual_1320","h_residual_1320",N_massBins_,massBins_)
     ci = rt.TColor.GetColor("#1068da"); # Bird
-    h_residual.SetFillColorAlpha(ci,0.5)
-    h_residual.SetDirectory(0)
+    h_residual_1320.SetFillColorAlpha(ci,0.5)
+    h_residual_1320.SetDirectory(0)
+    h_residual_2200 = rt.TH1D("h_residual_2200","h_residual_2200",N_massBins_,massBins_)
+    ci = rt.TColor.GetColor("#2cb6a5"); # Bird
+    h_residual_2200.SetFillColorAlpha(ci,0.5)
+    h_residual_2200.SetDirectory(0)
     for bin in range (0,N_massBins_):
         ## Values and errors
         value_data = data_obs_TGraph_.GetY()[bin]
@@ -288,35 +292,43 @@ def addSignalHisto(h_bkg,data_obs_TGraph_,N_massBins_,massBins_,cat):
         xbinLow = data_obs_TGraph_.GetX()[bin]-data_obs_TGraph_.GetEXlow()[bin]
         xbinHigh = data_obs_TGraph_.GetX()[bin]+data_obs_TGraph_.GetEXhigh()[bin]
         binWidth_current = xbinHigh - xbinLow
-        value = sighist_1320.GetBinContent(bin+1)+h_bkg.GetBinContent(bin+1)
-        print("hihi %f %f %f"%(xbinCenter,value,value_data))
-        # print(value_data,err_low_data,err_high_data)
-        # print(xbinCenter,xbinLow,xbinHigh,binWidth_current)
-        # print(value)
-
-        ## Fit residuals
+        value_1320 = sighist_1320.GetBinContent(bin+1)+h_bkg.GetBinContent(bin+1)
+        ## residuals
         err_tot_data = 0
-        if (value > value_data):
+        if (value_1320 > value_data):
             err_tot_data = err_high_data
         else:
             err_tot_data = err_low_data
 
-        fit_residual = (value_data - value) / err_tot_data
-        err_fit_residual = 1
+        residual_1320 = (value_data - value_1320) / err_tot_data
+        residual_1320 = 1
+
+        value_2200 = sighist_2200.GetBinContent(bin+1)+h_bkg.GetBinContent(bin+1)
+        err_tot_data = 0
+        if (value_2200 > value_data):
+            err_tot_data = err_high_data
+        else:
+            err_tot_data = err_low_data
+        residual_2200 = (value_data - value_2200) / err_tot_data
+        residual_2200 = 1
 
         ## Fill histo with residuals
 
-        h_residual.SetBinContent(bin+1,fit_residual)
-        h_residual.SetBinError(bin+1,err_fit_residual)
-
+        h_residual_1320.SetBinContent(bin+1,fit_residual)
+        h_residual_1320.SetBinError(bin+1,err_fit_residual)
+        h_residual_2200.SetBinContent(bin+1,fit_residual)
+        h_residual_2200.SetBinError(bin+1,err_fit_residual)
 
     ctest = rt.TCanvas()
-    h_residual.Draw("HIST")
-    h_residual.GetXaxis().SetRangeUser(500,4000)
-    h_residual.GetYaxis().SetRangeUser(-3,3)
+    h_residual_1320.Draw("HIST")
+    h_residual_1320.GetXaxis().SetRangeUser(500,4000)
+    h_residual_1320.GetYaxis().SetRangeUser(-3,3)
+    h_residual_2200.Draw("HIST")
+    h_residual_2200.GetXaxis().SetRangeUser(500,4000)
+    h_residual_2200.GetYaxis().SetRangeUser(-3,3)
     ctest.SaveAs("test1.png")
 
-    return hstack_1320, sighist_1320, hstack_2200, sighist_2200, h_residual
+    return hstack_1320, sighist_1320, hstack_2200, sighist_2200, h_residual_1320, h_residual_2200
 
 if __name__ == '__main__':
     parser = OptionParser()
@@ -993,11 +1005,12 @@ if __name__ == '__main__':
     h_backgrounds = {}
     for key, value in backgrounds.iteritems():
         h_backgrounds[key] = convertFunctionToHisto(value,"h_background",len(x)-1,x)
-    hstack_1320, sighist_1320, hstack_2200, sighist_2200, h_residual = addSignalHisto(h_backgrounds["dijet"],g_data,len(x)-1,x,options.cat)
+    hstack_1320, sighist_1320, hstack_2200, sighist_2200, h_residual_1320, h_residual_2200 = addSignalHisto(h_backgrounds["dijet"],g_data,len(x)-1,x,options.cat)
     ctest = rt.TCanvas()
     hstack_1320.Draw("HIST")
     hstack_2200.Draw("HISTsame")
-    h_residual.Draw("HISTsame")
+    h_residual_1320.Draw("HISTsame")
+    h_residual_2200.Draw("HISTsame")
     ctest.SetLogy()
     ctest.SaveAs("test.png")
 
@@ -1506,8 +1519,9 @@ if __name__ == '__main__':
     # paper
     h_fit_residual_vs_mass.GetXaxis().SetTitle('Dijet mass [GeV]')
 
-    # h_residual.GetXaxis().SetRangeUser(1290,1400)
-    h_residual.Draw("HISTSame")
+    # h_residual_1320.GetXaxis().SetRangeUser(1290,1400)
+    h_residual_1320.Draw("HISTSame")
+    h_residual_2200.Draw("HISTSame")
     h_fit_residual_vs_mass.Draw("histsame")
 
     # line = rt.TLine(h_fit_residual_vs_mass.GetXaxis().GetXmin(),0,h_fit_residual_vs_mass.GetXaxis().GetXmax(),0)
