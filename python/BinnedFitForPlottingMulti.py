@@ -1041,7 +1041,7 @@ if __name__ == '__main__':
     elif 'DiPhoton' in box:
         myRebinnedDensityTH1.SetMaximum(2e3)
         if w.var('mgg').getMax() > 2037:
-            myRebinnedDensityTH1.SetMaximum(2e2)
+            myRebinnedDensityTH1.SetMaximum(4e2)
             myRebinnedDensityTH1.SetMinimum(2e-3)
         else:
             myRebinnedDensityTH1.SetMinimum(2e-5)
