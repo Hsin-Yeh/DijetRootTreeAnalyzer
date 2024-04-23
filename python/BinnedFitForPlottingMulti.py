@@ -1038,6 +1038,7 @@ if __name__ == '__main__':
     g_data_clone.Draw("zpsame")
     g_data.Draw("zpsame")
     h_sig.SetLineWidth(5)
+    h_sig.GetXaxis().SetRangeUser(600,1500)
     h_sig.Draw("HISTsame")
     # Draw fit function
     if options.doTriggerFit or options.doSimultaneousFit or options.doSpectrumFit or options.noFit:
