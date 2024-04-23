@@ -276,40 +276,40 @@ def addSignalHisto(h_bkg,data_obs_TGraph_,cat):
     hstack_2200.Add(sighist_2200)
     sighist_1320.Add(data)
 
-    for bin in range (0,N_massBins_):
-        ## Values and errors
-        value_data = data_obs_TGraph_.GetY()[bin]
-        err_low_data = data_obs_TGraph_.GetEYlow()[bin]
-        err_high_data = data_obs_TGraph_.GetEYhigh()[bin]
-        xbinCenter = data_obs_TGraph_.GetX()[bin]
-        xbinLow = data_obs_TGraph_.GetX()[bin]-data_obs_TGraph_.GetEXlow()[bin]
-        xbinHigh = data_obs_TGraph_.GetX()[bin]+data_obs_TGraph_.GetEXhigh()[bin]
-        binWidth_current = xbinHigh - xbinLow
-        value = sighist_1320.GetBinContent(bin+1)
-        # print(value_data,err_low_data,err_high_data)
-        # print(xbinCenter,xbinLow,xbinHigh,binWidth_current)
-        # print(value)
+    # for bin in range (0,N_massBins_):
+    #     ## Values and errors
+    #     value_data = data_obs_TGraph_.GetY()[bin]
+    #     err_low_data = data_obs_TGraph_.GetEYlow()[bin]
+    #     err_high_data = data_obs_TGraph_.GetEYhigh()[bin]
+    #     xbinCenter = data_obs_TGraph_.GetX()[bin]
+    #     xbinLow = data_obs_TGraph_.GetX()[bin]-data_obs_TGraph_.GetEXlow()[bin]
+    #     xbinHigh = data_obs_TGraph_.GetX()[bin]+data_obs_TGraph_.GetEXhigh()[bin]
+    #     binWidth_current = xbinHigh - xbinLow
+    #     value = sighist_1320.GetBinContent(bin+1)
+    #     # print(value_data,err_low_data,err_high_data)
+    #     # print(xbinCenter,xbinLow,xbinHigh,binWidth_current)
+    #     # print(value)
 
-        ## Fit residuals
-        err_tot_data = 0
-        if (value > value_data):
-            err_tot_data = err_high_data
-        else:
-            err_tot_data = err_low_data
-        plotRegions = plotRegion.split(',')
-        checkInRegions = [xbinCenter>workspace_.var('mgg').getMin(reg) and xbinCenter<workspace_.var('mgg').getMax(reg) for reg in plotRegions]
-        if effFit_: checkInRegions = [xbinCenter>workspace_.var('mgg').getMin('Eff') and xbinCenter<workspace_.var('mgg').getMax('Eff')]
-        if any(checkInRegions):
-            fit_residual = (value_data - value) / err_tot_data
-            err_fit_residual = 1
-        else:
-            fit_residual = 0
-            err_fit_residual = 0
+    #     ## Fit residuals
+    #     err_tot_data = 0
+    #     if (value > value_data):
+    #         err_tot_data = err_high_data
+    #     else:
+    #         err_tot_data = err_low_data
+    #     plotRegions = plotRegion.split(',')
+    #     checkInRegions = [xbinCenter>workspace_.var('mgg').getMin(reg) and xbinCenter<workspace_.var('mgg').getMax(reg) for reg in plotRegions]
+    #     if effFit_: checkInRegions = [xbinCenter>workspace_.var('mgg').getMin('Eff') and xbinCenter<workspace_.var('mgg').getMax('Eff')]
+    #     if any(checkInRegions):
+    #         fit_residual = (value_data - value) / err_tot_data
+    #         err_fit_residual = 1
+    #     else:
+    #         fit_residual = 0
+    #         err_fit_residual = 0
 
-        ## Fill histo with residuals
+    #     ## Fill histo with residuals
 
-        hist_fit_residual_vsMass_.SetBinContent(bin+1,fit_residual)
-        hist_fit_residual_vsMass_.SetBinError(bin+1,err_fit_residual)
+    #     hist_fit_residual_vsMass_.SetBinContent(bin+1,fit_residual)
+    #     hist_fit_residual_vsMass_.SetBinError(bin+1,err_fit_residual)
 
 
     return hstack_1320, sighist_1320, hstack_2200, sighist_2200
