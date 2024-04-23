@@ -148,16 +148,16 @@ if __name__ == "__main__":
     cmsText.SetLineColor(0);
     cmsText.SetLineStyle(1);
     cmsText.SetLineWidth(1);
-    cmsText.SetTextSize(0.04);
+    cmsText.SetTextSize(0.05);
     cmsText.Draw();
 
-    extraText=ROOT.TLatex(0.24,0.83, "Simulation");
+    extraText=ROOT.TLatex(0.25,0.83, "Simulation");
     extraText.SetNDC(1);
     extraText.SetTextFont(52);
     extraText.SetLineColor(0);
     extraText.SetLineStyle(1);
     extraText.SetLineWidth(1);
-    extraText.SetTextSize(0.04);
+    extraText.SetTextSize(0.05);
     extraText.Draw();
 
     yearText=ROOT.TLatex(0.39,0.90, args.year);
