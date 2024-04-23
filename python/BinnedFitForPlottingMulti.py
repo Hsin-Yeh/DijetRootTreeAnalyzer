@@ -253,8 +253,8 @@ def addSignalHisto(h_bkg,N_massBins_,massBins_):
     hstack_600 = rt.THStack("hstack_600","")
     sighist_1000 = sigfile.Get("h_gg_1000")
     sighist_600 = sigfile.Get("h_gg_600")
-    sighist_1000.Scale(100)
-    sighist_600.Scale(100)
+    sighist_1000.Scale(57.408)
+    sighist_600.Scale(138)
     sighist_1000.SetDirectory(0)
     sighist_600.SetDirectory(0)
     h_bkg.SetFillColor(0)
@@ -1194,8 +1194,8 @@ if __name__ == '__main__':
     # legsig.SetFillStyle(0)
     # legsig.SetLineWidth(0)
     # legsig.SetLineColor(rt.kWhite)
-    leg.AddEntry(sighist_1000,"1TeV narrow RSG","f")
-    leg.AddEntry(sighist_600,"3TeV narrow RSG","f")
+    leg.AddEntry(sighist_1000,"1TeV NW RSG","f")
+    leg.AddEntry(sighist_600,"3TeV NW RSG","f")
 
     # for key, value in backgrounds.iteritems():
         # leg.AddEntry(value,"%s: %s "%(key, modelforms[key]),"l")
