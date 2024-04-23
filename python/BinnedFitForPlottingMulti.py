@@ -1150,7 +1150,7 @@ if __name__ == '__main__':
     l.SetTextFont(62)
     if(options.year=="fullRun2"):
         l.SetTextSize(0.065)
-        l.DrawLatex(0.21,0.25,"CMS")
+        l.DrawLatex(0.21,0.26,"CMS")
         # PAS
         l.SetTextFont(52)
         l.SetTextSize(0.055)
@@ -1180,9 +1180,9 @@ if __name__ == '__main__':
     leg.AddEntry(backgrounds["invpow1"],"%s"%(modelforms["invpow1"]),"l")
     leg.AddEntry(backgrounds["invpowlin1"],"%s"%(modelforms["invpowlin1"]),"l")
 
-    legsig = rt.TLegend(0.21,0.7,0.46,0.88)
+    legsig = rt.TLegend(0.21,0.7,0.43,0.88)
     legsig.SetTextFont(42)
-    legsig.SetTextSize(0.055)
+    legsig.SetTextSize(0.054)
     legsig.SetFillColor(rt.kWhite)
     legsig.SetFillStyle(0)
     legsig.SetLineWidth(0)
