@@ -247,7 +247,7 @@ def calculateChi2AndFillResiduals(data_obs_TGraph_,background_hist_,hist_fit_res
 
     return [chi2_FullRangeAll, ndf_FullRangeAll, chi2_PlotRangeAll, ndf_PlotRangeAll, chi2_PlotRangeNonZero, ndf_PlotRangeNonZero, chi2_PlotRangeMinNumEvents, ndf_PlotRangeMinNumEvents]
 
-def addSignalHisto(h_bkg,cat):
+def addSignalHisto(h_bkg,data_obs_TGraph_,N_massBins_,massBins_,cat):
     if(cat=="EBEB"): sigfile = rt.TFile("/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/full/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_kMpl001_EBEB_2017.root")
     elif(cat=="EBEE"): sigfile = rt.TFile("/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/full/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_kMpl001_EBEE_2017.root")
     hstack_1320 = rt.THStack("hstack_1320","")
@@ -274,38 +274,39 @@ def addSignalHisto(h_bkg,cat):
     hstack_1320.Add(sighist_1320)
     hstack_2200.Add(h_bkg)
     hstack_2200.Add(sighist_2200)
-    # sighist_1320.Add(data)
+    sighist_1320.Add(h_bkg)
 
-    # for bin in range (0,N_massBins_):
-    #     ## Values and errors
-    #     value_data = data_obs_TGraph_.GetY()[bin]
-    #     err_low_data = data_obs_TGraph_.GetEYlow()[bin]
-    #     err_high_data = data_obs_TGraph_.GetEYhigh()[bin]
-    #     xbinCenter = data_obs_TGraph_.GetX()[bin]
-    #     xbinLow = data_obs_TGraph_.GetX()[bin]-data_obs_TGraph_.GetEXlow()[bin]
-    #     xbinHigh = data_obs_TGraph_.GetX()[bin]+data_obs_TGraph_.GetEXhigh()[bin]
-    #     binWidth_current = xbinHigh - xbinLow
-    #     value = sighist_1320.GetBinContent(bin+1)
-    #     # print(value_data,err_low_data,err_high_data)
-    #     # print(xbinCenter,xbinLow,xbinHigh,binWidth_current)
-    #     # print(value)
+    h_residual = rt.TH1D("h_residual","h_residual",N_massBins_,massBins_)
+    for bin in range (0,N_massBins_):
+        ## Values and errors
+        value_data = data_obs_TGraph_.GetY()[bin]
+        err_low_data = data_obs_TGraph_.GetEYlow()[bin]
+        err_high_data = data_obs_TGraph_.GetEYhigh()[bin]
+        xbinCenter = data_obs_TGraph_.GetX()[bin]
+        xbinLow = data_obs_TGraph_.GetX()[bin]-data_obs_TGraph_.GetEXlow()[bin]
+        xbinHigh = data_obs_TGraph_.GetX()[bin]+data_obs_TGraph_.GetEXhigh()[bin]
+        binWidth_current = xbinHigh - xbinLow
+        value = sighist_1320.GetBinContent(bin+1)
+        # print(value_data,err_low_data,err_high_data)
+        # print(xbinCenter,xbinLow,xbinHigh,binWidth_current)
+        # print(value)
 
-    #     ## Fit residuals
-    #     err_tot_data = 0
-    #     if (value > value_data):
-    #         err_tot_data = err_high_data
-    #     else:
-    #         err_tot_data = err_low_data
-    #     fit_residual = (value_data - value) / err_tot_data
-    #     err_fit_residual = 1
+        ## Fit residuals
+        err_tot_data = 0
+        if (value > value_data):
+            err_tot_data = err_high_data
+        else:
+            err_tot_data = err_low_data
+        fit_residual = (value_data - value) / err_tot_data
+        err_fit_residual = 1
 
-    #     ## Fill histo with residuals
+        ## Fill histo with residuals
 
-    #     hist_fit_residual_vsMass_.SetBinContent(bin+1,fit_residual)
-    #     hist_fit_residual_vsMass_.SetBinError(bin+1,err_fit_residual)
+        h_residual.SetBinContent(bin+1,fit_residual)
+        h_residual.SetBinError(bin+1,err_fit_residual)
 
 
-    return hstack_1320, sighist_1320, hstack_2200, sighist_2200
+    return hstack_1320, sighist_1320, hstack_2200, sighist_2200, h_residual
 
 if __name__ == '__main__':
     parser = OptionParser()
@@ -982,7 +983,7 @@ if __name__ == '__main__':
     h_backgrounds = {}
     for key, value in backgrounds.iteritems():
         h_backgrounds[key] = convertFunctionToHisto(value,"h_background",len(x)-1,x)
-    hstack_1320, sighist_1320, hstack_2200, sighist_2200 = addSignalHisto(h_backgrounds["dijet"],options.cat)
+    hstack_1320, sighist_1320, hstack_2200, sighist_2200, h_residual = addSignalHisto(h_backgrounds["dijet"],g_data,len(x)-1,x,options.cat)
     ctest = rt.TCanvas()
     hstack_1320.Draw("HIST")
     hstack_2200.Draw("HISTsame")
