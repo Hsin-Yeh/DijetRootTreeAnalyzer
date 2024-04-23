@@ -250,27 +250,27 @@ def calculateChi2AndFillResiduals(data_obs_TGraph_,background_hist_,hist_fit_res
 def addSignalHisto(h_bkg,cat):
     if(cat=="EBEB"): sigfile = rt.TFile("/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/full/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_kMpl001_EBEB_2017.root")
     elif(cat=="EBEE"): sigfile = rt.TFile("/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/full/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_kMpl001_EBEE_2017.root")
-    hstack_1000 = rt.THStack("hstack_1000","")
-    hstack_600 = rt.THStack("hstack_600","")
-    sighist_1000 = sigfile.Get("h_gg_1000")
-    sighist_600 = sigfile.Get("h_gg_600")
-    sighist_1000.Scale(57.408)
-    sighist_600.Scale(138)
-    sighist_1000.SetDirectory(0)
-    sighist_600.SetDirectory(0)
+    hstack_1320 = rt.THStack("hstack_1320","")
+    hstack_2200 = rt.THStack("hstack_2200","")
+    sighist_1320 = sigfile.Get("h_gg_1320")
+    sighist_2200 = sigfile.Get("h_gg_2200")
+    sighist_1320.Scale(319)
+    sighist_2200.Scale(91)
+    sighist_1320.SetDirectory(0)
+    sighist_2200.SetDirectory(0)
     h_bkg.SetFillColorAlpha(0,0)
     h_bkg.SetLineColorAlpha(0,0)
     ci = rt.TColor.GetColor("#1068da"); # Bird
-    sighist_1000.SetFillColorAlpha(ci,0.5)
-    sighist_1000.SetLineColorAlpha(0,0)
+    sighist_1320.SetFillColorAlpha(ci,0.5)
+    sighist_1320.SetLineColorAlpha(0,0)
     ci = rt.TColor.GetColor("#2cb6a5"); # Bird
-    sighist_600.SetFillColorAlpha(ci,0.5)
-    sighist_600.SetLineColorAlpha(0,0)
-    hstack_1000.Add(h_bkg)
-    hstack_1000.Add(sighist_1000)
-    hstack_600.Add(h_bkg)
-    hstack_600.Add(sighist_600)
-    return hstack_1000, sighist_1000, hstack_600, sighist_600
+    sighist_2200.SetFillColorAlpha(ci,0.5)
+    sighist_2200.SetLineColorAlpha(0,0)
+    hstack_1320.Add(h_bkg)
+    hstack_1320.Add(sighist_1320)
+    hstack_2200.Add(h_bkg)
+    hstack_2200.Add(sighist_2200)
+    return hstack_1320, sighist_1320, hstack_2200, sighist_2200
 
 if __name__ == '__main__':
     parser = OptionParser()
@@ -947,10 +947,10 @@ if __name__ == '__main__':
     h_backgrounds = {}
     for key, value in backgrounds.iteritems():
         h_backgrounds[key] = convertFunctionToHisto(value,"h_background",len(x)-1,x)
-    hstack_1000, sighist_1000, hstack_600, sighist_600 = addSignalHisto(h_backgrounds["dijet"],options.cat)
+    hstack_1320, sighist_1320, hstack_2200, sighist_2200 = addSignalHisto(h_backgrounds["dijet"],options.cat)
     ctest = rt.TCanvas()
-    hstack_1000.Draw("HIST")
-    hstack_600.Draw("HISTsame")
+    hstack_1320.Draw("HIST")
+    hstack_2200.Draw("HISTsame")
     ctest.SetLogy()
     ctest.SaveAs("test.png")
 
@@ -1050,10 +1050,10 @@ if __name__ == '__main__':
     myRebinnedDensityTH1.Draw("axis")
 
     # Draw data
-    hstack_1000.GetXaxis().SetRangeUser(400,1500)
-    hstack_1000.Draw("HISTsame")
-    hstack_600.GetXaxis().SetRangeUser(400,800)
-    hstack_600.Draw("HISTsame")
+    hstack_1320.GetXaxis().SetRangeUser(400,1500)
+    hstack_1320.Draw("HISTsame")
+    hstack_2200.GetXaxis().SetRangeUser(400,800)
+    hstack_2200.Draw("HISTsame")
     myRebinnedDensityTH1.Draw("axissame")
     g_data_clone.Draw("zpsame")
     g_data.Draw("zpsame")
@@ -1190,8 +1190,8 @@ if __name__ == '__main__':
     legsig.SetFillStyle(0)
     legsig.SetLineWidth(0)
     legsig.SetLineColor(rt.kWhite)
-    legsig.AddEntry(sighist_600,"NW signal at 0.6TeV","f")
-    legsig.AddEntry(sighist_1000,"NW signal at 1TeV","f")
+    legsig.AddEntry(sighist_2200,"NW signal at 0.6TeV","f")
+    legsig.AddEntry(sighist_1320,"NW signal at 1TeV","f")
 
     # for key, value in backgrounds.iteritems():
         # leg.AddEntry(value,"%s: %s "%(key, modelforms[key]),"l")
