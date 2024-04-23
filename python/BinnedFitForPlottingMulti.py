@@ -1187,8 +1187,8 @@ if __name__ == '__main__':
     legsig.SetFillStyle(0)
     legsig.SetLineWidth(0)
     legsig.SetLineColor(rt.kWhite)
-    legsig.AddEntry(sighist_600,"#tilde{k}=0.01, J=2, 0.6TeV","f")
     legsig.AddEntry(sighist_1000,"#tilde{k}=0.01, J=2, 1TeV","f")
+    legsig.AddEntry(sighist_600,"#tilde{k}=0.01, J=2, 0.6TeV","f")
 
     # for key, value in backgrounds.iteritems():
         # leg.AddEntry(value,"%s: %s "%(key, modelforms[key]),"l")
@@ -1257,7 +1257,7 @@ if __name__ == '__main__':
                           list_chi2AndNdf_background[4], list_chi2AndNdf_background[5],
                           list_chi2AndNdf_background[4]/list_chi2AndNdf_background[5]))
 
-    EBText=rt.TLatex(0.21,0.1, "%s"%(options.cat));
+    EBText=rt.TLatex(0.21,0.13, "%s"%(options.cat));
     EBText.SetNDC(1);
     EBText.SetTextFont(42);
     EBText.SetLineColor(0);
@@ -1266,7 +1266,7 @@ if __name__ == '__main__':
     EBText.SetTextSize(0.062);
     EBText.Draw()
 
-    chiText=rt.TLatex(0.21,0.02, "#chi^{{2}} / dof = {0:.1f} / {1:d} = {2:.1f}".format(list_chi2AndNdf_background[4], list_chi2AndNdf_background[5], list_chi2AndNdf_background[4]/list_chi2AndNdf_background[5]));
+    chiText=rt.TLatex(0.21,0.05, "#chi^{{2}} / dof = {0:.1f} / {1:d} = {2:.1f}".format(list_chi2AndNdf_background[4], list_chi2AndNdf_background[5], list_chi2AndNdf_background[4]/list_chi2AndNdf_background[5]));
     chiText.SetNDC(1);
     chiText.SetTextFont(42);
     chiText.SetLineColor(0);
