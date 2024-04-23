@@ -258,7 +258,7 @@ def addSignalHisto(h_bkg):
     h_bkg.Draw("HIST")
     ctest.SetLogy()
     ctest.SaveAs("test.png")
-    return h_sig
+    return h_bkg
 
 if __name__ == '__main__':
     parser = OptionParser()
