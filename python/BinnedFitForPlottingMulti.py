@@ -255,6 +255,7 @@ def addSignalHisto(h_bkg,N_massBins_,massBins_):
     sighist_3000 = sigfile.Get("h_gg_3000")
     sighist_1000.Scale(100)
     sighist_1000.SetDirectory(0)
+    sighist_3000.SetDirectory(0)
     h_bkg.SetFillColor(0)
     ci = rt.TColor.GetColor("#1068da"); # Bird
     sighist_1000.SetFillColorAlpha(ci,0.5)
