@@ -1161,7 +1161,7 @@ if __name__ == '__main__':
 
     if options.signalFileName!=None:
         if 'DiPhoton' in box:
-            leg = rt.TLegend(0.6,0.35,0.88,0.87)
+            leg = rt.TLegend(0.6,0.38,0.89,0.89)
         else:
             leg = rt.TLegend(0.58,0.55,0.85,0.87)
     else:
@@ -1194,8 +1194,8 @@ if __name__ == '__main__':
     legsig.SetFillStyle(0)
     legsig.SetLineWidth(0)
     legsig.SetLineColor(rt.kWhite)
-    legsig.AddEntry(sighist_600,"#frac{#Gamma_{X}}{m_{X}}=1.4 #times 10^{-4},0.6TeV","f")
-    legsig.AddEntry(sighist_1000,"#frac{#Gamma_{X}}{m_{X}}=1.4 #times 10^{-4},1TeV","f")
+    legsig.AddEntry(sighist_600,"#tilde{k}=0.01,0.6TeV","f")
+    legsig.AddEntry(sighist_1000,"#tilde{k}=0.01,1TeV","f")
 
     # for key, value in backgrounds.iteritems():
         # leg.AddEntry(value,"%s: %s "%(key, modelforms[key]),"l")
