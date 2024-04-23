@@ -989,9 +989,9 @@ if __name__ == '__main__':
         h_backgrounds[key] = convertFunctionToHisto(value,"h_background",len(x)-1,x)
     hstack_1320, sighist_1320, hstack_2200, sighist_2200, h_residual = addSignalHisto(h_backgrounds["dijet"],g_data,len(x)-1,x,options.cat)
     ctest = rt.TCanvas()
-    h_residual.Draw("HIST")
-    ctest.SetLogy()
-    ctest.SaveAs("test.png")
+    # h_residual.Draw("HIST")
+    # ctest.SetLogy()
+    # ctest.SaveAs("test.png")
 
     #i have data
     #h_th1x.Scale(1.0/lumi)
