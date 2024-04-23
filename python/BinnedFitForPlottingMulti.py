@@ -933,7 +933,7 @@ if __name__ == '__main__':
     h_backgrounds = {}
     for key, value in backgrounds.iteritems():
         h_backgrounds[key] = convertFunctionToHisto(value,"h_background",len(x)-1,x)
-    h_sig = addSignalHisto(h_backgrounds["dijet"])
+    h_sig = addSignalHisto(h_backgrounds["dijet"],len(x)-1,x)
     ctest = rt.TCanvas()
     h_sig.Draw("HIST")
     ctest.SetLogy()
