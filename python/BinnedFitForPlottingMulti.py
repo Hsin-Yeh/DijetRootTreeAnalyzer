@@ -1161,7 +1161,7 @@ if __name__ == '__main__':
 
     if options.signalFileName!=None:
         if 'DiPhoton' in box:
-            leg = rt.TLegend(0.6,0.38,0.89,0.89)
+            leg = rt.TLegend(0.65,0.38,0.89,0.89)
         else:
             leg = rt.TLegend(0.58,0.55,0.85,0.87)
     else:
@@ -1187,7 +1187,7 @@ if __name__ == '__main__':
     leg.AddEntry(backgrounds["invpow1"],"%s"%(modelforms["invpow1"]),"l")
     leg.AddEntry(backgrounds["invpowlin1"],"%s"%(modelforms["invpowlin1"]),"l")
 
-    legsig = rt.TLegend(0.4,0.65,0.6,0.89)
+    legsig = rt.TLegend(0.35,0.7,0.55,0.89)
     legsig.SetTextFont(42)
     legsig.SetTextSize(0.04)
     legsig.SetFillColor(rt.kWhite)
