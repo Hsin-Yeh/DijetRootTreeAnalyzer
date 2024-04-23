@@ -282,7 +282,7 @@ def addSignalHisto(h_bkg,data_obs_TGraph_,N_massBins_,massBins_,cat):
     sighist_1320_clone.Add(h_bkg)
     h_residual = rt.TH1D("h_residual","h_residual",N_massBins_,massBins_)
     ci = rt.TColor.GetColor("#1068da"); # Bird
-    h_residual.SetFillColorAlpha(c1,0.5)
+    h_residual.SetFillColorAlpha(ci,0.5)
     h_residual.SetDirectory(0)
     for bin in range (0,N_massBins_):
         ## Values and errors
