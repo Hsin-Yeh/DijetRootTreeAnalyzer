@@ -896,9 +896,9 @@ if __name__ == '__main__':
     alpha = 1-0.6827
     for i in range(0,g_data.GetN()):
         N = g_data.GetY()[i]
-        print(N)
+        # print(N)
         binWidth = g_data.GetEXlow()[i] + g_data.GetEXhigh()[i]
-        print(binWidth)
+        # print(binWidth)
         L = 0
         if N!=0:
             L = rt.Math.gamma_quantile(alpha/2,N,1.)
@@ -915,7 +915,7 @@ if __name__ == '__main__':
         g_data.SetPoint(i, g_data.GetX()[i], N/(binWidth ))
 
         #print(i, g_data.GetX()[i], N/(binWidth * lumi) )
-        print(i, g_data.GetX()[i] )
+        # print(i, g_data.GetX()[i] )
 
 
         plotRegions = plotRegion.split(',')
@@ -1369,7 +1369,7 @@ if __name__ == '__main__':
 	                 myRebinnedDensityTH1.GetXaxis().GetXmax(), 20,  "f_h2_log10_x_axis", 509,"-UBS", 0.0);
         # bbot.SetTickSize(myrebinneddensityth1.getticklength("x"))
         # btop.SetTickSize(myRebinnedDensityTH1.GetTickLength("X"))
-        print(myRebinnedDensityTH1.GetTickLength("X"))
+        # print(myRebinnedDensityTH1.GetTickLength("X"))
         bbot.SetTickSize(0.5)
         btop.SetTickSize(0.5)
 	bbot.Draw()
