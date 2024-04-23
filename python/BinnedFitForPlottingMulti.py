@@ -1204,8 +1204,8 @@ if __name__ == '__main__':
         l.SetTextSize(0.05)
         l.DrawLatex(0.22,0.85,"CMS Supplementary")
 
-    # leg = rt.TLegend(0.21,0.25,0.5,0.6)
-    leg = rt.TLegend(0.6,0.4,0.88,0.88)
+    leg = rt.TLegend(0.21,0.15,0.4,0.5)
+    # leg = rt.TLegend(0.6,0.4,0.88,0.88)
     leg.SetTextFont(42)
     leg.SetTextSize(0.06)
     leg.SetFillColor(rt.kWhite)
@@ -1226,9 +1226,10 @@ if __name__ == '__main__':
     leg.AddEntry(backgrounds["invpow1"],"%s"%(modelforms["invpow1"]),"l")
     leg.AddEntry(backgrounds["invpowlin1"],"%s"%(modelforms["invpowlin1"]),"l")
 
-    legsig = rt.TLegend(0.21,0.15,0.4,0.4)
+    # legsig = rt.TLegend(0.21,0.15,0.4,0.4)
+    legsig = rt.TLegend(0.6,0.4,0.88,0.88)
     legsig.SetTextFont(42)
-    legsig.SetTextSize(0.05)
+    legsig.SetTextSize(0.045)
     legsig.SetFillColor(rt.kWhite)
     legsig.SetFillStyle(0)
     legsig.SetLineWidth(0)
