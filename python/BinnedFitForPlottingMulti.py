@@ -1030,7 +1030,7 @@ if __name__ == '__main__':
     # Draw data
     g_data_clone.Draw("zpsame")
     g_data.Draw("zpsame")
-    h_sig.Draw("HISTsame")
+    # h_sig.Draw("HISTsame")
     # Draw fit function
     if options.doTriggerFit or options.doSimultaneousFit or options.doSpectrumFit or options.noFit:
         rt.gStyle.SetPalette(90)
