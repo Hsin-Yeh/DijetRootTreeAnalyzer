@@ -323,10 +323,10 @@ def addSignalHisto(h_bkg,data_obs_TGraph_,N_massBins_,massBins_,cat):
     ctest = rt.TCanvas()
     h_residual_1320.Draw("HIST")
     h_residual_1320.GetXaxis().SetRangeUser(500,4000)
-    h_residual_1320.GetYaxis().SetRangeUser(-3,3)
+    # h_residual_1320.GetYaxis().SetRangeUser(-3,3)
     h_residual_2200.Draw("HIST")
     h_residual_2200.GetXaxis().SetRangeUser(500,4000)
-    h_residual_2200.GetYaxis().SetRangeUser(-3,3)
+    # h_residual_2200.GetYaxis().SetRangeUser(-3,3)
     ctest.SaveAs("test1.png")
 
     return hstack_1320, sighist_1320, hstack_2200, sighist_2200, h_residual_1320, h_residual_2200
