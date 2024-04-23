@@ -1159,14 +1159,7 @@ if __name__ == '__main__':
         l.SetTextSize(0.05)
         l.DrawLatex(0.22,0.85,"CMS Supplementary")
 
-    if options.signalFileName!=None:
-        if 'DiPhoton' in box:
-            leg = rt.TLegend(0.65,0.38,0.89,0.89)
-        else:
-            leg = rt.TLegend(0.58,0.55,0.85,0.87)
-    else:
-        # leg = rt.TLegend(0.6,0.6,0.89,0.89)
-        leg = rt.TLegend(0.56,0.35,0.88,0.89)
+    leg = rt.TLegend(0.65,0.38,0.89,0.89)
     leg.SetTextFont(42)
     leg.SetTextSize(0.06)
     leg.SetFillColor(rt.kWhite)
