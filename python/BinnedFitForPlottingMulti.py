@@ -279,23 +279,6 @@ def addSignalHisto(h_bkg,data_obs_TGraph_,N_massBins_,massBins_,cat):
     ci = rt.TColor.GetColor("#1068da"); # Bird
     h_residual_1320.SetFillColorAlpha(ci,0.5)
     h_residual_1320.SetDirectory(0)
-    h_residual_1320.GetXaxis().SetRangeUser(500,4000)
-    h_residual_1320.GetYaxis().SetRangeUser(-3.5,3.5)
-    h_residual_1320.GetYaxis().SetTitleSize(2*0.06)
-    h_residual_1320.GetYaxis().SetLabelSize(2*0.05)
-    # PAS
-    #h_residual_1320.GetYaxis().SetTitleOffset(0.5)
-    #h_residual_1320.GetYaxis().SetTitle('#frac{(Data-Fit)}{#sigma_{Data}}')
-    # paper
-    h_residual_1320.GetYaxis().SetTitleOffset(0.6)
-    h_residual_1320.GetYaxis().SetTitle('#frac{Data-Fit}{Uncertainty}')
-    h_residual_1320.GetXaxis().SetTitleSize(2*0.06)
-    h_residual_1320.GetXaxis().SetLabelSize(2*0.05)
-    #h_residual_1320.GetXaxis().SetTitle('m_{jj} [GeV]')
-    # PAS
-    #h_residual_1320.GetXaxis().SetTitle('Dijet Mass [GeV]')
-    # paper
-    h_residual_1320.GetXaxis().SetTitle('Dijet mass [GeV]')
 
     h_residual_2200 = rt.TH1D("h_residual_2200","h_residual_2200",N_massBins_,massBins_)
     ci = rt.TColor.GetColor("#2cb6a5"); # Bird
@@ -1537,7 +1520,7 @@ if __name__ == '__main__':
     # paper
     h_fit_residual_vs_mass.GetXaxis().SetTitle('Dijet mass [GeV]')
 
-    # h_residual_1320.GetXaxis().SetRangeUser(1290,1400)
+    h_fit_residual_vs_mass.Draw("histsame")
     h_residual_1320.Draw("HISTSame")
     h_residual_2200.Draw("HISTSame")
     h_fit_residual_vs_mass.Draw("histsame")
