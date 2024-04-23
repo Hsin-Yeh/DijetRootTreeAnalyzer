@@ -943,7 +943,7 @@ if __name__ == '__main__':
         h_backgrounds[key] = convertFunctionToHisto(value,"h_background",len(x)-1,x)
     hstack_1000, sighist_1000, hstack_3000, sighist_3000 = addSignalHisto(h_backgrounds["dijet"],len(x)-1,x)
     ctest = rt.TCanvas()
-    hstack_1000.Draw("HIST")
+    hstack_3000.Draw("HIST")
     ctest.SetLogy()
     ctest.SaveAs("test.png")
 
