@@ -142,7 +142,7 @@ if __name__ == "__main__":
     leg2.Draw("same")
 
 
-    cmsText=ROOT.TLatex(0.17,0.83, "CMS");
+    cmsText=ROOT.TLatex(0.17,0.82, "CMS");
     cmsText.SetNDC(1);
     cmsText.SetTextFont(61);
     cmsText.SetLineColor(0);
@@ -151,7 +151,7 @@ if __name__ == "__main__":
     cmsText.SetTextSize(0.05);
     cmsText.Draw();
 
-    extraText=ROOT.TLatex(0.27,0.83, "Simulation");
+    extraText=ROOT.TLatex(0.27,0.82, "Simulation");
     extraText.SetNDC(1);
     extraText.SetTextFont(52);
     extraText.SetLineColor(0);
