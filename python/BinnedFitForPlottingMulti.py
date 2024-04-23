@@ -254,10 +254,6 @@ def addSignalHisto(h_bkg):
     h_sig = sigfile.Get("h_gg_1313")
     h_sig.Scale(1000)
     h_sig.Add(h_bkg)
-    ctest = rt.TCanvas()
-    h_sig.Draw("HIST")
-    ctest.SetLogy()
-    ctest.SaveAs("test.png")
     return h_sig
 
 if __name__ == '__main__':
@@ -936,6 +932,11 @@ if __name__ == '__main__':
     for key, value in backgrounds.iteritems():
         h_backgrounds[key] = convertFunctionToHisto(value,"h_background",len(x)-1,x)
     h_sig = addSignalHisto(h_backgrounds["dijet"])
+    ctest = rt.TCanvas()
+    h_sig.Draw("HIST")
+    ctest.SetLogy()
+    ctest.SaveAs("test.png")
+
     #i have data
     #h_th1x.Scale(1.0/lumi)
     #h_background = convertToMjjHist(h_th1x,x)
