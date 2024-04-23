@@ -188,9 +188,9 @@ def calculateChi2AndFillResiduals(data_obs_TGraph_,background_hist_,hist_fit_res
         binWidth_current = xbinHigh - xbinLow
         #value_fit = background_.Integral(xbinLow , xbinHigh) / binWidth_current
         value_fit = background_hist_.GetBinContent(bin+1)
-        print(value_data,err_low_data,err_high_data)
-        print(xbinCenter,xbinLow,xbinHigh,binWidth_current)
-        print(value_fit)
+        # print(value_data,err_low_data,err_high_data)
+        # print(xbinCenter,xbinLow,xbinHigh,binWidth_current)
+        # print(value_fit)
         
         ## Fit residuals
         err_tot_data = 0
