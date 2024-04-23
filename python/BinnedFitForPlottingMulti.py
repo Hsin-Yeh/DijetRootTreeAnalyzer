@@ -312,7 +312,7 @@ def addSignalHisto(h_bkg,data_obs_TGraph_,N_massBins_,massBins_,cat):
 
     ctest = rt.TCanvas()
     h_residual.Draw("HIST")
-    h_residual.GetXaxis().SetRangeUser(1290,1350)
+    h_residual.GetXaxis().SetRangeUser(1280,1400)
     ctest.SaveAs("test1.png")
 
     return hstack_1320, sighist_1320, hstack_2200, sighist_2200, h_residual
@@ -1506,7 +1506,7 @@ if __name__ == '__main__':
     h_fit_residual_vs_mass.GetXaxis().SetTitle('Dijet mass [GeV]')
 
     h_fit_residual_vs_mass.Draw("histsame")
-    h_residual.GetXaxis().SetRangeUser(1200,1500)
+    h_residual.GetXaxis().SetRangeUser(1280,1400)
     h_residual.Draw("HISTSame")
 
     # line = rt.TLine(h_fit_residual_vs_mass.GetXaxis().GetXmin(),0,h_fit_residual_vs_mass.GetXaxis().GetXmax(),0)
