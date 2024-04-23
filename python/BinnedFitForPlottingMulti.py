@@ -260,10 +260,10 @@ def addSignalHisto(h_bkg,N_massBins_,massBins_):
     h_bkg.SetFillColor(0)
     ci = rt.TColor.GetColor("#1068da"); # Bird
     sighist_1000.SetFillColorAlpha(ci,0.5)
-    sighist_1000.SetLineColor(ci)
+    sighist_1000.SetLineColor(0)
     ci = rt.TColor.GetColor("#2cb6a5"); # Bird
     sighist_600.SetFillColorAlpha(ci,0.5)
-    sighist_600.SetLineColor(ci)
+    sighist_600.SetLineColor(0)
     hstack_1000.Add(h_bkg)
     hstack_1000.Add(sighist_1000)
     hstack_600.Add(h_bkg)
@@ -1187,15 +1187,15 @@ if __name__ == '__main__':
     leg.AddEntry(backgrounds["invpow1"],"%s"%(modelforms["invpow1"]),"l")
     leg.AddEntry(backgrounds["invpowlin1"],"%s"%(modelforms["invpowlin1"]),"l")
 
-    legsig = rt.TLegend(0.4,0.65,0.6,0.87)
+    legsig = rt.TLegend(0.4,0.65,0.6,0.89)
     legsig.SetTextFont(42)
     legsig.SetTextSize(0.04)
     legsig.SetFillColor(rt.kWhite)
     legsig.SetFillStyle(0)
     legsig.SetLineWidth(0)
     legsig.SetLineColor(rt.kWhite)
-    legsig.AddEntry(sighist_1000,"#tilde{k}=0.01,J=2,1TeV","f")
-    legsig.AddEntry(sighist_600,"#tilde{k}=0.01,J=2,3TeV","f")
+    legsig.AddEntry(sighist_600,"#frac{#Gamma_{X}}{m_{X}}=1.4 #times 10^{-4},0.6TeV","f")
+    legsig.AddEntry(sighist_1000,"#frac{#Gamma_{X}}{m_{X}}=1.4 #times 10^{-4},1TeV","f")
 
     # for key, value in backgrounds.iteritems():
         # leg.AddEntry(value,"%s: %s "%(key, modelforms[key]),"l")
