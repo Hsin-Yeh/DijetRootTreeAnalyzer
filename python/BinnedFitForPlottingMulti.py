@@ -206,7 +206,9 @@ def calculateChi2AndFillResiduals(data_obs_TGraph_,background_hist_,hist_fit_res
             fit_residual = 0
             err_fit_residual = 0
         if (value_data == 0):
-            err_fit_residual = 10
+            fit_residual = 1
+        else:
+            fit_residual=0
         ## Fill histo with residuals
 
         hist_fit_residual_vsMass_.SetBinContent(bin+1,fit_residual)
@@ -1511,7 +1513,8 @@ if __name__ == '__main__':
     # h_fit_residual_vs_mass.GetXaxis().SetRangeUser(w.var('mgg').getMin(),w.var('mgg').getMax())
     # h_fit_residual_vs_mass.GetXaxis().SetRangeUser(500,4000)
     h_fit_residual_vs_mass.GetXaxis().SetRangeUser(1500,3000)
-    h_fit_residual_vs_mass.GetYaxis().SetRangeUser(-3.5,3.5)
+    # h_fit_residual_vs_mass.GetYaxis().SetRangeUser(-3.5,3.5)
+    h_fit_residual_vs_mass.GetYaxis().SetRangeUser(-0.5,1.5)
     #h_fit_residual_vs_mass.GetYaxis().SetNdivisions(210,True)
     h_fit_residual_vs_mass.SetLineWidth(1)
     h_fit_residual_vs_mass.SetFillColor(rt.kRed)
@@ -1526,7 +1529,8 @@ if __name__ == '__main__':
     # paper
     h_fit_residual_vs_mass.GetYaxis().CenterTitle(1);
     h_fit_residual_vs_mass.GetYaxis().SetTitleOffset(0.6)
-    h_fit_residual_vs_mass.GetYaxis().SetTitle('#frac{Data-Fit}{Uncertainty}')
+    # h_fit_residual_vs_mass.GetYaxis().SetTitle('#frac{Data-Fit}{Uncertainty}')
+    h_fit_residual_vs_mass.GetYaxis().SetTitle('Data == 0')
 
     h_fit_residual_vs_mass.GetXaxis().SetTitleSize(2*0.06)
     h_fit_residual_vs_mass.GetXaxis().SetLabelSize(2*0.05)
@@ -1536,7 +1540,7 @@ if __name__ == '__main__':
     # paper
     h_fit_residual_vs_mass.GetXaxis().SetTitle('Dijet mass [GeV]')
 
-    h_fit_residual_vs_mass.Draw("hist E same")
+    h_fit_residual_vs_mass.Draw("hist same")
     # h_residual_1320.Draw("HISTSame")
     # h_residual_2200.Draw("HISTSame")
     # h_fit_residual_vs_mass.Draw("histsame")
