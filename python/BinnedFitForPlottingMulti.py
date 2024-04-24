@@ -1237,15 +1237,15 @@ if __name__ == '__main__':
     leg.AddEntry(backgrounds["invpowlin1"],"%s"%(modelforms["invpowlin1"]),"l")
 
     # legsig = rt.TLegend(0.21,0.15,0.4,0.4)
-    legsig = rt.TLegend(0.55,0.7,0.85,0.9)
+    legsig = rt.TLegend(0.58,0.7,0.85,0.9)
     legsig.SetTextFont(42)
     legsig.SetTextSize(0.043)
     legsig.SetFillColor(rt.kWhite)
     legsig.SetFillStyle(0)
     legsig.SetLineWidth(0)
     legsig.SetLineColor(rt.kWhite)
-    legsig.AddEntry(sighist_1320,"#tilde{k} = 0.01, M_{G} = 1.3TeV","f")
-    legsig.AddEntry(sighist_2200,"#tilde{k} = 0.01, M_{G} = 2.2TeV","f")
+    legsig.AddEntry(sighist_1320,"#tilde{k} = 0.01, M_{G} = 1.3 TeV","f")
+    legsig.AddEntry(sighist_2200,"#tilde{k} = 0.01, M_{G} = 2.2 TeV","f")
 
     # for key, value in backgrounds.iteritems():
         # leg.AddEntry(value,"%s: %s "%(key, modelforms[key]),"l")
