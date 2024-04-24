@@ -30,7 +30,8 @@ export coupling=$2
 
 #################### Constants ####################
 # Cats
-export catlist=("EBEB" "EBEE")
+export catlist=("EBEB")
+# export catlist=("EBEB" "EBEE")
 # Lumi
 export lumi=35.9
 export lumi_1000=35900
