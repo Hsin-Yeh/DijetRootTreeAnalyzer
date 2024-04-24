@@ -1536,7 +1536,7 @@ if __name__ == '__main__':
     # paper
     h_fit_residual_vs_mass.GetXaxis().SetTitle('Dijet mass [GeV]')
 
-    h_fit_residual_vs_mass.Draw("hist C same")
+    h_fit_residual_vs_mass.Draw("hist E same")
     # h_residual_1320.Draw("HISTSame")
     # h_residual_2200.Draw("HISTSame")
     # h_fit_residual_vs_mass.Draw("histsame")
