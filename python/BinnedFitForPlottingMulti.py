@@ -1244,7 +1244,11 @@ if __name__ == '__main__':
     leg.AddEntry(backgrounds["invpow1"],"%s"%(modelforms["invpow1"]),"l")
     leg.AddEntry(backgrounds["invpowlin1"],"%s"%(modelforms["invpowlin1"]),"l")
 
-    legsig = rt.TLegend(0.21,0.08,0.4,0.28)
+    if(options.year=="fullRun2"):
+        legsig = rt.TLegend(0.21,0.08,0.4,0.28)
+    else:
+        legsig = rt.TLegend(0.21,0.04,0.4,0.2)
+
     # legsig = rt.TLegend(0.58,0.68,0.85,0.88)
     legsig.SetTextFont(42)
     legsig.SetTextSize(0.048)
