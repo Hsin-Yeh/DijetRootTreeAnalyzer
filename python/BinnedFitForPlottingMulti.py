@@ -1508,7 +1508,7 @@ if __name__ == '__main__':
 
     # h_fit_residual_vs_mass.GetXaxis().SetRangeUser(w.var('mgg').getMin(),w.var('mgg').getMax())
     h_fit_residual_vs_mass.GetXaxis().SetRangeUser(500,4000)
-    h_fit_residual_vs_mass.GetYaxis().SetRangeUser(-3.5,8)
+    h_fit_residual_vs_mass.GetYaxis().SetRangeUser(-3.5,9)
     #h_fit_residual_vs_mass.GetYaxis().SetNdivisions(210,True)
     h_fit_residual_vs_mass.SetLineWidth(1)
     h_fit_residual_vs_mass.SetFillColor(rt.kRed)
@@ -1547,7 +1547,8 @@ if __name__ == '__main__':
     legres_data.SetLineColor(rt.kWhite)
     legres_data.AddEntry(h_fit_residual_vs_mass,"(Data-Fit) / Unc.","f")
     legres_data.Draw()
-    legres_sig = rt.TLegend(0.53,0.29,0.87,0.47)
+    # legres_sig = rt.TLegend(0.53,0.29,0.87,0.47)
+    legres_sig = rt.TLegend(0.53,0.5,0.87,0.8)
     legres_sig.SetTextFont(42)
     legres_sig.SetTextSize(0.078)
     legres_sig.SetFillColor(rt.kWhite)
