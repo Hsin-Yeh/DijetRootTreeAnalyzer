@@ -1219,8 +1219,8 @@ if __name__ == '__main__':
         l.SetTextSize(0.055)
         if (options.PAS): l.DrawLatex(0.32,0.85,"Preliminary")
     else:
-        l.SetTextSize(0.05)
-        l.DrawLatex(0.22,0.85,"CMS Supplementary")
+        l.SetTextSize(0.053)
+        l.DrawLatex(0.21,0.85,"CMS Supplementary")
 
     # leg = rt.TLegend(0.2,0.12,0.52,0.54)
     leg = rt.TLegend(0.6,0.4,0.88,0.91)
@@ -1329,7 +1329,7 @@ if __name__ == '__main__':
     if(options.year=="fullRun2"):
         EBText=rt.TLatex(0.35,0.85, "%s"%(options.cat));
     else:
-        EBText=rt.TLatex(0.21,0.78, "%s"%(options.cat));
+        EBText=rt.TLatex(0.21,0.75, "%s"%(options.cat));
 
     EBText.SetNDC(1);
     EBText.SetTextFont(42);
@@ -1342,7 +1342,7 @@ if __name__ == '__main__':
     if(options.year=="fullRun2"):
         chiText=rt.TLatex(0.21,0.78, "#chi^{{2}} / dof = {0:.1f} / {1:d} = {2:.1f}".format(list_chi2AndNdf_background[4], list_chi2AndNdf_background[5], list_chi2AndNdf_background[4]/list_chi2AndNdf_background[5]));
     else:
-        chiText=rt.TLatex(0.21,0.7, "#chi^{{2}} / dof = {0:.1f} / {1:d} = {2:.1f}".format(list_chi2AndNdf_background[4], list_chi2AndNdf_background[5], list_chi2AndNdf_background[4]/list_chi2AndNdf_background[5]));
+        chiText=rt.TLatex(0.21,0.69, "#chi^{{2}} / dof = {0:.1f} / {1:d} = {2:.1f}".format(list_chi2AndNdf_background[4], list_chi2AndNdf_background[5], list_chi2AndNdf_background[4]/list_chi2AndNdf_background[5]));
 
     chiText.SetNDC(1);
     chiText.SetTextFont(42);
