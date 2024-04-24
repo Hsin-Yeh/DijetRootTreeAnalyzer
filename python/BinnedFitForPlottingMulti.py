@@ -1253,8 +1253,8 @@ if __name__ == '__main__':
     legsig.SetFillStyle(0)
     legsig.SetLineWidth(0)
     legsig.SetLineColor(rt.kWhite)
-    legsig.AddEntry(sighist_1320,"#tilde{k}=0.01, M_{G}=1.3TeV","f")
-    legsig.AddEntry(sighist_2200,"#tilde{k}=0.01, M_{G}=2.2TeV","f")
+    legsig.AddEntry(sighist_1320,"#tilde{k} = 0.01, M_{G} = 1.3TeV","f")
+    legsig.AddEntry(sighist_2200,"#tilde{k} = 0.01, M_{G} = 2.2TeV","f")
 
     # for key, value in backgrounds.iteritems():
         # leg.AddEntry(value,"%s: %s "%(key, modelforms[key]),"l")
