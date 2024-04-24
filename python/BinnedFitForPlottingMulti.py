@@ -1534,13 +1534,8 @@ if __name__ == '__main__':
 
     h_fit_residual_vs_mass.GetXaxis().SetTitleSize(2*0.06)
     h_fit_residual_vs_mass.GetXaxis().SetLabelSize(2*0.05)
-    #h_fit_residual_vs_mass.GetXaxis().SetTitle('m_{jj} [GeV]')
-    # PAS
-    #h_fit_residual_vs_mass.GetXaxis().SetTitle('Dijet Mass [GeV]')
-    # paper
-    h_fit_residual_vs_mass.GetXaxis().SetTitle('Dijet mass [GeV]')
 
-    h_fit_residual_vs_mass.Draw("AP* same")
+    h_fit_residual_vs_mass.Draw("P* same")
     # h_residual_1320.Draw("HISTSame")
     # h_residual_2200.Draw("HISTSame")
     # h_fit_residual_vs_mass.Draw("histsame")
