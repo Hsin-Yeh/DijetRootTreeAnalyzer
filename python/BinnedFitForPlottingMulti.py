@@ -207,9 +207,9 @@ def calculateChi2AndFillResiduals(data_obs_TGraph_,background_hist_,hist_fit_res
             err_fit_residual = 0
         if (value_data == 0):
             fit_residual = 1
-            print("zero bin %f"%(xbinCenter))
         else:
             fit_residual=0
+            print("non zero bin %f"%(xbinCenter))
         ## Fill histo with residuals
 
         hist_fit_residual_vsMass_.SetBinContent(bin+1,fit_residual)
