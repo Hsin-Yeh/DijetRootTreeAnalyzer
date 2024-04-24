@@ -1544,7 +1544,7 @@ if __name__ == '__main__':
     axis.Draw();
     h_residual_1320.Draw("HISTSame")
     h_residual_2200.Draw("HISTSame")
-    h_fit_residual_vs_mass.Draw("histsame")
+    # h_fit_residual_vs_mass.Draw("histsame")
 
     legres_data = rt.TLegend(0.68,0.48,0.93,0.55)
     legres_data.SetTextFont(42)
