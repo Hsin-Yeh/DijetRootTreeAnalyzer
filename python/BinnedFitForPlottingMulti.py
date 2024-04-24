@@ -1520,7 +1520,7 @@ if __name__ == '__main__':
     h_residual_2200.Draw("HISTSame")
     h_fit_residual_vs_mass.Draw("histsame")
 
-    legres_data = rt.TLegend(0.72,0.48,0.89,0.55)
+    legres_data = rt.TLegend(0.72,0.46,0.89,0.53)
     legres_data.SetTextFont(42)
     legres_data.SetTextSize(0.075)
     legres_data.SetFillColor(rt.kWhite)
