@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-#
+# python python/signalNorm_interpolate.py -i ../../SignalNorm_Splines_genFiducial.txt -o ../../SignalNorm_Splines_genFiducial_multiWidth.txt -s heavyhiggs
 
 import pandas as pd
 import argparse
