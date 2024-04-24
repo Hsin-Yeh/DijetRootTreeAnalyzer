@@ -1102,7 +1102,7 @@ if __name__ == '__main__':
     elif 'DiPhoton' in box:
         myRebinnedDensityTH1.SetMaximum(2e3)
         if w.var('mgg').getMax() > 2037:
-            myRebinnedDensityTH1.SetMaximum(6e2)
+            myRebinnedDensityTH1.SetMaximum(5e2)
             # myRebinnedDensityTH1.SetMaximum(7e1)
             myRebinnedDensityTH1.SetMinimum(2e-3)
         else:
@@ -1331,7 +1331,7 @@ if __name__ == '__main__':
     EBText.SetTextSize(0.062);
     EBText.Draw()
 
-    chiText=rt.TLatex(0.21,0.8, "#chi^{{2}} / dof = {0:.1f} / {1:d} = {2:.1f}".format(list_chi2AndNdf_background[4], list_chi2AndNdf_background[5], list_chi2AndNdf_background[4]/list_chi2AndNdf_background[5]));
+    chiText=rt.TLatex(0.21,0.78, "#chi^{{2}} / dof = {0:.1f} / {1:d} = {2:.1f}".format(list_chi2AndNdf_background[4], list_chi2AndNdf_background[5], list_chi2AndNdf_background[4]/list_chi2AndNdf_background[5]));
     chiText.SetNDC(1);
     chiText.SetTextFont(42);
     chiText.SetLineColor(0);
