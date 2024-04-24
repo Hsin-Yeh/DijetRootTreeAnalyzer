@@ -1011,6 +1011,7 @@ if __name__ == '__main__':
     h_residual_2200.Draw("HISTsame")
     ctest.SetLogy()
     ctest.SaveAs("test.png")
+    print("hey: %f"%sighist_1320.Integral())
 
     #i have data
     #h_th1x.Scale(1.0/lumi)
