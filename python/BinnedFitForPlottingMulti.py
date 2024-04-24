@@ -247,7 +247,7 @@ def calculateChi2AndFillResiduals(data_obs_TGraph_,background_hist_,hist_fit_res
 
     return [chi2_FullRangeAll, ndf_FullRangeAll, chi2_PlotRangeAll, ndf_PlotRangeAll, chi2_PlotRangeNonZero, ndf_PlotRangeNonZero, chi2_PlotRangeMinNumEvents, ndf_PlotRangeMinNumEvents]
 
-def addSignalHisto(h_bkg,data_obs_TGraph_,N_massBins_,massBins_,cat):
+def addSignalHisto(h_bkg,data_obs_TGraph_,N_massBins_,massBins_,cat,lumi):
     if(cat=="EBEB"): sigfile = rt.TFile("/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/full/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_kMpl001_EBEB_2017.root")
     elif(cat=="EBEE"): sigfile = rt.TFile("/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/full/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_kMpl001_EBEE_2017.root")
     hstack_1320 = rt.THStack("hstack_1320","")
@@ -257,14 +257,14 @@ def addSignalHisto(h_bkg,data_obs_TGraph_,N_massBins_,massBins_,cat):
     sighist_1320.SetDirectory(0)
     sighist_2200.SetDirectory(0)
     if(cat=="EBEB"):
-        factor = 1000*0.00268570521957342*138*0.386773
+        factor = 1000*0.00268570521957342*lumi*0.386773
         sighist_1320.Scale(factor/sighist_1320.Integral(),"width")
-        factor = 1000*0.00011876885597882948*138*0.483016
+        factor = 1000*0.00011876885597882948*lumi*0.483016
         sighist_2200.Scale(factor/sighist_2200.Integral(), "width")
     elif(cat=="EBEE"):
-        factor = 1000*0.00268570521957342*138*0.190722
+        factor = 1000*0.00268570521957342*lumi*0.190722
         sighist_1320.Scale(factor/sighist_1320.Integral(), "width");
-        factor = 1000*0.00011876885597882948*138*0.137251
+        factor = 1000*0.00011876885597882948*lumi*0.137251
         sighist_2200.Scale(factor/sighist_2200.Integral(), "width")
     h_bkg.SetFillColorAlpha(0,0)
     h_bkg.SetLineColorAlpha(0,0)
@@ -1003,7 +1003,7 @@ if __name__ == '__main__':
     h_backgrounds = {}
     for key, value in backgrounds.iteritems():
         h_backgrounds[key] = convertFunctionToHisto(value,"h_background",len(x)-1,x)
-    hstack_1320, sighist_1320, hstack_2200, sighist_2200, h_residual_1320, h_residual_2200 = addSignalHisto(h_backgrounds["dijet"],g_data,len(x)-1,x,options.cat)
+    hstack_1320, sighist_1320, hstack_2200, sighist_2200, h_residual_1320, h_residual_2200 = addSignalHisto(h_backgrounds["dijet"],g_data,len(x)-1,x,options.cat,options.lumi)
     ctest = rt.TCanvas()
     hstack_1320.Draw("HIST")
     hstack_2200.Draw("HISTsame")
