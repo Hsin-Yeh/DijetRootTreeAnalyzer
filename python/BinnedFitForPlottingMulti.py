@@ -257,14 +257,14 @@ def addSignalHisto(h_bkg,data_obs_TGraph_,N_massBins_,massBins_,cat,lumi):
     sighist_1320.SetDirectory(0)
     sighist_2200.SetDirectory(0)
     if(cat=="EBEB"):
-        factor = 1000*0.00268570521957342*lumi*0.386773
+        factor = 0.00268570521957342*lumi*0.386773
         sighist_1320.Scale(factor/sighist_1320.Integral(),"width")
-        factor = 1000*0.00011876885597882948*lumi*0.483016
+        factor = 0.00011876885597882948*lumi*0.483016
         sighist_2200.Scale(factor/sighist_2200.Integral(), "width")
     elif(cat=="EBEE"):
-        factor = 1000*0.00268570521957342*lumi*0.190722
+        factor = 0.00268570521957342*lumi*0.190722
         sighist_1320.Scale(factor/sighist_1320.Integral(), "width");
-        factor = 1000*0.00011876885597882948*lumi*0.137251
+        factor = 0.00011876885597882948*lumi*0.137251
         sighist_2200.Scale(factor/sighist_2200.Integral(), "width")
     h_bkg.SetFillColorAlpha(0,0)
     h_bkg.SetLineColorAlpha(0,0)
