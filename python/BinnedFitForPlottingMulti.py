@@ -1495,7 +1495,7 @@ if __name__ == '__main__':
     h_fit_residual_vs_mass.SetLineWidth(1)
     h_fit_residual_vs_mass.SetFillColor(rt.kRed)
     h_fit_residual_vs_mass.SetLineColor(rt.kBlack)
-    h_fit_residual_vs_mass.SetLineWidth(0)
+    # h_fit_residual_vs_mass.SetLineWidth(0)
 
     h_fit_residual_vs_mass.GetYaxis().SetTitleSize(2*0.06)
     h_fit_residual_vs_mass.GetYaxis().SetLabelSize(2*0.05)
@@ -1520,7 +1520,7 @@ if __name__ == '__main__':
     h_residual_2200.Draw("HISTSame")
     h_fit_residual_vs_mass.Draw("histsame")
 
-    legres = rt.TLegend(0.65,0.3,0.9,0.5)
+    legres = rt.TLegend(0.55,0.3,0.9,0.5)
     legres.SetTextFont(42)
     legres.SetTextSize(0.05)
     legres.SetFillColor(rt.kWhite)
