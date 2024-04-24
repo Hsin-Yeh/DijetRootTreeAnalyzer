@@ -319,10 +319,10 @@ def addSignalHisto(h_bkg,data_obs_TGraph_,N_massBins_,massBins_,cat,lumi):
 
     ctest = rt.TCanvas()
     h_residual_1320.Draw("HIST")
-    h_residual_1320.GetXaxis().SetRangeUser(1500,3000)
+    h_residual_1320.GetXaxis().SetRangeUser(500,4000)
     # h_residual_1320.GetYaxis().SetRangeUser(-3,3)
     h_residual_2200.Draw("HIST")
-    h_residual_2200.GetXaxis().SetRangeUser(1500,3000)
+    h_residual_2200.GetXaxis().SetRangeUser(500,4000)
     # h_residual_2200.GetYaxis().SetRangeUser(-3,3)
     ctest.SaveAs("test1.png")
 
@@ -1083,7 +1083,7 @@ if __name__ == '__main__':
             myRebinnedDensityTH1.SetBinContent(i,0)
             myRebinnedDensityTH1.SetBinError(i,0)
     # myRebinnedDensityTH1.GetXaxis().SetRangeUser(w.var('mgg').getMin(),w.var('mgg').getMax())
-    myRebinnedDensityTH1.GetXaxis().SetRangeUser(1500,3000)
+    myRebinnedDensityTH1.GetXaxis().SetRangeUser(500,4000)
     # paper:
     myRebinnedDensityTH1.GetYaxis().SetTitle('dN/dM_{gg} (TeV^{-1})')
     # PAS:
@@ -1107,6 +1107,7 @@ if __name__ == '__main__':
             myRebinnedDensityTH1.SetMinimum(2e-3)
         else:
             myRebinnedDensityTH1.SetMinimum(2e-5)
+    myRebinnedDensityTH1.GetXaxis.SetRangeUser(1500,3000)
     myRebinnedDensityTH1.Draw("axis")
 
     # Draw data
@@ -1507,7 +1508,7 @@ if __name__ == '__main__':
     pad_2.cd()
 
     # h_fit_residual_vs_mass.GetXaxis().SetRangeUser(w.var('mgg').getMin(),w.var('mgg').getMax())
-    h_fit_residual_vs_mass.GetXaxis().SetRangeUser(1500,3000)
+    h_fit_residual_vs_mass.GetXaxis().SetRangeUser(500,4000)
     h_fit_residual_vs_mass.GetYaxis().SetRangeUser(-3.5,3.5)
     #h_fit_residual_vs_mass.GetYaxis().SetNdivisions(210,True)
     h_fit_residual_vs_mass.SetLineWidth(1)
