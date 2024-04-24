@@ -293,7 +293,7 @@ def addSignalHisto(h_bkg,data_obs_TGraph_,N_massBins_,massBins_,cat):
         xbinLow = data_obs_TGraph_.GetX()[bin]-data_obs_TGraph_.GetEXlow()[bin]
         xbinHigh = data_obs_TGraph_.GetX()[bin]+data_obs_TGraph_.GetEXhigh()[bin]
         binWidth_current = xbinHigh - xbinLow
-        value_1320 = sighist_1320.GetBinContent(bin+1)+h_bkg.GetBinContent(bin+1)
+        value_1320 = sighist_1320.GetBinContent(bin+1)
         ## residuals
         err_tot_data = 0
         if (value_1320 > value_data):
@@ -301,16 +301,16 @@ def addSignalHisto(h_bkg,data_obs_TGraph_,N_massBins_,massBins_,cat):
         else:
             err_tot_data = err_low_data
 
-        residual_1320 = (value_data - value_1320) / err_tot_data
+        residual_1320 =  value_1320 / err_tot_data
         err_residual_1320 = 1
 
-        value_2200 = sighist_2200.GetBinContent(bin+1)+h_bkg.GetBinContent(bin+1)
+        value_2200 = sighist_2200.GetBinContent(bin+1)
         err_tot_data = 0
         if (value_2200 > value_data):
             err_tot_data = err_high_data
         else:
             err_tot_data = err_low_data
-        residual_2200 = (value_data - value_2200) / err_tot_data
+        residual_2200 = value_2200 / err_tot_data
         err_residual_2200 = 1
 
         ## Fill histo with residuals
