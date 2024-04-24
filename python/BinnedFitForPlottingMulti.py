@@ -1058,7 +1058,7 @@ if __name__ == '__main__':
 
     pad_2 = c.GetPad(2)
     pad_2.SetTickx()
-    pad_2.SetTicky()
+    # pad_2.SetTicky()
     pad_2.SetLeftMargin(0.175)
     pad_2.SetPad(0.01,0.02,0.99,0.33)
     pad_2.SetBottomMargin(0.25)
@@ -1537,7 +1537,7 @@ if __name__ == '__main__':
     axis.SetLineColor(rt.kRed);
     axis.SetLabelColor(rt.kRed);
     h_residual_1320.Draw("HISTSame")
-    axis.Draw("same");
+    axis.Draw();
 
     # h_residual_2200.Draw("HISTSame")
     # h_fit_residual_vs_mass.Draw("histsame")
