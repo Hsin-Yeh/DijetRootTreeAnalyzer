@@ -205,7 +205,8 @@ def calculateChi2AndFillResiduals(data_obs_TGraph_,background_hist_,hist_fit_res
         else:
             fit_residual = 0
             err_fit_residual = 0
-
+        if (value_data == 0):
+            err_fit_residual = 10
         ## Fill histo with residuals
 
         hist_fit_residual_vsMass_.SetBinContent(bin+1,fit_residual)
@@ -1508,7 +1509,8 @@ if __name__ == '__main__':
     pad_2.cd()
 
     # h_fit_residual_vs_mass.GetXaxis().SetRangeUser(w.var('mgg').getMin(),w.var('mgg').getMax())
-    h_fit_residual_vs_mass.GetXaxis().SetRangeUser(500,4000)
+    # h_fit_residual_vs_mass.GetXaxis().SetRangeUser(500,4000)
+    h_fit_residual_vs_mass.GetXaxis().SetRangeUser(1500,3000)
     h_fit_residual_vs_mass.GetYaxis().SetRangeUser(-3.5,3.5)
     #h_fit_residual_vs_mass.GetYaxis().SetNdivisions(210,True)
     h_fit_residual_vs_mass.SetLineWidth(1)
