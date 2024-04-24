@@ -1102,7 +1102,7 @@ if __name__ == '__main__':
     elif 'DiPhoton' in box:
         myRebinnedDensityTH1.SetMaximum(2e3)
         if w.var('mgg').getMax() > 2037:
-            myRebinnedDensityTH1.SetMaximum(4e2)
+            myRebinnedDensityTH1.SetMaximum(6e2)
             # myRebinnedDensityTH1.SetMaximum(7e1)
             myRebinnedDensityTH1.SetMinimum(2e-3)
         else:
@@ -1244,7 +1244,7 @@ if __name__ == '__main__':
     leg.AddEntry(backgrounds["invpow1"],"%s"%(modelforms["invpow1"]),"l")
     leg.AddEntry(backgrounds["invpowlin1"],"%s"%(modelforms["invpowlin1"]),"l")
 
-    legsig = rt.TLegend(0.21,0.1,0.4,0.33)
+    legsig = rt.TLegend(0.21,0.08,0.4,0.28)
     # legsig = rt.TLegend(0.58,0.68,0.85,0.88)
     legsig.SetTextFont(42)
     legsig.SetTextSize(0.043)
