@@ -1540,7 +1540,7 @@ if __name__ == '__main__':
     # paper
     h_fit_residual_vs_mass.GetXaxis().SetTitle('Dijet mass [GeV]')
 
-    h_fit_residual_vs_mass.Draw("hist P* same")
+    h_fit_residual_vs_mass.Draw("AP* same")
     # h_residual_1320.Draw("HISTSame")
     # h_residual_2200.Draw("HISTSame")
     # h_fit_residual_vs_mass.Draw("histsame")
@@ -1553,7 +1553,7 @@ if __name__ == '__main__':
     legres_data.SetLineWidth(0)
     legres_data.SetLineColor(rt.kWhite)
     legres_data.AddEntry(h_fit_residual_vs_mass,"(Data-Fit) / Unc.","f")
-    legres_data.Draw()
+    # legres_data.Draw()
     legres_sig = rt.TLegend(0.53,0.29,0.87,0.47)
     legres_sig.SetTextFont(42)
     legres_sig.SetTextSize(0.078)
