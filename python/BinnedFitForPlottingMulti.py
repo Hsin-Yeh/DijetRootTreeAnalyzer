@@ -1508,7 +1508,7 @@ if __name__ == '__main__':
 
     # h_fit_residual_vs_mass.GetXaxis().SetRangeUser(w.var('mgg').getMin(),w.var('mgg').getMax())
     h_fit_residual_vs_mass.GetXaxis().SetRangeUser(500,4000)
-    h_fit_residual_vs_mass.GetYaxis().SetRangeUser(-3.5,9)
+    h_fit_residual_vs_mass.GetYaxis().SetRangeUser(-3.5,10)
     #h_fit_residual_vs_mass.GetYaxis().SetNdivisions(210,True)
     h_fit_residual_vs_mass.SetLineWidth(1)
     h_fit_residual_vs_mass.SetFillColor(rt.kRed)
@@ -1546,7 +1546,7 @@ if __name__ == '__main__':
     legres_data.SetLineWidth(0)
     legres_data.SetLineColor(rt.kWhite)
     legres_data.AddEntry(h_fit_residual_vs_mass,"(Data-Fit) / Unc.","f")
-    legres_data.Draw()
+    # legres_data.Draw()
     # legres_sig = rt.TLegend(0.53,0.29,0.87,0.47)
     legres_sig = rt.TLegend(0.53,0.5,0.87,0.8)
     legres_sig.SetTextFont(42)
@@ -1557,7 +1557,7 @@ if __name__ == '__main__':
     legres_sig.SetLineColor(rt.kWhite)
     legres_sig.AddEntry(h_residual_1320,"Signal / Unc. (M_{G}=1.3 TeV)","f")
     legres_sig.AddEntry(h_residual_2200,"Signal / Unc. (M_{G}=2.2 TeV)","f")
-    legres_sig.Draw()
+    # legres_sig.Draw()
 
     # line = rt.TLine(h_fit_residual_vs_mass.GetXaxis().GetXmin(),0,h_fit_residual_vs_mass.GetXaxis().GetXmax(),0)
     line = rt.TLine(h_fit_residual_vs_mass.GetXaxis().GetXmin(),0,4000,0)
