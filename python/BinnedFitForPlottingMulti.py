@@ -207,6 +207,7 @@ def calculateChi2AndFillResiduals(data_obs_TGraph_,background_hist_,hist_fit_res
             err_fit_residual = 0
         if (value_data == 0):
             fit_residual = 1
+            print("zero bin %f"%(xbinCenter))
         else:
             fit_residual=0
         ## Fill histo with residuals
