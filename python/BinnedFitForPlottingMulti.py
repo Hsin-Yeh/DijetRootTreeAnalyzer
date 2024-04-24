@@ -1529,10 +1529,10 @@ if __name__ == '__main__':
     h_fit_residual_vs_mass.GetXaxis().SetLabelSize(2*0.05)
 
     h_fit_residual_vs_mass.Draw("histsame")
-    rightmax = 1.1*h_residual_1320.GetMaximum();
-    scale = rt.gPad.GetUymax()/rightmax;
-    h_residual_1320.Scale(scale);
-    h_residual_2200.Scale(scale);
+    # rightmax = 1.1*h_residual_1320.GetMaximum();
+    # scale = rt.gPad.GetUymax()/rightmax;
+    # h_residual_1320.Scale(scale);
+    # h_residual_2200.Scale(scale);
     h_residual_1320.Draw("HISTSameY+")
     # axis.Draw();
 
@@ -1695,7 +1695,7 @@ if __name__ == '__main__':
                 lastX = g_signal_residual.GetX()[i]
                 lastY = g_signal_residual.GetY()[i]
         g_signal_residuals.append(g_signal_residual)
-        g_signal_residual.Draw("cxsame")
+        # g_signal_residual.Draw("cxsame")
 
 
     #c.RedrawAxis() # request from David
