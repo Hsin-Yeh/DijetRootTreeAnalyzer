@@ -1538,7 +1538,7 @@ if __name__ == '__main__':
     h_residual_2200.Draw("HISTSame")
     h_fit_residual_vs_mass.Draw("histsame")
 
-    legres_data = rt.TLegend(0.69,0.48,0.94,0.55)
+    legres_data = rt.TLegend(0.68,0.48,0.93,0.55)
     legres_data.SetTextFont(42)
     legres_data.SetTextSize(0.078)
     legres_data.SetFillColor(rt.kWhite)
@@ -1547,7 +1547,7 @@ if __name__ == '__main__':
     legres_data.SetLineColor(rt.kWhite)
     legres_data.AddEntry(h_fit_residual_vs_mass,"(Data-Fit) / Unc.","f")
     legres_data.Draw()
-    legres_sig = rt.TLegend(0.54,0.29,0.88,0.47)
+    legres_sig = rt.TLegend(0.53,0.29,0.87,0.47)
     legres_sig.SetTextFont(42)
     legres_sig.SetTextSize(0.078)
     legres_sig.SetFillColor(rt.kWhite)
