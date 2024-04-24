@@ -1508,7 +1508,7 @@ if __name__ == '__main__':
 
     # h_fit_residual_vs_mass.GetXaxis().SetRangeUser(w.var('mgg').getMin(),w.var('mgg').getMax())
     h_fit_residual_vs_mass.GetXaxis().SetRangeUser(500,4000)
-    h_fit_residual_vs_mass.GetYaxis().SetRangeUser(-3.5,20)
+    h_fit_residual_vs_mass.GetYaxis().SetRangeUser(-3.5,3.5)
     #h_fit_residual_vs_mass.GetYaxis().SetNdivisions(210,True)
     h_fit_residual_vs_mass.SetLineWidth(1)
     h_fit_residual_vs_mass.SetFillColor(rt.kRed)
@@ -1534,6 +1534,14 @@ if __name__ == '__main__':
     h_fit_residual_vs_mass.GetXaxis().SetTitle('Dijet mass [GeV]')
 
     h_fit_residual_vs_mass.Draw("histsame")
+    rightmax = 1.1*h_residual_1320.GetMaximum();
+    scale = rt.gPad.GetUymax()/rightmax;
+    h_residual_1320.Scale(scale);
+    h_residual_2200.Scale(scale);
+    axis = rt.TGaxis(rt.gPad.GetUxmax(),rt.gPad.GetUymin(),rt.gPad.GetUxmax(), rt.gPad.GetUymax(),0,rightmax,510,"+L");
+    axis.SetLineColor(kRed);
+    axis.SetLabelColor(kRed);
+    axis.Draw();
     h_residual_1320.Draw("HISTSame")
     h_residual_2200.Draw("HISTSame")
     h_fit_residual_vs_mass.Draw("histsame")
