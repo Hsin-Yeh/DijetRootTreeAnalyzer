@@ -1539,8 +1539,8 @@ if __name__ == '__main__':
     h_residual_1320.Scale(scale);
     h_residual_2200.Scale(scale);
     axis = rt.TGaxis(rt.gPad.GetUxmax(),rt.gPad.GetUymin(),rt.gPad.GetUxmax(), rt.gPad.GetUymax(),0,rightmax,510,"+L");
-    axis.SetLineColor(kRed);
-    axis.SetLabelColor(kRed);
+    # axis.SetLineColor(kRed);
+    # axis.SetLabelColor(kRed);
     axis.Draw();
     h_residual_1320.Draw("HISTSame")
     h_residual_2200.Draw("HISTSame")
