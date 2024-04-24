@@ -1559,7 +1559,7 @@ if __name__ == '__main__':
     legres_sig.SetLineColor(rt.kWhite)
     legres_sig.AddEntry(h_residual_1320,"Signal / Unc. (M_{G}=1.3 TeV)","f")
     legres_sig.AddEntry(h_residual_2200,"Signal / Unc. (M_{G}=2.2 TeV)","f")
-    legres_sig.Draw()
+    # legres_sig.Draw()
 
     # line = rt.TLine(h_fit_residual_vs_mass.GetXaxis().GetXmin(),0,h_fit_residual_vs_mass.GetXaxis().GetXmax(),0)
     line = rt.TLine(h_fit_residual_vs_mass.GetXaxis().GetXmin(),0,4000,0)
