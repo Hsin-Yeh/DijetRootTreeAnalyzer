@@ -1536,8 +1536,8 @@ if __name__ == '__main__':
     axis = rt.TGaxis(rt.gPad.GetUxmax(),rt.gPad.GetUymin(),rt.gPad.GetUxmax(), rt.gPad.GetUymax(),0,rightmax,510,"+L");
     axis.SetLineColor(rt.kRed);
     axis.SetLabelColor(rt.kRed);
-    h_residual_1320.Draw("HISTSame")
-    axis.Draw();
+    h_residual_1320.Draw("HISTSameY+")
+    # axis.Draw();
 
     # h_residual_2200.Draw("HISTSame")
     # h_fit_residual_vs_mass.Draw("histsame")
