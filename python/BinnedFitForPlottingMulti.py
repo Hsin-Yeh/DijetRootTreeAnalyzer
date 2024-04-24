@@ -259,8 +259,8 @@ def addSignalHisto(h_bkg,data_obs_TGraph_,N_massBins_,massBins_,cat):
     if(cat=="EBEB"):
         print("hoo: %f"%sighist_1320.Integral())
         factor = 1000*0.00268570521957342*138*0.386773
-        sighist_1320.Scale(factor/sighist_1320.Integral(),"")
-        print("hohoho: %f"%sighist_1320.Integral())
+        sighist_1320.Scale(factor/sighist_1320.Integral(),"width")
+        print("hohoho: %f %f"%sighist_1320.Integral(),%sighist_1320.Integral("width"))
         factor = 1000*0.00011876885597882948*138*0.483016
         sighist_2200.Scale(factor/sighist_2200.Integral(), "width")
     elif(cat=="EBEE"):
