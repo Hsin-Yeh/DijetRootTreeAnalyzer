@@ -205,11 +205,7 @@ def calculateChi2AndFillResiduals(data_obs_TGraph_,background_hist_,hist_fit_res
         else:
             fit_residual = 0
             err_fit_residual = 0
-        if (value_data == 0):
-            fit_residual = 1
-        else:
-            fit_residual=0
-            print("non zero bin %f"%(xbinCenter))
+
         ## Fill histo with residuals
 
         hist_fit_residual_vsMass_.SetBinContent(bin+1,fit_residual)
@@ -1115,9 +1111,9 @@ if __name__ == '__main__':
 
     # Draw data
     hstack_1320.GetXaxis().SetRangeUser(400,1500)
-    # hstack_1320.Draw("HISTsame")
+    hstack_1320.Draw("HISTsame")
     hstack_2200.GetXaxis().SetRangeUser(400,800)
-    # hstack_2200.Draw("HISTsame")
+    hstack_2200.Draw("HISTsame")
     myRebinnedDensityTH1.Draw("axissame")
     g_data_clone.Draw("zpsame")
     g_data.Draw("zpsame")
@@ -1277,7 +1273,7 @@ if __name__ == '__main__':
     #             leg.AddEntry(g_signal,"%s (%.2f TeV)"%(model,float(mass)/1000.),"l")
     #         #leg.AddEntry(None,"%.1f pb"%(float(xsec)),"")
     leg.Draw()
-    # legsig.Draw()
+    legsig.Draw()
     #background.Draw("csame")
     #g_data.Draw("pezsame")
 
@@ -1491,7 +1487,6 @@ if __name__ == '__main__':
     if 'DiPhotons' in box:
         # paper
         myRebinnedDensityTH1.GetYaxis().SetTitle('dN/dm_{#gamma#gamma} (TeV^{-1})')
-        myRebinnedDensityTH1.GetXaxis().SetRangeUser(1500,3000)
         # PAS
         #myRebinnedDensityTH1.GetYaxis().SetTitle('d#sigma / dm_{jj} [pb / TeV]')
         # myRebinnedDensityTH1.GetYaxis().SetLabelOffset(1000)
@@ -1512,10 +1507,8 @@ if __name__ == '__main__':
     pad_2.cd()
 
     # h_fit_residual_vs_mass.GetXaxis().SetRangeUser(w.var('mgg').getMin(),w.var('mgg').getMax())
-    # h_fit_residual_vs_mass.GetXaxis().SetRangeUser(500,4000)
-    h_fit_residual_vs_mass.GetXaxis().SetRangeUser(1500,3000)
-    # h_fit_residual_vs_mass.GetYaxis().SetRangeUser(-3.5,3.5)
-    h_fit_residual_vs_mass.GetYaxis().SetRangeUser(-0.5,1.5)
+    h_fit_residual_vs_mass.GetXaxis().SetRangeUser(500,4000)
+    h_fit_residual_vs_mass.GetYaxis().SetRangeUser(-3.5,3.5)
     #h_fit_residual_vs_mass.GetYaxis().SetNdivisions(210,True)
     h_fit_residual_vs_mass.SetLineWidth(1)
     h_fit_residual_vs_mass.SetFillColor(rt.kRed)
@@ -1530,16 +1523,20 @@ if __name__ == '__main__':
     # paper
     h_fit_residual_vs_mass.GetYaxis().CenterTitle(1);
     h_fit_residual_vs_mass.GetYaxis().SetTitleOffset(0.6)
-    # h_fit_residual_vs_mass.GetYaxis().SetTitle('#frac{Data-Fit}{Uncertainty}')
-    h_fit_residual_vs_mass.GetYaxis().SetTitle('Data == 0')
+    h_fit_residual_vs_mass.GetYaxis().SetTitle('#frac{Data-Fit}{Uncertainty}')
 
     h_fit_residual_vs_mass.GetXaxis().SetTitleSize(2*0.06)
     h_fit_residual_vs_mass.GetXaxis().SetLabelSize(2*0.05)
+    #h_fit_residual_vs_mass.GetXaxis().SetTitle('m_{jj} [GeV]')
+    # PAS
+    #h_fit_residual_vs_mass.GetXaxis().SetTitle('Dijet Mass [GeV]')
+    # paper
+    h_fit_residual_vs_mass.GetXaxis().SetTitle('Dijet mass [GeV]')
 
-    h_fit_residual_vs_mass.Draw("HIST P* same")
-    # h_residual_1320.Draw("HISTSame")
-    # h_residual_2200.Draw("HISTSame")
-    # h_fit_residual_vs_mass.Draw("histsame")
+    h_fit_residual_vs_mass.Draw("histsame")
+    h_residual_1320.Draw("HISTSame")
+    h_residual_2200.Draw("HISTSame")
+    h_fit_residual_vs_mass.Draw("histsame")
 
     legres_data = rt.TLegend(0.68,0.48,0.93,0.55)
     legres_data.SetTextFont(42)
@@ -1549,7 +1546,7 @@ if __name__ == '__main__':
     legres_data.SetLineWidth(0)
     legres_data.SetLineColor(rt.kWhite)
     legres_data.AddEntry(h_fit_residual_vs_mass,"(Data-Fit) / Unc.","f")
-    # legres_data.Draw()
+    legres_data.Draw()
     legres_sig = rt.TLegend(0.53,0.29,0.87,0.47)
     legres_sig.SetTextFont(42)
     legres_sig.SetTextSize(0.078)
@@ -1559,7 +1556,7 @@ if __name__ == '__main__':
     legres_sig.SetLineColor(rt.kWhite)
     legres_sig.AddEntry(h_residual_1320,"Signal / Unc. (M_{G}=1.3 TeV)","f")
     legres_sig.AddEntry(h_residual_2200,"Signal / Unc. (M_{G}=2.2 TeV)","f")
-    # legres_sig.Draw()
+    legres_sig.Draw()
 
     # line = rt.TLine(h_fit_residual_vs_mass.GetXaxis().GetXmin(),0,h_fit_residual_vs_mass.GetXaxis().GetXmax(),0)
     line = rt.TLine(h_fit_residual_vs_mass.GetXaxis().GetXmin(),0,4000,0)
