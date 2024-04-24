@@ -257,6 +257,7 @@ def addSignalHisto(h_bkg,data_obs_TGraph_,N_massBins_,massBins_,cat):
     sighist_1320.SetDirectory(0)
     sighist_2200.SetDirectory(0)
     if(cat=="EBEB"):
+        print("hoo: %f"sighist_1320.Integral())
         factor = 1000*0.00268570521957342*138*0.386773
         sighist_1320.Scale(factor/sighist_1320.Integral(), "width")
         factor = 1000*0.00011876885597882948*138*0.483016
