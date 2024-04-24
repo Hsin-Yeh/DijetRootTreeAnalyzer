@@ -1112,9 +1112,9 @@ if __name__ == '__main__':
 
     # Draw data
     hstack_1320.GetXaxis().SetRangeUser(400,1500)
-    hstack_1320.Draw("HISTsame")
+    # hstack_1320.Draw("HISTsame")
     hstack_2200.GetXaxis().SetRangeUser(400,800)
-    hstack_2200.Draw("HISTsame")
+    # hstack_2200.Draw("HISTsame")
     myRebinnedDensityTH1.Draw("axissame")
     g_data_clone.Draw("zpsame")
     g_data.Draw("zpsame")
@@ -1274,7 +1274,7 @@ if __name__ == '__main__':
     #             leg.AddEntry(g_signal,"%s (%.2f TeV)"%(model,float(mass)/1000.),"l")
     #         #leg.AddEntry(None,"%.1f pb"%(float(xsec)),"")
     leg.Draw()
-    legsig.Draw()
+    # legsig.Draw()
     #background.Draw("csame")
     #g_data.Draw("pezsame")
 
