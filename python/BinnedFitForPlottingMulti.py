@@ -1487,7 +1487,7 @@ if __name__ == '__main__':
     if 'DiPhotons' in box:
         # paper
         myRebinnedDensityTH1.GetYaxis().SetTitle('dN/dm_{#gamma#gamma} (TeV^{-1})')
-        myRebinnedDensityTH1.GetXaxis.SetRangeUser(1500,3000)
+        myRebinnedDensityTH1.GetXaxis().SetRangeUser(1500,3000)
         # PAS
         #myRebinnedDensityTH1.GetYaxis().SetTitle('d#sigma / dm_{jj} [pb / TeV]')
         # myRebinnedDensityTH1.GetYaxis().SetLabelOffset(1000)
