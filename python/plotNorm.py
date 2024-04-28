@@ -27,10 +27,10 @@ if __name__ == "__main__":
     leg2 = ROOT.TLegend(0.63, 0.33, 0.88, 0.53)
     leg1.SetBorderSize(0);
     leg1.SetFillStyle(0);
-    leg1.SetTextSize(0.058)
+    leg1.SetTextSize(0.05)
     leg2.SetBorderSize(0);
     leg2.SetFillStyle(0);
-    leg2.SetTextSize(0.058)
+    leg2.SetTextSize(0.05)
 
 
     if (args.coupling=="kMpl001"):
