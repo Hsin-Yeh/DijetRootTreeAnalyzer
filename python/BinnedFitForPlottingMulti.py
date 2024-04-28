@@ -1508,7 +1508,7 @@ if __name__ == '__main__':
 
     # h_fit_residual_vs_mass.GetXaxis().SetRangeUser(w.var('mgg').getMin(),w.var('mgg').getMax())
     h_fit_residual_vs_mass.GetXaxis().SetRangeUser(500,4000)
-    h_fit_residual_vs_mass.GetYaxis().SetRangeUser(-3.5,3.5)
+    h_fit_residual_vs_mass.GetYaxis().SetRangeUser(-3.5,20)
     #h_fit_residual_vs_mass.GetYaxis().SetNdivisions(210,True)
     h_fit_residual_vs_mass.SetLineWidth(1)
     h_fit_residual_vs_mass.SetFillColor(rt.kRed)
