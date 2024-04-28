@@ -27,8 +27,11 @@ if __name__ == "__main__":
     leg2 = ROOT.TLegend(0.63, 0.33, 0.88, 0.53)
     leg1.SetBorderSize(0);
     leg1.SetFillStyle(0);
+    leg1.SetTextSize(0.058)
     leg2.SetBorderSize(0);
     leg2.SetFillStyle(0);
+    leg2.SetTextSize(0.058)
+
 
     if (args.coupling=="kMpl001"):
         # l.SetHeader("#tilde{k}=0.01              #frac{#Gamma_{X}}{m_{X}} = 1.4 #times 10^{-4}","C")
