@@ -1241,7 +1241,8 @@ if __name__ == '__main__':
         if (options.PAS): l.DrawLatex(0.32,0.85,"Preliminary")
     else:
         l.SetTextSize(0.053)
-        l.DrawLatex(0.21,0.85,"CMS Supplementary")
+        l.DrawLatex(0.21,0.85,"CMS")
+        l.DrawLatex(0.32,0.85," Supplementary")
 
     # leg = rt.TLegend(0.2,0.12,0.52,0.54)
     leg = rt.TLegend(0.6,0.4,0.88,0.91)
@@ -1544,7 +1545,8 @@ if __name__ == '__main__':
     # paper
     h_fit_residual_vs_mass.GetYaxis().CenterTitle(1);
     h_fit_residual_vs_mass.GetYaxis().SetTitleOffset(0.6)
-    h_fit_residual_vs_mass.GetYaxis().SetTitle('#frac{Data-Fit}{Uncertainty}')
+    # h_fit_residual_vs_mass.GetYaxis().SetTitle('#frac{Data-Fit}{Uncertainty}')
+    h_fit_residual_vs_mass.GetYaxis().SetTitle('Pull')
 
     h_fit_residual_vs_mass.GetXaxis().SetTitleSize(2*0.06)
     h_fit_residual_vs_mass.GetXaxis().SetLabelSize(2*0.05)
