@@ -262,20 +262,25 @@ def addSignalHisto(h_bkg,data_obs_TGraph_,N_massBins_,massBins_,cat,lumi):
     sighist_2200 = sigfile_2200.Get("h_gg_14")
     sighist_1320.SetDirectory(0)
     sighist_2200.SetDirectory(0)
-    # xsec
+    # xsec (pb)
     xsec_001_1320 = 0.00268570521957342
     xsec_02_1320 = 1.041417154818832
     xsec_001_2200 = 0.00011876885597882948
     xsec_02_2200 = 0.04560241337556088
+    # limit (pb)
+    limit_001_1320 = 0.4453
+    limit_02_1320 = 0.8262
+    limit_001_2200 = 0.0590
+    limit_02_2200 = 0.0744
     # Norm
     norm_02_1320_EBEB = 0.388212
     norm_02_1320_EBEE = 0.183994
     norm_001_2200_EBEB = 0.483016
     norm_001_2200_EBEE = 0.137251
     if(cat=="EBEB"):
-        factor = xsec_02_1320*lumi*norm_02_1320_EBEB
+        factor = limit_02_1320*lumi*norm_02_1320_EBEB
         sighist_1320.Scale(factor/sighist_1320.Integral(),"width")
-        factor = xsec_001_2200*lumi*norm_001_2200_EBEB
+        factor = limit_001_2200*lumi*norm_001_2200_EBEB
         sighist_2200.Scale(factor/sighist_2200.Integral(), "width")
     elif(cat=="EBEE"):
         factor = xsec_02_1320*lumi*norm_02_1320_EBEE
