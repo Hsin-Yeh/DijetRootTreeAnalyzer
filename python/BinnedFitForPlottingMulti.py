@@ -333,11 +333,11 @@ def addSignalHisto(h_bkg,data_obs_TGraph_,N_massBins_,massBins_,cat,lumi):
         err_tot_data = err_high_data
         value_1320 = sighist_1320.GetBinContent(bin+1)
         residual_1320 =  value_1320 / err_tot_data
-        err_residual_1320 = 1
+        err_residual_1320 = 0
 
         value_2200 = sighist_2200.GetBinContent(bin+1)
         residual_2200 = value_2200 / err_tot_data
-        err_residual_2200 = 1
+        err_residual_2200 = 0
 
         ## Fill histo with residuals
 
