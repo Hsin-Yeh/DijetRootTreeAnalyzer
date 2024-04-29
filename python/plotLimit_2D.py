@@ -110,16 +110,16 @@ def pvalue2D():
     cmsText.SetLineWidth(1);
     cmsText.SetTextSize(0.046);
 
-    extraText=ROOT.TLatex(0.23,0.90, "Supplementary");
+    extraText=ROOT.TLatex(0.23,0.90, "Preliminary");
     extraText.SetNDC(1);
     extraText.SetTextFont(52);
     extraText.SetLineColor(0);
     extraText.SetLineStyle(1);
     extraText.SetLineWidth(1);
-    extraText.SetTextSize(0.04);
+    extraText.SetTextSize(0.035);
     # extraText.Draw();
 
-    supText=ROOT.TLatex(0.14,0.90, "CMS");
+    supText=ROOT.TLatex(0.2,0.90, " Supplementary");
     supText.SetNDC(1);
     supText.SetTextFont(61);
     supText.SetLineColor(0);
@@ -213,13 +213,14 @@ def pvalue2D():
     h_zvalue.GetZaxis().SetTitleSize(0.05)
     h_zvalue.SetMinimum(-0.01)
     h_zvalue.Draw("colz")
-    # cmsText.Draw();
+    cmsText.Draw();
     supText.Draw()
     lumiText.Draw();
     c1.SaveAs("%s/zvalue_%s.pdf"%(args.outputDir,args.signame))
     ########## Set Range 600-2500GeV
     h_zvalue.GetXaxis().SetRangeUser(600,2500)
     h_zvalue.Draw("colz")
+    cmsText.Draw();
     supText.Draw();
     lumiText.Draw();
     c1.SaveAs("%s/zvalue_zoomin_%s.pdf"%(args.outputDir,args.signame))
