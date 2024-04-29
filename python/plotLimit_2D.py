@@ -110,16 +110,16 @@ def pvalue2D():
     cmsText.SetLineWidth(1);
     cmsText.SetTextSize(0.046);
 
-    extraText=ROOT.TLatex(0.23,0.90, "Preliminary");
+    extraText=ROOT.TLatex(0.23,0.90, "Supplementary");
     extraText.SetNDC(1);
     extraText.SetTextFont(52);
     extraText.SetLineColor(0);
     extraText.SetLineStyle(1);
     extraText.SetLineWidth(1);
-    extraText.SetTextSize(0.035);
+    extraText.SetTextSize(0.04);
     # extraText.Draw();
 
-    supText=ROOT.TLatex(0.14,0.90, "CMS Supplementary");
+    supText=ROOT.TLatex(0.14,0.90, "CMS");
     supText.SetNDC(1);
     supText.SetTextFont(61);
     supText.SetLineColor(0);
