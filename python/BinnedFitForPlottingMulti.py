@@ -277,6 +277,8 @@ def addSignalHisto(h_bkg,data_obs_TGraph_,N_massBins_,massBins_,cat,lumi):
     norm_02_1320_EBEE = 0.183994
     norm_001_2200_EBEB = 0.483016
     norm_001_2200_EBEE = 0.137251
+    norm_02_2200_EBEB = 0.476336
+    norm_02_2200_EBEE = 0.139000
     if(cat=="EBEB"):
         factor = limit_02_1320*lumi*norm_02_1320_EBEB
         sighist_1320.Scale(factor/sighist_1320.Integral(),"width")
