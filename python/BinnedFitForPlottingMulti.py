@@ -1141,8 +1141,8 @@ if __name__ == '__main__':
     myRebinnedDensityTH1.Draw("axis")
 
     # Draw data
-    sighist_1320.Draw("csame")
-    sighist_2200.Draw("csame")
+    sighist_1320.Draw("hist c same")
+    sighist_2200.Draw("hist c same")
     myRebinnedDensityTH1.Draw("axissame")
     g_data_clone.Draw("zpsame")
     g_data.Draw("zpsame")
@@ -1564,10 +1564,10 @@ if __name__ == '__main__':
     # scale = rt.gPad.GetUymax()/rightmax;
     # h_residual_1320.Scale(scale);
     # h_residual_2200.Scale(scale);
-    h_residual_1320.Draw("cxsame")
+    h_residual_1320.Draw("hist c same")
     # axis.Draw();
 
-    h_residual_2200.Draw("cxsame")
+    h_residual_2200.Draw("hist c same")
     # h_fit_residual_vs_mass.Draw("histsame")
 
     legres_data = rt.TLegend(0.68,0.48,0.93,0.55)
