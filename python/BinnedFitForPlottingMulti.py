@@ -1030,8 +1030,8 @@ if __name__ == '__main__':
     ctest = rt.TCanvas()
 
     h_residual_2200.Draw("HIST")
-    # hstack_1320.Draw("HIST")
-    # hstack_2200.Draw("HISTsame")
+    hstack_1320.Draw("HISTsame")
+    hstack_2200.Draw("HISTsame")
     h_residual_1320.Draw("HISTsame")
     # ctest.SetLogy()
     ctest.SaveAs("test.png")
