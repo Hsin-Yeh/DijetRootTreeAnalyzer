@@ -1028,8 +1028,9 @@ if __name__ == '__main__':
         h_backgrounds[key] = convertFunctionToHisto(value,"h_background",len(x)-1,x)
     hstack_1320, sighist_1320, hstack_2200, sighist_2200, h_residual_1320, h_residual_2200 = addSignalHisto(h_backgrounds["dijet"],g_data,len(x)-1,x,options.cat,options.lumi)
     ctest = rt.TCanvas()
-
-    h_residual_2200.Draw("HIST")
+    sighist_1320.Draw("HIST")
+    sighist_2200.Draw("HISTsame")
+    h_residual_2200.Draw("HISTsame")
     hstack_1320.Draw("HISTsame")
     hstack_2200.Draw("HISTsame")
     h_residual_1320.Draw("HISTsame")
@@ -1134,10 +1135,8 @@ if __name__ == '__main__':
     myRebinnedDensityTH1.Draw("axis")
 
     # Draw data
-    hstack_1320.GetXaxis().SetRangeUser(400,1500)
-    hstack_1320.Draw("HISTsame")
-    hstack_2200.GetXaxis().SetRangeUser(400,800)
-    hstack_2200.Draw("HISTsame")
+    sighist_1320.Draw("cxsame")
+    sighist_2200.Draw("cxsame")
     myRebinnedDensityTH1.Draw("axissame")
     g_data_clone.Draw("zpsame")
     g_data.Draw("zpsame")
@@ -1559,10 +1558,10 @@ if __name__ == '__main__':
     # scale = rt.gPad.GetUymax()/rightmax;
     # h_residual_1320.Scale(scale);
     # h_residual_2200.Scale(scale);
-    h_residual_1320.Draw("HISTSame")
+    h_residual_1320.Draw("cxsame")
     # axis.Draw();
 
-    h_residual_2200.Draw("HISTSame")
+    h_residual_2200.Draw("cxsame")
     # h_fit_residual_vs_mass.Draw("histsame")
 
     legres_data = rt.TLegend(0.68,0.48,0.93,0.55)
