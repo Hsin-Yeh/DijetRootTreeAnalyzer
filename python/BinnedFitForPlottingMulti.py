@@ -1,3 +1,5 @@
+# ./run_multi_combine.sh fullRun2 kMpl001
+
 from optparse import OptionParser
 import ROOT as rt
 import rootTools
@@ -248,23 +250,37 @@ def calculateChi2AndFillResiduals(data_obs_TGraph_,background_hist_,hist_fit_res
     return [chi2_FullRangeAll, ndf_FullRangeAll, chi2_PlotRangeAll, ndf_PlotRangeAll, chi2_PlotRangeNonZero, ndf_PlotRangeNonZero, chi2_PlotRangeMinNumEvents, ndf_PlotRangeMinNumEvents]
 
 def addSignalHisto(h_bkg,data_obs_TGraph_,N_massBins_,massBins_,cat,lumi):
-    if(cat=="EBEB"): sigfile = rt.TFile("/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/full/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_kMpl001_EBEB_2017.root")
-    elif(cat=="EBEE"): sigfile = rt.TFile("/afs/cern.ch/work/h/hsinyeh/public/diphoton-analysis/CMSSW_10_2_13/src/diphoton-analysis/DijetShapeInterpolator/full/ResonanceShapes_InputShapes_RSGravitonToGammaGamma_kMpl001_EBEE_2017.root")
+    if(cat=="EBEB"):
+        sigfile_1320 = rt.TFile("signal_shapes/width_InputShapes_RSGravitonToGammaGamma_EBEB_2017_1320GeV.root")
+        sigfile_2200 = rt.TFile("signal_shapes/width_InputShapes_RSGravitonToGammaGamma_EBEB_2017_2200GeV.root")
+    elif(cat=="EBEE"):
+        sigfile_1320 = rt.TFile("signal_shapes/width_InputShapes_RSGravitonToGammaGamma_EBEE_2017_1320GeV.root")
+        sigfile_2200 = rt.TFile("signal_shapes/width_InputShapes_RSGravitonToGammaGamma_EBEE_2017_2200GeV.root")
     hstack_1320 = rt.THStack("hstack_1320","")
     hstack_2200 = rt.THStack("hstack_2200","")
-    sighist_1320 = sigfile.Get("h_gg_1320")
-    sighist_2200 = sigfile.Get("h_gg_2200")
+    sighist_1320 = sigfile_1320.Get("h_gg_5600")
+    sighist_2200 = sigfile_2200.Get("h_gg_14")
     sighist_1320.SetDirectory(0)
     sighist_2200.SetDirectory(0)
+    # xsec
+    xsec_001_1320 = 0.00268570521957342
+    xsec_02_1320 = 1.041417154818832
+    xsec_001_2200 = 0.00011876885597882948
+    xsec_02_2200 = 0.04560241337556088
+    # Norm
+    norm_02_1320_EBEB = 0.388212
+    norm_02_1320_EBEE = 0.183994
+    norm_001_2200_EBEB = 0.483016
+    norm_001_2200_EBEE = 0.137251
     if(cat=="EBEB"):
-        factor = 0.00268570521957342*lumi*0.386773
+        factor = xsec_02_1320*lumi*norm_02_1320_EBEB
         sighist_1320.Scale(factor/sighist_1320.Integral(),"width")
-        factor = 0.00011876885597882948*lumi*0.483016
+        factor = xsec_001_2200*lumi*norm_001_2200_EBEB
         sighist_2200.Scale(factor/sighist_2200.Integral(), "width")
     elif(cat=="EBEE"):
-        factor = 0.00268570521957342*lumi*0.190722
+        factor = xsec_02_1320*lumi*norm_02_1320_EBEE
         sighist_1320.Scale(factor/sighist_1320.Integral(), "width");
-        factor = 0.00011876885597882948*lumi*0.137251
+        factor = xsec_001_2200*lumi*norm_001_2200_EBEE
         sighist_2200.Scale(factor/sighist_2200.Integral(), "width")
     h_bkg.SetFillColorAlpha(0,0)
     h_bkg.SetLineColorAlpha(0,0)
