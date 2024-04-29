@@ -1141,8 +1141,8 @@ if __name__ == '__main__':
     myRebinnedDensityTH1.Draw("axis")
 
     # Draw data
-    sighist_1320.Draw("cxsame")
-    sighist_2200.Draw("cxsame")
+    sighist_1320.Draw("csame")
+    sighist_2200.Draw("csame")
     myRebinnedDensityTH1.Draw("axissame")
     g_data_clone.Draw("zpsame")
     g_data.Draw("zpsame")
