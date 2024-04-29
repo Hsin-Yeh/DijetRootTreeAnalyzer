@@ -1272,7 +1272,7 @@ if __name__ == '__main__':
     legsig.SetFillStyle(0)
     legsig.SetLineWidth(0)
     legsig.SetLineColor(rt.kWhite)
-    legsig.AddEntry(sighist_1320,"#tilde{k}=0.01, M_{G}=1.3 TeV","f")
+    legsig.AddEntry(sighist_1320,"#tilde{k}=0.2,  M_{G}=1.3 TeV","f")
     legsig.AddEntry(sighist_2200,"#tilde{k}=0.01, M_{G}=2.2 TeV","f")
 
     # for key, value in backgrounds.iteritems():
