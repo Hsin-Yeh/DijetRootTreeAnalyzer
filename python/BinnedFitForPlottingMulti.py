@@ -1559,10 +1559,10 @@ if __name__ == '__main__':
     # scale = rt.gPad.GetUymax()/rightmax;
     # h_residual_1320.Scale(scale);
     # h_residual_2200.Scale(scale);
-    h_residual_1320.Draw("HISTSameY+")
+    h_residual_1320.Draw("HISTSame")
     # axis.Draw();
 
-    # h_residual_2200.Draw("HISTSame")
+    h_residual_2200.Draw("HISTSame")
     # h_fit_residual_vs_mass.Draw("histsame")
 
     legres_data = rt.TLegend(0.68,0.48,0.93,0.55)
