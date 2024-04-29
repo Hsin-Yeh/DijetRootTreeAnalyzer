@@ -259,7 +259,7 @@ def addSignalHisto(h_bkg,data_obs_TGraph_,N_massBins_,massBins_,cat,lumi):
     hstack_1320 = rt.THStack("hstack_1320","")
     hstack_2200 = rt.THStack("hstack_2200","")
     sighist_1320 = sigfile_1320.Get("h_gg_5600")
-    sighist_2200 = sigfile_2200.Get("h_gg_14")
+    sighist_2200 = sigfile_2200.Get("h_gg_5600")
     sighist_1320.SetDirectory(0)
     sighist_2200.SetDirectory(0)
     # xsec (pb)
