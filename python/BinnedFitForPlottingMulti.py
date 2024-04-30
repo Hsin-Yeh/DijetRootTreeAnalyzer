@@ -289,19 +289,14 @@ def addSignalHisto(h_bkg,data_obs_TGraph_,N_massBins_,massBins_,cat,lumi):
         sighist_1320.Scale(factor/sighist_1320.Integral(), "width");
         factor = xsec_001_2200*lumi*norm_001_2200_EBEE
         sighist_2200.Scale(factor/sighist_2200.Integral(), "width")
-    print("Integral check: 1320GeV %f and 2200GeV %f"&(sighist_1320.Integral("width"),sighist_2200.Integral("width")))
     h_bkg.SetFillColorAlpha(0,0)
     h_bkg.SetLineColorAlpha(0,0)
     ci = rt.TColor.GetColor("#1068da"); # Bird
-    sighist_1320.SetFillColorAlpha(ci,0)
-    sighist_1320.SetLineColorAlpha(ci,1)
-    sighist_1320.SetLineStyle(2)
-    sighist_1320.SetLineWidth(2)
+    sighist_1320.SetFillColorAlpha(ci,0.4)
+    sighist_1320.SetLineColorAlpha(0,0)
     ci = rt.TColor.GetColor("#2cb6a5"); # Bird
-    sighist_2200.SetFillColorAlpha(ci,0)
-    sighist_2200.SetLineColorAlpha(ci,1)
-    sighist_2200.SetLineStyle(4)
-    sighist_2200.SetLineWidth(2)
+    sighist_2200.SetFillColorAlpha(ci,0.4)
+    sighist_2200.SetLineColorAlpha(0,0)
     hstack_1320.Add(h_bkg)
     hstack_1320.Add(sighist_1320)
     hstack_2200.Add(h_bkg)
@@ -310,15 +305,13 @@ def addSignalHisto(h_bkg,data_obs_TGraph_,N_massBins_,massBins_,cat,lumi):
     h_residual_1320 = rt.TH1D("h_residual_1320","h_residual_1320",N_massBins_,massBins_)
     ci = rt.TColor.GetColor("#1068da"); # Bird
     h_residual_1320.SetFillColorAlpha(ci,0.4)
-    h_residual_1320.SetLineColorAlpha(ci,1)
-    h_residual_1320.SetLineWidth(2)
+    h_residual_1320.SetLineWidth(0)
     h_residual_1320.SetDirectory(0)
 
     h_residual_2200 = rt.TH1D("h_residual_2200","h_residual_2200",N_massBins_,massBins_)
     ci = rt.TColor.GetColor("#2cb6a5"); # Bird
     h_residual_2200.SetFillColorAlpha(ci,0.4)
-    h_residual_2200.SetLineColorAlpha(ci,1)
-    h_residual_2200.SetLineWidth(2)
+    h_residual_2200.SetLineWidth(0)
     h_residual_2200.SetDirectory(0)
     for bin in range (0,N_massBins_):
         ## Values and errors
@@ -334,11 +327,11 @@ def addSignalHisto(h_bkg,data_obs_TGraph_,N_massBins_,massBins_,cat,lumi):
         err_tot_data = err_high_data
         value_1320 = sighist_1320.GetBinContent(bin+1)
         residual_1320 =  value_1320 / err_tot_data
-        err_residual_1320 = 0
+        err_residual_1320 = 1
 
         value_2200 = sighist_2200.GetBinContent(bin+1)
         residual_2200 = value_2200 / err_tot_data
-        err_residual_2200 = 0
+        err_residual_2200 = 1
 
         ## Fill histo with residuals
 
@@ -1035,9 +1028,8 @@ if __name__ == '__main__':
         h_backgrounds[key] = convertFunctionToHisto(value,"h_background",len(x)-1,x)
     hstack_1320, sighist_1320, hstack_2200, sighist_2200, h_residual_1320, h_residual_2200 = addSignalHisto(h_backgrounds["dijet"],g_data,len(x)-1,x,options.cat,options.lumi)
     ctest = rt.TCanvas()
-    sighist_1320.Draw("HIST")
-    sighist_2200.Draw("HISTsame")
-    h_residual_2200.Draw("HISTsame")
+
+    h_residual_2200.Draw("HIST")
     hstack_1320.Draw("HISTsame")
     hstack_2200.Draw("HISTsame")
     h_residual_1320.Draw("HISTsame")
@@ -1142,8 +1134,10 @@ if __name__ == '__main__':
     myRebinnedDensityTH1.Draw("axis")
 
     # Draw data
-    sighist_1320.Draw("hist c same")
-    sighist_2200.Draw("hist c same")
+    hstack_1320.GetXaxis().SetRangeUser(400,1500)
+    hstack_1320.Draw("HISTsame")
+    hstack_2200.GetXaxis().SetRangeUser(400,800)
+    hstack_2200.Draw("HISTsame")
     myRebinnedDensityTH1.Draw("axissame")
     g_data_clone.Draw("zpsame")
     g_data.Draw("zpsame")
@@ -1565,10 +1559,10 @@ if __name__ == '__main__':
     # scale = rt.gPad.GetUymax()/rightmax;
     # h_residual_1320.Scale(scale);
     # h_residual_2200.Scale(scale);
-    h_residual_1320.Draw("hist c same")
+    h_residual_1320.Draw("HISTSame")
     # axis.Draw();
 
-    h_residual_2200.Draw("hist c same")
+    h_residual_2200.Draw("HISTSame")
     # h_fit_residual_vs_mass.Draw("histsame")
 
     legres_data = rt.TLegend(0.68,0.48,0.93,0.55)
