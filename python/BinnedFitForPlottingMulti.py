@@ -273,6 +273,8 @@ def addSignalHisto(h_bkg,data_obs_TGraph_,N_massBins_,massBins_,cat,lumi):
     limit_001_2200 = 0.0590*1e-3
     limit_02_2200 = 0.0744*1e-3
     # Norm
+    norm_001_1320_EBEB = 0.39
+    norm_001_1320_EBEE = 0.183994
     norm_02_1320_EBEB = 0.388212
     norm_02_1320_EBEE = 0.183994
     norm_001_2200_EBEB = 0.483016
