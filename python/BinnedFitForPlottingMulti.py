@@ -1270,6 +1270,7 @@ if __name__ == '__main__':
     leg.AddEntry(backgrounds["expow1"],"%s"%(modelforms["expow1"]),"l")
     leg.AddEntry(backgrounds["invpow1"],"%s"%(modelforms["invpow1"]),"l")
     leg.AddEntry(backgrounds["invpowlin1"],"%s"%(modelforms["invpowlin1"]),"l")
+    leg.Draw()
 
     if(options.year=="fullRun2"):
         legsig = rt.TLegend(0.21,0.04,0.4,0.2)
@@ -1286,25 +1287,9 @@ if __name__ == '__main__':
         else:
             legsig.AddEntry(sighist_2200,"#tilde{k}=0.01, M_{G}=2.2 TeV","f")
             legsig.AddEntry(sighist_1320,"#tilde{k}=0.01, M_{G}=1.3 TeV #times 0.4","f")
+        legsig.Draw()
 
     # for key, value in backgrounds.iteritems():
-        # leg.AddEntry(value,"%s: %s "%(key, modelforms[key]),"l")
-
-    # for model, mass, xsec, signalFileName, g_signal in zip(models,masses,xsecs,signalFileNames, g_signals):
-    #     if 'PF' in box:
-    #         leg.AddEntry(g_signal,"%s (%.1f TeV)"%(model,float(mass)/1000.),"l")
-    #     #elif 'Calo' in box:
-    #     elif 'DiPhotons' in box:
-    #         if w.var('mgg').getMax() > 2037:
-    #             leg.AddEntry(g_signal,"%s (%.1f TeV)"%(model,float(mass)/1000.),"l")
-    #         else:
-    #             leg.AddEntry(g_signal,"%s (%.2f TeV)"%(model,float(mass)/1000.),"l")
-    #         #leg.AddEntry(None,"%.1f pb"%(float(xsec)),"")
-    leg.Draw()
-    legsig.Draw()
-    #background.Draw("csame")
-    #g_data.Draw("pezsame")
-
     pave_sel = rt.TPaveText(0.2,0.03,0.5,0.25,"NDC")
     #pave_sel = rt.TPaveText(0.2,0.03,0.5,0.22,"NDC")
     pave_sel.SetFillColor(0)
