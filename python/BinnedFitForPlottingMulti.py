@@ -1245,8 +1245,9 @@ if __name__ == '__main__':
         l.SetTextSize(0.055)
         if (options.PAS): l.DrawLatex(0.32,0.85,"Preliminary")
     else:
-        l.SetTextSize(0.053)
+        l.SetTextSize(0.065)
         l.DrawLatex(0.21,0.85,"CMS")
+        l.SetTextSize(0.06)
         l.SetTextFont(42)
         l.DrawLatex(0.3,0.85," Supplementary")
 
