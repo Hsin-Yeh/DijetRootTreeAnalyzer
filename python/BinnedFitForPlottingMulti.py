@@ -1247,7 +1247,8 @@ if __name__ == '__main__':
     else:
         l.SetTextSize(0.053)
         l.DrawLatex(0.21,0.85,"CMS")
-        l.DrawLatex(0.32,0.85," Supplementary")
+        l.SetTextFont(42)
+        l.DrawLatex(0.3,0.85," Supplementary")
 
     # leg = rt.TLegend(0.2,0.12,0.52,0.54)
     leg = rt.TLegend(0.6,0.4,0.88,0.91)
