@@ -284,7 +284,7 @@ def addSignalHisto(h_bkg,data_obs_TGraph_,N_massBins_,massBins_,cat,lumi):
     if(cat=="EBEB"):
         factor = xsec_001_1320*lumi*norm_001_1320_EBEB*0.2
         sighist_1320.Scale(factor/sighist_1320.Integral(),"width")
-        factor = xsec_001_2200*lumi*norm_001_2200_EBEB*0.2
+        factor = xsec_001_2200*lumi*norm_001_2200_EBEB
         sighist_2200.Scale(factor/sighist_2200.Integral(), "width")
     elif(cat=="EBEE"):
         factor = xsec_001_1320*lumi*norm_001_1320_EBEE
@@ -1284,8 +1284,8 @@ if __name__ == '__main__':
     legsig.SetLineWidth(0)
     legsig.SetLineColor(rt.kWhite)
     if (options.cat == "EBEB"):
+        legsig.AddEntry(sighist_2200,"#tilde{k}=0.01, M_{G}=2.2 TeV","f")
         legsig.AddEntry(sighist_1320,"#tilde{k}=0.01, M_{G}=1.3 TeV #times 0.4","f")
-        legsig.AddEntry(sighist_2200,"#tilde{k}=0.01, M_{G}=2.2 TeV #times 0.4","f")
     else:
         legsig.AddEntry(sighist_1320,"#tilde{k}=0.01, M_{G}=1.3 TeV","f")
         legsig.AddEntry(sighist_2200,"#tilde{k}=0.01, M_{G}=2.2 TeV","f")
