@@ -119,7 +119,7 @@ def pvalue2D():
     extraText.SetTextSize(0.035);
     # extraText.Draw();
 
-    supText=ROOT.TLatex(0.23,0.90, " Supplementary");
+    supText=ROOT.TLatex(0.24,0.90, " Supplementary");
     supText.SetNDC(1);
     supText.SetTextFont(42);
     supText.SetLineColor(0);
