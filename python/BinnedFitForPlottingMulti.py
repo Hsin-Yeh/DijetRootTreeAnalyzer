@@ -1273,22 +1273,19 @@ if __name__ == '__main__':
 
     if(options.year=="fullRun2"):
         legsig = rt.TLegend(0.21,0.04,0.4,0.2)
-    else:
-        legsig = rt.TLegend(0.21,0.04,0.4,0.2)
-
-    # legsig = rt.TLegend(0.58,0.68,0.85,0.88)
-    legsig.SetTextFont(42)
-    legsig.SetTextSize(0.045)
-    legsig.SetFillColor(rt.kWhite)
-    legsig.SetFillStyle(0)
-    legsig.SetLineWidth(0)
-    legsig.SetLineColor(rt.kWhite)
-    if (options.cat == "EBEB"):
-        legsig.AddEntry(sighist_2200,"#tilde{k}=0.01, M_{G}=2.2 TeV","f")
-        legsig.AddEntry(sighist_1320,"#tilde{k}=0.01, M_{G}=1.3 TeV #times 0.4","f")
-    else:
-        legsig.AddEntry(sighist_1320,"#tilde{k}=0.01, M_{G}=1.3 TeV","f")
-        legsig.AddEntry(sighist_2200,"#tilde{k}=0.01, M_{G}=2.2 TeV","f")
+        # legsig = rt.TLegend(0.58,0.68,0.85,0.88)
+        legsig.SetTextFont(42)
+        legsig.SetTextSize(0.045)
+        legsig.SetFillColor(rt.kWhite)
+        legsig.SetFillStyle(0)
+        legsig.SetLineWidth(0)
+        legsig.SetLineColor(rt.kWhite)
+        if (options.cat == "EBEB"):
+            legsig.AddEntry(sighist_2200,"#tilde{k}=0.01, M_{G}=2.2 TeV","f")
+            legsig.AddEntry(sighist_1320,"#tilde{k}=0.01, M_{G}=1.3 TeV #times 0.4","f")
+        else:
+            legsig.AddEntry(sighist_1320,"#tilde{k}=0.01, M_{G}=1.3 TeV","f")
+            legsig.AddEntry(sighist_2200,"#tilde{k}=0.01, M_{G}=2.2 TeV","f")
 
     # for key, value in backgrounds.iteritems():
         # leg.AddEntry(value,"%s: %s "%(key, modelforms[key]),"l")
