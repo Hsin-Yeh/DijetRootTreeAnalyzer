@@ -1550,7 +1550,7 @@ if __name__ == '__main__':
     #h_fit_residual_vs_mass.GetYaxis().SetTitle('#frac{(Data-Fit)}{#sigma_{Data}}')
     # paper
     h_fit_residual_vs_mass.GetYaxis().CenterTitle(1);
-    h_fit_residual_vs_mass.GetYaxis().SetTitleOffset(0.6)
+    h_fit_residual_vs_mass.GetYaxis().SetTitleOffset(0.4)
     # h_fit_residual_vs_mass.GetYaxis().SetTitle('#frac{Data-Fit}{Uncertainty}')
     h_fit_residual_vs_mass.GetYaxis().SetTitle('Pull')
 
@@ -1584,7 +1584,7 @@ if __name__ == '__main__':
     legres_sig.SetFillStyle(0)
     legres_sig.SetLineWidth(0)
     legres_sig.SetLineColor(rt.kWhite)
-    legres_sig.AddEntry(h_residual_1320,"Signal / Unc. (M_{G}=1.3 TeV)","f")
+    legres_sig.AddEntry(h_residual_1320,"Signal #times 0.4/ Unc. (M_{G}=1.3 TeV)","f")
     legres_sig.AddEntry(h_residual_2200,"Signal / Unc. (M_{G}=2.2 TeV)","f")
     legres_sig.Draw()
 
