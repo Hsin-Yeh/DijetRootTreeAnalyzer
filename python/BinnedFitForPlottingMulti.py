@@ -284,12 +284,12 @@ def addSignalHisto(h_bkg,data_obs_TGraph_,N_massBins_,massBins_,cat,lumi):
     if(cat=="EBEB"):
         factor = xsec_001_1320*lumi*norm_001_1320_EBEB*0.4
         sighist_1320.Scale(factor/sighist_1320.Integral(),"width")
-        factor = xsec_001_2200*lumi*norm_001_2200_EBEB
+        factor = xsec_001_2200*lumi*norm_001_2200_EBEB*0.4
         sighist_2200.Scale(factor/sighist_2200.Integral(), "width")
     elif(cat=="EBEE"):
-        factor = xsec_02_1320*lumi*norm_02_1320_EBEE
+        factor = xsec_02_1320*lumi*norm_001_1320_EBEE*0.4
         sighist_1320.Scale(factor/sighist_1320.Integral(), "width");
-        factor = xsec_001_2200*lumi*norm_001_2200_EBEE
+        factor = xsec_001_2200*lumi*norm_001_2200_EBEE*0.4
         sighist_2200.Scale(factor/sighist_2200.Integral(), "width")
     print("Integral check: 1320GeV %f and 2200GeV %f"%(sighist_1320.Integral("width"),sighist_2200.Integral("width")))
     h_bkg.SetFillColorAlpha(0,0)
@@ -1137,10 +1137,9 @@ if __name__ == '__main__':
     myRebinnedDensityTH1.Draw("axis")
 
     # Draw data
-    hstack_1320.GetXaxis().SetRangeUser(400,1500)
-    hstack_1320.Draw("HISTsame")
-    hstack_2200.GetXaxis().SetRangeUser(400,800)
-    hstack_2200.Draw("HISTsame")
+    if (options.year == "fullRun2"):
+        hstack_1320.Draw("HISTsame")
+        hstack_2200.Draw("HISTsame")
     myRebinnedDensityTH1.Draw("axissame")
     g_data_clone.Draw("zpsame")
     g_data.Draw("zpsame")
@@ -1279,13 +1278,13 @@ if __name__ == '__main__':
 
     # legsig = rt.TLegend(0.58,0.68,0.85,0.88)
     legsig.SetTextFont(42)
-    legsig.SetTextSize(0.048)
+    legsig.SetTextSize(0.045)
     legsig.SetFillColor(rt.kWhite)
     legsig.SetFillStyle(0)
     legsig.SetLineWidth(0)
     legsig.SetLineColor(rt.kWhite)
-    legsig.AddEntry(sighist_1320,"#tilde{k}=0.01, M_{G}=1.3 TeV","f")
-    legsig.AddEntry(sighist_2200,"#tilde{k}=0.01, M_{G}=2.2 TeV","f")
+    legsig.AddEntry(sighist_1320,"#tilde{k}=0.01, M_{G}=1.3 TeV #times 0.4","f")
+    legsig.AddEntry(sighist_2200,"#tilde{k}=0.01, M_{G}=2.2 TeV #times 0.4","f")
 
     # for key, value in backgrounds.iteritems():
         # leg.AddEntry(value,"%s: %s "%(key, modelforms[key]),"l")
@@ -1562,10 +1561,9 @@ if __name__ == '__main__':
     # scale = rt.gPad.GetUymax()/rightmax;
     # h_residual_1320.Scale(scale);
     # h_residual_2200.Scale(scale);
-    h_residual_1320.Draw("HISTSame")
-    # axis.Draw();
-
-    h_residual_2200.Draw("HISTSame")
+    if (options.year == "fullRun2"):
+        h_residual_1320.Draw("HISTSame")
+        h_residual_2200.Draw("HISTSame")
     # h_fit_residual_vs_mass.Draw("histsame")
 
     legres_data = rt.TLegend(0.68,0.48,0.93,0.55)
