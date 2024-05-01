@@ -121,7 +121,7 @@ def pvalue2D():
 
     supText=ROOT.TLatex(0.23,0.90, " Supplementary");
     supText.SetNDC(1);
-    supText.SetTextFont(52);
+    supText.SetTextFont(42);
     supText.SetLineColor(0);
     supText.SetLineStyle(1);
     supText.SetLineWidth(1);
