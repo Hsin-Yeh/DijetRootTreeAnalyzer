@@ -1272,7 +1272,7 @@ if __name__ == '__main__':
     leg.AddEntry(backgrounds["invpowlin1"],"%s"%(modelforms["invpowlin1"]),"l")
 
     if(options.year=="fullRun2"):
-        legsig = rt.TLegend(0.21,0.08,0.4,0.28)
+        legsig = rt.TLegend(0.21,0.04,0.4,0.2)
     else:
         legsig = rt.TLegend(0.21,0.04,0.4,0.2)
 
