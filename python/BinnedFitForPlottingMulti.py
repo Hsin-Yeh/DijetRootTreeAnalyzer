@@ -1563,7 +1563,7 @@ if __name__ == '__main__':
     legres_data.SetLineColor(rt.kWhite)
     legres_data.AddEntry(h_fit_residual_vs_mass,"(Data-Fit) / Unc.","f")
     legres_data.Draw()
-    for(options.year == "fullRun2"):
+    if(options.year == "fullRun2"):
         legres_sig = rt.TLegend(0.53,0.29,0.87,0.47)
         # legres_sig = rt.TLegend(0.53,0.5,0.87,0.8)
         legres_sig.SetTextFont(42)
