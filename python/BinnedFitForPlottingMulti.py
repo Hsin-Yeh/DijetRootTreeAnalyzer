@@ -282,14 +282,14 @@ def addSignalHisto(h_bkg,data_obs_TGraph_,N_massBins_,massBins_,cat,lumi):
     norm_02_2200_EBEB = 0.476336
     norm_02_2200_EBEE = 0.139000
     if(cat=="EBEB"):
-        factor = xsec_001_1320*lumi*norm_001_1320_EBEB*0.4
+        factor = xsec_001_1320*lumi*norm_001_1320_EBEB*0.2
         sighist_1320.Scale(factor/sighist_1320.Integral(),"width")
-        factor = xsec_001_2200*lumi*norm_001_2200_EBEB*0.4
+        factor = xsec_001_2200*lumi*norm_001_2200_EBEB*0.2
         sighist_2200.Scale(factor/sighist_2200.Integral(), "width")
     elif(cat=="EBEE"):
-        factor = xsec_02_1320*lumi*norm_001_1320_EBEE*0.4
+        factor = xsec_001_1320*lumi*norm_001_1320_EBEE
         sighist_1320.Scale(factor/sighist_1320.Integral(), "width");
-        factor = xsec_001_2200*lumi*norm_001_2200_EBEE*0.4
+        factor = xsec_001_2200*lumi*norm_001_2200_EBEE
         sighist_2200.Scale(factor/sighist_2200.Integral(), "width")
     print("Integral check: 1320GeV %f and 2200GeV %f"%(sighist_1320.Integral("width"),sighist_2200.Integral("width")))
     h_bkg.SetFillColorAlpha(0,0)
@@ -1283,8 +1283,12 @@ if __name__ == '__main__':
     legsig.SetFillStyle(0)
     legsig.SetLineWidth(0)
     legsig.SetLineColor(rt.kWhite)
-    legsig.AddEntry(sighist_1320,"#tilde{k}=0.01, M_{G}=1.3 TeV #times 0.4","f")
-    legsig.AddEntry(sighist_2200,"#tilde{k}=0.01, M_{G}=2.2 TeV #times 0.4","f")
+    if (options.cat == "EBEB"):
+        legsig.AddEntry(sighist_1320,"#tilde{k}=0.01, M_{G}=1.3 TeV #times 0.4","f")
+        legsig.AddEntry(sighist_2200,"#tilde{k}=0.01, M_{G}=2.2 TeV #times 0.4","f")
+    else:
+        legsig.AddEntry(sighist_1320,"#tilde{k}=0.01, M_{G}=1.3 TeV","f")
+        legsig.AddEntry(sighist_2200,"#tilde{k}=0.01, M_{G}=2.2 TeV","f")
 
     # for key, value in backgrounds.iteritems():
         # leg.AddEntry(value,"%s: %s "%(key, modelforms[key]),"l")
