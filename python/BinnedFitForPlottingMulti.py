@@ -262,6 +262,7 @@ def addSignalHisto(h_bkg,data_obs_TGraph_,N_massBins_,massBins_,cat,lumi):
     sighist_2200 = sigfile_2200.Get("h_gg_14")
     sighist_1320.SetDirectory(0)
     sighist_2200.SetDirectory(0)
+    h_bkg.SetDirectory(0)
     # xsec (pb)
     xsec_001_1320 = 0.00268570521957342
     # xsec_02_1320 = 1.041417154818832
