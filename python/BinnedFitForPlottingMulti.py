@@ -1031,8 +1031,7 @@ if __name__ == '__main__':
     ctest = rt.TCanvas()
 
     h_residual_2200.Draw("HIST")
-    h_backgrounds["expow1"].Draw("histsame")
-    # h_bkg.Draw("HISTsame")
+    h_bkg.Draw("HISTsame")
     # h_bkg.SetFillColorAlpha(2,0)
     # hstack_1320.Draw("HISTsame")
     # hstack_2200.Draw("HISTsame")
