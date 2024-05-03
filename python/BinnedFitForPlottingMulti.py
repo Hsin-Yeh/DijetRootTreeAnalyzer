@@ -1027,14 +1027,11 @@ if __name__ == '__main__':
     h_backgrounds = {}
     for key, value in backgrounds.iteritems():
         h_backgrounds[key] = convertFunctionToHisto(value,"h_background",len(x)-1,x)
-    h_backgrounds["dijet"].SetDirectory(0)
-    h2 = h_backgrounds["dijet"].Clone()
-    h2.SetFillStyle(0)
     hstack_1320, sighist_1320, hstack_2200, sighist_2200, h_residual_1320, h_residual_2200, h_bkg = addSignalHisto(h_backgrounds["dijet"],g_data,len(x)-1,x,options.cat,options.lumi)
     ctest = rt.TCanvas()
 
     h_residual_2200.Draw("HIST")
-    h2.Draw("histsame")
+    h_backgrounds["expow1"].Draw("histsame")
     # h_bkg.Draw("HISTsame")
     # h_bkg.SetFillColorAlpha(2,0)
     hstack_1320.Draw("HISTsame")
