@@ -1137,12 +1137,12 @@ if __name__ == '__main__':
     myRebinnedDensityTH1.Draw("axis")
 
     # Draw data
+    g_data_clone.Draw("zpsame")
+    g_data.Draw("zpsame")
     if (options.year == "fullRun2"):
         hstack_1320.Draw("HISTsame")
         hstack_2200.Draw("HISTsame")
     myRebinnedDensityTH1.Draw("axissame")
-    g_data_clone.Draw("zpsame")
-    g_data.Draw("zpsame")
     # Draw fit function
     if options.doTriggerFit or options.doSimultaneousFit or options.doSpectrumFit or options.noFit:
         rt.gStyle.SetPalette(90)
@@ -1572,8 +1572,8 @@ if __name__ == '__main__':
         legres_sig.SetFillStyle(0)
         legres_sig.SetLineWidth(0)
         legres_sig.SetLineColor(rt.kWhite)
-        legres_sig.AddEntry(h_residual_1320,"Signal / Unc. (M_{G}=1.3 TeV)","f")
         legres_sig.AddEntry(h_residual_2200,"Signal / Unc. (M_{G}=2.2 TeV)","f")
+        legres_sig.AddEntry(h_residual_1320,"Signal / Unc. (M_{G}=1.3 TeV)","f")
         legres_sig.Draw()
 
     # line = rt.TLine(h_fit_residual_vs_mass.GetXaxis().GetXmin(),0,h_fit_residual_vs_mass.GetXaxis().GetXmax(),0)
