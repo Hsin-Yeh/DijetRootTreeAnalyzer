@@ -262,7 +262,6 @@ def addSignalHisto(h_bkg,data_obs_TGraph_,N_massBins_,massBins_,cat,lumi):
     sighist_2200 = sigfile_2200.Get("h_gg_14")
     sighist_1320.SetDirectory(0)
     sighist_2200.SetDirectory(0)
-    h_bkg.SetDirectory(0)
     # xsec (pb)
     xsec_001_1320 = 0.00268570521957342
     # xsec_02_1320 = 1.041417154818832
@@ -299,7 +298,7 @@ def addSignalHisto(h_bkg,data_obs_TGraph_,N_massBins_,massBins_,cat,lumi):
     ci = rt.TColor.GetColor("#2cb6a5"); # Bird
     sighist_2200.SetFillColorAlpha(ci,0)
     sighist_2200.SetLineColorAlpha(0,0)
-    h_bkg.SetFillColorAlpha(ci,0.4)
+    h_bkg.SetFillColorAlpha(2,0.4)
     hstack_1320.Add(h_bkg)
     hstack_1320.Add(sighist_1320)
     hstack_2200.Add(h_bkg)
