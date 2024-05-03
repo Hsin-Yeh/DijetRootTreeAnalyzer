@@ -352,7 +352,7 @@ def addSignalHisto(h_bkg,data_obs_TGraph_,N_massBins_,massBins_,cat,lumi):
     # h_residual_2200.GetYaxis().SetRangeUser(-3,3)
     ctest.SaveAs("test1.png")
 
-    return hstack_1320, sighist_1320, hstack_2200, sighist_2200, h_residual_1320, h_residual_2200
+    return hstack_1320, sighist_1320, hstack_2200, sighist_2200, h_residual_1320, h_residual_2200, h_bkg
 
 if __name__ == '__main__':
     parser = OptionParser()
@@ -1029,13 +1029,14 @@ if __name__ == '__main__':
     h_backgrounds = {}
     for key, value in backgrounds.iteritems():
         h_backgrounds[key] = convertFunctionToHisto(value,"h_background",len(x)-1,x)
-    hstack_1320, sighist_1320, hstack_2200, sighist_2200, h_residual_1320, h_residual_2200 = addSignalHisto(h_backgrounds["dijet"],g_data,len(x)-1,x,options.cat,options.lumi)
+    hstack_1320, sighist_1320, hstack_2200, sighist_2200, h_residual_1320, h_residual_2200, h_bkg = addSignalHisto(h_backgrounds["dijet"],g_data,len(x)-1,x,options.cat,options.lumi)
     ctest = rt.TCanvas()
 
     h_residual_2200.Draw("HIST")
     hstack_1320.Draw("HISTsame")
     hstack_2200.Draw("HISTsame")
     h_residual_1320.Draw("HISTsame")
+    h_bkg.Draw("HISTsame")
     # ctest.SetLogy()
     ctest.SaveAs("test.png")
     print("hey: %f"%sighist_1320.Integral())
