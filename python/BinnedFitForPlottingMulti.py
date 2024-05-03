@@ -1026,7 +1026,7 @@ if __name__ == '__main__':
             print("AM I IN HERE?")
 
     h_bkg.SetDirectory(0)
-    h2 = h_bkg->Clone()
+    h2 = h_bkg.Clone()
     h2.SetFillStyle(0)
 
     h_backgrounds = {}
