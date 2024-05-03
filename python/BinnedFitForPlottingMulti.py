@@ -292,9 +292,8 @@ def addSignalHisto(h_bkg,data_obs_TGraph_,N_massBins_,massBins_,cat,lumi):
         factor = xsec_001_2200*lumi*norm_001_2200_EBEE
         sighist_2200.Scale(factor/sighist_2200.Integral(), "width")
     print("Integral check: 1320GeV %f and 2200GeV %f"%(sighist_1320.Integral("width"),sighist_2200.Integral("width")))
-    h_bkg.SetFillColorAlpha(0,0)
-    h_bkg.SetLineColorAlpha(0,0)
-    hstack_1320.SetFillStyle(0)
+    h_bkg.SetFillColorAlpha(2,0.4)
+    h_bkg.SetFillStyle(0)
     ci = rt.TColor.GetColor("#1068da"); # Bird
     sighist_1320.SetFillColorAlpha(ci,0.4)
     sighist_1320.SetLineColorAlpha(0,0)
