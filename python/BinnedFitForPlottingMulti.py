@@ -300,8 +300,8 @@ def addSignalHisto(h_bkg,data_obs_TGraph_,N_massBins_,massBins_,cat,lumi):
     sighist_2200.SetFillColorAlpha(ci,0)
     sighist_2200.SetLineColorAlpha(0,0)
     h_bkg.SetFillColorAlpha(ci,0.4)
-    hstack_1320.Add(sighist_1320)
     hstack_1320.Add(h_bkg)
+    hstack_1320.Add(sighist_1320)
     hstack_2200.Add(h_bkg)
     hstack_2200.Add(sighist_2200)
 
