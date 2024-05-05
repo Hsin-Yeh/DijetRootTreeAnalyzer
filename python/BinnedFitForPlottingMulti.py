@@ -301,9 +301,8 @@ def addSignalHisto(h_bkg,data_obs_TGraph_,N_massBins_,massBins_,cat,lumi):
     sighist_2200.SetFillColorAlpha(ci,0.4)
     sighist_2200.SetLineColorAlpha(ci,0)
     # sighist_2200.SetFillStyle(4050)
-    h_bkg.SetFillColorAlpha(2,0)
+    h_bkg.SetFillColorAlpha(2,0.4)
     h_bkg.SetLineColorAlpha(0,0)
-    h_bkg.SetFillStyle(4050)
     h_bkg.SetDirectory(0)
     hstack_1320.Add(h_bkg)
     hstack_1320.Add(sighist_1320)
@@ -1153,7 +1152,7 @@ if __name__ == '__main__':
         # h_bkg.SetFillColorAlpha(0,0)
         # hstack_dummy.Draw("HISTsame NOCLEAR")
         # hstack_1320.Draw("HISTsame")
-        hstack_2200.Draw("same")
+        hstack_2200.Draw("HISTsame")
     myRebinnedDensityTH1.Draw("axissame")
     # Draw fit function
     if options.doTriggerFit or options.doSimultaneousFit or options.doSpectrumFit or options.noFit:
