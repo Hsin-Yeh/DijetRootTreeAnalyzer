@@ -262,7 +262,7 @@ def addSignalHisto(h_bkg,data_obs_TGraph_,N_massBins_,massBins_,cat,lumi):
     sighist_1320 = sigfile_1320.Get("h_gg_14")
     sighist_2200 = sigfile_2200.Get("h_gg_14")
     h_empty = h_bkg.Clone()
-    h_empty.Reset("ICESM");
+    # h_empty.Reset("ICESM");
     sighist_1320.SetDirectory(0)
     sighist_2200.SetDirectory(0)
     # xsec (pb)
