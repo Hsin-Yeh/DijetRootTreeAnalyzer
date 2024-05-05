@@ -1040,7 +1040,7 @@ if __name__ == '__main__':
 
     h_residual_2200.Draw("HIST")
     h_bkg.Draw("HISTsame")
-    hstack_dummy.Draw("HISTsame")
+    # hstack_dummy.Draw("HISTsame")
     # h_bkg.SetFillColorAlpha(2,0)
     hstack_1320.Draw("HISTsame")
     hstack_2200.Draw("HISTsame")
