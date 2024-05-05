@@ -301,7 +301,7 @@ def addSignalHisto(h_bkg,data_obs_TGraph_,N_massBins_,massBins_,cat,lumi):
     h_bkg.SetFillColorAlpha(2,0)
     h_bkg.SetDirectory(0)
     hempty = h_bkg.Clone()
-    for bin in range (0,h_bkg.GetNBins()):
+    for bin in range (0,h_bkg.GetNBinsX()):
         value = 0
         hempty.SetBinContent(bin+1,0)
 
