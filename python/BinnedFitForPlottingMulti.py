@@ -309,8 +309,8 @@ def addSignalHisto(h_bkg,data_obs_TGraph_,N_massBins_,massBins_,cat,lumi):
     hstack_1320.Add(sighist_1320)
     hstack_2200.Add(h_bkg)
     hstack_2200.Add(sighist_2200)
-    hstack_dummy.Add(sighist_2200)
-    hstack_dummy.Add(sighist_1320)
+    hstack_dummy.Add(h_bkg)
+    # hstack_dummy.Add(sighist_1320)
 
     h_residual_1320 = rt.TH1D("h_residual_1320","h_residual_1320",N_massBins_,massBins_)
     ci = rt.TColor.GetColor("#1068da"); # Bird
