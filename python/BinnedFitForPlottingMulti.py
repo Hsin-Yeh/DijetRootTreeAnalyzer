@@ -1145,7 +1145,7 @@ if __name__ == '__main__':
     g_data.Draw("zpsame")
     if (options.year == "fullRun2"):
         # h_bkg.SetFillColorAlpha(0,0)
-        hstack_1320.Draw("HISTsame NOCLEAR")
+        # hstack_1320.Draw("HISTsame NOCLEAR")
         hstack_2200.Draw("HISTsame NOCLEAR")
     myRebinnedDensityTH1.Draw("axissame")
     # Draw fit function
