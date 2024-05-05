@@ -1147,13 +1147,13 @@ if __name__ == '__main__':
     myRebinnedDensityTH1.Draw("axis")
 
     # Draw data
-    hstack_dummy.Draw("same NOCLEAR")
+    hstack_dummy.Draw("same")
     g_data_clone.Draw("zpsame")
     g_data.Draw("zpsame")
     if (options.year == "fullRun2"):
         # h_bkg.SetFillColorAlpha(0,0)
-        hstack_1320.Draw("same NOCLEAR")
-        hstack_2200.Draw("same NOCLEAR")
+        hstack_1320.Draw("same")
+        hstack_2200.Draw("same")
     myRebinnedDensityTH1.Draw("axissame")
     # Draw fit function
     if options.doTriggerFit or options.doSimultaneousFit or options.doSpectrumFit or options.noFit:
