@@ -1152,8 +1152,8 @@ if __name__ == '__main__':
     if (options.year == "fullRun2"):
         # h_bkg.SetFillColorAlpha(0,0)
         hstack_dummy.Draw("HISTsame NOCLEAR")
-        hstack_1320.Draw("HISTsame NOCLEAR")
-        hstack_2200.Draw("HISTsame NOCLEAR")
+        hstack_1320.Draw("HISTsame")
+        hstack_2200.Draw("HISTsame")
     myRebinnedDensityTH1.Draw("axissame")
     # Draw fit function
     if options.doTriggerFit or options.doSimultaneousFit or options.doSpectrumFit or options.noFit:
