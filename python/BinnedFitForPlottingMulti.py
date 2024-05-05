@@ -256,7 +256,7 @@ def addSignalHisto(h_bkg,data_obs_TGraph_,N_massBins_,massBins_,cat,lumi):
     elif(cat=="EBEE"):
         sigfile_1320 = rt.TFile("signal_shapes/width_InputShapes_RSGravitonToGammaGamma_EBEE_2017_1320GeV.root")
         sigfile_2200 = rt.TFile("signal_shapes/width_InputShapes_RSGravitonToGammaGamma_EBEE_2017_2200GeV.root")
-    # hstack_dummy = rt.THStack("hstack_dummy","")
+    hstack_dummy = rt.THStack("hstack_dummy","")
     hstack_1320 = rt.THStack("hstack_1320","")
     hstack_2200 = rt.THStack("hstack_2200","")
     sighist_1320 = sigfile_1320.Get("h_gg_14")
@@ -309,7 +309,7 @@ def addSignalHisto(h_bkg,data_obs_TGraph_,N_massBins_,massBins_,cat,lumi):
     hstack_1320.Add(sighist_1320)
     hstack_2200.Add(h_bkg)
     hstack_2200.Add(sighist_2200)
-    # hstack_dummy.Add(h_bkg)
+    hstack_dummy.Add(h_bkg)
     # hstack_dummy.Add(sighist_1320)
 
     h_residual_1320 = rt.TH1D("h_residual_1320","h_residual_1320",N_massBins_,massBins_)
@@ -359,7 +359,7 @@ def addSignalHisto(h_bkg,data_obs_TGraph_,N_massBins_,massBins_,cat,lumi):
     # h_residual_2200.GetYaxis().SetRangeUser(-3,3)
     ctest.SaveAs("test1.png")
 
-    return hstack_1320, sighist_1320, hstack_2200, sighist_2200, h_residual_1320, h_residual_2200, h_bkg
+    return hstack_1320, sighist_1320, hstack_2200, sighist_2200, h_residual_1320, h_residual_2200, h_bkg, hstack_dummy
 
 if __name__ == '__main__':
     parser = OptionParser()
@@ -1035,12 +1035,12 @@ if __name__ == '__main__':
     h_backgrounds = {}
     for key, value in backgrounds.iteritems():
         h_backgrounds[key] = convertFunctionToHisto(value,"h_background",len(x)-1,x)
-    hstack_1320, sighist_1320, hstack_2200, sighist_2200, h_residual_1320, h_residual_2200, h_bkg = addSignalHisto(h_backgrounds["dijet"],g_data,len(x)-1,x,options.cat,options.lumi)
+    hstack_1320, sighist_1320, hstack_2200, sighist_2200, h_residual_1320, h_residual_2200, h_bkg, hstack_dummy = addSignalHisto(h_backgrounds["dijet"],g_data,len(x)-1,x,options.cat,options.lumi)
     ctest = rt.TCanvas()
 
     h_residual_2200.Draw("HIST")
     h_bkg.Draw("HISTsame")
-    # hstack_dummy.Draw("HISTsame")
+    hstack_dummy.Draw("HISTsame")
     # h_bkg.SetFillColorAlpha(2,0)
     hstack_1320.Draw("HISTsame")
     hstack_2200.Draw("HISTsame")
@@ -1151,7 +1151,7 @@ if __name__ == '__main__':
     g_data.Draw("zpsame")
     if (options.year == "fullRun2"):
         # h_bkg.SetFillColorAlpha(0,0)
-        # hstack_dummy.Draw("same NOCLEAR")
+        hstack_dummy.Draw("HISTsame NOCLEAR")
         hstack_1320.Draw("HISTsame NOCLEAR")
         hstack_2200.Draw("HISTsame NOCLEAR")
     myRebinnedDensityTH1.Draw("axissame")
