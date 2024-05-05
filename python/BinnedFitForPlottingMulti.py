@@ -298,19 +298,12 @@ def addSignalHisto(h_bkg,data_obs_TGraph_,N_massBins_,massBins_,cat,lumi):
     ci = rt.TColor.GetColor("#2cb6a5"); # Bird
     sighist_2200.SetFillColorAlpha(ci,0.4)
     sighist_2200.SetLineColorAlpha(0,0)
-    h_bkg.SetFillColorAlpha(0,0)
+    h_bkg.SetFillColorAlpha(2,0.4)
     h_bkg.SetLineColorAlpha(0,0)
-    # h_bkg.SetFillStyle(10)
+    h_bkg.SetFillStyle(10)
     h_bkg.SetDirectory(0)
-    hempty = h_bkg.Clone()
-    for bin in range (0,h_bkg.GetNbinsX()):
-        value = 0
-        hempty.SetBinContent(bin+1,0)
-
-    # hstack_1320.Add(hempty)
     hstack_1320.Add(h_bkg)
     hstack_1320.Add(sighist_1320)
-    # hstack_2200.Add(hempty)
     hstack_2200.Add(h_bkg)
     hstack_2200.Add(sighist_2200)
 
@@ -1152,8 +1145,8 @@ if __name__ == '__main__':
     g_data.Draw("zpsame")
     if (options.year == "fullRun2"):
         # h_bkg.SetFillColorAlpha(0,0)
-        hstack_1320.Draw("HISTsame")
-        hstack_2200.Draw("HISTsame")
+        hstack_1320.Draw("HISTsame NOCLEAR")
+        hstack_2200.Draw("HISTsame NOCLEAR")
     myRebinnedDensityTH1.Draw("axissame")
     # Draw fit function
     if options.doTriggerFit or options.doSimultaneousFit or options.doSpectrumFit or options.noFit:
