@@ -308,7 +308,7 @@ def addSignalHisto(h_bkg,data_obs_TGraph_,N_massBins_,massBins_,cat,lumi):
     h_bkg.SetDirectory(0)
     hstack_1320.Add(h_bkg)
     hstack_1320.Add(sighist_1320)
-    hstack_2200.Add(h_sighist_1320)
+    hstack_2200.Add(sighist_1320)
     hstack_2200.Add(h_bkg)
     hstack_2200.Add(sighist_2200)
     hstack_dummy.Add(h_bkg)
