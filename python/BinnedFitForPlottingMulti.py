@@ -261,6 +261,8 @@ def addSignalHisto(h_bkg,data_obs_TGraph_,N_massBins_,massBins_,cat,lumi):
     hstack_2200 = rt.THStack("hstack_2200","")
     sighist_1320 = sigfile_1320.Get("h_gg_14")
     sighist_2200 = sigfile_2200.Get("h_gg_14")
+    # h_empty = h_bkg.Clone()
+    # h_empty
     sighist_1320.SetDirectory(0)
     sighist_2200.SetDirectory(0)
     # xsec (pb)
@@ -303,11 +305,13 @@ def addSignalHisto(h_bkg,data_obs_TGraph_,N_massBins_,massBins_,cat,lumi):
     # sighist_2200.SetFillStyle(4050)
     h_bkg.SetFillColorAlpha(2,0.4)
     h_bkg.SetLineColorAlpha(0,0)
+    h_bkg.SetFillStyle(0)
     h_bkg.SetDirectory(0)
     hstack_1320.Add(h_bkg)
     hstack_1320.Add(sighist_1320)
-    hstack_2200.Add(sighist_2200)
+    # hstack_2200.Add(h_empty)
     hstack_2200.Add(h_bkg)
+    hstack_2200.Add(sighist_2200)
     hstack_dummy.Add(h_bkg)
     # hstack_dummy.Add(sighist_1320)
 
