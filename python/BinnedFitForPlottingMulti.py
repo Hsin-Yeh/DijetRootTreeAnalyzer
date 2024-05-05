@@ -1145,7 +1145,7 @@ if __name__ == '__main__':
     myRebinnedDensityTH1.Draw("axis")
 
     # Draw data
-     if (options.year == "fullRun2"):
+    if (options.year == "fullRun2"):
         hstack_1320.Draw("HISTsame")
         hstack_2200.Draw("HISTsame")
     g_data_clone.Draw("zpsame")
