@@ -256,7 +256,7 @@ def addSignalHisto(h_bkg,data_obs_TGraph_,N_massBins_,massBins_,cat,lumi):
     elif(cat=="EBEE"):
         sigfile_1320 = rt.TFile("signal_shapes/width_InputShapes_RSGravitonToGammaGamma_EBEE_2017_1320GeV.root")
         sigfile_2200 = rt.TFile("signal_shapes/width_InputShapes_RSGravitonToGammaGamma_EBEE_2017_2200GeV.root")
-    hstack_dummy = rt.THStack("hstack_dummy","")
+    # hstack_dummy = rt.THStack("hstack_dummy","")
     hstack_1320 = rt.THStack("hstack_1320","")
     hstack_2200 = rt.THStack("hstack_2200","")
     sighist_1320 = sigfile_1320.Get("h_gg_14")
@@ -359,7 +359,7 @@ def addSignalHisto(h_bkg,data_obs_TGraph_,N_massBins_,massBins_,cat,lumi):
     # h_residual_2200.GetYaxis().SetRangeUser(-3,3)
     ctest.SaveAs("test1.png")
 
-    return hstack_1320, sighist_1320, hstack_2200, sighist_2200, h_residual_1320, h_residual_2200, h_bkg, hstack_dummy
+    return hstack_1320, sighist_1320, hstack_2200, sighist_2200, h_residual_1320, h_residual_2200, h_bkg
 
 if __name__ == '__main__':
     parser = OptionParser()
@@ -1035,7 +1035,7 @@ if __name__ == '__main__':
     h_backgrounds = {}
     for key, value in backgrounds.iteritems():
         h_backgrounds[key] = convertFunctionToHisto(value,"h_background",len(x)-1,x)
-    hstack_1320, sighist_1320, hstack_2200, sighist_2200, h_residual_1320, h_residual_2200, h_bkg, hstack_dummy = addSignalHisto(h_backgrounds["dijet"],g_data,len(x)-1,x,options.cat,options.lumi)
+    hstack_1320, sighist_1320, hstack_2200, sighist_2200, h_residual_1320, h_residual_2200, h_bkg = addSignalHisto(h_backgrounds["dijet"],g_data,len(x)-1,x,options.cat,options.lumi)
     ctest = rt.TCanvas()
 
     h_residual_2200.Draw("HIST")
@@ -1152,8 +1152,8 @@ if __name__ == '__main__':
     if (options.year == "fullRun2"):
         # h_bkg.SetFillColorAlpha(0,0)
         # hstack_dummy.Draw("same NOCLEAR")
-        hstack_1320.Draw("same NOCLEAR")
-        hstack_2200.Draw("same NOCLEAR")
+        hstack_1320.Draw("HISTsame NOCLEAR")
+        hstack_2200.Draw("HISTsame NOCLEAR")
     myRebinnedDensityTH1.Draw("axissame")
     # Draw fit function
     if options.doTriggerFit or options.doSimultaneousFit or options.doSpectrumFit or options.noFit:
