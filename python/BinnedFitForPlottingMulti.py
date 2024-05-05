@@ -1089,6 +1089,7 @@ if __name__ == '__main__':
     pad_1.SetTopMargin(0.07)
     pad_1.SetLeftMargin(0.175)
     pad_1.SetFillColor(0)
+    pad_1.SetFillStyle(4000)
     pad_1.SetBorderMode(0)
     pad_1.SetFrameFillStyle(0)
     pad_1.SetFrameBorderMode(0)
@@ -1151,8 +1152,8 @@ if __name__ == '__main__':
     g_data.Draw("zpsame")
     if (options.year == "fullRun2"):
         # h_bkg.SetFillColorAlpha(0,0)
-        hstack_1320.Draw("HISTsame NOCLEAR")
-        hstack_2200.Draw("HISTsame NOCLEAR")
+        hstack_1320.Draw("HISTsame")
+        hstack_2200.Draw("HISTsame")
     myRebinnedDensityTH1.Draw("axissame")
     # Draw fit function
     if options.doTriggerFit or options.doSimultaneousFit or options.doSpectrumFit or options.noFit:
