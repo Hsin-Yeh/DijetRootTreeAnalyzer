@@ -1145,11 +1145,11 @@ if __name__ == '__main__':
     myRebinnedDensityTH1.Draw("axis")
 
     # Draw data
+    g_data_clone.Draw("zpsame")
+    g_data.Draw("zpsame")
     if (options.year == "fullRun2"):
         hstack_1320.Draw("HISTsame")
         hstack_2200.Draw("HISTsame")
-    g_data_clone.Draw("zpsame")
-    g_data.Draw("zpsame")
     myRebinnedDensityTH1.Draw("axissame")
     # Draw fit function
     if options.doTriggerFit or options.doSimultaneousFit or options.doSpectrumFit or options.noFit:
