@@ -298,7 +298,9 @@ def addSignalHisto(h_bkg,data_obs_TGraph_,N_massBins_,massBins_,cat,lumi):
     ci = rt.TColor.GetColor("#2cb6a5"); # Bird
     sighist_2200.SetFillColorAlpha(ci,0.4)
     sighist_2200.SetLineColorAlpha(0,0)
-    h_bkg.SetFillColorAlpha(0,1)
+    h_bkg.SetFillColorAlpha(0,0)
+    h_bkg.SetLineColorAlpha(0,0)
+    h_bkg.SetFillStyle()
     h_bkg.SetDirectory(0)
     hempty = h_bkg.Clone()
     for bin in range (0,h_bkg.GetNbinsX()):
@@ -1148,6 +1150,7 @@ if __name__ == '__main__':
     g_data_clone.Draw("zpsame")
     g_data.Draw("zpsame")
     if (options.year == "fullRun2"):
+        h_bkg.SetFillColorAlpha(0,0)
         hstack_1320.Draw("HISTsame")
         hstack_2200.Draw("HISTsame")
     myRebinnedDensityTH1.Draw("axissame")
