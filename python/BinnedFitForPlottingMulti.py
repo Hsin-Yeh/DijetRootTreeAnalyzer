@@ -1569,15 +1569,10 @@ if __name__ == '__main__':
     h_fit_residual_vs_mass.GetXaxis().SetTitleSize(2*0.06)
     h_fit_residual_vs_mass.GetXaxis().SetLabelSize(2*0.05)
 
-    h_fit_residual_vs_mass.Draw("histsame")
-    # rightmax = 1.1*h_residual_1320.GetMaximum();
-    # scale = rt.gPad.GetUymax()/rightmax;
-    # h_residual_1320.Scale(scale);
-    # h_residual_2200.Scale(scale);
     if (options.year == "fullRun2"):
         h_residual_1320.Draw("HISTSame")
         h_residual_2200.Draw("HISTSame")
-    # h_fit_residual_vs_mass.Draw("histsame")
+    h_fit_residual_vs_mass.Draw("histsame")
 
     if(options.year == "fullRun2"):
         legres_sig = rt.TLegend(0.53,0.29,0.87,0.47)
