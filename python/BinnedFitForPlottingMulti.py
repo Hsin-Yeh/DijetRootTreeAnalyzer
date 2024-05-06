@@ -1577,7 +1577,7 @@ if __name__ == '__main__':
     if (options.year == "fullRun2"):
         h_residual_1320.Draw("HISTSame")
         h_residual_2200.Draw("HISTSame")
-    h_fit_residual_vs_mass.Draw("histsame")
+    # h_fit_residual_vs_mass.Draw("histsame")
 
     if(options.year == "fullRun2"):
         legres_sig = rt.TLegend(0.53,0.29,0.87,0.47)
