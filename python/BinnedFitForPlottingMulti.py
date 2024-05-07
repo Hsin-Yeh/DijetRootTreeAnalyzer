@@ -1553,7 +1553,7 @@ if __name__ == '__main__':
     h_fit_residual_vs_mass.SetLineWidth(1)
     h_fit_residual_vs_mass.SetFillColor(rt.kRed)
     h_fit_residual_vs_mass.SetLineColor(rt.kBlack)
-    # h_fit_residual_vs_mass.SetLineWidth(0)
+    h_fit_residual_vs_mass.SetLineWidth(0)
 
     h_fit_residual_vs_mass.GetYaxis().SetTitleSize(0.14)
     h_fit_residual_vs_mass.GetYaxis().SetLabelSize(2*0.05)
