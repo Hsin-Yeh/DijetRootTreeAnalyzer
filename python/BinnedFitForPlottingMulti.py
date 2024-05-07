@@ -1309,11 +1309,11 @@ if __name__ == '__main__':
         legsig.SetLineWidth(0)
         legsig.SetLineColor(rt.kWhite)
         if (options.cat == "EBEB"):
-            legsig.AddEntry(sighist_2200,"#tilde{k}=0.01, M_{G}=2.2 TeV","f")
             legsig.AddEntry(sighist_1320,"#tilde{k}=0.01, M_{G}=1.3 TeV #times 0.2","f")
+            legsig.AddEntry(sighist_2200,"#tilde{k}=0.01, M_{G}=2.2 TeV","f")
         else:
-            legsig.AddEntry(sighist_2200,"#tilde{k}=0.01, M_{G}=2.2 TeV","f")
             legsig.AddEntry(sighist_1320,"#tilde{k}=0.01, M_{G}=1.3 TeV #times 0.2","f")
+            legsig.AddEntry(sighist_2200,"#tilde{k}=0.01, M_{G}=2.2 TeV","f")
         legsig.Draw()
 
     # for key, value in backgrounds.iteritems():
@@ -1588,8 +1588,8 @@ if __name__ == '__main__':
         legres_sig.SetFillStyle(0)
         legres_sig.SetLineWidth(0)
         legres_sig.SetLineColor(rt.kWhite)
-        legres_sig.AddEntry(h_residual_2200,"Signal / Unc. (M_{G}=2.2 TeV)","f")
         legres_sig.AddEntry(h_residual_1320,"Signal / Unc. (M_{G}=1.3 TeV)","f")
+        legres_sig.AddEntry(h_residual_2200,"Signal / Unc. (M_{G}=2.2 TeV)","f")
         legres_sig.Draw()
     legres_data = rt.TLegend(0.68,0.48,0.93,0.55)
     legres_data.SetTextFont(42)
