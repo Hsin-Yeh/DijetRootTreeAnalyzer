@@ -313,7 +313,7 @@ def addSignalHisto(h_bkg,data_obs_TGraph_,N_massBins_,massBins_,cat,lumi):
     # ci = rt.TColor.GetColor("#869450")
     # ci = rt.TColor.GetColor("#4caf50")
     ci = rt.TColor.GetColor("#9933FF")
-    sighist_1320.SetFillColorAlpha(rt.kPurple,0.8)
+    sighist_2200.SetFillColorAlpha(rt.kViolet,0.8)
     # sighist_2200.SetFillColorAlpha(ci,0.8)
     sighist_2200.SetLineColorAlpha(ci,0)
     # sighist_2200.SetFillStyle(4050)
@@ -331,7 +331,8 @@ def addSignalHisto(h_bkg,data_obs_TGraph_,N_massBins_,massBins_,cat,lumi):
     # ci = rt.TColor.GetColor("#1068da"); # Bird
     # ci = rt.TColor.GetColor('#29b6f6')
     ci = rt.TColor.GetColor("#FF3333")
-    h_residual_1320.SetFillColorAlpha(ci,0.8)
+    # h_residual_1320.SetFillColorAlpha(ci,0.8)
+    h_residual_1320.SetFillColorAlpha(rt.kRed,0.8)
     h_residual_1320.SetLineWidth(0)
     h_residual_1320.SetDirectory(0)
 
@@ -339,7 +340,8 @@ def addSignalHisto(h_bkg,data_obs_TGraph_,N_massBins_,massBins_,cat,lumi):
     # ci = rt.TColor.GetColor("#2cb6a5"); # Bird
     # ci = rt.TColor.GetColor("#4caf50")
     ci = rt.TColor.GetColor("#9933FF")
-    h_residual_2200.SetFillColorAlpha(ci,0.8)
+    # h_residual_2200.SetFillColorAlpha(ci,0.8)
+    h_residual_2200.SetFillColorAlpha(rt.kViolet,0.8)
     h_residual_2200.SetLineWidth(0)
     h_residual_2200.SetDirectory(0)
     for bin in range (0,N_massBins_):
