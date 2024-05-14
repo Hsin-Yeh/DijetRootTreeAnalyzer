@@ -295,6 +295,8 @@ def addSignalHisto(h_bkg,data_obs_TGraph_,N_massBins_,massBins_,cat,lumi):
         factor = xsec_001_2200*lumi*norm_001_2200_EBEE
         sighist_2200.Scale(factor/sighist_2200.Integral(), "width")
     print("Integral check: 1320GeV %f and 2200GeV %f"%(sighist_1320.Integral("width"),sighist_2200.Integral("width")))
+    h_residual_1320 = rt.TH1D("h_residual_1320","h_residual_1320",N_massBins_,massBins_)
+
     # ci = rt.TColor.GetColor("#1068da"); # Bird
     # ci = rt.TColor.GetColor('#43accb')
     # ci = rt.TColor.GetColor('#fbd25f') # yellow
@@ -307,10 +309,15 @@ def addSignalHisto(h_bkg,data_obs_TGraph_,N_massBins_,massBins_,cat,lumi):
     # ci = rt.TColor.GetColor("#FF3333")
     # ci = rt.TColor.GetColor('#EE4B2B')
     ci = rt.TColor.GetColor('#FF5B00')
+    ci = rt.TColor.GetColor('#AD0AFD')
     sighist_1320.SetFillColorAlpha(ci,0.8)
     # sighist_1320.SetFillColorAlpha(rt.kRed,1)
     sighist_1320.SetLineColorAlpha(ci,0)
-    # sighist_1320.SetFillStyle(4050)
+    h_residual_1320.SetFillColorAlpha(ci,0.8)
+    # h_residual_1320.SetFillColorAlpha(rt.kRed,0.8)
+    h_residual_1320.SetLineWidth(0)
+    h_residual_1320.SetDirectory(0)
+
     # ci = rt.TColor.GetColor("#2cb6a5"); # Bird
     # ci = rt.TColor.GetColor("#869450")
     # ci = rt.TColor.GetColor("#4caf50")
@@ -329,14 +336,6 @@ def addSignalHisto(h_bkg,data_obs_TGraph_,N_massBins_,massBins_,cat,lumi):
     hstack_dummy.Add(h_bkg)
     # hstack_dummy.Add(sighist_1320)
 
-    h_residual_1320 = rt.TH1D("h_residual_1320","h_residual_1320",N_massBins_,massBins_)
-    # ci = rt.TColor.GetColor("#1068da"); # Bird
-    # ci = rt.TColor.GetColor('#29b6f6')
-    ci = rt.TColor.GetColor("#FF3333")
-    # h_residual_1320.SetFillColorAlpha(ci,0.8)
-    h_residual_1320.SetFillColorAlpha(rt.kRed,0.8)
-    h_residual_1320.SetLineWidth(0)
-    h_residual_1320.SetDirectory(0)
 
     h_residual_2200 = rt.TH1D("h_residual_2200","h_residual_2200",N_massBins_,massBins_)
     # ci = rt.TColor.GetColor("#2cb6a5"); # Bird
