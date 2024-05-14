@@ -305,9 +305,9 @@ def addSignalHisto(h_bkg,data_obs_TGraph_,N_massBins_,massBins_,cat,lumi):
     # ci = rt.TColor.GetColor('#b16cab')
     # ci = rt.TColor.GetColor('#29b6f6')
     # ci = rt.TColor.GetColor("#FF3333")
-    ci = rt.TColor.GetColor('#EE4B2B')
-    sighist_1320.SetFillColorAlpha(ci,0.8)
-    # sighist_1320.SetFillColorAlpha(rt.kRed,0.8)
+    # ci = rt.TColor.GetColor('#EE4B2B')
+    # sighist_1320.SetFillColorAlpha(ci,0.8)
+    sighist_1320.SetFillColorAlpha(rt.kRed,1)
     sighist_1320.SetLineColorAlpha(ci,0)
     # sighist_1320.SetFillStyle(4050)
     # ci = rt.TColor.GetColor("#2cb6a5"); # Bird
