@@ -310,7 +310,7 @@ def addSignalHisto(h_bkg,data_obs_TGraph_,N_massBins_,massBins_,cat,lumi):
     # ci = rt.TColor.GetColor('#EE4B2B')
     # ci = rt.TColor.GetColor('#FF5B00')
     ci = rt.TColor.GetColor('#FF0A01')
-    sighist_1320.SetFillColorAlpha(ci,0.8)
+    sighist_1320.SetFillColorAlpha(ci,1)
     # sighist_1320.SetFillColorAlpha(rt.kRed,1)
     sighist_1320.SetLineColorAlpha(ci,0)
     h_residual_1320.SetFillColorAlpha(ci,0.8)
