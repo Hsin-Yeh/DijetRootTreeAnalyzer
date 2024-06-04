@@ -22,14 +22,13 @@ bkgFitResultsDir="${eosDir}/bkgFitResults/"
 configDir="../config"
 pythonDir="../python"
 datacardsDir="datacards/${signal}"
-# toysfile created by: combine -M GenerateOnly datacards/diphoton_combine_1300_DiPhotons_4550_fullRun2.txt -n _bkgOnly --toysFrequentist -t 10000 --saveToys --expectSignal=0
-toysfile="${eosDir}/ParallelForLimits/higgsCombine_Generate_bkgOnly.root"
+# toysfile created by: combine -M GenerateOnly datacards/grav/diphoton_combine_1320_DiPhotons_14_fullRun2.txt -n _bkgOnly --toysFrequentist -t 10000 --saveToys --expectSignal=0
+toysfile="${eosDir}/toysfile/higgsCombine_bkgOnly.GenerateOnly.mH120.123456.root"
 
 
 #################### mkdirs ####################
 mkdir -p ${datacardsDir}
 mkdir -p FinalResults
-
 ############################## WriteDataCard.py grav ##############################
 # The yield was initially normalized to 1000/pb.
 echo "########## Write Datacards... ##########"
@@ -77,12 +76,12 @@ combineCards.py ${datacardsDir}/diphoton_combine_${mass}_${scenario}_EBEB_2016.t
     > ${datacardsDir}/diphoton_combine_${mass}_${scenario}_fullRun2.txt;
 echo "Combined card for all years: ${datacardfile}"
 
-finalResults="FinalResults/finalResults_${signal}_${coupling}_${mass}.txt"
-echo "Final results file: ${finalResults}"
 # ############################## Combine Limit ##############################
 echo "########## Run AsymptoticLimits ##########"
+finalResults="FinalResults/finalResults_${signal}_${coupling}_${mass}.txt"
+echo "Final results file: ${finalResults}"
 
-combine -M AsymptoticLimits -s -1 -d $datacardfile --X-rtd MINIMIZER_freezeDisassociatedParams -n ${year}_${signal}_${coupling} > results
+combine -M AsymptoticLimits -s -1 -d $datacardfile --X-rtd MINIMIZER_freezeDisassociatedParams -n ${year}_${signal}_${coupling} | tee results_limits
 
 obs=`cat results  | grep  "Observed Limit:" | awk '{print $5}'`
 expM2s=`cat results  | grep  "Expected  2.5%:" | awk '{print $5}'`
@@ -96,7 +95,7 @@ echo $mass $obs $expM2s $expM1s $exp $expP1s $expP2s > ${finalResults}
 
 # ############################## Combine local pvalue ##############################
 echo "########## Run pvalue ##########"
-combine -d ${datacardfile} -M Significance --pval --cminDefaultMinimizerType=Minuit2 -n Observed_pvalue > results_pvalue
+combine -d ${datacardfile} -M Significance --pval --cminDefaultMinimizerType=Minuit2 -n Observed_pvalue | tee results_pvalue
 rm higgsCombine*.root
 
 pvalue=`cat results_pvalue  | grep  "p-value of background:" | awk '{print $4}'`
@@ -106,7 +105,7 @@ echo $mass $pvalue >> ${finalResults}
 
 # ############################## Combine zvalue ##############################
 echo "########## Run zvalue ##########"
-combine -d ${datacardfile} -M Significance --cminDefaultMinimizerType=Minuit2 -n Observed_zvalue > results_zvalue
+combine -d ${datacardfile} -M Significance --cminDefaultMinimizerType=Minuit2 -n Observed_zvalue | tee results_zvalue
 rm higgsCombine*.root
 
 zvalue=`cat results_zvalue  | grep  "Significance:" | awk '{print $2}'`
@@ -116,10 +115,16 @@ echo $mass $zvalue >> ${finalResults}
 
 # ############################## Combine Global zvalue ##############################
 echo "########## Run Global Significance ##########"
-combine -d ${datacardfile} -M Significance --cminDefaultMinimizerType=Minuit2 -n Observed_global --toysFile ${toysfile} -t 1000 > results_global_zvalue
+combine -d ${datacardfile} -M Significance --cminDefaultMinimizerType=Minuit2 -n Observed_global --toysFile ${toysfile} -t 1000 | tee results_global_zvalue
 rm higgsCombine*.root
 
 global_zvalue=`cat results_global_zvalue  | grep  "Significance:" | awk '{print $2}'`
 
 echo $mass $global_zvalue
 echo $mass $global_zvalue >> ${finalResults}
+
+# ############################## Clean up ##############################
+mv results* FinalResults
+mv combine_logger.out FinalResults
+mv roostats* FinalResults
+mv higgsCombine*.root FinalResults
