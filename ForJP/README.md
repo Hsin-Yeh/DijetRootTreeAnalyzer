@@ -20,7 +20,7 @@ git clone git@github.com:apsallid/HiggsAnalysis-CombinedLimit.git HiggsAnalysis/
 cd $CMSSW_BASE/src/HiggsAnalysis/CombinedLimit
 git checkout diphotfuns
 ##### Complie #####
-cd ../
+cd ../../
 scram b -j8
 ```
 
