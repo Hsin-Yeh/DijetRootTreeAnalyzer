@@ -1,6 +1,7 @@
 # README
 
-*This code only runs under CentOS7 (lxplus7)*
+*This code runs under CentOS7 (lxplus7)*
+*For AlmalinuxOS (lxplus8,9), I am not sure what needs to be changed. Hope that lxplus7 does not disappear too soon*
 
 ## Setup
 ``` bash
@@ -23,7 +24,7 @@ cd ../
 scram b -j8
 ```
 
-# Execute
+## Execute
 ```bash
 cd DijetRootTreeAnalyzer/ForJP
 ./run.sh

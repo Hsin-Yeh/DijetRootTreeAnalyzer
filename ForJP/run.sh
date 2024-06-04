@@ -83,12 +83,12 @@ echo "Final results file: ${finalResults}"
 
 combine -M AsymptoticLimits -s -1 -d $datacardfile --X-rtd MINIMIZER_freezeDisassociatedParams -n ${year}_${signal}_${coupling} | tee results_limits
 
-obs=`cat results  | grep  "Observed Limit:" | awk '{print $5}'`
-expM2s=`cat results  | grep  "Expected  2.5%:" | awk '{print $5}'`
-expM1s=`cat results  | grep  "Expected 16.0%:" | awk '{print $5}'`
-exp=`cat results  | grep  "Expected 50.0%:" | awk '{print $5}'`
-expP1s=`cat results  | grep  "Expected 84.0%:" | awk '{print $5}'`
-expP2s=`cat results  | grep  "Expected 97.5%:" | awk '{print $5}'`
+obs=`cat results_limits  | grep  "Observed Limit:" | awk '{print $5}'`
+expM2s=`cat results_limits  | grep  "Expected  2.5%:" | awk '{print $5}'`
+expM1s=`cat results_limits  | grep  "Expected 16.0%:" | awk '{print $5}'`
+exp=`cat results_limits  | grep  "Expected 50.0%:" | awk '{print $5}'`
+expP1s=`cat results_limits  | grep  "Expected 84.0%:" | awk '{print $5}'`
+expP2s=`cat results_limits  | grep  "Expected 97.5%:" | awk '{print $5}'`
 
 echo $mass $obs $expM2s $expM1s $exp $expP1s $expP2s
 echo $mass $obs $expM2s $expM1s $exp $expP1s $expP2s > ${finalResults}
@@ -115,7 +115,7 @@ echo $mass $zvalue >> ${finalResults}
 
 # ############################## Combine Global zvalue ##############################
 echo "########## Run Global Significance ##########"
-combine -d ${datacardfile} -M Significance --cminDefaultMinimizerType=Minuit2 -n Observed_global --toysFile ${toysfile} -t 1000 | tee results_global_zvalue
+combine -d ${datacardfile} -M Significance --cminDefaultMinimizerType=Minuit2 -n Observed_global --toysFile ${toysfile} -t 5 | tee results_global_zvalue
 rm higgsCombine*.root
 
 global_zvalue=`cat results_global_zvalue  | grep  "Significance:" | awk '{print $2}'`
