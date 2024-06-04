@@ -20,6 +20,7 @@ dataDir="${eosDir}/data"
 SignalNormFile="${eosDir}/SignalNorm_Splines_full_multiWidth.txt"
 bkgFitResultsDir="${eosDir}/bkgFitResults/"
 configDir="../config"
+pythonDir="../python"
 datacardsDir="datacards/${signal}"
 # toysfile created by: combine -M GenerateOnly datacards/diphoton_combine_1300_DiPhotons_4550_fullRun2.txt -n _bkgOnly --toysFrequentist -t 10000 --saveToys --expectSignal=0
 toysfile="${eosDir}/ParallelForLimits/higgsCombine_Generate_bkgOnly.root"
@@ -44,7 +45,7 @@ for year in "${yearlist[@]}"; do
         box="DiPhotons_${coupling}_${cat}_${year}"
         echo ${year} ${box}
         datacard_configfile="${configDir}/diphotons_bias_${year}_pdf_index_wopip_wopil_multiWidth.config"
-        python python/WriteDataCard.py --multi -m gg --mass ${mass} ${dataDir}/InputShapes_data_${cat}_${year}.root \
+        python ${pythonDir}/WriteDataCard.py --multi -m gg --mass ${mass} ${dataDir}/InputShapes_data_${cat}_${year}.root \
             -i ${bkgFitResultsDir}/FitResults_${box}.root --lumi ${lumi} -c ${datacard_configfile} -b ${box} --year ${year} \
             --SigNorm ${SignalNormFile} \
             --eneScStatUp    ${signalDir}/ResonanceShapes_InputShapes_${signal_LongName}_${coupling}_${cat}_${year}_energyScaleStatUp.root   \
