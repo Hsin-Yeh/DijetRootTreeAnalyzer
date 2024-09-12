@@ -1,3 +1,5 @@
+# Example usage: time python python/RunBias.py -c config/diphotons_bias_2017_pdf_index.config -i datacards/multi/FitResults_DiPhotons_kMpl001_EBEB_2017.root -b DiPhotons_kMpl001_EBEB_2017 --mass 1000 -m gg -d signal_bias -r 1 -l 41.527 --year 2017 -t 1000 --gen-pdf expow1 --fit-pdf dijet
+
 from optparse import OptionParser
 import ROOT as rt
 import rootTools
